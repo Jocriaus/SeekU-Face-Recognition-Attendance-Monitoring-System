@@ -10,7 +10,7 @@ cap = cv.VideoCapture(0)
 while True:
 
     #img as video 
-    img = cap.read()
+    _,  img = cap.read()
     #img set img as graye color
     gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
 
