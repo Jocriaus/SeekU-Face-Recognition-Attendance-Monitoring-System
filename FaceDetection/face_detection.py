@@ -1,5 +1,6 @@
 import cv2
 import os
+import sys
 import numpy as np
 
 subjects = ["", "Jose Crisanto", "Vrixen Mendoza"]
@@ -8,7 +9,7 @@ subjects = ["", "Jose Crisanto", "Vrixen Mendoza"]
 def detect_face(img):
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     face_cascade = cv2.CascadeClassifier(
-        "/FaceDetection/data/haarcascade_frontalface_alt.xml"
+        "./FaceDetection/data/haarcascade_frontalface_alt.xml"
     )
 
     faces = face_cascade.detectMultiScale(gray, scaleFactor=1.2, minNeighbors=5)
@@ -22,6 +23,7 @@ def detect_face(img):
 
 
 def prepare_training_data(data_folder_path):
+
     dirs = os.listdir(data_folder_path)
 
     faces = []
@@ -58,14 +60,13 @@ def prepare_training_data(data_folder_path):
 
 
 print("Preparing data...")
-faces, labels = prepare_training_data("training-data")
+faces, labels = prepare_training_data("./FaceDetection/training-data")
 print("Data prepared")
 
 print("Total faces: ", len(faces))
 print("Total labels: ", len(labels))
 
-face_recognizer = cv2.face.createEigenFaceRecognizer()
-
+face_recognizer = cv2.face.EigenFaceRecognizer_create()
 face_recognizer.train(faces, np.array(labels))
 
 
@@ -90,10 +91,14 @@ def predict(text_img):
 
 print("Predicting images...")
 # need image
-test_img1 = cv2.imread()
-test_img2 = cv2.imread()
+test_img1 = cv2.imread("./FaceDetection/test/Crisanto.png")
+test_img2 = cv2.imread("./FaceDetection/test/Vrixen.jpg")
 
 predicted_img1 = predict(test_img1)
 predicted_img2 = predict(test_img2)
+print("Prediction complete")
+
+cv2.imshow(subjects[1], predicted_img1)
+cv2.imshow(subjects[2], predicted_img2)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
