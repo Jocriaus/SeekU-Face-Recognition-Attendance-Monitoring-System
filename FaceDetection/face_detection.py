@@ -43,11 +43,12 @@ def prepare_training_data(data_folder_path):
 
             image_path = subject_dir_path + "/" + image_name
             image = cv2.imread(image_path)
+            resize_image = cv2.resize(image, (120, 120))
 
-            cv2.imshow("Training on image...", image)
+            cv2.imshow("Training on image...", resize_image)
             cv2.waitKey(100)
 
-            face, rect = detect_face(image)
+            face, rect = detect_face(resize_image)
 
             if face is not None:
                 faces.append(face)
@@ -94,8 +95,11 @@ print("Predicting images...")
 test_img1 = cv2.imread("./FaceDetection/test/Crisanto.png")
 test_img2 = cv2.imread("./FaceDetection/test/Vrixen.jpg")
 
-predicted_img1 = predict(test_img1)
-predicted_img2 = predict(test_img2)
+test_img1_resize = cv2.resize(test_img1, (500, 750))
+test_img2_resize = cv2.resize(test_img2, (500, 750))
+
+predicted_img1 = predict(test_img1_resize)
+predicted_img2 = predict(test_img2_resize)
 print("Prediction complete")
 
 cv2.imshow(subjects[1], predicted_img1)
