@@ -8,7 +8,7 @@ class FaceRecognitionUI:
     def __init__(self, master=None):
         # build ui
         self.system_app = tk.Tk() if master is None else tk.Toplevel(master)
-        self.bg_image = ImageTk.PhotoImage(Image.open("SeekU/Background.png"))
+        #self.bg_image = ImageTk.PhotoImage(Image.open("SeekU/Background.png"))
         self.system_app.configure(
             background="#0072bc",
             height=200,
@@ -148,9 +148,9 @@ class FaceRecognitionUI:
         frame4.rowconfigure(0, weight=1)
         frame4.columnconfigure(0, weight=1)
         frame2.pack(anchor="center", expand="true", fill="both", side="top")
-        self.bg_label = tk.Label(frame2, image=self.bg_image)
-        self.bg_label.place(x=0,y=0)
-        self.bg_label.lift()
+        #self.bg_label = tk.Label(frame2, image=self.bg_image)
+        #self.bg_label.place(x=0,y=0)
+        #self.bg_label.lower()
         # Main widget
         self.mainwindow = self.system_app
 
