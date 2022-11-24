@@ -3,7 +3,7 @@ import numpy as np
 import face_recognition
 import os
 
-path = "ImagesAttendance"
+path = "data_set"
 images = []
 classNames = []
 myList = os.listdir(path)
