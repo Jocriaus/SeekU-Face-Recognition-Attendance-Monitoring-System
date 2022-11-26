@@ -3,16 +3,17 @@ import numpy as np
 import face_recognition
 import os
 
-path = "data_set"
+path = "./Face Recognition/data_set"
 images = []
 classNames = []
 myList = os.listdir(path)
 print(myList)
 
-for cl in myList:
-    currentImage = cv2.imread(f"{path}/{cl}")
-    images.append(currentImage)
-    classNames.append(os.path.splitext(cl)[0])
+for root, dirs, files in os.walk(path):
+    for f in files:
+        currentImage = cv2.imread(f"{root}/{f}")
+        images.append(currentImage)
+        classNames.append(os.path.splitext(f)[0])
 
 print(classNames)
 
