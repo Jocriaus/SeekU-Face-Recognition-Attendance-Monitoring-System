@@ -176,8 +176,8 @@ class FaceRecognitionUI:
             fill="both",
             side="top")
 
-        
-        self.update()
+        #calling camera update for camera display
+        self.cam_update()
 
         # Main widget
         self.mainwindow = self.system_app
@@ -194,14 +194,7 @@ class FaceRecognitionUI:
         pass
 
     def reset_attendance(self, event=None):
-        '''
-        global cont
-        if facerecogApp().live_feed.isOpened():
-            print("open")
-        facerecogApp().reopen_cam()
-        print(cont)
-        #self.update()
-        '''
+        pass
 
     def add_client(self, event=None):
         #shut down update function on main window
@@ -221,7 +214,7 @@ class FaceRecognitionUI:
     #    global cont
     #    cont = True
 
-    def update(self):
+    def cam_update(self):
         global cont
         if cont:
             return
@@ -231,8 +224,49 @@ class FaceRecognitionUI:
         if ret:
             self.photo = ImageTk.PhotoImage(image = Image.fromarray(frame))
             self.camera_canvas.create_image(0, 0, image = self.photo, anchor = tk.NW)
+            # cv2.resize is reserve word to resize the image or camera display
+            self.img_small = cv2.resize(frame , (0, 0), None, 0.25, 0.25)
+            # converts the image into RGB
+            self.img_small = cv2.cvtColor(self.img_small, cv2.COLOR_BGR2RGB)
+            
+            # the next step is to find the location of the face in order to do that we need to use a reserved word
+            # face_recognition.face_location is a reserve word to find the location of the face
+            facesCurrentFrame = face_recognition.face_locations(self.img_small)
+            # after that we need to encode the current frame of the camera
+            encodesCurrentFrame = face_recognition.face_encodings(self.img_small, facesCurrentFrame)
+
+            # for loop in order to encode every frame of the camera
+            for encodeFace, faceLocation in zip(encodesCurrentFrame, facesCurrentFrame):
+                # in order to compare the detected face to the training images we need to use face_recognition.compare_faces reserved word
+                matches = face_recognition.compare_faces(encodeListKnownFaces, encodeFace)
+                # in order to find the distance of face we need to use face_recognition.face_distance reserved word
+                faceDistance = face_recognition.face_distance(encodeListKnownFaces, encodeFace)
+                print(faceDistance)
+                # it returns the minimum values along axis of matchIndex
+                matchIndex = np.argmin(faceDistance)
+
+                # an if statement in order to draw rectangle to the detected face and also to write the name of detected face
+                # if statement that tells it detected the image
+                if matches[matchIndex]:
+                    name = classNames[matchIndex].upper()
+                    print(name)
+                    # x and y axis to draw rectangle
+                    y1, x2, y2, x1 = faceLocation
+                    y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4
+                    # draws the rectangle to the detected face
+                    cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+                    cv2.rectangle(frame, (x1, y2 - 35), (x2, y2), (0, 255, 0), cv2.FILLED)
+                    cv2.putText(
+                        frame,
+                        name,
+                        (x1 + 6, y2 - 6),
+                        cv2.FONT_HERSHEY_COMPLEX,
+                        1,
+                        (255, 255, 255),
+                        2,
+                    )
         #call again the same method after 5 millisecond
-        self.system_app.after(5, self.update)
+        self.system_app.after(5, self.cam_update)
         cont = False
         #print(cont)
 
