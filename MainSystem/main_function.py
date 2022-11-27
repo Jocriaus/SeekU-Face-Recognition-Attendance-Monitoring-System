@@ -62,21 +62,21 @@ class facerecogApp:
 
     def get_frame(self):
         if self.live_feed.isOpened():
-            ret, frame = self.live_feed.read()
+            ret, self.frame = self.live_feed.read()
             if ret:
                 # Return a boolean success flag and the current frame converted to BGR
-                return (ret, cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+                return (ret, cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGB))
             else:
                 return (ret, None)
         else:
             return (ret, None)
 
-    def face_recognition_func(self, frame):
+    def face_recognition_func(self):
         # an infinite loop in order to capture every frames of the camera
-        success, frame = self.live_feed.read()
-
+        success, self.frame = self.get_frame()
+        
         # cv2.resize is reserve word to resize the image or camera display
-        self.img_small = cv2.resize(frame, (0, 0), None, 0.25, 0.25)
+        self.img_small = cv2.resize(self.frame, (0, 0), None, 0.25, 0.25)
         # converts the image into RGB
         self.img_small = cv2.cvtColor(self.img_small, cv2.COLOR_BGR2RGB)
         
@@ -105,10 +105,10 @@ class facerecogApp:
                 y1, x2, y2, x1 = faceLocation
                 y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4
                 # draws the rectangle to the detected face
-                cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
-                cv2.rectangle(frame, (x1, y2 - 35), (x2, y2), (0, 255, 0), cv2.FILLED)
+                cv2.rectangle(self.frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+                cv2.rectangle(self.frame, (x1, y2 - 35), (x2, y2), (0, 255, 0), cv2.FILLED)
                 cv2.putText(
-                    frame,
+                    self.frame,
                     name,
                     (x1 + 6, y2 - 6),
                     cv2.FONT_HERSHEY_COMPLEX,

@@ -78,7 +78,6 @@ class snapApp:
             cv2.imwrite(os.path.join(self.folder_selected ,(student_number + ".jpg")), cv2.cvtColor(frame, cv2.COLOR_RGB2BGR))
         
     def exit3(self):
-        print("try")
         self.restart_var()
         
         

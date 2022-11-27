@@ -187,7 +187,15 @@ class FaceRecognitionUI:
         pass
 
     def add_client(self, event=None):
-        ss.snapApp()
+        global cont
+        cont = True
+        ss.snapApp(self.restart)
+
+    def restart(self):
+        global cont
+        cont = False
+        self.system_app.destroy() 
+        FaceRecognitionUI().run()
 
     def cam_update(self):
         global cont
@@ -199,7 +207,7 @@ class FaceRecognitionUI:
         if ret:
             self.photo = ImageTk.PhotoImage(image = Image.fromarray(frame))
             self.camera_canvas.create_image(0, 0, image = self.photo, anchor = tk.NW)
-            mf.facerecogApp().face_recognition_func(frame)
+            self.fr_vid.face_recognition_func()
         #call again the same method after 5 millisecond
         self.system_app.after(5, self.cam_update)
         cont = False
