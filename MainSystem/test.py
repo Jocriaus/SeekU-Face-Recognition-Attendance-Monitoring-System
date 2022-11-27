@@ -240,7 +240,7 @@ class FaceRecognitionUI:
         
 #in comment
         
-"""
+
 
 # path for training images
 path = "./FaceRecognition/data_set"
@@ -283,7 +283,7 @@ encodeListKnownFaces = findEncodings(images)
 
 print("Encode Complete")
 
-"""
+
 
 class facerecogApp:
     def __init__(self, video_source=0):    
