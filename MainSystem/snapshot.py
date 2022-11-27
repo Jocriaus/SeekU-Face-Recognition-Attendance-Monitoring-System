@@ -5,13 +5,12 @@ import PIL.Image, PIL.ImageTk
 import os
 
 class snapApp:
-    def __init__(self, video_source=0):
+    def __init__(self,restart,video_source=0 ):
         self.snapshot_app = tk.Toplevel()
         self.snapshot_app.title("Add Client")
         self.snapshot_app.configure(
             background="#0072bc")
-        self.video_source = video_source
-
+        self.restart_var = restart
         # open video source
         self.vid = MyVideoCapture(video_source)
 
@@ -50,8 +49,11 @@ class snapApp:
         self.snapshot_button.pack(anchor=tk.S, expand=True)
 
         # After it is called once, the update method will be automatically called every delay milliseconds
-        self.delay = 15
+        self.delay = 15       
         self.update()
+
+        self.snapshot_app.protocol("WM_DELETE_WINDOW", self.exit3 )
+        #self.snapshot_app.mainloop()
 
 
     def update(self):
@@ -67,6 +69,7 @@ class snapApp:
         self.folder_selected = filedialog.askdirectory()
 
     def snapshot(self):
+        self.exit3()
         # Get a frame from the video source
         student_number = self.input_text.get("1.0", "end-1c")
         ret, frame = self.vid.get_frame()
@@ -74,6 +77,12 @@ class snapApp:
         if ret:
             cv2.imwrite(os.path.join(self.folder_selected ,(student_number + ".jpg")), cv2.cvtColor(frame, cv2.COLOR_RGB2BGR))
         
+    def exit3(self):
+        print("try")
+        self.restart_var()
+        
+        
+
 
 class MyVideoCapture:
     def __init__(self, video_source=0):

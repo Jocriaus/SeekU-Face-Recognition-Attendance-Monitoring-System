@@ -2,6 +2,9 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 import snapshot as ss
+import main_function as mf
+
+
 
 class FaceRecognitionUI:
     def __init__(self, master=None):
@@ -13,11 +16,16 @@ class FaceRecognitionUI:
             relief="flat",
             takefocus=True,
             width=200)
+        self.fr_vid = mf.facerecogApp()
         self.system_app.geometry("1280x720")
         self.system_app.resizable(True, True)
         self.system_app.title("SeekU - Face Recognition Attendance System")
+        
+        #main frame that consistst two frames (left and right)
         self.main_frame = ttk.Frame(self.system_app)
         self.main_frame.configure(height=200, width=200)
+
+        #left frame (Includes System Name, Sti Logo etc)
         self.left_frame = tk.Frame(self.main_frame)
         self.left_frame.configure(background="#0072bc", height=200, width=200)
         self.system_name_label = tk.Label(self.left_frame)
@@ -76,7 +84,7 @@ class FaceRecognitionUI:
             justify="left",
             takefocus=False,
             text='Next',
-            width=20)
+            width=15)
         self.next_button.grid(
             column=0,
             columnspan=2,
@@ -122,6 +130,8 @@ class FaceRecognitionUI:
         self.left_frame.rowconfigure("all", weight=1)
         self.left_frame.columnconfigure(0, weight=1)
         self.left_frame.columnconfigure("all", weight=1)
+
+        #right Frame(includes camera and add button)
         self.right_frame = tk.Frame(self.main_frame)
         self.right_frame.configure(background="#0072bc", height=400, width=400)
         self.add_button = tk.Button(self.right_frame)
@@ -134,15 +144,21 @@ class FaceRecognitionUI:
             width=20)
         self.add_button.grid(column=0, padx=5, pady=60, row=0, sticky="s")
         self.add_button.bind("<ButtonPress>", self.add_client, add="+")
-        self.camera_canvas = tk.Canvas(self.right_frame)
-        self.camera_canvas.configure(
-            background="#0072bc",
-            borderwidth=0,
-            height=500,
-            insertborderwidth=0,
-            relief="flat",
-            width=500)
+        #camera 
+        
+        self.camera_canvas = tk.Canvas(self.right_frame, width = self.fr_vid.width, height = self.fr_vid.height)
+        #self.camera_canvas.configure(
+        #    borderwidth=0,
+        #    height=500,
+        #    insertborderwidth=0,
+        #    relief="flat",
+        #    width=500,
+        #    image=mf.facerecogApp.display_cam()
+        #    )
         self.camera_canvas.grid(column=0, padx=5, pady=10, row=0)
+        #self.camera_canvas.after(25,)
+        
+        #self.canvas.create_image(image= self.final_img)
         self.right_frame.pack(expand="true", fill="both", side="right")
         self.right_frame.grid_anchor("center")
         self.right_frame.rowconfigure(0, weight=1)
@@ -155,6 +171,11 @@ class FaceRecognitionUI:
 
         # Main widget
         self.mainwindow = self.system_app
+
+    #def put_into_image(self, event=None):
+        #self.img_from_feed = Image.fromarray(mf.img_small)
+        # Convert image to PhotoImage
+        #self.final_img = ImageTk.PhotoImage(image = self.img_from_feed)
 
     def run(self):
         self.mainwindow.mainloop()  
