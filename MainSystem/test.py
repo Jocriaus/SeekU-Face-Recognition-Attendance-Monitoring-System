@@ -14,7 +14,6 @@ add_client_win = None
 class FaceRecognitionUI:
     def __init__(self, master=None):
         # build ui
-
         self.system_app = tk.Tk() if master is None else tk.Toplevel(master)
         self.system_app.configure(
             background="#0072bc",
