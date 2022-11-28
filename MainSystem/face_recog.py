@@ -2,7 +2,6 @@
 import cv2
 import numpy as np
 import face_recognition
-from PIL import Image, ImageTk
 import os
 
 # path for training images
