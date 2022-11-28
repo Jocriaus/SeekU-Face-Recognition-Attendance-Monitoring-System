@@ -27,6 +27,7 @@ class FaceRecognitionUI:
         #left frame (Includes System Name, Sti Logo etc)
         self.left_frame = tk.Frame(self.main_frame)
         self.left_frame.configure(background="#0072bc", height=200, width=200)
+
         #label for the name of the system displayed
         self.system_name_label = tk.Label(self.left_frame)
         self.system_name_label.configure(
@@ -38,6 +39,7 @@ class FaceRecognitionUI:
             text='SEEK U')
         self.system_name_label.grid(
             column=1, padx=10, pady=35, row=0, sticky="n")
+
         #label for the display of the year level
         self.year_label = tk.Label(self.left_frame)
         self.year_label.configure(
@@ -49,6 +51,7 @@ class FaceRecognitionUI:
             takefocus=False,
             text='BSCS - 4A S.Y. 2022-2023')
         self.year_label.grid(column=1, padx=10, row=0)
+
         #label for displaying the name of the detected person
         self.client_name_label = tk.Label(self.left_frame)
         self.client_name_label.configure(
@@ -61,6 +64,7 @@ class FaceRecognitionUI:
             width=20)
         self.client_name_label.grid(
             column=0, columnspan=2, ipadx=30, padx=5, row=1)
+
         #label for displaying the time of attendance
         self.attendance_label = tk.Label(self.left_frame)
         self.attendance_label.configure(
@@ -79,6 +83,7 @@ class FaceRecognitionUI:
             ipady=10,
             padx=5,
             row=2)
+
         #button for next person attendance
         self.next_button = tk.Button(self.left_frame)
         self.next_button.configure(
@@ -98,6 +103,7 @@ class FaceRecognitionUI:
             row=4,
             sticky="w")
         self.next_button.bind("<ButtonPress>", self.next_student, add="+")
+
         #label for the logo of the sti image
         self.label5 = tk.Label(self.left_frame)
         self.img_STICollegeBalagtasLogos = tk.PhotoImage(
@@ -113,6 +119,7 @@ class FaceRecognitionUI:
             row=0,
             rowspan=2,
             sticky="nw")
+
         #button for resetting the wrong detection
         self.reset_button = tk.Button(self.left_frame)
         self.reset_button.configure(
@@ -137,9 +144,11 @@ class FaceRecognitionUI:
         self.left_frame.rowconfigure("all", weight=1)
         self.left_frame.columnconfigure(0, weight=1)
         self.left_frame.columnconfigure("all", weight=1)
+
         #right Frame(includes camera and add button)
         self.right_frame = tk.Frame(self.main_frame)
         self.right_frame.configure(background="#0072bc", height=400, width=400)
+
         #button for adding new client
         self.add_button = tk.Button(self.right_frame)
         self.add_button.configure(
@@ -151,12 +160,14 @@ class FaceRecognitionUI:
             width=20)
         self.add_button.grid(column=0, padx=5, pady=60, row=0, sticky="s")
         self.add_button.bind("<ButtonPress>", self.add_client, add="+")
+
         #camera display on the Window
         self.camera_canvas = tk.Canvas(
             self.right_frame, 
             width = self.fr_vid.width, 
             height = self.fr_vid.height)
         self.camera_canvas.grid(column=0, padx=5, pady=10, row=0)
+
         #setting up right frame
         self.right_frame.pack(expand="true", fill="both", side="right")
         self.right_frame.grid_anchor("center")
@@ -172,10 +183,6 @@ class FaceRecognitionUI:
         # Main widget
         self.mainwindow = self.system_app
 
-    #def put_into_image(self, event=None):
-        #self.img_from_feed = Image.fromarray(mf.img_small)
-        # Convert image to PhotoImage
-        #self.final_img = ImageTk.PhotoImage(image = self.img_from_feed)
 
     def run(self):
         self.mainwindow.mainloop()  

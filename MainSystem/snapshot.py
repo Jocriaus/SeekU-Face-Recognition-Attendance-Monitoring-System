@@ -15,7 +15,6 @@ class snapApp:
         self.restart_var = restart
         # open video source
         self.vid = MyVideoCapture(video_source)
-
         # Create a canvas that can fit the above video source size
         self.snap_camera_canvas = tk.Canvas(self.snapshot_app, width = self.vid.width, height = self.vid.height)
         self.snap_camera_canvas.pack(anchor="e", expand="false", side="left")
@@ -68,13 +67,14 @@ class snapApp:
         self.first_name_entry.configure(font="{Arial Baltic} 14 {}", width=35)
 
         #guest checker Will ask if the client is a guest
-        self.guest_check = tk.Checkbutton(self.snapshot_app)
+        self.guest_checked_var = tk.IntVar()
+        self.guest_check = tk.Checkbutton(self.snapshot_app, variable = self.guest_checked_var ,command= self.isguest)
         self.guest_check.configure(
             background="#0072bc",
             font="{Arial Black} 16 {}",
             foreground="#fff200",
             text='Guest?')
-        self.guest_check.pack(anchor="center", expand="true", side="top")
+        self.guest_check.pack(anchor="center", side="top")
 
         #mobile number Label
         self.mob_num_lbl = tk.Label(self.snapshot_app)
@@ -83,12 +83,12 @@ class snapApp:
             font="{Arial Black} 20 {}",
             foreground="#fff200",
             text='Mobile Number:')
-        self.mob_num_lbl.pack(anchor="center", pady=5, side="top")
+        #self.mob_num_lbl.pack(anchor="center", pady=5, side="top")
     
         #mobile entry of the client/guest
         self.mob_num_entry = tk.Entry(self.snapshot_app)
         self.mob_num_entry.configure(font="{Arial Baltic} 14 {}", width=35)
-        self.mob_num_entry.pack(anchor="center", expand="true", side="top")
+        #self.mob_num_entry.pack(anchor="center", expand="true", side="top")
 
         #button for the folder selection
         self.folder_selection_button=tk.Button(self.snapshot_app, command=self.select_folder)
@@ -117,7 +117,7 @@ class snapApp:
         self.update()
 
         self.snapshot_app.protocol("WM_DELETE_WINDOW", self.restart_system )
-        #self.snapshot_app.mainloop()
+        
 
     def update(self):
         # Get a frame from the video source
@@ -136,17 +136,31 @@ class snapApp:
         student_number = self.student_num_entry.get("1.0", "end-1c")
         student_last_name = self.last_name_entry.get("1.0", "end-1c")
         student_first_name = self.first_name_entry.get("1.0", "end-1c")
-        mobile_number = self.mob_num_entry.get("1.0", "end-1c")
+        if not self.guest_checked_var.get() == 0:
+            mobile_number = self.mob_num_entry.get("1.0", "end-1c")
         ret, frame = self.vid.get_frame()
         
         if ret:
             cv2.imwrite(os.path.join(self.folder_selected ,(student_number + ".jpg")), cv2.cvtColor(frame, cv2.COLOR_RGB2BGR))
-        
+    
+    def isguest(self):
+        if self.guest_checked_var.get() == 0:
+            #self.mob_num_entry.configure(state='disabled')
+            self.mob_num_lbl.pack_forget()
+            self.mob_num_entry.pack_forget()            
+        else:
+            #self.mob_num_entry.configure(state='normal')
+            self.mob_num_lbl.pack(anchor="center", pady=5, side="top")
+            self.mob_num_entry.pack(anchor="center", expand="true", side="top")
+            self.folder_selection_button.pack_forget()
+            self.folder_selection_button.pack(anchor=tk.S,pady=20, expand=True)
+            self.snapshot_btn.pack_forget()
+            self.snapshot_btn.pack(anchor="s", padx=10, pady=5, side="bottom")
+
     def restart_system(self):
         self.restart_var()
         
-        
-
+    
 
 class MyVideoCapture:
     def __init__(self, video_source=0):
@@ -154,10 +168,11 @@ class MyVideoCapture:
         self.vid = cv2.VideoCapture(video_source)
         if not self.vid.isOpened():
             raise ValueError("Unable to open video source", video_source)
-
         #setting the height and width of the camera
-        #self.vid.set(cv2.CAP_PROP_FRAME_WIDTH,700)
-        #self.vid.set(cv2.CAP_PROP_FRAME_HEIGHT,600)
+        #cam_size_x = 750
+        #cam_size_y = 600
+        #self.vid.set(cv2.CAP_PROP_FRAME_WIDTH,cam_size_x)
+        #self.vid.set(cv2.CAP_PROP_FRAME_HEIGHT,cam_size_y)
         # Get video source width and height
         self.width = self.vid.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = self.vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
@@ -177,4 +192,3 @@ class MyVideoCapture:
                 return (ret, None)
         else:
             return (ret, None)
-
