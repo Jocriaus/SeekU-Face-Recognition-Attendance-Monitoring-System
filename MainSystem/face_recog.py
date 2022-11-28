@@ -1,3 +1,4 @@
+#python file for face recognition and data training 
 import cv2
 import numpy as np
 import face_recognition
@@ -92,14 +93,14 @@ class facerecogApp:
             matches = face_recognition.compare_faces(encodeListKnownFaces, encodeFace)
             # in order to find the distance of face we need to use face_recognition.face_distance reserved word
             faceDistance = face_recognition.face_distance(encodeListKnownFaces, encodeFace)
-            print(faceDistance)
+            # print(faceDistance)
             # it returns the minimum values along axis of matchIndex
             matchIndex = np.argmin(faceDistance)
 
             # an if statement in order to draw rectangle to the detected face and also to write the name of detected face
             # if statement that tells it detected the image
             if matches[matchIndex]:
-
+                
                 #change the content - make it appear the original image to the person detected
                 name = classNames[matchIndex].upper()
                 print(name)

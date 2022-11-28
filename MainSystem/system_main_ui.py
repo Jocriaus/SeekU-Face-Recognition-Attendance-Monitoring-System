@@ -1,8 +1,8 @@
-#!/usr/bin/python3
+#python file for the main UI
 import tkinter as tk
 import tkinter.ttk as ttk
 import snapshot as ss
-import main_function as mf
+import face_recog as mf
 from PIL import Image, ImageTk
 
 cont = None
@@ -19,7 +19,7 @@ class FaceRecognitionUI:
         self.system_app.geometry("1280x720")
         self.system_app.resizable(True, True)
         self.system_app.title("SeekU - Face Recognition Attendance System")
-        #Opening video
+        #instantiating the object
         self.fr_vid = mf.facerecogApp()
         #main frame that consistst two frames (left and right)
         self.main_frame = ttk.Frame(self.system_app)
