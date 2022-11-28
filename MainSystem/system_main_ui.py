@@ -1,16 +1,15 @@
 #!/usr/bin/python3
 import tkinter as tk
 import tkinter.ttk as ttk
-from tkinter import filedialog
-import cv2
-import PIL.Image, PIL.ImageTk
-import os
+import snapshot as ss
+import main_function as mf
+from PIL import Image, ImageTk
 
-
+cont = None
 class FaceRecognitionUI:
     def __init__(self, master=None):
-        # build ui
-        self.system_app = tk.Tk() 
+        # build ui (main window)
+        self.system_app = tk.Tk() if master is None else tk.Toplevel(master)
         self.system_app.configure(
             background="#0072bc",
             height=200,
@@ -20,10 +19,15 @@ class FaceRecognitionUI:
         self.system_app.geometry("1280x720")
         self.system_app.resizable(True, True)
         self.system_app.title("SeekU - Face Recognition Attendance System")
+        #Opening video
+        self.fr_vid = mf.facerecogApp()
+        #main frame that consistst two frames (left and right)
         self.main_frame = ttk.Frame(self.system_app)
         self.main_frame.configure(height=200, width=200)
+        #left frame (Includes System Name, Sti Logo etc)
         self.left_frame = tk.Frame(self.main_frame)
         self.left_frame.configure(background="#0072bc", height=200, width=200)
+        #label for the name of the system displayed
         self.system_name_label = tk.Label(self.left_frame)
         self.system_name_label.configure(
             background="#0072bc",
@@ -34,6 +38,7 @@ class FaceRecognitionUI:
             text='SEEK U')
         self.system_name_label.grid(
             column=1, padx=10, pady=35, row=0, sticky="n")
+        #label for the display of the year level
         self.year_label = tk.Label(self.left_frame)
         self.year_label.configure(
             background="#0072bc",
@@ -44,6 +49,7 @@ class FaceRecognitionUI:
             takefocus=False,
             text='BSCS - 4A S.Y. 2022-2023')
         self.year_label.grid(column=1, padx=10, row=0)
+        #label for displaying the name of the detected person
         self.client_name_label = tk.Label(self.left_frame)
         self.client_name_label.configure(
             background="#fff200",
@@ -55,6 +61,7 @@ class FaceRecognitionUI:
             width=20)
         self.client_name_label.grid(
             column=0, columnspan=2, ipadx=30, padx=5, row=1)
+        #label for displaying the time of attendance
         self.attendance_label = tk.Label(self.left_frame)
         self.attendance_label.configure(
             background="#fff200",
@@ -72,6 +79,7 @@ class FaceRecognitionUI:
             ipady=10,
             padx=5,
             row=2)
+        #button for next person attendance
         self.next_button = tk.Button(self.left_frame)
         self.next_button.configure(
             background="#fff200",
@@ -80,7 +88,7 @@ class FaceRecognitionUI:
             justify="left",
             takefocus=False,
             text='Next',
-            width=20)
+            width=15)
         self.next_button.grid(
             column=0,
             columnspan=2,
@@ -90,6 +98,7 @@ class FaceRecognitionUI:
             row=4,
             sticky="w")
         self.next_button.bind("<ButtonPress>", self.next_student, add="+")
+        #label for the logo of the sti image
         self.label5 = tk.Label(self.left_frame)
         self.img_STICollegeBalagtasLogos = tk.PhotoImage(
             file="SeekU/STI College Balagtas Logo-s.png")
@@ -104,6 +113,7 @@ class FaceRecognitionUI:
             row=0,
             rowspan=2,
             sticky="nw")
+        #button for resetting the wrong detection
         self.reset_button = tk.Button(self.left_frame)
         self.reset_button.configure(
             background="#fff200",
@@ -120,15 +130,18 @@ class FaceRecognitionUI:
             row=4,
             sticky="e")
         self.reset_button.bind("<ButtonPress>", self.reset_attendance, add="+")
+        #setting up left frame
         self.left_frame.pack(expand="true", fill="both", side="left")
         self.left_frame.grid_anchor("center")
         self.left_frame.rowconfigure(0, weight=1)
         self.left_frame.rowconfigure("all", weight=1)
         self.left_frame.columnconfigure(0, weight=1)
         self.left_frame.columnconfigure("all", weight=1)
+        #right Frame(includes camera and add button)
         self.right_frame = tk.Frame(self.main_frame)
         self.right_frame.configure(background="#0072bc", height=400, width=400)
-        self.add_button = tk.Button(self.right_frame,)
+        #button for adding new client
+        self.add_button = tk.Button(self.right_frame)
         self.add_button.configure(
             background="#fff200",
             font="{Arial Black} 14 {}",
@@ -138,15 +151,13 @@ class FaceRecognitionUI:
             width=20)
         self.add_button.grid(column=0, padx=5, pady=60, row=0, sticky="s")
         self.add_button.bind("<ButtonPress>", self.add_client, add="+")
-        self.camera_canvas = tk.Canvas(self.right_frame)
-        self.camera_canvas.configure(
-            background="#0072bc",
-            borderwidth=0,
-            height=500,
-            insertborderwidth=0,
-            relief="flat",
-            width=500)
+        #camera display on the Window
+        self.camera_canvas = tk.Canvas(
+            self.right_frame, 
+            width = self.fr_vid.width, 
+            height = self.fr_vid.height)
         self.camera_canvas.grid(column=0, padx=5, pady=10, row=0)
+        #setting up right frame
         self.right_frame.pack(expand="true", fill="both", side="right")
         self.right_frame.grid_anchor("center")
         self.right_frame.rowconfigure(0, weight=1)
@@ -157,101 +168,49 @@ class FaceRecognitionUI:
             fill="both",
             side="top")
 
+        self.cam_update()
         # Main widget
         self.mainwindow = self.system_app
+
+    #def put_into_image(self, event=None):
+        #self.img_from_feed = Image.fromarray(mf.img_small)
+        # Convert image to PhotoImage
+        #self.final_img = ImageTk.PhotoImage(image = self.img_from_feed)
 
     def run(self):
         self.mainwindow.mainloop()  
 
     def next_student(self, event=None):
-        pass
+        self.cam_update()
 
     def reset_attendance(self, event=None):
         pass
 
     def add_client(self, event=None):
-        snapApp()
+        global cont
+        cont = True
+        ss.snapApp(self.restart)
 
+    def restart(self):
+        global cont
+        cont = False
+        self.system_app.destroy() 
+        FaceRecognitionUI().run()
 
-class snapApp:
-    def __init__(self, video_source=0):
-        self.snapshot_app = tk.Toplevel()
-        self.snapshot_app.title("Add Client")
-        self.video_source = video_source
-
-        # open video source
-        self.vid = MyVideoCapture(video_source)
-
-        # Create a canvas that can fit the above video source size
-        self.canvas = tk.Canvas(self.snapshot_app, width = self.vid.width, height = self.vid.height)
-        self.canvas.pack()
-        
-        #will be the file name
-        self.input_text = tk.Text(self.snapshot_app,height = 2)
-        self.input_text.pack()
-
-        self.folder_selection_button=tk.Button(self.snapshot_app, text="Select Folder", width=50, command=self.select_folder)
-        self.folder_selection_button.pack(anchor=tk.S, expand=True)
-
-        # Button that lets the user take a snapshot
-        self.snapshot_button=tk.Button(self.snapshot_app, text="Snap", width=50, command=self.snapshot)
-        self.snapshot_button.pack(anchor=tk.S, expand=True)
-
-        # After it is called once, the update method will be automatically called every delay milliseconds
-        self.delay = 15
-        self.update()
-
-
-    def update(self):
+    def cam_update(self):
+        global cont
+        if cont:
+            return
         # Get a frame from the video source
-        ret, frame = self.vid.get_frame()
-        if ret:
-            self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
-            self.canvas.create_image(0, 0, image = self.photo, anchor = tk.NW)
-
-        self.snapshot_app.after(self.delay, self.update)
-
-    def select_folder(self):
-        self.folder_selected = filedialog.askdirectory()
-
-    def snapshot(self):
-        # Get a frame from the video source
-        student_number = self.input_text.get("1.0", "end-1c")
-        ret, frame = self.vid.get_frame()
+        ret, frame = self.fr_vid.get_frame()
 
         if ret:
-            cv2.imwrite(os.path.join(self.folder_selected ,(student_number + ".jpg")), cv2.cvtColor(frame, cv2.COLOR_RGB2BGR))
-
-class MyVideoCapture:
-    def __init__(self, video_source=0):
-        # Open the video source
-        self.vid = cv2.VideoCapture(video_source)
-        if not self.vid.isOpened():
-            raise ValueError("Unable to open video source", video_source)
-
-        #setting the height and width of the camera
-        #self.vid.set(cv2.CAP_PROP_FRAME_WIDTH,700)
-        #self.vid.set(cv2.CAP_PROP_FRAME_HEIGHT,600)
-        # Get video source width and height
-        self.width = self.vid.get(cv2.CAP_PROP_FRAME_WIDTH)
-        self.height = self.vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
-
-    # Release the video source when the object is destroyed
-    def __del__(self):
-        if self.vid.isOpened():
-            self.vid.release()
-
-    def get_frame(self):
-        if self.vid.isOpened():
-            ret, frame = self.vid.read()
-            if ret:
-                # Return a boolean success flag and the current frame converted to BGR
-                return (ret, cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
-            else:
-                return (ret, None)
-        else:
-            return (ret, None)
-
+            self.photo = ImageTk.PhotoImage(image = Image.fromarray(frame))
+            self.camera_canvas.create_image(0, 0, image = self.photo, anchor = tk.NW)
+            self.fr_vid.face_recognition_func()
+        #call again the same method after 5 millisecond
+        self.system_app.after(15, self.cam_update)
+        cont = False
 
 if __name__ == "__main__":
     app = FaceRecognitionUI()

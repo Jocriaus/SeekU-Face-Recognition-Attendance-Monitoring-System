@@ -99,6 +99,8 @@ class facerecogApp:
             # an if statement in order to draw rectangle to the detected face and also to write the name of detected face
             # if statement that tells it detected the image
             if matches[matchIndex]:
+
+                #change the content - make it appear the original image to the person detected
                 name = classNames[matchIndex].upper()
                 print(name)
                 # x and y axis to draw rectangle
