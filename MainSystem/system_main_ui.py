@@ -4,7 +4,10 @@ import tkinter.ttk as ttk
 import snapshot as ss
 import face_recog as mf
 from PIL import Image, ImageTk
+import cv2
 
+#global variable for catching the unknon error
+#when adding client
 cont = None
 class FaceRecognitionUI:
     def __init__(self, master=None):
@@ -107,7 +110,7 @@ class FaceRecognitionUI:
         #label for the logo of the sti image
         self.label5 = tk.Label(self.left_frame)
         self.img_STICollegeBalagtasLogos = tk.PhotoImage(
-            file="SeekU/STI College Balagtas Logo-s.png")
+            file=".\SeekU\STI College Balagtas Logo-s.png")
         self.label5.configure(
             background="#0072bc",
             image=self.img_STICollegeBalagtasLogos,
@@ -183,42 +186,77 @@ class FaceRecognitionUI:
         # Main widget
         self.mainwindow = self.system_app
 
-
-    def run(self):
-        self.mainwindow.mainloop()  
-
-    def next_student(self, event=None):
-        self.cam_update()
-
-    def reset_attendance(self, event=None):
-        pass
-
-    def add_client(self, event=None):
-        global cont
-        cont = True
-        ss.snapApp(self.restart)
-
+    #this function will restart the main system.
     def restart(self):
         global cont
         cont = False
         self.system_app.destroy() 
         FaceRecognitionUI().run()
 
+    # will update the canvas content
     def cam_update(self):
         global cont
         if cont:
             return
+            
         # Get a frame from the video source
         ret, frame = self.fr_vid.get_frame()
 
-        if ret:
+        if ret & self.fr_vid.face_detected:
             self.photo = ImageTk.PhotoImage(image = Image.fromarray(frame))
             self.camera_canvas.create_image(0, 0, image = self.photo, anchor = tk.NW)
             self.fr_vid.face_recognition_func()
-        #call again the same method after 5 millisecond
+            #if a face is detected it will stop detecting and
+            #
+            if not self.fr_vid.face_detected :
+                print("run")
+                self.attendance()
+        #call again the same method after 15 millisecond
         self.system_app.after(15, self.cam_update)
         cont = False
+
+    # check attendance 
+    # this will be used for the database. 
+    # retrieving data and displaying necessary details on screen.
+    def attendance(self):
+        print("detected")
+        
+        #print(self.fr_vid.paths_array[self.fr_vid.image_index])
+        load_image = Image.open(self.fr_vid.paths_array[self.fr_vid.image_index])
+        self.student_image = ImageTk.PhotoImage(load_image)
+        self.camera_canvas.create_image(0, 0, image = self.student_image, anchor = tk.NW)
+        
+    def run(self):
+        self.mainwindow.mainloop()  
+
+    def next_student(self, event=None):
+        self.fr_vid.face_detected = True
+        self.cam_update
+
+    def reset_attendance(self, event=None):
+        self.fr_vid.face_detected = True
+        self.cam_update
+
+    def add_client(self, event=None):
+        global cont
+        cont = True
+        ss.snapApp(self.restart)
+
 
 if __name__ == "__main__":
     app = FaceRecognitionUI()
     app.run()
+
+
+
+"""
+Class FaceRecognitionUI
+    def __init__ = initialization of window and widgets 
+    def restart = will restart the main system
+    def cam_update = will display the camera/image of the detected face into the canvas
+    def attendance = will set the image and details of the client
+    def run = will run the system
+    def next_student = will save the information of the student and reopen the camera
+    def reset_student = will not save the info
+    def add_client = will add new client to the system.
+"""

@@ -116,30 +116,32 @@ class snapApp:
 
         # After it is called once, the update method will be automatically called every delay milliseconds
         self.delay = 15       
-        self.update()
+        self.cam_update()
 
         self.snapshot_app.protocol("WM_DELETE_WINDOW", self.restart_system )
         
 
-    def update(self):
+    def cam_update(self):
         # Get a frame from the video source
         ret, frame = self.vid.get_frame()
         if ret:
             self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
             self.snap_camera_canvas.create_image(0, 0, image = self.photo, anchor = tk.NW)
 
-        self.snapshot_app.after(self.delay, self.update)
+        self.snapshot_app.after(self.delay, self.cam_update)
 
     def select_folder(self):
         self.snapshot_app.attributes('-topmost', False)
         self.folder_selected = filedialog.askdirectory()
         self.snapshot_app.attributes('-topmost', True)
 
+    # Get a frame from the video source 
     def snapshot_func(self):
-        # Get a frame from the video source
+        #putting the values into variables to save into the database. 
         student_number = self.student_num_entry.get()
         student_last_name = self.last_name_entry.get()
         student_first_name = self.first_name_entry.get()
+
         if not self.guest_checked_var.get() == 0:
             mobile_number = self.mob_num_entry.get()
         ret, frame = self.vid.get_frame()
@@ -196,3 +198,20 @@ class MyVideoCapture:
                 return (ret, None)
         else:
             return (ret, None)
+
+
+"""
+class snapApp
+    def __init__ = will encode the images 
+    def cam_update = will display the camera into the canvas
+    def select_folder = will encode the images
+    def snapshot_func = will take grab the image and save to the selected folder together of the information given
+    def isGuest = this function will remove the mobile numeber label and entry
+    def restart_system = will restart the system by calling the restart function in system_main.py
+
+class MyVideoCapture
+    def __init__ = will set up the camera
+    def __del__ = will delete the camera/video source
+    def get_frame = will get frame if the camera is open
+
+"""

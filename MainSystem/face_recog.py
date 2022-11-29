@@ -7,13 +7,16 @@ import os
 class facerecogApp:
     def __init__(self, video_source=0):    
 
+        self.face_detected = True
         # path for training images
-        self.path = "./FaceRecognition/data_set"
-        #array for images and names
+        self.path = ".\\FaceRecognition\\data_set"
+        #array for images, image location, and image names
         self.images = []
+        self.paths_array = []
         self.classNames = []
         # os.listdir is a reserve word to list all the folder inside path
         self.myList = os.listdir(self.path)
+
         print(self.myList)
 
         # for loop to run through all subfolders of the root folders
@@ -24,9 +27,13 @@ class facerecogApp:
                 currentImage = cv2.imread(f"{root}/{f}")
                 # appends currentImage through images array
                 self.images.append(currentImage)
+                file_path = os.path.join(root ,(f))
+                self.paths_array.append(file_path)
                 # get the className by appending the name of file and removes extension
                 self.classNames.append(os.path.splitext(f)[0])
+            
 
+        print(self.paths_array)
         print(self.classNames)
 
         # function to encode images
@@ -47,9 +54,7 @@ class facerecogApp:
 
         print("Encode Complete")
 
-
-
-
+        #ENCODING FINISHES 
 
         # Open the video source
         self.live_feed = cv2.VideoCapture(0)
@@ -57,8 +62,8 @@ class facerecogApp:
             raise ValueError("Unable to open video source", video_source)
 
         #setting the height and width of the camera
-        self.live_feed.set(cv2.CAP_PROP_FRAME_WIDTH,600)
-        self.live_feed.set(cv2.CAP_PROP_FRAME_HEIGHT,600)
+        self.live_feed.set(cv2.CAP_PROP_FRAME_WIDTH,700)
+        self.live_feed.set(cv2.CAP_PROP_FRAME_HEIGHT,700)
 
         # Get video source width and height
         self.width = self.live_feed.get(cv2.CAP_PROP_FRAME_WIDTH)
@@ -92,39 +97,50 @@ class facerecogApp:
 
         # for loop in order to encode every frame of the camera
         for encodeFace, faceLocation in zip(encodesCurrentFrame, facesCurrentFrame):
-            # in order to compare the detected face to the training images we need to use face_recognition.compare_faces reserved word
-            matches = face_recognition.compare_faces(self.encodeListKnownFaces, encodeFace)
-            # in order to find the distance of face we need to use face_recognition.face_distance reserved word
-            faceDistance = face_recognition.face_distance(self.encodeListKnownFaces, encodeFace)
-            # print(faceDistance)
-            # it returns the minimum values along axis of matchIndex
-            matchIndex = np.argmin(faceDistance)
+            if self.face_detected:
+                # in order to compare the detected face to the training images we need to use face_recognition.compare_faces reserved word
+                matches = face_recognition.compare_faces(self.encodeListKnownFaces, encodeFace)
+                # in order to find the distance of face we need to use face_recognition.face_distance reserved word
+                faceDistance = face_recognition.face_distance(self.encodeListKnownFaces, encodeFace)
+                # it returns the minimum values along axis of matchIndex
+                matchIndex = np.argmin(faceDistance)
 
-            # an if statement in order to draw rectangle to the detected face and also to write the name of detected face
-            # if statement that tells it detected the image
-            if matches[matchIndex]:
-                
-                #change the content - make it appear the original image to the person detected
-                name = self.classNames[matchIndex].upper()
-                print(name)
-                # x and y axis to draw rectangle
-                y1, x2, y2, x1 = faceLocation
-                y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4
-                # draws the rectangle to the detected face
-                cv2.rectangle(self.frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
-                cv2.rectangle(self.frame, (x1, y2 - 35), (x2, y2), (0, 255, 0), cv2.FILLED)
-                cv2.putText(
-                    self.frame,
-                    name,
-                    (x1 + 6, y2 - 6),
-                    cv2.FONT_HERSHEY_COMPLEX,
-                    1,
-                    (255, 255, 255),
-                    2,
-                )
+                # an if statement in order to draw rectangle to the detected face and also to write the name of detected face
+                # if statement that tells it detected the image
+                if matches[matchIndex]:
+                    
+                    #change the content - make it appear the original image to the person detected
+                    name = self.classNames[matchIndex].upper()
+                    #getting the image of the index for referencing
+                    self.image_index = matchIndex
+                    #this boolean will be the key for stopping the face recognition and the cam_update function
+                    self.face_detected = False
+                    break
 
-        
-
+                    """ 
+                    y1, x2, y2, x1 = faceLocation
+                    y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4
+                    # draws the rectangle to the detected face
+                    cv2.rectangle(self.frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+                    cv2.rectangle(self.frame, (x1, y2 - 35), (x2, y2), (0, 255, 0), cv2.FILLED)
+                    cv2.putText(
+                        self.frame,
+                        name,
+                        (x1 + 6, y2 - 6),
+                        cv2.FONT_HERSHEY_COMPLEX,
+                        1,
+                        (255, 255, 255),
+                        2,
+                    )
+                    """
+                    
+"""
+Class facerecogApp
+    def __init__ = will encode the images 
+        def findEncodings = will encode the images
+    def get_frame = will get the frame if the camera is open
+    def face_recognition_func = will detect the images
+"""
 
 
 
