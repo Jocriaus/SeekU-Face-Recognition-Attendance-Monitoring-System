@@ -12,6 +12,7 @@ class snapApp:
         self.snapshot_app.configure(
             background="#0072bc")
         self.snapshot_app.geometry("1280x720")
+        self.snapshot_app.attributes('-topmost', True)
         self.restart_var = restart
         # open video source
         self.vid = MyVideoCapture(video_source)
@@ -65,6 +66,7 @@ class snapApp:
         #First name entry of the client
         self.first_name_entry = tk.Entry(self.snapshot_app)
         self.first_name_entry.configure(font="{Arial Baltic} 14 {}", width=35)
+        self.first_name_entry.pack(anchor="center", side="top")
 
         #guest checker Will ask if the client is a guest
         self.guest_checked_var = tk.IntVar()
@@ -101,7 +103,7 @@ class snapApp:
         self.folder_selection_button.pack(anchor=tk.S,pady=20, expand=True)
 
         # Button that lets the user take a snapshot
-        self.snapshot_btn = tk.Button(self.snapshot_app)
+        self.snapshot_btn = tk.Button(self.snapshot_app, command=self.snapshot_func)
         self.snapshot_btn.configure(
             background="#fff200",
             font="{Arial Black} 20 {}",
@@ -109,7 +111,7 @@ class snapApp:
             text='Take a Picture!',
             width=20)
         self.snapshot_btn.pack(anchor="s", padx=10, pady=5, side="bottom")
-        self.snapshot_btn.bind("<ButtonPress>", self.snapshot_func)
+        #self.snapshot_btn.bind("<ButtonPress>", self.snapshot_func)
 
 
         # After it is called once, the update method will be automatically called every delay milliseconds
@@ -129,15 +131,17 @@ class snapApp:
         self.snapshot_app.after(self.delay, self.update)
 
     def select_folder(self):
+        self.snapshot_app.attributes('-topmost', False)
         self.folder_selected = filedialog.askdirectory()
+        self.snapshot_app.attributes('-topmost', True)
 
     def snapshot_func(self):
         # Get a frame from the video source
-        student_number = self.student_num_entry.get("1.0", "end-1c")
-        student_last_name = self.last_name_entry.get("1.0", "end-1c")
-        student_first_name = self.first_name_entry.get("1.0", "end-1c")
+        student_number = self.student_num_entry.get()
+        student_last_name = self.last_name_entry.get()
+        student_first_name = self.first_name_entry.get()
         if not self.guest_checked_var.get() == 0:
-            mobile_number = self.mob_num_entry.get("1.0", "end-1c")
+            mobile_number = self.mob_num_entry.get()
         ret, frame = self.vid.get_frame()
         
         if ret:

@@ -4,49 +4,53 @@ import numpy as np
 import face_recognition
 import os
 
-# path for training images
-path = "./FaceRecognition/data_set"
-#array for images and names
-images = []
-classNames = []
-# os.listdir is a reserve word to list all the folder inside path
-myList = os.listdir(path)
-print(myList)
-
-# for loop to run through all subfolders of the root folders
-for root, dirs, files in os.walk(path):
-    # for loop in every files on folders
-    for f in files:
-        # reads the images on root/files
-        currentImage = cv2.imread(f"{root}/{f}")
-        # appends currentImage through images array
-        images.append(currentImage)
-        # get the className by appending the name of file and removes extension
-        classNames.append(os.path.splitext(f)[0])
-
-print(classNames)
-
-# function to encode images
-def findEncodings(images):
-    encodeList = []
-    # for loop for every images in the folder
-    for img in images:
-        # converts the color of img to RGB
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        # face_recognition.face_encodings is a reserve word to encode the images
-        encode = face_recognition.face_encodings(img)[0]
-        # appends encodeList array
-        encodeList.append(encode)
-    return encodeList
-
-
-# after defining the functions we need to provide images by using images variable to findEncodings function and declares it to encodeListKnownFaces variable
-encodeListKnownFaces = findEncodings(images)
-
-print("Encode Complete")
-
 class facerecogApp:
     def __init__(self, video_source=0):    
+
+        # path for training images
+        self.path = "./FaceRecognition/data_set"
+        #array for images and names
+        self.images = []
+        self.classNames = []
+        # os.listdir is a reserve word to list all the folder inside path
+        self.myList = os.listdir(self.path)
+        print(self.myList)
+
+        # for loop to run through all subfolders of the root folders
+        for root, dirs, files in os.walk(self.path):
+            # for loop in every files on folders
+            for f in files:
+                # reads the images on root/files
+                currentImage = cv2.imread(f"{root}/{f}")
+                # appends currentImage through images array
+                self.images.append(currentImage)
+                # get the className by appending the name of file and removes extension
+                self.classNames.append(os.path.splitext(f)[0])
+
+        print(self.classNames)
+
+        # function to encode images
+        def findEncodings(images):
+            encodeList = []
+            # for loop for every images in the folder
+            for img in images:
+                # converts the color of img to RGB
+                img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+                # face_recognition.face_encodings is a reserve word to encode the images
+                encode = face_recognition.face_encodings(img)[0]
+                # appends encodeList array
+                encodeList.append(encode)
+            return encodeList
+
+        # after defining the functions we need to provide images by using images variable to findEncodings function and declares it to encodeListKnownFaces variable
+        self.encodeListKnownFaces = findEncodings(self.images)
+
+        print("Encode Complete")
+
+
+
+
+
         # Open the video source
         self.live_feed = cv2.VideoCapture(0)
         if not self.live_feed.isOpened():
@@ -89,9 +93,9 @@ class facerecogApp:
         # for loop in order to encode every frame of the camera
         for encodeFace, faceLocation in zip(encodesCurrentFrame, facesCurrentFrame):
             # in order to compare the detected face to the training images we need to use face_recognition.compare_faces reserved word
-            matches = face_recognition.compare_faces(encodeListKnownFaces, encodeFace)
+            matches = face_recognition.compare_faces(self.encodeListKnownFaces, encodeFace)
             # in order to find the distance of face we need to use face_recognition.face_distance reserved word
-            faceDistance = face_recognition.face_distance(encodeListKnownFaces, encodeFace)
+            faceDistance = face_recognition.face_distance(self.encodeListKnownFaces, encodeFace)
             # print(faceDistance)
             # it returns the minimum values along axis of matchIndex
             matchIndex = np.argmin(faceDistance)
@@ -101,7 +105,7 @@ class facerecogApp:
             if matches[matchIndex]:
                 
                 #change the content - make it appear the original image to the person detected
-                name = classNames[matchIndex].upper()
+                name = self.classNames[matchIndex].upper()
                 print(name)
                 # x and y axis to draw rectangle
                 y1, x2, y2, x1 = faceLocation
