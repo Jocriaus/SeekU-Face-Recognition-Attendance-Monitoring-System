@@ -110,7 +110,7 @@ class facerecogApp:
                 if matches[matchIndex]:
                     
                     #change the content - make it appear the original image to the person detected
-                    name = self.classNames[matchIndex].upper()
+                    self.name = self.classNames[matchIndex].upper()
                     #getting the image of the index for referencing
                     self.image_index = matchIndex
                     #this boolean will be the key for stopping the face recognition and the cam_update function
