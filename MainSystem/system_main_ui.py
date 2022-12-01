@@ -7,7 +7,6 @@ from PIL import Image, ImageTk
 import datetime
 import time
 
-
 class FaceRecognitionUI:
     def __init__(self, master=None):
         #variable for catching the unknon error
@@ -205,7 +204,7 @@ class FaceRecognitionUI:
             #consistently getting the time and date 
             self.current_time = time.strftime('%H:%M:%S', time.localtime())
             self.current_date = datetime.date.today().strftime("%m/%d/%y")
-            self.current_date_n_time = 'Attendance: ' + self.current_date +' '+self.current_time
+            self.current_date_n_time = 'Attendance: ' + self.current_date +' '+self.current_time    
             #saving the frame from the array unto the photo variable as an "image"
             self.photo = ImageTk.PhotoImage(image = Image.fromarray(frame))
             #putting of image(frame) into the canvas
@@ -228,8 +227,16 @@ class FaceRecognitionUI:
         print("detected")
         self.client_name_label.config(text = self.fr_vid.name)
         self.attendance_label.config(text = self.current_date_n_time)
+        """
+        system connection to the database
+        """
+        # the system will open the image of the client using the array
+        # of paths of the image with the index of the image.
         load_image = Image.open(self.fr_vid.paths_array[self.fr_vid.image_index])
+        # will use the ImageTK.PhotoImage() function to set the image
+        # as a readable image.
         self.student_image = ImageTk.PhotoImage(load_image)
+        #will display the image into the canvas
         self.camera_canvas.create_image(0, 0, image = self.student_image, anchor = tk.NW)
         
     def run(self):

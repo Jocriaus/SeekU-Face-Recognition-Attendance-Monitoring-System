@@ -81,7 +81,7 @@ class facerecogApp:
             return (ret, None)
 
     def face_recognition_func(self):
-        # an infinite loop in order to capture every frames of the camera
+        #function to detect faces and match on the encoded images
         success, self.frame = self.get_frame()
         
         # cv2.resize is reserve word to resize the image or camera display
@@ -116,23 +116,6 @@ class facerecogApp:
                     #this boolean will be the key for stopping the face recognition and the cam_update function
                     self.face_detected = False
                     break
-
-                    """ 
-                    y1, x2, y2, x1 = faceLocation
-                    y1, x2, y2, x1 = y1 * 4, x2 * 4, y2 * 4, x1 * 4
-                    # draws the rectangle to the detected face
-                    cv2.rectangle(self.frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
-                    cv2.rectangle(self.frame, (x1, y2 - 35), (x2, y2), (0, 255, 0), cv2.FILLED)
-                    cv2.putText(
-                        self.frame,
-                        name,
-                        (x1 + 6, y2 - 6),
-                        cv2.FONT_HERSHEY_COMPLEX,
-                        1,
-                        (255, 255, 255),
-                        2,
-                    )
-                    """
                     
 """
 Class facerecogApp
@@ -142,13 +125,8 @@ Class facerecogApp
     def face_recognition_func = will detect the images
 """
 
-
-
 # Algorithm used in face_recognition library
 # HOG(Histogram of Gradients) - for detecting the face
 # Face landmark estimation - for Posing and Projecting Images
 # Deep Convolutional Neural Networks - used to identify patterns on images and videos.
 # SVM classifier(machine learning classification algorithm) - used to find the persons name from the encoding
-
-# if you want to know the full details of algorithms that use in face_recognition library kindly read the article of Adam Gietgey
-# https://medium.com/@ageitgey/machine-learning-is-fun-part-4-modern-face-recognition-with-deep-learning-c3cffc121d78
