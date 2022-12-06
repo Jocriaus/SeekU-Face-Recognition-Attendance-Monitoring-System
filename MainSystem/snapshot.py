@@ -35,7 +35,7 @@ class snapApp:
             background="#0072bc",
             font="{Arial Black} 20 {}",
             foreground="#fff200",
-            text='Student Number:')
+            text='Client Number:')
         self.student_num_lbl.pack(anchor="center", padx=30, pady=5, side="top")
         #will be the file name of the client's image
         self.student_num_entry = tk.Entry(self.snapshot_app)
