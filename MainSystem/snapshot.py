@@ -1,4 +1,4 @@
-#python file for taking pictures
+# python file for taking pictures
 from tkinter import filedialog
 import tkinter as tk
 import cv2
@@ -21,7 +21,7 @@ class snapApp:
         self.snap_camera_canvas = tk.Canvas(self.snapshot_app, width = self.vid.width, height = self.vid.height)
         self.snap_camera_canvas.pack(anchor="e",padx=10, expand="false", side="left")
         
-        #snapshot! title label
+        # snapshot! title label
         self.snapshot_lbl = tk.Label(self.snapshot_app)
         self.snapshot_lbl.configure(
             background="#0072bc",
@@ -30,7 +30,7 @@ class snapApp:
             text='Snapshot!')
         self.snapshot_lbl.pack(anchor="center", padx=10, pady=25, side="top")
 
-        #student num label
+        # student num label
         self.student_num_lbl = tk.Label(self.snapshot_app)
         self.student_num_lbl.configure(
             background="#0072bc",
@@ -38,12 +38,12 @@ class snapApp:
             foreground="#fff200",
             text='Client Number:')
         self.student_num_lbl.pack(anchor="center", padx=30, pady=5, side="top")
-        #will be the file name of the client's image
+        # will be the file name of the client's image
         self.student_num_entry = tk.Entry(self.snapshot_app)
         self.student_num_entry.configure(font="{Arial Baltic} 14 {}", width=35)
         self.student_num_entry.pack(anchor="center", side="top")
 
-        #Last Name Label
+        # Last Name Label
         self.last_name_lbl = tk.Label(self.snapshot_app)
         self.last_name_lbl.configure(
             background="#0072bc",
@@ -51,12 +51,12 @@ class snapApp:
             foreground="#fff200",
             text='Last Name:')
         self.last_name_lbl.pack(anchor="center", pady=5, side="top")
-        #last name entry of the client
+        # last name entry of the client
         self.last_name_entry = tk.Entry(self.snapshot_app)
         self.last_name_entry.configure(font="{Arial Baltic} 14 {}", width=35)
         self.last_name_entry.pack(anchor="center", side="top")
 
-        #First Name Label
+        # First Name Label
         self.first_name_lbl = tk.Label(self.snapshot_app)
         self.first_name_lbl.configure(
             background="#0072bc",
@@ -64,12 +64,12 @@ class snapApp:
             foreground="#fff200",
             text='First Name:')
         self.first_name_lbl.pack(anchor="center", pady=5, side="top")
-        #First name entry of the client
+        # First name entry of the client
         self.first_name_entry = tk.Entry(self.snapshot_app)
         self.first_name_entry.configure(font="{Arial Baltic} 14 {}", width=35)
         self.first_name_entry.pack(anchor="center", side="top")
 
-        #guest checker Will ask if the client is a guest
+        # guest checker Will ask if the client is a guest
         self.guest_checked_var = tk.IntVar()
         self.guest_check = tk.Checkbutton(self.snapshot_app, variable = self.guest_checked_var ,command= self.isguest)
         self.guest_check.configure(
@@ -79,21 +79,21 @@ class snapApp:
             text='Guest?')
         self.guest_check.pack(anchor="center", side="top")
 
-        #mobile number Label
+        # mobile number Label
         self.mob_num_lbl = tk.Label(self.snapshot_app)
         self.mob_num_lbl.configure(
             background="#0072bc",
             font="{Arial Black} 20 {}",
             foreground="#fff200",
             text='Mobile Number:')
-        #self.mob_num_lbl.pack(anchor="center", pady=5, side="top")
+        # self.mob_num_lbl.pack(anchor="center", pady=5, side="top")
     
-        #mobile entry of the client/guest
+        # mobile entry of the client/guest
         self.mob_num_entry = tk.Entry(self.snapshot_app)
         self.mob_num_entry.configure(font="{Arial Baltic} 14 {}", width=35)
-        #self.mob_num_entry.pack(anchor="center", expand="true", side="top")
+        # self.mob_num_entry.pack(anchor="center", expand="true", side="top")
 
-        #button for the folder selection
+        # button for the folder selection
         self.folder_selection_button=tk.Button(self.snapshot_app, command=self.select_folder)
         self.folder_selection_button.configure(
             background="#fff200",
@@ -112,7 +112,7 @@ class snapApp:
             text='Take a Picture!',
             width=20)
         self.snapshot_btn.pack(anchor="s", padx=10, pady=5, side="bottom")
-        #self.snapshot_btn.bind("<ButtonPress>", self.snapshot_func)
+        # self.snapshot_btn.bind("<ButtonPress>", self.snapshot_func)
 
         # setting up haar cascade
         self.haar_face_cascade = cv2.CascadeClassifier(
@@ -150,7 +150,7 @@ class snapApp:
 
     # Get a frame from the video source 
     def snapshot_func(self):
-        #putting the values into variables to save into the database. 
+        # putting the values into variables to save into the database. 
         student_number = self.student_num_entry.get()
         student_last_name = self.last_name_entry.get()
         student_first_name = self.first_name_entry.get()
@@ -164,11 +164,11 @@ class snapApp:
     
     def isguest(self):
         if self.guest_checked_var.get() == 0:
-            #self.mob_num_entry.configure(state='disabled')
+            # self.mob_num_entry.configure(state='disabled')
             self.mob_num_lbl.pack_forget()
             self.mob_num_entry.pack_forget()            
         else:
-            #self.mob_num_entry.configure(state='normal')
+            # self.mob_num_entry.configure(state='normal')
             self.mob_num_lbl.pack(anchor="center", pady=5, side="top")
             self.mob_num_entry.pack(anchor="center", expand="true", side="top")
             self.folder_selection_button.pack_forget()
@@ -187,7 +187,7 @@ class MyVideoCapture:
         self.vid = cv2.VideoCapture(video_source)
         if not self.vid.isOpened():
             raise ValueError("Unable to open video source", video_source)
-        #setting the height and width of the camera
+        # setting the height and width of the camera
         self.vid.set(cv2.CAP_PROP_FRAME_WIDTH,640)
         self.vid.set(cv2.CAP_PROP_FRAME_HEIGHT,480)
         # Get video source width and height

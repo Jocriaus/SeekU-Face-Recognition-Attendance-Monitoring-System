@@ -1,4 +1,4 @@
-#python file for face recognition and data training 
+# python file for face recognition and data training 
 import cv2
 import numpy as np
 import face_recognition
@@ -10,7 +10,7 @@ class facerecogApp:
         self.face_detected = True
         # path for training images
         self.path = ".\\FaceRecognition\\data_set"
-        #array for images, image location, and image names
+        # array for images, image location, and image names
         self.images = []
         self.paths_array = []
         self.classNames = []
@@ -54,14 +54,14 @@ class facerecogApp:
 
         print("Encode Complete")
 
-        #ENCODING FINISHES 
+        # ENCODING FINISHES 
 
         # Open the video source
         self.live_feed = cv2.VideoCapture(0)
         if not self.live_feed.isOpened():
             raise ValueError("Unable to open video source", video_source)
 
-        #setting the height and width of the camera
+        # setting the height and width of the camera
         self.live_feed.set(cv2.CAP_PROP_FRAME_WIDTH,640)
         self.live_feed.set(cv2.CAP_PROP_FRAME_HEIGHT,480)
 
@@ -82,7 +82,7 @@ class facerecogApp:
             return (ret, None)
 
     def face_recognition_func(self):
-        #function to detect faces and match on the encoded images
+        # function to detect faces and match on the encoded images
         success, self.frame = self.get_frame()
         # cv2.resize is reserve word to resize the image or camera display
         self.img_small = cv2.resize(self.frame, (0, 0),None, 0.25, 0.25)
@@ -109,11 +109,11 @@ class facerecogApp:
                 # if statement that tells it detected the image
                 if matches[matchIndex]:
                     
-                    #change the content - make it appear the original image to the person detected
+                    # change the content - make it appear the original image to the person detected
                     self.name = self.classNames[matchIndex].upper()
-                    #getting the image of the index for referencing
+                    # getting the image of the index for referencing
                     self.image_index = matchIndex
-                    #this boolean will be the key for stopping the face recognition and the cam_update function
+                    # this boolean will be the key for stopping the face recognition and the cam_update function
                     self.face_detected = False
                     break
                     
