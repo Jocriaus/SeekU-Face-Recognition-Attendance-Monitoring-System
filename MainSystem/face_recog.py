@@ -57,7 +57,7 @@ class facerecogApp:
         # ENCODING FINISHES 
 
         # Open the video source
-        self.live_feed = cv2.VideoCapture(0)
+        self.live_feed = cv2.VideoCapture(0,cv2.CAP_DSHOW)
         if not self.live_feed.isOpened():
             raise ValueError("Unable to open video source", video_source)
 
