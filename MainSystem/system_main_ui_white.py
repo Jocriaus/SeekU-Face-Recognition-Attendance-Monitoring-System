@@ -40,7 +40,7 @@ class FaceRecognitionUI:
             background="#0072bc",
             image=self.img_STICollegeBalagtasLogos,
             text='label3')
-        self.sti_logo.grid(column=0, padx=100, pady=10, row=0, rowspan=2)
+        self.sti_logo.grid(column=0, padx=100, pady=5, row=0, rowspan=2)
 
         # label for the name of the system displayed
         self.system_name_label = tk.Label(self.top_frame)
@@ -162,14 +162,16 @@ class FaceRecognitionUI:
         self.add_button.grid(column=0, padx=5, pady=10, row=1)
 
         #camera display on the Window
-        self.camera_canvas = tk.Canvas(
-            self.right_frame, 
-            width = self.fr_vid.width, 
+        self.camera_canvas = tk.Canvas(self.right_frame)
+        self.camera_canvas.configure(
+            background="#0072bc",
+            height=480,
             highlightbackground="#0072bc",
             highlightthickness=5,
-            height = self.fr_vid.height)
+            relief="flat",
+            width=640)
         self.camera_canvas.grid(column=0, padx=5, pady=10, row=0)
-
+        
         #setting up right frame
         self.right_frame.pack(expand="true", fill="both", side="right")
         self.right_frame.grid_anchor("center")
@@ -194,7 +196,7 @@ class FaceRecognitionUI:
     # will update the canvas content
     def cam_update(self):
         if self.cont:
-            pass
+            return
         # Get a frame from the video source
         ret, frame = self.fr_vid.get_frame()
         # if it return a frame and if there are still no face detected

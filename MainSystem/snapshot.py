@@ -7,8 +7,9 @@ import os
 
 class snapApp:
     def __init__(self,restart,video_source=0 ):
+        # build ui (second window)
         self.snapshot_app = tk.Toplevel()
-        self.snapshot_app.title("Add Client")
+        self.snapshot_app.title("SeekU - Add Client")
         self.snapshot_app.configure(
             background="#0072bc")
         self.snapshot_app.geometry("1280x720")
@@ -18,7 +19,7 @@ class snapApp:
         self.vid = MyVideoCapture(video_source)
         # Create a canvas that can fit the above video source size
         self.snap_camera_canvas = tk.Canvas(self.snapshot_app, width = self.vid.width, height = self.vid.height)
-        self.snap_camera_canvas.pack(anchor="e", expand="false", side="left")
+        self.snap_camera_canvas.pack(anchor="e",padx=10, expand="false", side="left")
         
         #snapshot! title label
         self.snapshot_lbl = tk.Label(self.snapshot_app)
@@ -113,6 +114,10 @@ class snapApp:
         self.snapshot_btn.pack(anchor="s", padx=10, pady=5, side="bottom")
         #self.snapshot_btn.bind("<ButtonPress>", self.snapshot_func)
 
+        # setting up haar cascade
+        self.haar_face_cascade = cv2.CascadeClassifier(
+        "MainSystem\Face Detection Data\haarcascade_frontalface_alt.xml"
+        )
 
         # After it is called once, the update method will be automatically called every delay milliseconds
         self.delay = 15       
@@ -125,6 +130,14 @@ class snapApp:
         # Get a frame from the video source
         ret, frame = self.vid.get_frame()
         if ret:
+            # turning the image into gray for the haar cascade to be read
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            # detecting the face
+            faces = self.haar_face_cascade.detectMultiScale(gray, 1.1, 6)
+            # placing a rectangle within the face
+            for (x, y, w, h) in faces:
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 114, 188), 2)
+            # pu tthe image/frame into the canvas
             self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
             self.snap_camera_canvas.create_image(0, 0, image = self.photo, anchor = tk.NW)
 
@@ -175,10 +188,8 @@ class MyVideoCapture:
         if not self.vid.isOpened():
             raise ValueError("Unable to open video source", video_source)
         #setting the height and width of the camera
-        #cam_size_x = 750
-        #cam_size_y = 600
-        #self.vid.set(cv2.CAP_PROP_FRAME_WIDTH,cam_size_x)
-        #self.vid.set(cv2.CAP_PROP_FRAME_HEIGHT,cam_size_y)
+        self.vid.set(cv2.CAP_PROP_FRAME_WIDTH,640)
+        self.vid.set(cv2.CAP_PROP_FRAME_HEIGHT,480)
         # Get video source width and height
         self.width = self.vid.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = self.vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
@@ -191,6 +202,8 @@ class MyVideoCapture:
     def get_frame(self):
         if self.vid.isOpened():
             ret, frame = self.vid.read()
+            # flipping the image so it is not inverted
+            frame = cv2.flip(frame, 1)
             if ret:
                 # Return a boolean success flag and the current frame converted to BGR
                 return (ret, cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))

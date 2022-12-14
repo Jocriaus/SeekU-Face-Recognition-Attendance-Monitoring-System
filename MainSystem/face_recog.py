@@ -62,8 +62,8 @@ class facerecogApp:
             raise ValueError("Unable to open video source", video_source)
 
         #setting the height and width of the camera
-        self.live_feed.set(cv2.CAP_PROP_FRAME_WIDTH,700)
-        self.live_feed.set(cv2.CAP_PROP_FRAME_HEIGHT,700)
+        self.live_feed.set(cv2.CAP_PROP_FRAME_WIDTH,640)
+        self.live_feed.set(cv2.CAP_PROP_FRAME_HEIGHT,480)
 
         # Get video source width and height
         self.width = self.live_feed.get(cv2.CAP_PROP_FRAME_WIDTH)
@@ -72,6 +72,7 @@ class facerecogApp:
     def get_frame(self):
         if self.live_feed.isOpened():
             ret, self.frame = self.live_feed.read()
+            self.frame = cv2.flip(self.frame, 1)
             if ret:
                 # Return a boolean success flag and the current frame converted to BGR
                 return (ret, cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGB))
@@ -83,9 +84,8 @@ class facerecogApp:
     def face_recognition_func(self):
         #function to detect faces and match on the encoded images
         success, self.frame = self.get_frame()
-        
         # cv2.resize is reserve word to resize the image or camera display
-        self.img_small = cv2.resize(self.frame, (0, 0), None, 0.25, 0.25)
+        self.img_small = cv2.resize(self.frame, (0, 0),None, 0.25, 0.25)
         # converts the image into RGB
         self.img_small = cv2.cvtColor(self.img_small, cv2.COLOR_BGR2RGB)
         
