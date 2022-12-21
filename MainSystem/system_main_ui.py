@@ -7,6 +7,13 @@ from PIL import Image, ImageTk
 import datetime
 import time
 
+"""
+Yellow = #fff200
+Orange = #fcaf17
+Blue = #0072bc
+grey = #808080
+cream = #F7FAE9
+"""
 class FaceRecognitionUI:
     def __init__(self, master=None):
         # variable for catching the unknon error
@@ -22,6 +29,7 @@ class FaceRecognitionUI:
             width=200)
         self.system_app.geometry("1280x720")
         self.system_app.resizable(True, True)
+        self.system_app.iconbitmap(".\SeekU\SeekU.ico")
         self.system_app.title("SeekU - Face Recognition Attendance System")
         # instantiating the object
         self.fr_vid = mf.facerecogApp()
@@ -38,9 +46,17 @@ class FaceRecognitionUI:
             file=".\SeekU\STI College Balagtas Logo.png")
         self.sti_logo.configure(
             background="#0072bc",
-            image=self.img_STICollegeBalagtasLogos,
-            text='label3')
+            image=self.img_STICollegeBalagtasLogos)
         self.sti_logo.grid(column=0, padx=100, pady=5, row=0, rowspan=2)
+
+        # label for the System Logo
+        self.system_logo = tk.Label(self.top_frame)
+        self.img_SeekU_Logo = tk.PhotoImage(
+            file=".\SeekU\SeekU-Logo.png")
+        self.system_logo.configure(
+            background="#0072bc",
+            image=self.img_SeekU_Logo)
+        self.system_logo.grid(column=1, row=0, rowspan=2)
 
         # label for the name of the system displayed
         self.system_name_label = tk.Label(self.top_frame)
@@ -51,7 +67,7 @@ class FaceRecognitionUI:
             justify="center",
             takefocus=False,
             text='SEEK U')
-        self.system_name_label.grid(column=1, row=0, sticky="se")
+        self.system_name_label.grid(column=2, row=0, sticky="se")
         self.top_frame.pack(anchor="center", fill="both", side="top")
 
         # label for the display of the year level
@@ -216,8 +232,11 @@ class FaceRecognitionUI:
             if not self.fr_vid.face_detected :
                 print('run')
                 self.attendance()
-        # call again the same method after 15 millisecond
-        self.system_app.after(15, self.cam_update)
+
+
+            # call again the same method after 15 millisecond
+        self.system_app.after(15, self.cam_update)   
+
         self.cont = False
 
     # check attendance 
@@ -238,7 +257,17 @@ class FaceRecognitionUI:
         self.student_image = ImageTk.PhotoImage(load_image)
         # will display the image into the canvas
         self.camera_canvas.create_image(0, 0, image = self.student_image, anchor = tk.NW)
-        
+
+    # will put a temporary image to the camera canvas
+    def add_client_camera_error_fix(self):
+        temp_image = Image.open(".\SeekU\Background.png")
+        # will use the ImageTK.PhotoImage() function to set the image
+        # as a readable image.
+        self.bg_image = ImageTk.PhotoImage(temp_image)
+        # will display the image into the canvas
+        self.camera_canvas.create_image(0, 0, image = self.bg_image, anchor = tk.NW)
+
+    # will run the main system    
     def run(self):
         self.mainwindow.mainloop()  
 
@@ -261,7 +290,10 @@ class FaceRecognitionUI:
     # will call the snapshot file to add a new client
     def add_client(self, event=None):
         self.cont = True
+        self.add_client_camera_error_fix()
         ss.snapApp(self.restart)
+
+    
 
 
 if __name__ == "__main__":
@@ -276,6 +308,7 @@ Class FaceRecognitionUI
     def restart = will restart the main system
     def cam_update = will display the camera/image of the detected face into the canvas
     def attendance = will set the image and details of the client
+    def add_client_camera_error_fix = Will put a temporary image to the camera canvas
     def run = will run the system
     def next_student = will save the information of the student and reopen the camera
     def reset_student = will not save the info

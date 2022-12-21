@@ -13,6 +13,7 @@ class snapApp:
         self.snapshot_app.configure(
             background="#0072bc")
         self.snapshot_app.geometry("1280x720")
+        self.snapshot_app.iconbitmap(".\SeekU\SeekU.ico")
         self.snapshot_app.attributes('-topmost', True)
         self.restart_var = restart
         # open video source
@@ -118,6 +119,7 @@ class snapApp:
         self.haar_face_cascade = cv2.CascadeClassifier(
         "MainSystem\Face Detection Data\haarcascade_frontalface_alt.xml"
         )
+        self.cont = False
 
         # After it is called once, the update method will be automatically called every delay milliseconds
         self.delay = 15       
@@ -127,6 +129,8 @@ class snapApp:
         
 
     def cam_update(self):
+        if self.cont:
+            return
         # Get a frame from the video source
         ret, frame = self.vid.get_frame()
         if ret:
@@ -142,6 +146,16 @@ class snapApp:
             self.snap_camera_canvas.create_image(0, 0, image = self.photo, anchor = tk.NW)
 
         self.snapshot_app.after(self.delay, self.cam_update)
+        self.cont = False
+
+    # will put a temporary image to the camera canvas
+    def add_client_camera_error_fix(self):
+        temp_image = PIL.Image.open(".\SeekU\Background.png")
+        # will use the ImageTK.PhotoImage() function to set the image
+        # as a readable image.
+        self.bg_image = PIL.ImageTk.PhotoImage(temp_image)
+        # will display the image into the canvas
+        self.snap_camera_canvas.create_image(0, 0, image = self.bg_image, anchor = tk.NW)
 
     def select_folder(self):
         self.snapshot_app.attributes('-topmost', False)
@@ -152,6 +166,9 @@ class snapApp:
     def snapshot_func(self):
         # putting the values into variables to save into the database. 
         student_number = self.student_num_entry.get()
+        """
+        Database Connection
+        """
         student_last_name = self.last_name_entry.get()
         student_first_name = self.first_name_entry.get()
 
@@ -177,6 +194,8 @@ class snapApp:
             self.snapshot_btn.pack(anchor="s", padx=10, pady=5, side="bottom")
 
     def restart_system(self):
+        self.cont = True
+        self.add_client_camera_error_fix()
         self.restart_var()
         
     
@@ -217,6 +236,7 @@ class MyVideoCapture:
 class snapApp
     def __init__ = will encode the images 
     def cam_update = will display the camera into the canvas
+    def add_client_camera_error_fix = Will put a temporary image to the camera canvas
     def select_folder = will encode the images
     def snapshot_func = will take grab the image and save to the selected folder together of the information given
     def isGuest = this function will remove the mobile numeber label and entry
