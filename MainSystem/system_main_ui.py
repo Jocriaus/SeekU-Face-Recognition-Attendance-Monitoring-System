@@ -52,7 +52,7 @@ class FaceRecognitionUI:
         # label for the System Logo
         self.system_logo = tk.Label(self.top_frame)
         self.img_SeekU_Logo = tk.PhotoImage(
-            file=".\SeekU\SeekU-Logo.png")
+            file=".\SeekU\SeekU-logo copy-small.png")
         self.system_logo.configure(
             background="#0072bc",
             image=self.img_SeekU_Logo)
