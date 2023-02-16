@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+import client_home as cH
 
 class LoginApp:
     def __init__(self, master=None):
@@ -8,7 +9,7 @@ class LoginApp:
         self.log_in_app.configure(background="#0072bc", height=200, width=200)
         self.log_in_app.geometry("500x500")
         self.log_in_app.resizable(False, False)
-        self.log_in_app.title("SeekU Login")
+        self.log_in_app.title("SeekU - Login")
         self.log_in_app.iconbitmap(".\SeekU\SeekU.ico")
         self.log_in_frame2 = tk.Frame(self.log_in_app)
         self.log_in_frame2.configure(
@@ -86,11 +87,10 @@ class LoginApp:
         self.log_in_frame.configure(
             background="#F7FAE9", height=200, width=200)
         self.sti_logo = tk.Label(self.log_in_frame)
-        self.img_SeekUStroke = tk.PhotoImage(file=".\SeekU\SeekU.png")
+        self.img_SeekU = tk.PhotoImage(file=".\SeekU\SeekU.png")
         self.sti_logo.configure(
             background="#F7FAE9",
-            font="TkDefaultFont",
-            image=self.img_SeekUStroke)
+            image=self.img_SeekU)
         self.sti_logo.place(anchor="center", relx=0.0, rely=0.0, x=150, y=80)
         self.app_name_label = tk.Label(self.log_in_frame)
         self.app_name_label.configure(
@@ -125,6 +125,7 @@ class LoginApp:
     def login_logic(self):
         if ((len(self.un_entry.get()) != 0) and (len(self.pw_entry.get()) != 0)):
             print("login")
+            cH.HomeApp()
             # add if else where it checks the un and pw to match
                 # go to the home section
             #else:
