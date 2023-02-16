@@ -98,9 +98,19 @@ class LoginApp:
             font="{arial black} 40 {}",
             foreground="#0072bc",
             relief="flat",
-            text='SEEKU ')
+            text='SEEK')
         self.app_name_label.place(
-            anchor="center", relx=0.0, rely=0.0, x=325, y=80)
+            anchor="center", relx=0.0, rely=0.0, x=290, y=80)
+        self.app_name_label2 = tk.Label(self.log_in_frame)
+        self.app_name_label2.configure(
+            background="#F7FAE9",
+            cursor="arrow",
+            font="{arial black} 40 {}",
+            foreground="#fff200",
+            relief="flat",
+            text='U')
+        self.app_name_label2.place(
+            anchor="center", relx=0.0, rely=0.0, x=395, y=80)
         self.log_in_frame.place(
             anchor="center",
             height=150,
