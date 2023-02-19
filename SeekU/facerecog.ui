@@ -1,0 +1,233 @@
+<?xml version='1.0' encoding='utf-8'?>
+<interface version="1.3">
+  <object class="tk.Toplevel" id="face_recog_app" named="True">
+    <property name="background">#0072bc</property>
+    <property name="geometry">1920x1080</property>
+    <property name="height">200</property>
+    <property name="resizable">none</property>
+    <property name="width">200</property>
+    <child>
+      <object class="tk.Frame" id="face_recog_frame3" named="True">
+        <property name="background">#0072bc</property>
+        <property name="height">200</property>
+        <property name="width">200</property>
+        <layout manager="place">
+          <property name="anchor">center</property>
+          <property name="relheight">0.83</property>
+          <property name="relwidth">.83</property>
+          <property name="relx">0.42</property>
+          <property name="rely">0.42</property>
+        </layout>
+        <child>
+          <object class="tk.Canvas" id="camera_canvas" named="True">
+            <property name="background">#0072bc</property>
+            <property name="highlightbackground">#0072bc</property>
+            <layout manager="place">
+              <property name="anchor">center</property>
+              <property name="relheight">1.0</property>
+              <property name="relwidth">1.0</property>
+              <property name="relx">.5</property>
+              <property name="rely">.5</property>
+              <property name="x">0</property>
+              <property name="y">0</property>
+            </layout>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Frame" id="face_recog_frame2" named="True">
+        <property name="background">#F7FAE9</property>
+        <property name="height">200</property>
+        <property name="width">200</property>
+        <layout manager="place">
+          <property name="anchor">center</property>
+          <property name="relheight">0.16</property>
+          <property name="relwidth">1.0</property>
+          <property name="relx">0.50</property>
+          <property name="rely">0.92</property>
+        </layout>
+        <child>
+          <object class="tk.Label" id="stud_name_label" named="True">
+            <property name="anchor">w</property>
+            <property name="background">#F7FAE9</property>
+            <property name="font">{arial} 54 {}</property>
+            <property name="foreground">#0072bc</property>
+            <property name="justify">left</property>
+            <property name="text" translatable="yes">Jose Crisanto Austria</property>
+            <layout manager="place">
+              <property name="anchor">center</property>
+              <property name="relx">0.5</property>
+              <property name="rely">0.3</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Label" id="attendance_label" named="True">
+            <property name="background">#F7FAE9</property>
+            <property name="cursor">arrow</property>
+            <property name="font">{arial} 40 {}</property>
+            <property name="foreground">#0072bc</property>
+            <property name="justify">left</property>
+            <property name="text" translatable="yes">19/23/2023 - 07:30:30</property>
+            <layout manager="place">
+              <property name="anchor">center</property>
+              <property name="relx">0.5</property>
+              <property name="rely">0.75</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Label" id="school_logo_label" named="True">
+            <property name="background">#F7FAE9</property>
+            <property name="image">STI College Balagtas Logo.png</property>
+            <property name="text" translatable="yes">label1</property>
+            <layout manager="place">
+              <property name="anchor">center</property>
+              <property name="relx">0.07</property>
+              <property name="rely">0.5</property>
+            </layout>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Frame" id="face_recog_frame" named="True">
+        <property name="background">#F7FAE9</property>
+        <property name="height">200</property>
+        <property name="width">200</property>
+        <layout manager="place">
+          <property name="anchor">center</property>
+          <property name="relheight">1.0</property>
+          <property name="relwidth">0.16</property>
+          <property name="relx">0.92</property>
+          <property name="rely">0.5</property>
+        </layout>
+        <child>
+          <object class="tk.Label" id="app_logo_label" named="True">
+            <property name="background">#F7FAE9</property>
+            <property name="image">SeekU medium.png</property>
+            <property name="text" translatable="yes">label1</property>
+            <layout manager="place">
+              <property name="anchor">center</property>
+              <property name="relheight">0.13</property>
+              <property name="relwidth">0.78</property>
+              <property name="relx">0.50</property>
+              <property name="rely">0.17</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Label" id="app_name_labels" named="True">
+            <property name="background">#F7FAE9</property>
+            <property name="font">{arial black} 80 {}</property>
+            <property name="foreground">#0072bc</property>
+            <property name="relief">flat</property>
+            <property name="text" translatable="yes">S</property>
+            <layout manager="place">
+              <property name="anchor">center</property>
+              <property name="relheight">0.10</property>
+              <property name="relwidth">.32</property>
+              <property name="relx">.5</property>
+              <property name="rely">0.29</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Label" id="app_name_labele" named="True">
+            <property name="background">#F7FAE9</property>
+            <property name="font">{arial black} 80 {}</property>
+            <property name="foreground">#0072bc</property>
+            <property name="relief">flat</property>
+            <property name="text" translatable="yes">E</property>
+            <layout manager="place">
+              <property name="anchor">center</property>
+              <property name="relheight">0.12</property>
+              <property name="relwidth">.32</property>
+              <property name="relx">.5</property>
+              <property name="rely">0.4</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Label" id="app_name_labele2" named="True">
+            <property name="background">#F7FAE9</property>
+            <property name="font">{arial black} 80 {}</property>
+            <property name="foreground">#0072bc</property>
+            <property name="relief">flat</property>
+            <property name="text" translatable="yes">E</property>
+            <layout manager="place">
+              <property name="anchor">center</property>
+              <property name="relheight">.12</property>
+              <property name="relwidth">.32</property>
+              <property name="relx">.5</property>
+              <property name="rely">0.51</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Label" id="app_name_labelk" named="True">
+            <property name="background">#F7FAE9</property>
+            <property name="font">{arial black} 80 {}</property>
+            <property name="foreground">#0072bc</property>
+            <property name="relief">flat</property>
+            <property name="text" translatable="yes">K</property>
+            <layout manager="place">
+              <property name="anchor">center</property>
+              <property name="relheight">.12</property>
+              <property name="relwidth">.32</property>
+              <property name="relx">.5</property>
+              <property name="rely">0.62</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Label" id="app_name_labelu" named="True">
+            <property name="background">#F7FAE9</property>
+            <property name="font">{arial black} 80 {}</property>
+            <property name="foreground">#fff200</property>
+            <property name="relief">flat</property>
+            <property name="text" translatable="yes">U</property>
+            <layout manager="place">
+              <property name="anchor">center</property>
+              <property name="relheight">0.11</property>
+              <property name="relwidth">0.32</property>
+              <property name="relx">.5</property>
+              <property name="rely">0.75</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Button" id="sign_out_button" named="True">
+            <property name="font">{arial black} 20 {}</property>
+            <property name="foreground">#0072bc</property>
+            <property name="text" translatable="yes">Sign Out</property>
+            <bind sequence="&lt;ButtonPress&gt;" handler="callback" add="" />
+            <layout manager="place">
+              <property name="anchor">center</property>
+              <property name="relheight">0.05</property>
+              <property name="relwidth">0.50</property>
+              <property name="relx">0.5</property>
+              <property name="rely">0.06</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Button" id="cancel_button" named="True">
+            <property name="font">{arial black} 30 {}</property>
+            <property name="foreground">#0072bc</property>
+            <property name="text" translatable="yes">Cancel</property>
+            <bind sequence="&lt;ButtonPress&gt;" handler="cancel_attendance" add="" />
+            <layout manager="place">
+              <property name="anchor">center</property>
+              <property name="relheight">0.08</property>
+              <property name="relwidth">0.69</property>
+              <property name="relx">.5</property>
+              <property name="rely">.925</property>
+            </layout>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

@@ -1,8 +1,16 @@
 import tkinter as tk
-import client_cam as cC
+from tkinter import filedialog
+import client_face_recog as cFG
 
 class HomeApp:
-    def __init__(self):
+    def __init__(self,vid_source, login_mod, sel_cam):
+        
+        #assignment for passed parameters
+        self.video_source = vid_source
+        self.login_window = login_mod
+        self.sel_cam_window = sel_cam
+        print(self.video_source)
+
         # build ui
         self.home_app = tk.Toplevel()
         self.home_app.configure(background="#0072bc", height=200, width=200)
@@ -10,6 +18,8 @@ class HomeApp:
         self.home_app.resizable(False, False)
         self.home_app.title("SeekU - Home")
         self.home_app.iconbitmap(".\SeekU\SeekU.ico")
+
+#-----------------------------------------------------------------------------------------
         self.home_app_frame2 = tk.Frame(self.home_app)
         self.home_app_frame2.configure(
             background="#0072bc", height=200, width=200)
@@ -35,6 +45,9 @@ class HomeApp:
             y=230)
         self.attendance_button.bind(
             "<ButtonPress>", self.attendance_press, add="")
+
+
+
         self.add_visitor = tk.Button(self.home_app_frame2)
         self.add_visitor.configure(
             background="#F7FAE9",
@@ -56,6 +69,8 @@ class HomeApp:
             x=250,
             y=350)
         self.add_visitor.bind("<ButtonPress>", self.add_visitors_press, add="")
+
+
         self.sign_out_button = tk.Button(self.home_app_frame2)
         self.sign_out_button.configure(
             background="#F7FAE9",
@@ -84,6 +99,8 @@ class HomeApp:
             x=250,
             y=250)
 
+
+#---------------------------------------------------------------------------------------
         self.home_app_frame = tk.Frame(self.home_app)
         self.home_app_frame.configure(
             background="#F7FAE9", height=200, width=200)
@@ -120,23 +137,51 @@ class HomeApp:
             x=250,
             y=75)
 
-        # Main widget
-        # self.mainwindow = self.home_app
 
-    # def run(self):
-    #     self.mainwindow.mainloop()
+        self.home_app.protocol("WM_DELETE_WINDOW", self.show_cam_window )
+        # Main widget
+        self.mainwindow = self.home_app
+        self.center(self.mainwindow)
+
+
+#-----------------------------------------------------------------------------------------
+    def center(self, win):
+        win.update()
+        w_req, h_req = win.winfo_width(), win.winfo_height()
+        w_form = win.winfo_rootx() - win.winfo_x()
+        w = w_req + w_form * 2
+        h = h_req + (win.winfo_rooty() - win.winfo_y()) + w_form
+        x = (win.winfo_screenwidth() // 2) - (w // 2)
+        y = (win.winfo_screenheight() // 2) - (h // 2)
+        win.geometry('{0}x{1}+{2}+{3}'.format(w_req, h_req, x, y))
+
+
+    def hide_this_window(self):
+        self.home_app.withdraw()
+
+    def show_cam_window(self):
+        self.sel_cam_window.deiconify()
+        self.home_app.destroy()
+
+    def show_log_window(self):
+        self.login_window.deiconify()
+        self.home_app.destroy()
+
+    def select_folder(self):
+        self.home_app.attributes('-topmost', False)
+        self.folder_selected = filedialog.askdirectory()
+        self.home_app.attributes('-topmost', True)
+
 
     def attendance_press(self, event=None):
-        cC.ClientCameraApp()
+        self.hide_this_window()
+        self.select_folder()
+        cFG.ClientFaceRecogApp(
+            self.video_source,self.login_window,self.sel_cam_window, self.home_app,self.folder_selected )
 
     def add_visitors_press(self, event=None):
         pass
 
     def signout_press(self, event=None):
-        pass
+        self.show_log_window()
 
-"""
-if __name__ == "__main__":
-    app = HomeApp()
-    app.run()
-"""

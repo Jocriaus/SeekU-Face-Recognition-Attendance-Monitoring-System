@@ -4,12 +4,12 @@ import numpy as np
 import face_recognition
 import os
 
-class facerecogApp:
-    def __init__(self, video_source=0):    
+class FaceRecognition:
+    def __init__(self, video_source, file_path, xsize,ysize):    
 
         self.face_detected = True
         # path for training images
-        self.path = ".\\FaceRecognition\\data_set"
+        self.path = file_path
         # array for images, image location, and image names
         self.images = []
         self.paths_array = []
@@ -57,13 +57,13 @@ class facerecogApp:
         # ENCODING FINISHES 
 
         # Open the video source
-        self.live_feed = cv2.VideoCapture(0,cv2.CAP_DSHOW)
+        self.live_feed = cv2.VideoCapture(video_source,cv2.CAP_DSHOW)
         if not self.live_feed.isOpened():
             raise ValueError("Unable to open video source", video_source)
 
         # setting the height and width of the camera
-        self.live_feed.set(cv2.CAP_PROP_FRAME_WIDTH,640)
-        self.live_feed.set(cv2.CAP_PROP_FRAME_HEIGHT,480)
+        self.live_feed.set(cv2.CAP_PROP_FRAME_WIDTH,xsize)
+        self.live_feed.set(cv2.CAP_PROP_FRAME_HEIGHT,ysize)
 
         # Get video source width and height
         self.width = self.live_feed.get(cv2.CAP_PROP_FRAME_WIDTH)

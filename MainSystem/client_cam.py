@@ -1,8 +1,12 @@
 import tkinter as tk
-
+import client_home as cH
 
 class ClientCameraApp:
-    def __init__(self):
+    def __init__(self, login_module):
+
+        self.login_window = login_module
+
+
         # build ui
         self.camera_app = tk.Toplevel()
         self.camera_app.configure(background="#0072bc", height=200, width=200)
@@ -13,12 +17,52 @@ class ClientCameraApp:
         self.camera_frame = tk.Frame(self.camera_app)
         self.camera_frame.configure(
             background="#0072bc", height=200, width=200)
+
+
+        # variable for the radiobuttons, to connect them
+        self.cam_var = tk.IntVar()
+        self.cam_var.set(0)
+
+        self.builtin_radiobutton = tk.Radiobutton(self.camera_frame)
+        self.builtin_radiobutton.configure(
+            background="#0072bc",
+            font="{arial} 24 {}",
+            foreground="#F7FAE9",
+            text='Built in Webcam',
+            selectcolor='black',
+            variable = self.cam_var,
+            value = 0,
+            command= self.check_selection)
+        self.builtin_radiobutton.place(anchor="center", x=210, y=250)
+        self.third_party_radiobutton = tk.Radiobutton(self.camera_frame)
+        self.third_party_radiobutton.configure(
+            background="#0072bc",
+            font="{arial} 24 {}",
+            foreground="#F7FAE9",
+            text='Third Party Webcam',
+            selectcolor='black',
+            variable = self.cam_var,
+            value = 1,
+            command= self.check_selection)
+        self.third_party_radiobutton.place(anchor="center", x=240, y=300)
+        self.ip_cam_radiobutton = tk.Radiobutton(self.camera_frame)
+        self.ip_cam_radiobutton.configure(
+            background="#0072bc",
+            font="{arial} 24 {}",
+            foreground="#F7FAE9",
+            text='IP Camera',
+            selectcolor='black',
+            variable = self.cam_var,
+            value = 2,
+            command= self.check_selection)
+        self.ip_cam_radiobutton.place(anchor="center", x=170, y=350)
         self.ip_cam_entry = tk.Entry(self.camera_frame)
         self.ip_cam_entry.configure(
             background="#F7FAE9",
             font="{arial} 18 {}",
             foreground="#010303",
-            show="•")
+            show="•",
+            state='disabled')
         self.ip_cam_entry.place(
             anchor="center",
             height=40,
@@ -27,39 +71,18 @@ class ClientCameraApp:
             width=350,
             x=250,
             y=400)
-        self.builtin_radiobutton = tk.Radiobutton(self.camera_frame)
-        self.builtin_radiobutton.configure(
-            background="#0072bc",
-            font="{arial} 24 {}",
-            foreground="#F7FAE9",
-            text='Built in Webcam')
-        self.builtin_radiobutton.place(anchor="center", x=210, y=250)
-        self.third_party_radiobutton = tk.Radiobutton(self.camera_frame)
-        self.third_party_radiobutton.configure(
-            background="#0072bc",
-            font="{arial} 24 {}",
-            foreground="#F7FAE9",
-            text='Third Party Webcam')
-        self.third_party_radiobutton.place(anchor="center", x=240, y=300)
-        self.ip_cam_radiobutton = tk.Radiobutton(self.camera_frame)
-        self.ip_cam_radiobutton.configure(
-            background="#0072bc",
-            font="{arial} 24 {}",
-            foreground="#F7FAE9",
-            text='IP Camera')
-        self.ip_cam_radiobutton.place(anchor="center", x=170, y=350)
-        self.ip_cam_radiobutton.bind("<1>", self.callback, add="")
-        self.login_button = tk.Button(self.camera_frame)
-        self.login_button.configure(
+
+        self.open_button = tk.Button(self.camera_frame)
+        self.open_button.configure(
             background="#F7FAE9",
             default="active",
             font="{arial Black} 20 {}",
             foreground="#0072bc",
             justify="center",
             relief="ridge",
-            text='START',
+            text='OPEN',
             width=10)
-        self.login_button.place(
+        self.open_button.place(
             anchor="center",
             height=50,
             relheight=0.0,
@@ -69,13 +92,16 @@ class ClientCameraApp:
             width=200,
             x=250,
             y=550)
-        self.login_button.bind("<ButtonPress>", self.login_press, add="")
+        self.open_button.bind("<ButtonPress>", self.open_press, add="")
         self.camera_frame.place(
             anchor="center",
             height=600,
             width=500,
             x=250,
             y=300)
+
+
+#---------------------------------------------------------------------------------
         self.camera_frame2 = tk.Frame(self.camera_app)
         self.camera_frame2.configure(
             background="#F7FAE9", height=200, width=200)
@@ -111,19 +137,53 @@ class ClientCameraApp:
             x=250,
             y=75)
 
-        # Main widget
+        self.camera_app.protocol("WM_DELETE_WINDOW", self.show_log_window )
+
         self.mainwindow = self.camera_app
-
-    def run(self):
-        self.mainwindow.mainloop()
-
-    def callback(self, event=None):
-        pass
-
-    def login_press(self, event=None):
-        pass
+        self.center(self.mainwindow)
 
 
-if __name__ == "__main__":
-    app = ClientCameraApp()
-    app.run()
+#-----------------------------------------------------------------------------------------
+
+    def center(self, win):
+        win.update()
+        w_req, h_req = win.winfo_width(), win.winfo_height()
+        w_form = win.winfo_rootx() - win.winfo_x()
+        w = w_req + w_form * 2
+        h = h_req + (win.winfo_rooty() - win.winfo_y()) + w_form
+        x = (win.winfo_screenwidth() // 2) - (w // 2)
+        y = (win.winfo_screenheight() // 2) - (h // 2)
+        win.geometry('{0}x{1}+{2}+{3}'.format(w_req, h_req, x, y))
+
+    def check_selection(self, event=None):
+        print(self.cam_var.get())
+        if(self.cam_var.get() == 0):
+            self.ip_cam_entry.configure(state='disabled')
+        if(self.cam_var.get() == 1):
+            self.ip_cam_entry.configure(state='disabled')
+        if(self.cam_var.get() == 2):
+            self.ip_cam_entry.configure(state='normal')
+
+    def open_logic(self):
+        self.hide_this_window()
+        if(self.cam_var.get() == 0):
+            vid_source = 0
+            cH.HomeApp(vid_source, self.login_window, self.camera_app )
+        if(self.cam_var.get() == 1):
+            vid_source = 1
+            cH.HomeApp(vid_source, self.login_window, self.camera_app )
+        if(self.cam_var.get() == 2):
+            vid_source = self.ip_cam_entry.get()
+            cH.HomeApp(vid_source, self.login_window, self.camera_app )   
+
+    def hide_this_window(self):
+        self.camera_app.withdraw()
+
+    def show_log_window(self):
+        self.login_window.deiconify()
+        self.camera_app.destroy()
+
+    def open_press(self, event=None):
+        self.open_logic()
+
+

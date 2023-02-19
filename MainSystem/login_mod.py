@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-import client_home as cH
+import client_cam as cC
 
 class LoginApp:
     def __init__(self, master=None):
@@ -125,7 +125,10 @@ class LoginApp:
     def login_logic(self):
         if ((len(self.un_entry.get()) != 0) and (len(self.pw_entry.get()) != 0)):
             print("login")
-            cH.HomeApp()
+            self.hide_this_window()
+            self.clear_entry()
+            cC.ClientCameraApp(self.log_in_app)
+
             # add if else where it checks the un and pw to match
                 # go to the home section
             #else:
@@ -142,6 +145,13 @@ class LoginApp:
         x = (win.winfo_screenwidth() // 2) - (w // 2)
         y = (win.winfo_screenheight() // 2) - (h // 2)
         win.geometry('{0}x{1}+{2}+{3}'.format(w_req, h_req, x, y))
+
+    def hide_this_window(self):
+        self.log_in_app.withdraw()
+
+    def clear_entry(self):
+        self.un_entry.delete(0,'end')
+        self.pw_entry.delete(0,'end')
 
     def run(self):
         self.mainwindow.mainloop()
