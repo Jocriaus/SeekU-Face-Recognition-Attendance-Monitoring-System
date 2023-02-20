@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog
 import client_face_recog as cFG
+import client_add_visitor as cAV
 
 class HomeApp:
     def __init__(self,vid_source, login_mod, sel_cam):
@@ -176,11 +177,14 @@ class HomeApp:
     def attendance_press(self, event=None):
         self.hide_this_window()
         self.select_folder()
+        # add for handling the select folder function if nothing is chosen.
         cFG.ClientFaceRecogApp(
             self.video_source,self.login_window,self.sel_cam_window, self.home_app,self.folder_selected )
 
     def add_visitors_press(self, event=None):
-        pass
+        self.hide_this_window()
+        cAV.AddClientApp(
+            self.video_source,self.login_window,self.sel_cam_window, self.home_app )
 
     def signout_press(self, event=None):
         self.show_log_window()

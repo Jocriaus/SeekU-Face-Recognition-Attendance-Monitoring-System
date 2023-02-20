@@ -7,6 +7,7 @@ import face_recog as mf
 class ClientFaceRecogApp:
     def __init__(self,vid_source, login_mod, sel_cam, home_mod, file_path):
 
+        #assignment for passed parameters
         self.login_window = login_mod
         self.select_cam_window = sel_cam
         self.home_window = home_mod
@@ -48,6 +49,7 @@ class ClientFaceRecogApp:
         print(self.camera_canvas.winfo_width())
         print(self.camera_canvas.winfo_height())
         self.fr_vid = mf.FaceRecognition(vid_source,file_path, 1592, 896 )
+        # self.fr_vid = mf.FaceRecognition(vid_source,file_path, 640, 480 )
         
 
 
@@ -232,11 +234,14 @@ class ClientFaceRecogApp:
             self.current_date = datetime.date.today().strftime("%m/%d/%y")
             self.current_date_n_time = 'Attendance: ' + self.current_date +' '+self.current_time  
             # saving the frame from the array unto the photo variable as an "image"
+            self.fr_vid.box(frame)
+            self.fr_vid.detect_eyes(frame)
+            self.fr_vid.face_in_box(frame)
             self.photo = ImageTk.PhotoImage(image = Image.fromarray(frame))
             # putting of image(frame) into the canvas
             self.camera_canvas.create_image(0, 0, image = self.photo, anchor = tk.NW)
-            self.detect_face()
-
+            # self.detect_face()
+            
 
             # call again the same method after 15 millisecond
         self.face_recog_app.after(15, self.cam_update)  
@@ -267,7 +272,7 @@ class ClientFaceRecogApp:
         self.stud_name_label.place(anchor="center", relx=0.5, rely=0.3)
         self.attendance_label.place(anchor="center", relx=0.5, rely=0.75)
 
-    def detect_face(self):
+    def recognize_face(self):
 
 
         self.fr_vid.face_recognition_func()

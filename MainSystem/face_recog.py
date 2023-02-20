@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 import face_recognition
 import os
+import math
 
 class FaceRecognition:
     def __init__(self, video_source, file_path, xsize,ysize):    
@@ -16,6 +17,12 @@ class FaceRecognition:
         self.classNames = []
         # os.listdir is a reserve word to list all the folder inside path
         self.myList = os.listdir(self.path)
+
+        self.haar_cascade_eyes = cv2.CascadeClassifier(
+        "MainSystem\DetectionData\haarcascade_eye.xml"
+        )
+
+
 
         print(self.myList)
 
@@ -117,8 +124,42 @@ class FaceRecognition:
                     self.face_detected = False
                     break
 
-    def face_in_box(self):
+    def box(self, frame):
+        height, width, z = frame.shape
+        TL = (math.floor(width/3), math.floor(height/4))
+        TR = (TL[0]*2, TL[1])
+        BL = (TL[0], TL[1]*3)
+        BR = (TR[0], BL[1])
+
+        cv2.line(frame, TL, TR, (0, 114, 188) , 10)
+        cv2.line(frame, TL, BL, (0, 114, 188), 10)
+        cv2.line(frame, TR, BR, (0, 114, 188), 10)
+        cv2.line(frame, BL, BR, (0, 114, 188), 10)
         
+    def detect_eyes(self,frame):
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        eyes = self.haar_cascade_eyes.detectMultiScale(gray, 1.1, 6)
+            # placing a rectangle within the face
+        for (x, y, w, h) in eyes:
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 114, 188), 2)
+
+
+    def face_in_box(self, frame):
+        center = (0,0)
+        height, width, z = frame.shape
+        TL = (math.floor(width/3), math.floor(height/4))
+        TR = (TL[0]*2, TL[1])
+        BL = (TL[0], TL[1]*3)
+        BR = (TR[0], BL[1])
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        eyes = self.haar_cascade_eyes.detectMultiScale(gray, 1.1, 6)
+        for (x, y, w, h) in eyes:
+            center = ( x +w / 2, y+ h / 2 ) 
+        if((TL[0] <= center[0]) and (TL[1]<= center[1] ) and (BR[0] >= center[0]) and (BR[1]>= center[1])):
+                print('inside')   
+
+
+
                     
 """
 Class facerecogApp

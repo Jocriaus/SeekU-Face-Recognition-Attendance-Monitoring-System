@@ -1,0 +1,269 @@
+<?xml version='1.0' encoding='utf-8'?>
+<interface version="1.3">
+  <object class="tk.Toplevel" id="add_client_app" named="True">
+    <property name="background">#F7FAE9</property>
+    <property name="geometry">1920x1080</property>
+    <property name="height">200</property>
+    <property name="resizable">none</property>
+    <property name="width">200</property>
+    <child>
+      <object class="tk.Frame" id="add_client_frame3" named="True">
+        <property name="background">#0072bc</property>
+        <property name="height">200</property>
+        <property name="width">200</property>
+        <layout manager="place">
+          <property name="anchor">center</property>
+          <property name="relheight">0.60</property>
+          <property name="relwidth">0.60</property>
+          <property name="relx">0.68</property>
+          <property name="rely">0.40</property>
+        </layout>
+        <child>
+          <object class="tk.Canvas" id="camera_canvas" named="True">
+            <property name="background">#0072bc</property>
+            <property name="highlightbackground">#0072bc</property>
+            <layout manager="place">
+              <property name="anchor">center</property>
+              <property name="relheight">1.0</property>
+              <property name="relwidth">1.0</property>
+              <property name="relx">.5</property>
+              <property name="rely">.5</property>
+              <property name="x">0</property>
+              <property name="y">0</property>
+            </layout>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Frame" id="add_client_frame2" named="True">
+        <property name="background">#F7FAE9</property>
+        <property name="height">200</property>
+        <property name="width">200</property>
+        <layout manager="place">
+          <property name="anchor">center</property>
+          <property name="relheight">0.3</property>
+          <property name="relwidth">1.0</property>
+          <property name="relx">0.50</property>
+          <property name="rely">0.85</property>
+        </layout>
+        <child>
+          <object class="tk.Label" id="app_name_labelS" named="True">
+            <property name="anchor">w</property>
+            <property name="background">#F7FAE9</property>
+            <property name="font">{arial black} 100 {}</property>
+            <property name="foreground">#0072bc</property>
+            <property name="justify">left</property>
+            <property name="text" translatable="yes">SEEK</property>
+            <layout manager="place">
+              <property name="anchor">center</property>
+              <property name="relx">0.70</property>
+              <property name="rely">.5</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Label" id="app_name_labelU" named="True">
+            <property name="anchor">w</property>
+            <property name="background">#F7FAE9</property>
+            <property name="font">{arial black} 100 {}</property>
+            <property name="foreground">#FFF200</property>
+            <property name="justify">left</property>
+            <property name="text" translatable="yes">U</property>
+            <layout manager="place">
+              <property name="anchor">center</property>
+              <property name="relx">0.84</property>
+              <property name="rely">0.5</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Label" id="app_logo_label" named="True">
+            <property name="background">#F7FAE9</property>
+            <property name="image">SeekU medium.png</property>
+            <property name="text" translatable="yes">label1</property>
+            <layout manager="place">
+              <property name="anchor">center</property>
+              <property name="relx">0.47</property>
+              <property name="rely">0.50</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Button" id="sign_oout_button" named="True">
+            <property name="font">{arial black} 24 {}</property>
+            <property name="foreground">#0072bc</property>
+            <property name="text" translatable="yes">Sign out</property>
+            <bind sequence="&lt;ButtonPress&gt;" handler="sign_out" add="" />
+            <layout manager="place">
+              <property name="anchor">center</property>
+              <property name="relheight">0.15</property>
+              <property name="relwidth">0.1</property>
+              <property name="relx">0.93</property>
+              <property name="rely">0.85</property>
+            </layout>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Frame" id="add_client_frame" named="True">
+        <property name="background">#F7FAE9</property>
+        <property name="height">200</property>
+        <property name="width">200</property>
+        <layout manager="place">
+          <property name="anchor">center</property>
+          <property name="relheight">1.0</property>
+          <property name="relwidth">0.35</property>
+          <property name="relx">0.17</property>
+          <property name="rely">0.5</property>
+        </layout>
+        <child>
+          <object class="tk.Button" id="snapshot_button" named="True">
+            <property name="font">{arial black} 36 {}</property>
+            <property name="foreground">#0072bc</property>
+            <property name="text" translatable="yes">Snapshot</property>
+            <bind sequence="&lt;ButtonPress&gt;" handler="save_info" add="" />
+            <layout manager="place">
+              <property name="anchor">center</property>
+              <property name="relheight">0.1</property>
+              <property name="relwidth">0.50</property>
+              <property name="relx">.5</property>
+              <property name="rely">.90</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Label" id="school_logo_label" named="True">
+            <property name="background">#F7FAE9</property>
+            <property name="image">STI College Balagtas Logo.png</property>
+            <property name="text" translatable="yes">label1</property>
+            <layout manager="place">
+              <property name="anchor">center</property>
+              <property name="relheight">0.15</property>
+              <property name="relwidth">.30</property>
+              <property name="relx">.5</property>
+              <property name="rely">0.12</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Label" id="last_name_label" named="True">
+            <property name="background">#F7FAE9</property>
+            <property name="font">{arial} 40 {}</property>
+            <property name="text" translatable="yes">Last Name</property>
+            <layout manager="place">
+              <property name="anchor">center</property>
+              <property name="relx">0.33</property>
+              <property name="rely">0.25</property>
+              <property name="x">0</property>
+              <property name="y">0</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Entry" id="last_name_entry" named="True">
+            <property name="borderwidth">2</property>
+            <property name="font">{arial} 36 {}</property>
+            <property name="highlightbackground">#000000</property>
+            <property name="highlightthickness">2</property>
+            <layout manager="place">
+              <property name="anchor">center</property>
+              <property name="relx">0.55</property>
+              <property name="rely">0.31</property>
+              <property name="x">0</property>
+              <property name="y">0</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Label" id="first_name_label" named="True">
+            <property name="background">#F7FAE9</property>
+            <property name="font">{arial} 40 {}</property>
+            <property name="text" translatable="yes">First Name</property>
+            <layout manager="place">
+              <property name="anchor">center</property>
+              <property name="relx">0.33</property>
+              <property name="rely">0.40</property>
+              <property name="x">0</property>
+              <property name="y">0</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Entry" id="first_name_entry" named="True">
+            <property name="borderwidth">2</property>
+            <property name="font">{arial} 36 {}</property>
+            <property name="highlightbackground">#000000</property>
+            <property name="highlightthickness">2</property>
+            <layout manager="place">
+              <property name="anchor">center</property>
+              <property name="relx">0.55</property>
+              <property name="rely">0.46</property>
+              <property name="x">0</property>
+              <property name="y">0</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Label" id="contact_no_label" named="True">
+            <property name="background">#F7FAE9</property>
+            <property name="font">{arial} 40 {}</property>
+            <property name="text" translatable="yes">Contact No.</property>
+            <layout manager="place">
+              <property name="anchor">center</property>
+              <property name="relx">0.35</property>
+              <property name="rely">0.55</property>
+              <property name="x">0</property>
+              <property name="y">0</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Entry" id="contact_no_entry" named="True">
+            <property name="borderwidth">2</property>
+            <property name="font">{arial} 36 {}</property>
+            <property name="highlightbackground">#000000</property>
+            <property name="highlightthickness">2</property>
+            <layout manager="place">
+              <property name="anchor">center</property>
+              <property name="relx">0.55</property>
+              <property name="rely">.61</property>
+              <property name="x">0</property>
+              <property name="y">0</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Label" id="address_label" named="True">
+            <property name="background">#F7FAE9</property>
+            <property name="font">{arial} 40 {}</property>
+            <property name="text" translatable="yes">Address</property>
+            <layout manager="place">
+              <property name="anchor">center</property>
+              <property name="relx">0.29</property>
+              <property name="rely">0.70</property>
+              <property name="x">0</property>
+              <property name="y">0</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Entry" id="address_entry" named="True">
+            <property name="borderwidth">2</property>
+            <property name="font">{arial} 36 {}</property>
+            <property name="highlightbackground">#000000</property>
+            <property name="highlightthickness">2</property>
+            <layout manager="place">
+              <property name="anchor">center</property>
+              <property name="relx">0.55</property>
+              <property name="rely">0.76</property>
+              <property name="x">0</property>
+              <property name="y">0</property>
+            </layout>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
