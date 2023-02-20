@@ -226,7 +226,7 @@ class ClientFaceRecogApp:
         # Get a frame from the video source
         ret, frame = self.fr_vid.get_frame()
         # if it return a frame and if there are still no face detected
-        if ret and self.fr_vid.face_detected:
+        if ret:
             # consistently getting the time and date 
             self.current_time = time.strftime('%H:%M:%S', time.localtime())
             self.current_date = datetime.date.today().strftime("%m/%d/%y")
@@ -235,13 +235,8 @@ class ClientFaceRecogApp:
             self.photo = ImageTk.PhotoImage(image = Image.fromarray(frame))
             # putting of image(frame) into the canvas
             self.camera_canvas.create_image(0, 0, image = self.photo, anchor = tk.NW)
-            # continuous face detection
-            self.fr_vid.face_recognition_func()
-            # if a face is detected it will stop detecting and
-            # will display the image of the owner of the face
-            if not self.fr_vid.face_detected :
-                print('run')
-                self.attendance()
+            self.detect_face()
+
 
             # call again the same method after 15 millisecond
         self.face_recog_app.after(15, self.cam_update)  
@@ -272,7 +267,13 @@ class ClientFaceRecogApp:
         self.stud_name_label.place(anchor="center", relx=0.5, rely=0.3)
         self.attendance_label.place(anchor="center", relx=0.5, rely=0.75)
 
+    def detect_face(self):
 
+
+        self.fr_vid.face_recognition_func()
+        # if a face is detected it will stop detecting and
+        # will display the image of the owner of the face
+        self.attendance()
 
     def sign_out_func(self, event=None):
         self.show_home_window()

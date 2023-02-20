@@ -116,6 +116,9 @@ class FaceRecognition:
                     # this boolean will be the key for stopping the face recognition and the cam_update function
                     self.face_detected = False
                     break
+
+    def face_in_box(self):
+        
                     
 """
 Class facerecogApp
