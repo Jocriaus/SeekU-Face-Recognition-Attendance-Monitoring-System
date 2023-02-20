@@ -131,10 +131,10 @@ class FaceRecognition:
         BL = (TL[0], TL[1]*3)
         BR = (TR[0], BL[1])
 
-        cv2.line(frame, TL, TR, (0, 114, 188) , 10)
-        cv2.line(frame, TL, BL, (0, 114, 188), 10)
-        cv2.line(frame, TR, BR, (0, 114, 188), 10)
-        cv2.line(frame, BL, BR, (0, 114, 188), 10)
+        cv2.line(frame, TL, TR, (0, 114, 188) , 5)
+        cv2.line(frame, TL, BL, (0, 114, 188), 5)
+        cv2.line(frame, TR, BR, (0, 114, 188), 5)
+        cv2.line(frame, BL, BR, (0, 114, 188), 5)
         
     def detect_eyes(self,frame):
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
