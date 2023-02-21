@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 import client_cam as cC
+import sys
 
 class LoginApp:
     def __init__(self, master=None):
@@ -118,9 +119,13 @@ class LoginApp:
             x=250,
             y=75)
 
+        self.log_in_app.protocol("WM_DELETE_WINDOW", self.exit_program)
         #self.center(self.log_in_app)
         # Main widget
         self.mainwindow = self.log_in_app
+
+    def exit_program(self):
+        sys.exit() 
 
     def login_logic(self):
         if ((len(self.un_entry.get()) != 0) and (len(self.pw_entry.get()) != 0)):

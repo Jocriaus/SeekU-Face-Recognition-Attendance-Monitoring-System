@@ -3,10 +3,12 @@ from PIL import Image, ImageTk
 import datetime
 import time
 import face_recog as mf
+from threading import Timer
 
 class ClientFaceRecogApp:
     def __init__(self,vid_source, login_mod, sel_cam, home_mod, file_path):
 
+        self.cont = False
         #assignment for passed parameters
         self.login_window = login_mod
         self.select_cam_window = sel_cam
@@ -214,7 +216,7 @@ class ClientFaceRecogApp:
         # Main widget
         self.mainwindow = self.face_recog_app
         self.mainwindow.wm_attributes('-fullscreen', 'True')
-
+        self.mainwindow.protocol("WM_DELETE_WINDOW", self.show_home_window )
 
 #-----------------------------------------------------------------------------------------
 
@@ -226,10 +228,13 @@ class ClientFaceRecogApp:
 
         # will update the canvas content
     def cam_update(self):
+        if self.cont:
+            return
         # Get a frame from the video source
         ret, frame = self.fr_vid.get_frame()
         # if it return a frame and if there are still no face detected
         if ret & self.fr_vid.face_detected:
+            self.hide_name()
             # consistently getting the time and date 
             self.current_time = time.strftime('%H:%M:%S', time.localtime())
             self.current_date = datetime.date.today().strftime("%m/%d/%y")
@@ -241,14 +246,14 @@ class ClientFaceRecogApp:
             
             self.camera_canvas.create_image(0, 0, image = self.photo, anchor = tk.NW)
             # self.detect_face()
+            
             self.fr_vid.face_in_box(self.recognize_face)
-
+            print("cont2")
             # call again the same method after 15 millisecond
         self.face_recog_app.after(15, self.cam_update)  
 
     def attendance(self):
         print("detected")
-
         self.show_name()
         # use the self.fr_vid.name to get the name in the database
         self.stud_name_label.config(text = self.fr_vid.name)
@@ -268,6 +273,7 @@ class ClientFaceRecogApp:
         self.camera_canvas.create_image(0, 0, image = self.student_image, anchor = tk.NW)
 
 
+
     def hide_name(self):
         self.stud_name_label.place_forget()
         self.attendance_label.place_forget()
@@ -277,15 +283,29 @@ class ClientFaceRecogApp:
         self.attendance_label.place(anchor="center", relx=0.5, rely=0.75)
 
     def recognize_face(self):
-
+        self.cont = True
         self.fr_vid.face_recognition_func()
+
         # if a face is detected it will stop detecting and
         # will display the image of the owner of the face
         if not self.fr_vid.face_detected :
             print('run')
             self.attendance()
-        
+            self.next_person()
 
+
+        
+    def next_person(self):
+        activity = Timer(5.0, self.continue_cam_up)
+        activity.start()
+
+
+    def continue_cam_up(self):
+        print("cont")
+        self.cont = False
+        self.fr_vid.face_detected = True
+        activity2 = Timer(3.0, self.cam_update)
+        activity2.start()
         # add delay then add call cam_update
 
     def sign_out_func(self, event=None):
