@@ -1,4 +1,9 @@
 import tkinter as tk
+from tkinter import filedialog
+import tkinter as tk
+import cv2
+import PIL.Image, PIL.ImageTk
+import os
 
 
 class AddVisitorApp:
@@ -9,7 +14,8 @@ class AddVisitorApp:
         self.login_window = login_mod
         self.sel_cam_window = sel_cam
         self.home_window = home_mod
-
+        # open video source
+        
 
         # build ui
         self.add_visitor_app = tk.Toplevel()
@@ -44,7 +50,7 @@ class AddVisitorApp:
             relx=0.68,
             rely=0.36)
 
-
+        self.vid = MyVideoCapture(self.video_source, 1280, 720)
 #-----------------------------------------------------------------------------------------
         self.add_visitor_frame2 = tk.Frame(self.add_visitor_app)
         self.add_visitor_frame2.configure(
@@ -190,9 +196,14 @@ class AddVisitorApp:
             relx=0.17,
             rely=0.5)
 
+        self.haar_face_cascade = cv2.CascadeClassifier(
+        "MainSystem\DetectionData\haarcascade_frontalface_alt.xml")
+
+        self.cam_update()
         # Main widget
         self.mainwindow = self.add_visitor_app
-        self.mainwindow.wm_attributes('-fullscreen', 'True')
+        self.mainwindow.attributes('-topmost', True)
+        self.mainwindow.wm_attributes('-fullscreen', 'True', )
 
 #-----------------------------------------------------------------------------------------
     def show_home_window(self):
@@ -200,13 +211,83 @@ class AddVisitorApp:
         self.add_visitor_app.destroy()
         # add additional function for destroying camera
 
+    def cam_update(self):
+        # Get a frame from the video source
+        ret, frame = self.vid.get_frame()
+        if ret:
+            resized = cv2.resize(frame, (self.camera_canvas.winfo_width(), self.camera_canvas.winfo_height()), interpolation=cv2.INTER_AREA)
+            # turning the image into gray for the haar cascade to be read
+            gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
+            # detecting the face
+            faces = self.haar_face_cascade.detectMultiScale(gray, 1.1, 6)
+            # placing a rectangle within the face
+            for (x, y, w, h) in faces:
+                cv2.rectangle(resized, (x, y), (x + w, y + h), (0, 114, 188), 2)
+            # pu tthe image/frame into the canvas
+            self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(resized))
+            self.camera_canvas.create_image(0, 0, image = self.photo, anchor = tk.NW)
+
+        self.add_visitor_app.after(15, self.cam_update)
+
+    def select_folder(self):
+        self.add_visitor_app.attributes('-topmost', False)
+        self.folder_selected = filedialog.askdirectory()
+        self.add_visitor_app.attributes('-topmost', True)
+    
+        # Get a frame from the video source 
+    def snapshot_func(self):
+        # putting the values into variables to save into the database. 
+        # create a data for the user then get the PK for the name of the image
+        # save the PK to a variable then use it for the  saving of image
+        """
+        Database Connection
+        """
+        last_name = self.last_name_entry.get()
+        first_name = self.first_name_entry.get()
+        contact_num = self.contact_no_entry.get()
+        address = self.address_entry.get()
+        self. select_folder()
+        ret, frame = self.vid.get_frame()
+        resized = cv2.resize(frame, (self.camera_canvas.winfo_width(), self.camera_canvas.winfo_height()), interpolation=cv2.INTER_AREA)
+        if ret:
+            cv2.imwrite(os.path.join(self.folder_selected ,(contact_num + ".jpg")), cv2.cvtColor(resized, cv2.COLOR_RGB2BGR))
+    
+
+
     def sign_out(self, event=None):
         self.show_home_window()
+        self.add_visitor_app.destroy()
 
     def save_info(self, event=None):
-        pass
+        self.snapshot_func()
 
+class MyVideoCapture:
+    def __init__(self, video_source,  xsize,ysize):
+        # Open the video source
+        self.vid = cv2.VideoCapture(video_source, cv2.CAP_DSHOW)
+        if not self.vid.isOpened():
+            raise ValueError("Unable to open video source", video_source)
+        # setting the height and width of the camera
+        self.vid.set(cv2.CAP_PROP_FRAME_WIDTH,xsize)
+        self.vid.set(cv2.CAP_PROP_FRAME_HEIGHT,ysize)
+        # Get video source width and height
+        self.width = self.vid.get(cv2.CAP_PROP_FRAME_WIDTH)
+        self.height = self.vid.get(cv2.CAP_PROP_FRAME_HEIGHT)
 
-if __name__ == "__main__":
-    app = AddVisitorApp()
-    app.run()
+    # Release the video source when the object is destroyed
+    def __del__(self):
+        if self.vid.isOpened():
+            self.vid.release()
+
+    def get_frame(self):
+        if self.vid.isOpened():
+            ret, frame = self.vid.read()
+            # flipping the image so it is not inverted
+            frame = cv2.flip(frame, 1)
+            if ret:
+                # Return a boolean success flag and the current frame converted to BGR
+                return (ret, cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+            else:
+                return (ret, None)
+        else:
+            return (ret, None)

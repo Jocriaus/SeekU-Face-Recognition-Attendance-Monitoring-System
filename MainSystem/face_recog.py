@@ -18,8 +18,8 @@ class FaceRecognition:
         # os.listdir is a reserve word to list all the folder inside path
         self.myList = os.listdir(self.path)
 
-        self.haar_cascade_eyes = cv2.CascadeClassifier(
-        "MainSystem\DetectionData\haarcascade_eye.xml"
+        self.haar_face_cascade = cv2.CascadeClassifier(
+        "MainSystem\DetectionData\haarcascade_frontalface_alt.xml"
         )
 
 
@@ -124,6 +124,33 @@ class FaceRecognition:
                     self.face_detected = False
                     break
 
+
+    def box_and_dot(self, frame):
+
+        self.center = (0,0)
+        height, width, z = frame.shape
+        self.TL = (math.floor(width/3), math.floor(height/4))
+        self.TR = (self.TL[0]*2, self.TL[1])
+        self.BL = (self.TL[0], self.TL[1]*3)
+        self.BR = (self.TR[0], self.BL[1])
+
+        cv2.line(frame, self.TL, self.TR, (0, 114, 188) , 5)
+        cv2.line(frame, self.TL, self.BL, (0, 114, 188), 5)
+        cv2.line(frame, self.TR, self.BR, (0, 114, 188), 5)
+        cv2.line(frame, self.BL, self.BR, (0, 114, 188), 5)
+
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        face = self.haar_face_cascade.detectMultiScale(gray, 1.1, 6)
+        for (x, y, w, h) in face:
+            self.center = (math.floor(x+ w / 2), math.floor(y+ h / 2))
+            cv2.circle(frame,self.center,5, (0, 114, 188),5)
+
+    def face_in_box(self, recognize_face):
+        attendance_func = recognize_face
+        if((self.TL[0] <= self.center[0]) and (self.TL[1]<= self.center[1] ) and (self.BR[0] >= self.center[0]) and (self.BR[1]>= self.center[1])):
+            attendance_func()
+
+"""
     def box(self, frame):
         height, width, z = frame.shape
         TL = (math.floor(width/3), math.floor(height/4))
@@ -142,21 +169,9 @@ class FaceRecognition:
             # placing a rectangle within the face
         for (x, y, w, h) in eyes:
             cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 114, 188), 2)
+"""
 
-
-    def face_in_box(self, frame):
-        center = (0,0)
-        height, width, z = frame.shape
-        TL = (math.floor(width/3), math.floor(height/4))
-        TR = (TL[0]*2, TL[1])
-        BL = (TL[0], TL[1]*3)
-        BR = (TR[0], BL[1])
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        eyes = self.haar_cascade_eyes.detectMultiScale(gray, 1.1, 6)
-        for (x, y, w, h) in eyes:
-            center = ( x +w / 2, y+ h / 2 ) 
-        if((TL[0] <= center[0]) and (TL[1]<= center[1] ) and (BR[0] >= center[0]) and (BR[1]>= center[1])):
-                print('inside')   
+    
 
 
 

@@ -183,7 +183,7 @@ class HomeApp:
 
     def add_visitors_press(self, event=None):
         self.hide_this_window()
-        cAV.AddClientApp(
+        cAV.AddVisitorApp(
             self.video_source,self.login_window,self.sel_cam_window, self.home_app )
 
     def signout_press(self, event=None):

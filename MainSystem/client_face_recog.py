@@ -48,7 +48,8 @@ class ClientFaceRecogApp:
 
         print(self.camera_canvas.winfo_width())
         print(self.camera_canvas.winfo_height())
-        self.fr_vid = mf.FaceRecognition(vid_source,file_path, 1592, 896 )
+        self.fr_vid = mf.FaceRecognition(vid_source,file_path, 1280, 720 )
+        # self.fr_vid = mf.FaceRecognition(vid_source,file_path, 1592, 896 )
         # self.fr_vid = mf.FaceRecognition(vid_source,file_path, 640, 480 )
         
 
@@ -228,27 +229,28 @@ class ClientFaceRecogApp:
         # Get a frame from the video source
         ret, frame = self.fr_vid.get_frame()
         # if it return a frame and if there are still no face detected
-        if ret:
+        if ret & self.fr_vid.face_detected:
             # consistently getting the time and date 
             self.current_time = time.strftime('%H:%M:%S', time.localtime())
             self.current_date = datetime.date.today().strftime("%m/%d/%y")
             self.current_date_n_time = 'Attendance: ' + self.current_date +' '+self.current_time  
+            self.fr_vid.box_and_dot(frame)
             # saving the frame from the array unto the photo variable as an "image"
-            self.fr_vid.box(frame)
-            self.fr_vid.detect_eyes(frame)
-            self.fr_vid.face_in_box(frame)
             self.photo = ImageTk.PhotoImage(image = Image.fromarray(frame))
             # putting of image(frame) into the canvas
+            
             self.camera_canvas.create_image(0, 0, image = self.photo, anchor = tk.NW)
             # self.detect_face()
-            
+            self.fr_vid.face_in_box(self.recognize_face)
 
             # call again the same method after 15 millisecond
         self.face_recog_app.after(15, self.cam_update)  
 
     def attendance(self):
         print("detected")
+
         self.show_name()
+        # use the self.fr_vid.name to get the name in the database
         self.stud_name_label.config(text = self.fr_vid.name)
         self.attendance_label.config(text = self.current_date_n_time)
         """
@@ -256,10 +258,12 @@ class ClientFaceRecogApp:
         """
         # the system will open the image of the client using the array
         # of paths of the image with the index of the image.
-        load_image = Image.open(self.fr_vid.paths_array[self.fr_vid.image_index])
+        self.load_image = Image.open(self.fr_vid.paths_array[self.fr_vid.image_index])
         # will use the ImageTK.PhotoImage() function to set the image
         # as a readable image.
-        self.student_image = ImageTk.PhotoImage(load_image)
+        self.resized_image = self.load_image.resize((1280, 720), Image. ANTIALIAS)
+
+        self.student_image = ImageTk.PhotoImage(self.resized_image)
         # will display the image into the canvas
         self.camera_canvas.create_image(0, 0, image = self.student_image, anchor = tk.NW)
 
@@ -274,18 +278,22 @@ class ClientFaceRecogApp:
 
     def recognize_face(self):
 
-
         self.fr_vid.face_recognition_func()
         # if a face is detected it will stop detecting and
         # will display the image of the owner of the face
-        self.attendance()
+        if not self.fr_vid.face_detected :
+            print('run')
+            self.attendance()
+        
+
+        # add delay then add call cam_update
 
     def sign_out_func(self, event=None):
         self.show_home_window()
+        self.face_recog_app.destroy()
 
     def cancel_attendance(self, event=None):
         pass
 
 
-    
 
