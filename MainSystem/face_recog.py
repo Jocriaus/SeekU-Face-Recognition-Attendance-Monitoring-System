@@ -4,10 +4,18 @@ import numpy as np
 import face_recognition
 import os
 import math
+import time
 
 class FaceRecognition:
     def __init__(self, video_source, file_path, xsize,ysize):    
+    
+        self.recognized = False
+        self.enter = False
+        self.init_time = 0
+        self.current_time = 0
+        self.passed_time = 0
 
+        self.cont = False
         self.face_detected = True
         # path for training images
         self.path = file_path
@@ -104,6 +112,7 @@ class FaceRecognition:
 
         # for loop in order to encode every frame of the camera
         for encodeFace, faceLocation in zip(encodesCurrentFrame, facesCurrentFrame):
+            print("entered face recognize")
             if self.face_detected:
                 # in order to compare the detected face to the training images we need to use face_recognition.compare_faces reserved word
                 matches = face_recognition.compare_faces(self.encodeListKnownFaces, encodeFace)
@@ -111,17 +120,16 @@ class FaceRecognition:
                 faceDistance = face_recognition.face_distance(self.encodeListKnownFaces, encodeFace)
                 # it returns the minimum values along axis of matchIndex
                 matchIndex = np.argmin(faceDistance)
-
                 # an if statement in order to draw rectangle to the detected face and also to write the name of detected face
                 # if statement that tells it detected the image
                 if matches[matchIndex]:
-                    
                     # change the content - make it appear the original image to the person detected
                     self.name = self.classNames[matchIndex].upper()
                     # getting the image of the index for referencing
                     self.image_index = matchIndex
                     # this boolean will be the key for stopping the face recognition and the cam_update function
                     self.face_detected = False
+                    print('face detected')
                     break
 
 
@@ -146,9 +154,26 @@ class FaceRecognition:
             cv2.circle(frame,self.center,5, (0, 114, 188),5)
 
     def face_in_box(self, recognize_face):
-        attendance_func = recognize_face
+        recognize_face_func = recognize_face
+        if self.recognized:
+            return
         if((self.TL[0] <= self.center[0]) and (self.TL[1]<= self.center[1] ) and (self.BR[0] >= self.center[0]) and (self.BR[1]>= self.center[1])):
-            attendance_func()
+            if not self.enter:
+                self.init_time = time.time()
+                self.enter = True
+
+            self.current_time = time.time()
+            self.passed_time = self.current_time - self.init_time
+            print(self.passed_time)
+            if self.passed_time >= 5:
+                self.init_time = 0
+                self.current_time = 0
+                self.recognized = True
+                self.cont = True
+                self.enter = False
+                recognize_face_func()
+        else:
+            self.enter = False
 
 """
     def box(self, frame):

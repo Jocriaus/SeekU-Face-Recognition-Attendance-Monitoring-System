@@ -3,17 +3,15 @@ from PIL import Image, ImageTk
 import datetime
 import time
 import face_recog as mf
-from threading import Timer
 
 class ClientFaceRecogApp:
     def __init__(self,vid_source, login_mod, sel_cam, home_mod, file_path):
-
-        self.cont = False
         #assignment for passed parameters
         self.login_window = login_mod
         self.select_cam_window = sel_cam
         self.home_window = home_mod
-
+        
+        self.call_cam = False
         # build ui
         self.face_recog_app = tk.Toplevel()
         self.face_recog_app.configure(
@@ -225,31 +223,38 @@ class ClientFaceRecogApp:
         self.face_recog_app.destroy()
         # add additional function for destroying camera
 
+    def hide_name(self):
+        self.stud_name_label.place_forget()
+        self.attendance_label.place_forget()
+
+    def show_name(self):
+        self.stud_name_label.place(anchor="center", relx=0.5, rely=0.3)
+        self.attendance_label.place(anchor="center", relx=0.5, rely=0.75)
 
         # will update the canvas content
     def cam_update(self):
-        if self.cont:
+        if self.fr_vid.cont:
             return
         # Get a frame from the video source
         ret, frame = self.fr_vid.get_frame()
         # if it return a frame and if there are still no face detected
         if ret & self.fr_vid.face_detected:
-            self.hide_name()
-            # consistently getting the time and date 
-            self.current_time = time.strftime('%H:%M:%S', time.localtime())
-            self.current_date = datetime.date.today().strftime("%m/%d/%y")
-            self.current_date_n_time = 'Attendance: ' + self.current_date +' '+self.current_time  
-            self.fr_vid.box_and_dot(frame)
-            # saving the frame from the array unto the photo variable as an "image"
-            self.photo = ImageTk.PhotoImage(image = Image.fromarray(frame))
-            # putting of image(frame) into the canvas
-            
-            self.camera_canvas.create_image(0, 0, image = self.photo, anchor = tk.NW)
-            # self.detect_face()
-            
-            self.fr_vid.face_in_box(self.recognize_face)
-            print("cont2")
-            # call again the same method after 15 millisecond
+            if not self.fr_vid.cont:
+                self.hide_name()
+                # consistently getting the time and date 
+                self.current_time = time.strftime('%H:%M:%S', time.localtime())
+                self.current_date = datetime.date.today().strftime("%m/%d/%y")
+                self.current_date_n_time = 'Attendance: ' + self.current_date +' '+self.current_time  
+                self.fr_vid.box_and_dot(frame)
+                # saving the frame from the array unto the photo variable as an "image"
+                self.photo = ImageTk.PhotoImage(image = Image.fromarray(frame))
+                # putting of image(frame) into the canvas
+                
+                self.camera_canvas.create_image(0, 0, image = self.photo, anchor = tk.NW)
+                # self.detect_face()
+                print("cont2")
+                self.fr_vid.face_in_box(self.recognize_face)
+                # call again the same method after 15 millisecond
         self.face_recog_app.after(15, self.cam_update)  
 
     def attendance(self):
@@ -272,41 +277,26 @@ class ClientFaceRecogApp:
         # will display the image into the canvas
         self.camera_canvas.create_image(0, 0, image = self.student_image, anchor = tk.NW)
 
-
-
-    def hide_name(self):
-        self.stud_name_label.place_forget()
-        self.attendance_label.place_forget()
-
-    def show_name(self):
-        self.stud_name_label.place(anchor="center", relx=0.5, rely=0.3)
-        self.attendance_label.place(anchor="center", relx=0.5, rely=0.75)
-
     def recognize_face(self):
-        self.cont = True
         self.fr_vid.face_recognition_func()
-
+        print(self.fr_vid.face_detected)
+        print("recognize face before not")
         # if a face is detected it will stop detecting and
         # will display the image of the owner of the face
         if not self.fr_vid.face_detected :
             print('run')
             self.attendance()
-            self.next_person()
-
+            self.face_recog_app.after(5000, self.next_person)
+        if self.fr_vid.face_detected:
+            self.fr_vid.face_recognition_func()
 
         
     def next_person(self):
-        activity = Timer(5.0, self.continue_cam_up)
-        activity.start()
-
-
-    def continue_cam_up(self):
-        print("cont")
-        self.cont = False
+        self.fr_vid.cont = False
         self.fr_vid.face_detected = True
-        activity2 = Timer(3.0, self.cam_update)
-        activity2.start()
-        # add delay then add call cam_update
+        self.fr_vid.recognized = False
+        self.cam_update()
+
 
     def sign_out_func(self, event=None):
         self.show_home_window()
