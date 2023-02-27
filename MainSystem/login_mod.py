@@ -88,7 +88,7 @@ class LoginApp:
         self.log_in_frame.configure(
             background="#F7FAE9", height=200, width=200)
         self.sti_logo = tk.Label(self.log_in_frame)
-        self.img_SeekU = tk.PhotoImage(file=".\SeekU\SeekU.png")
+        self.img_SeekU = tk.PhotoImage(file=".\SeekU\SeekU small.png")
         self.sti_logo.configure(
             background="#F7FAE9",
             image=self.img_SeekU)
@@ -136,6 +136,8 @@ class LoginApp:
 
             # add if else where it checks the un and pw to match
                 # go to the home section
+                # add check if the usertype
+                    # go to specific module
             #else:
                 # messagebox.showwarning("Error", "No Account avilable with this username and password." )
         else:

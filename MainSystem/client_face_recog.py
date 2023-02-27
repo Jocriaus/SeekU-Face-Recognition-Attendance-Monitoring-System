@@ -99,7 +99,7 @@ class ClientFaceRecogApp:
         self.face_recog_frame.configure(
             background="#F7FAE9", height=200, width=200)
         self.app_logo_label = tk.Label(self.face_recog_frame)
-        self.img_SeekUmedium = tk.PhotoImage(file=".\SeekU\SeekU small.png")
+        self.img_SeekUmedium = tk.PhotoImage(file=".\SeekU\SeekU medium.png")
         self.app_logo_label.configure(
             background="#F7FAE9",
             image=self.img_SeekUmedium,
@@ -179,14 +179,14 @@ class ClientFaceRecogApp:
         self.sign_out_button.configure(
             font="{arial black} 20 {}",
             foreground="#0072bc",
-            text='Sign Out')
+            text='Log out')
         self.sign_out_button.place(
             anchor="center",
             relheight=0.05,
             relwidth=0.55,
             relx=0.5,
             rely=0.06)
-        self.sign_out_button.bind("<ButtonPress>", self.sign_out_func, add="")
+        self.sign_out_button.bind("<ButtonPress>", self.log_out_func, add="")
         self.cancel_button = tk.Button(self.face_recog_frame)
         self.cancel_button.configure(
             font="{arial black} 30 {}",
@@ -298,7 +298,7 @@ class ClientFaceRecogApp:
         self.cam_update()
 
 
-    def sign_out_func(self, event=None):
+    def log_out_func(self, event=None):
         self.show_home_window()
         self.face_recog_app.destroy()
 

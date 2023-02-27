@@ -80,7 +80,7 @@ class HomeApp:
             foreground="#0072bc",
             justify="center",
             relief="ridge",
-            text='Sign out',
+            text='Log out',
             width=10)
         self.sign_out_button.place(
             anchor="center",
@@ -92,7 +92,7 @@ class HomeApp:
             width=100,
             x=75,
             y=465)
-        self.sign_out_button.bind("<ButtonPress>", self.signout_press, add="")
+        self.sign_out_button.bind("<ButtonPress>", self.logout_press, add="")
         self.home_app_frame2.place(
             anchor="center",
             height=500,
@@ -107,7 +107,7 @@ class HomeApp:
             background="#F7FAE9", height=200, width=200)
 
         self.seeku_logo = tk.Label(self.home_app_frame)
-        self.img_SeekU2 = tk.PhotoImage(file=".\SeekU\SeekU1.png")
+        self.img_SeekU2 = tk.PhotoImage(file=".\SeekU\SeekU small.png")
         self.seeku_logo.configure(
             background="#F7FAE9",
             image=self.img_SeekU2)
@@ -186,6 +186,6 @@ class HomeApp:
         cAV.AddVisitorApp(
             self.video_source,self.login_window,self.sel_cam_window, self.home_app )
 
-    def signout_press(self, event=None):
+    def logout_press(self, event=None):
         self.show_log_window()
 

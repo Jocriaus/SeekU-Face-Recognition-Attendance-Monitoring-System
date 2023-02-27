@@ -74,7 +74,7 @@ class AddVisitorApp:
             text='U')
         self.app_name_labelU.place(anchor="center", relx=0.87, rely=0.5)
         self.app_logo_label = tk.Label(self.add_visitor_frame2)
-        self.img_SeekUmedium = tk.PhotoImage(file=".\SeekU\SeekU medium.png")
+        self.img_SeekUmedium = tk.PhotoImage(file=".\SeekU\SeekU large.png")
         self.app_logo_label.configure(
             background="#F7FAE9",
             image=self.img_SeekUmedium,
@@ -84,14 +84,14 @@ class AddVisitorApp:
         self.sign_out_button.configure(
             font="{arial black} 20 {}",
             foreground="#0072bc",
-            text='Sign out')
+            text='Log out')
         self.sign_out_button.place(
             anchor="center",
             relheight=0.15,
             relwidth=0.1,
             relx=0.93,
             rely=0.85)
-        self.sign_out_button.bind("<ButtonPress>", self.sign_out, add="")
+        self.sign_out_button.bind("<ButtonPress>", self.log_out_func, add="")
         self.add_visitor_frame2.place(
             anchor="center",
             relheight=0.3,
@@ -120,7 +120,7 @@ class AddVisitorApp:
         self.snapshot_button.bind("<ButtonPress>", self.save_info, add="")
         self.school_logo_label = tk.Label(self.add_visitor_frame)
         self.img_STICollegeBalagtasLogo = tk.PhotoImage(
-            file=".\SeekU\STI College Balagtas Logo.png")
+            file=".\SeekU\STI College Balagtas Logo large.png")
         self.school_logo_label.configure(
             background="#F7FAE9",
             image=self.img_STICollegeBalagtasLogo,
@@ -254,7 +254,7 @@ class AddVisitorApp:
     
 
 
-    def sign_out(self, event=None):
+    def log_out_func(self, event=None):
         self.show_home_window()
         self.add_visitor_app.destroy()
 

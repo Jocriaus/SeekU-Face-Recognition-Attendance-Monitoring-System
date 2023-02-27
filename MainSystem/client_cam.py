@@ -106,7 +106,7 @@ class ClientCameraApp:
         self.camera_frame2.configure(
             background="#F7FAE9", height=200, width=200)
         self.seeku_logo = tk.Label(self.camera_frame2)
-        self.img_SeekU2 = tk.PhotoImage(file=".\SeekU\SeekU1.png")
+        self.img_SeekU2 = tk.PhotoImage(file=".\SeekU\SeekU small.png")
         self.seeku_logo.configure(
             background="#F7FAE9",
             image=self.img_SeekU2)
