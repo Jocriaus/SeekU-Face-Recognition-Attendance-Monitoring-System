@@ -1,8 +1,8 @@
 import tkinter as tk
 from tkinter import filedialog
 import client_face_recog as cFG
-import client_add_visitor as cAV
-
+import client_camera_app as cCA
+import sys
 class HomeApp:
     def __init__(self,vid_source, login_mod, sel_cam):
         
@@ -72,8 +72,8 @@ class HomeApp:
         self.add_visitor.bind("<ButtonPress>", self.add_visitors_press, add="")
 
 
-        self.sign_out_button = tk.Button(self.home_app_frame2)
-        self.sign_out_button.configure(
+        self.log_out_button = tk.Button(self.home_app_frame2)
+        self.log_out_button.configure(
             background="#F7FAE9",
             default="active",
             font="{arial} 12 {}",
@@ -82,7 +82,7 @@ class HomeApp:
             relief="ridge",
             text='Log out',
             width=10)
-        self.sign_out_button.place(
+        self.log_out_button.place(
             anchor="center",
             height=35,
             relheight=0.0,
@@ -92,7 +92,7 @@ class HomeApp:
             width=100,
             x=75,
             y=465)
-        self.sign_out_button.bind("<ButtonPress>", self.logout_press, add="")
+        self.log_out_button.bind("<ButtonPress>", self.logout_press, add="")
         self.home_app_frame2.place(
             anchor="center",
             height=500,
@@ -112,25 +112,21 @@ class HomeApp:
             background="#F7FAE9",
             image=self.img_SeekU2)
         self.seeku_logo.place(anchor="center", x=145, y=80)
-        self.app_name_label = tk.Label(self.home_app_frame)
-        self.app_name_label.configure(
+        self.app_name_logo = tk.Label(self.home_app_frame)
+        self.img_SeekULogotypemicro = tk.PhotoImage(
+            file=".\SeekU\SeekU Logotype micro.png")
+        self.app_name_logo.configure(
             background="#F7FAE9",
-            font="{arial black} 40 {}",
             foreground="#0072bc",
+            image=self.img_SeekULogotypemicro,
             relief="flat",
             text='SEEK')
-        self.app_name_label.place(
-            anchor="center", relx=0.0, rely=0.0, x=280, y=80)
-        self.app_name_label2 = tk.Label(self.home_app_frame)
-        self.app_name_label2.configure(
-            background="#F7FAE9",
-            cursor="arrow",
-            font="{arial black} 40 {}",
-            foreground="#fff200",
-            relief="flat",
-            text='U')
-        self.app_name_label2.place(
-            anchor="center", relx=0.0, rely=0.0, x=385, y=80)
+        self.app_name_logo.place(
+            anchor="center",
+            relx=0.052,
+            rely=0.04,
+            x=290,
+            y=80)
         self.home_app_frame.place(
             anchor="center",
             height=150,
@@ -139,13 +135,17 @@ class HomeApp:
             y=75)
 
 
-        self.home_app.protocol("WM_DELETE_WINDOW", self.show_cam_window )
+        self.home_app.protocol("WM_DELETE_WINDOW", self.exit_program )
         # Main widget
         self.mainwindow = self.home_app
         self.center(self.mainwindow)
 
 
 #-----------------------------------------------------------------------------------------
+
+    def exit_program(self):
+        sys.exit() 
+
     def center(self, win):
         win.update()
         w_req, h_req = win.winfo_width(), win.winfo_height()
@@ -160,10 +160,6 @@ class HomeApp:
     def hide_this_window(self):
         self.home_app.withdraw()
 
-    def show_cam_window(self):
-        self.sel_cam_window.deiconify()
-        self.home_app.destroy()
-
     def show_log_window(self):
         self.login_window.deiconify()
         self.home_app.destroy()
@@ -171,6 +167,7 @@ class HomeApp:
     def select_folder(self):
         self.home_app.attributes('-topmost', False)
         self.folder_selected = filedialog.askdirectory()
+        print(self.folder_selected)
         self.home_app.attributes('-topmost', True)
 
 
@@ -183,9 +180,9 @@ class HomeApp:
 
     def add_visitors_press(self, event=None):
         self.hide_this_window()
-        cAV.AddVisitorApp(
-            self.video_source,self.login_window,self.sel_cam_window, self.home_app )
+        self.select_folder()
+        cCA.CameraApp(
+            self.video_source,self.login_window,self.sel_cam_window, self.home_app,self.folder_selected )
 
     def logout_press(self, event=None):
         self.show_log_window()
-

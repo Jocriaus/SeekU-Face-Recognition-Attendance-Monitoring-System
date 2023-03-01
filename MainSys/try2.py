@@ -2,7 +2,7 @@
 import tkinter as tk
 
 
-class AdmindHomeApp:
+class AdminclientUserApp:
     def __init__(self, master=None):
         # build ui
         self.administrator_app = tk.Tk() if master is None else tk.Toplevel(master)
@@ -13,117 +13,138 @@ class AdmindHomeApp:
         self.administrator_app.geometry("%dx%d" % (width, height))
         self.administrator_app.resizable(False, False)
 
-#----------------------------replace----------------------------------           
-        self.administrator_db_frame = tk.Frame(self.administrator_app)
-        self.administrator_db_frame.configure(
+
+        self.administrator_client_frame = tk.Frame(self.administrator_app)
+        self.administrator_client_frame.configure(
             background="#E7E7E7", height=200, width=200)
-        self.time_and_date_label = tk.Label(self.administrator_db_frame)
+        self.time_and_date_label = tk.Label(self.administrator_client_frame)
         self.time_and_date_label.configure(
             background="#F7FAE9",
-            font="{arial} 36 {bold}",
+            compound="top",
+            font="{arial} 30 {bold}",
+            foreground="#0072bc",
             text='Time and Date')
         self.time_and_date_label.place(
             anchor="center",
             relwidth=1,
             relx=0.5,
-            rely=0.97,
-            x=0,
-            y=0) 
-        self.administrator_db_ttl_frame = tk.Frame(self.administrator_db_frame)
-        self.administrator_db_ttl_frame.configure(
-            background="#F7FAE9", height=200, width=200)
-        self.ttl_students_label = tk.Label(self.administrator_db_ttl_frame)
-        self.ttl_students_label.configure(
-            background="#F7FAE9",
-            font="{arial} 24 {bold}",
-            text='Total Students')
-        self.ttl_students_label.place(
-            anchor="center", relx=0.16, rely=0.25, x=0, y=0)
-        self.ttl_personnels_label = tk.Label(self.administrator_db_ttl_frame)
-        self.ttl_personnels_label.configure(
-            anchor="n",
-            background="#F7FAE9",
-            font="{arial} 24 {bold}",
-            text='Total Personnels')
-        self.ttl_personnels_label.place(
-            anchor="center", relx=0.5, rely=0.25, x=0, y=0)
-        self.ttl_visitor_label = tk.Label(self.administrator_db_ttl_frame)
-        self.ttl_visitor_label.configure(
-            background="#F7FAE9",
-            font="{arial} 24 {bold}",
-            text='Total Visitors')
-        self.ttl_visitor_label.place(
-            anchor="center", relx=0.84, rely=0.25, x=0, y=0)
-        self.administrator_db_ttl_frame.place(
-            anchor="center",
-            relheight=0.35,
-            relwidth=0.9,
-            relx=0.5,
-            rely=0.72,
+            rely=0.975,
             x=0,
             y=0)
-        self.administrator_db_ol_frame = tk.Frame(self.administrator_db_frame)
-        self.administrator_db_ol_frame.configure(
-            background="#F7FAE9", height=200, width=200)
-        self.ol_students_label = tk.Label(self.administrator_db_ol_frame)
-        self.ol_students_label.configure(
-            background="#F7FAE9",
-            font="{arial} 24 {bold}",
-            text='Present Students')
-        self.ol_students_label.place(
-            anchor="center", relx=0.16, rely=0.25, x=0, y=0)
-        self.ol_personnels_label = tk.Label(self.administrator_db_ol_frame)
-        self.ol_personnels_label.configure(
-            anchor="n",
-            background="#F7FAE9",
-            font="{arial} 24 {bold}",
-            text='Present Personnels')
-        self.ol_personnels_label.place(
-            anchor="center", relx=0.5, rely=0.25, x=0, y=0)
-        self.ol_visitor_label = tk.Label(self.administrator_db_ol_frame)
-        self.ol_visitor_label.configure(
-            background="#F7FAE9",
-            font="{arial} 24 {bold}",
-            text='Present Visitors')
-        self.ol_visitor_label.place(
-            anchor="center", relx=0.84, rely=0.25, x=0, y=0)
-        self.administrator_db_ol_frame.place(
-            anchor="center",
-            relheight=0.35,
-            relwidth=0.9,
-            relx=0.5,
-            rely=0.33,
-            x=0,
-            y=0)
-        self.dashboard_label = tk.Label(self.administrator_db_frame)
-        self.dashboard_label.configure(
-            background="#E7E7E7",
-            font="{arial black} 48 {}",
-            text='Dashboard')
-        self.dashboard_label.place(
-            anchor="center", relheight=0.1, relx=0.5, rely=0.09,)
-        self.time_and_date_label = tk.Label(self.administrator_db_frame)
+        
+
+#CLIENT-------------------------------------------------------------------------------------------------------  
+        self.administrator_client_frame = tk.Frame(self.administrator_app)
+        self.administrator_client_frame.configure(
+            background="#E7E7E7", height=200, width=200)
+        self.time_and_date_label = tk.Label(self.administrator_client_frame)
         self.time_and_date_label.configure(
             background="#F7FAE9",
-            font="{arial} 36 {bold}",
+            compound="top",
+            font="{arial} 30 {bold}",
+            foreground="#0072bc",
             text='Time and Date')
         self.time_and_date_label.place(
             anchor="center",
             relwidth=1,
             relx=0.5,
-            rely=0.97,
+            rely=0.975,
             x=0,
-            y=0) 
-        self.administrator_db_frame.place(
+            y=0)
+        self.admin_c_sec1_frame = tk.Frame(self.administrator_client_frame)
+        self.admin_c_sec1_frame.configure(
+            background="#E7E7E7", height=200, width=200)
+        self.add_button = tk.Button(self.admin_c_sec1_frame)
+        self.add_button.configure(
+            background="#0072bc",
+            font="{arial} 20 {bold}",
+            foreground="#f7fae9",
+            text='Add Students')
+        self.add_button.place(
+            anchor="center", relx=0.85, rely=.5, x=0, y=0)
+        self.add_button.bind("<Button>", self.add_clients, add="")
+        self.admin_c_sec1_frame.place(
+            anchor="center",
+            relheight=0.1,
+            relwidth=1.0,
+            relx=0.5,
+            rely=0.09)
+        self.admin_c_sec2_frame = tk.Frame(self.administrator_client_frame)
+        self.admin_c_sec2_frame.configure(
+            background="#F7FAE9", height=200, width=200)
+        self.search_c_button = tk.Button(self.admin_c_sec2_frame)
+        self.search_c_button.configure(
+            background="#0072bc",
+            font="{arial} 20 {bold}",
+            foreground="#f7fae9",
+            text='Search')
+        self.search_c_button.place(
+            anchor="center",
+            relheight=.5,
+            relwidth=0.16,
+            relx=0.9,
+            rely=.5,
+            x=0,
+            y=0)
+        self.admin_c_sec1_frame.place(
+            anchor="center",
+            relheight=0.1,
+            relwidth=1.0,
+            relx=0.5,
+            rely=0.09)
+        self.search_c_button.bind("<Button>", self.search_clients_info, add="")
+        self.search_c_entry = tk.Entry(self.admin_c_sec2_frame)
+        self.search_c_entry.configure(background="#E7E7E7", font="{arial} 24 {}")
+        self.search_c_entry.place(anchor="center", relx=0.63, rely=.5, x=0, y=0)
+        self.clients_list = tk.Label(self.admin_c_sec2_frame)
+        self.clients_list.configure(
+            anchor="n",
+            background="#F7FAE9",
+            font="{arial} 24 {bold}",
+            text='Students List')
+        self.clients_list.place(anchor="center", relx=0.125, rely=.5, x=0, y=0)        
+        self.admin_c_sec2_frame.place(
+            anchor="center",
+            relheight=0.1,
+            relwidth=.90,
+            relx=0.5,
+            rely=0.22)
+        self.admin_c_sec3_frame = tk.Frame(self.administrator_client_frame)
+        self.admin_c_sec3_frame.configure(
+            background="#F7FAE9", height=200, width=200)
+        self.admin_c_sec3_frame.place(
+            anchor="center",
+            relheight=0.6,
+            relwidth=0.9,
+            relx=.5,
+            rely=.6,
+            x=0,
+            y=0)
+        self.clients_man_var = tk.StringVar(value='Manage Students')
+        __values = [
+            'Manage Students',
+            'Manage Personnels',
+            'Manage Visitors']
+        self.manage_client_optionmenu = tk.OptionMenu(
+            self.administrator_client_frame,
+            self.clients,
+            *__values,
+            command=self.open_diff_client)
+        self.manage_client_optionmenu.configure(font="{arial} 20 {bold}")
+        self.manage_client_optionmenu.place(anchor="center", relx=0.17, rely=0.09, x=0, y=0)
+        self.manage_client_options = self.administrator_app.nametowidget(self.manage_client_optionmenu.menuname)
+        self.manage_client_options.config(font="{arial} 16")
+        self.administrator_client_frame.place(
             anchor="center",
             relheight=0.95,
             relwidth=.78,
             relx=0.61,
             rely=0.525)
-#----------------------------replace----------------------------------  
         self.administrator_frame3 = tk.Frame(self.administrator_app)
         self.administrator_frame3.configure(
             background="#0072bc", height=200, width=200)
+#CLIENT-------------------------------------------------------------------------------------------------------  
+      
         self.dashboard_section_label = tk.Label(self.administrator_frame3)
         self.dashboard_section_label.configure(
             background="#0072bc",
@@ -208,36 +229,25 @@ class AdmindHomeApp:
             relwidth=0.22,
             relx=0.11,
             rely=.54)
-#----------------------------------------------------------------------------------
         self.administrator_frame2 = tk.Frame(self.administrator_app)
         self.administrator_frame2.configure(
             background="#F7FAE9", height=200, width=200)
-        self.app_name_label = tk.Label(self.administrator_frame2)
-        self.app_name_label.configure(
-            anchor="w",
-            background="#F7FAE9",
-            font="{arial} 36 {bold}",
-            foreground="#0072bc",
-            justify="left",
-            text='SEEK')
-        self.app_name_label.place(anchor="w", relx=0.08, rely=.5)
-        self.app_name_labelU = tk.Label(self.administrator_frame2)
-        self.app_name_labelU.configure(
-            anchor="w",
-            background="#F7FAE9",
-            font="{Arial} 36 {bold}",
-            foreground="#fff200",
-            justify="left",
-            text='U')
-        self.app_name_labelU.place(anchor="w", relx=0.17, rely=0.5)
         self.app_logo_label = tk.Label(self.administrator_frame2)
-        self.img_SeekUmicro = tk.PhotoImage(
-            file=".\SeekU\SeekU micro.png")
+        self.img_SeekUmicro = tk.PhotoImage(file=".\SeekU\SeekU micro.png")
         self.app_logo_label.configure(
             background="#F7FAE9",
             image=self.img_SeekUmicro,
             text='label1')
         self.app_logo_label.place(anchor="center", relx=0.05, rely=0.5)
+        self.app_name_logo = tk.Label(self.administrator_frame2)
+        self.img_SeekULogotypemicro = tk.PhotoImage(
+            file=".\SeekU\SeekU Logotype micro.png")
+        self.app_name_logo.configure(
+            background="#F7FAE9",
+            image=self.img_SeekULogotypemicro,
+            text='label1')
+        self.app_name_logo.place(
+            anchor="center", relx=0.16, rely=0.5, x=0, y=0)
         self.administrator_frame2.place(
             anchor="center",
             relheight=0.08,
@@ -252,65 +262,99 @@ class AdmindHomeApp:
     def run(self):
         self.mainwindow.mainloop()
 
+    def change_layout(self):
+        if(self.clients.get() == 'Manage Students'):
+            self.add_button.configure(text='Add Students')
+            self.clients_list.configure(text='Students List')
+        if(self.clients.get() == 'Manage Personnels'):
+            self.add_button.configure(text='Add Personnels')
+            self.clients_list.configure(text='Personnels List')
+        if(self.clients.get() == 'Manage Visitors'):
+            self.add_button.configure(text='Add Visitors')
+            self.clients_list.configure(text='Visitors List')
+
+    def add_clients_logic(self):
+        if(self.clients.get() == 'Manage Students'):
+            pass
+        if(self.clients.get() == 'Manage Personnels'):
+            pass
+        if(self.clients.get() == 'Manage Visitors'):
+            pass
+
+    def search_clients_info_logic(self):
+        if(self.clients.get() == 'Manage Students'):
+            pass
+        if(self.clients.get() == 'Manage Personnels'):
+            pass
+        if(self.clients.get() == 'Manage Visitors'):
+            pass
+
+
+    def open_diff_client(self, event):
+        self.change_layout()
+
+
+    def add_clients(self, event=None):
+        self.add_clients_logic()
+
+    def search_clients_info(self, event=None):
+        self.search_clients_info_logic()
+
     def dashboard_appear(self, event=None):
         pass
 
     def dashboard_hover(self, event=None):
-        self.dashboard_section_label.configure(foreground="#fff200")
+        pass
 
     def dashboard_hover_out(self, event=None):
-        self.dashboard_section_label.configure(foreground="#F7FAE9")
+        pass
 
     def client_appear(self, event=None):
         pass
 
     def client_hover(self, event=None):
-        self.client_section_label.configure(font="{arial } 19 {bold underline}")
+        pass
 
     def client_hover_out(self, event=None):
-        self.client_section_label.configure(font="{arial } 19 {bold}")
+        pass
 
     def user_appear(self, event=None):
         pass
 
     def user_hover(self, event=None):
-        self.user_section_label.configure(font="{arial } 19 {bold underline}")
+        pass
 
     def user_hover_out(self, event=None):
-        self.user_section_label.configure(font="{arial } 19 {bold}")
+        pass
 
     def report_appear(self, event=None):
         pass
 
     def report_hover(self, event=None):
-        self.report_section_label.configure(font="{arial } 19 {bold underline}")
+        pass
 
     def report_hover_out(self, event=None):
-        self.report_section_label.configure(font="{arial } 19 {bold}")
+        pass
 
     def settings_appear(self, event=None):
         pass
 
     def settings_hover(self, event=None):
-        self.settings_section_label.configure(font="{arial } 19 {bold underline}")
+        pass
 
     def settings_hover_out(self, event=None):
-        self.settings_section_label.configure(font="{arial } 19 {bold}")
+        pass
 
     def logout(self, event=None):
-        # log in module appear
         self.administrator_app.destroy()
 
     def logout_hover(self, event=None):
-        self.logout_label.configure(font="{arial } 19 {bold underline}")
+        pass
 
     def logout_hover_out(self, event=None):
-        self.logout_label.configure(font="{arial } 19 {bold}")
-
-
+        pass
 
 
 if __name__ == "__main__":
-    app = AdmindHomeApp()
+    app = AdminclientUserApp()
     app.run()
-

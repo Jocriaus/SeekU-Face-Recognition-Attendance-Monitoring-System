@@ -93,25 +93,21 @@ class LoginApp:
             background="#F7FAE9",
             image=self.img_SeekU)
         self.sti_logo.place(anchor="center", relx=0.0, rely=0.0, x=150, y=80)
-        self.app_name_label = tk.Label(self.log_in_frame)
-        self.app_name_label.configure(
+        self.app_name_logo = tk.Label(self.log_in_frame)
+        self.img_SeekULogotypemicro = tk.PhotoImage(
+            file=".\SeekU\SeekU Logotype micro.png")
+        self.app_name_logo.configure(
             background="#F7FAE9",
-            font="{arial black} 40 {}",
             foreground="#0072bc",
+            image=self.img_SeekULogotypemicro,
             relief="flat",
             text='SEEK')
-        self.app_name_label.place(
-            anchor="center", relx=0.0, rely=0.0, x=290, y=80)
-        self.app_name_label2 = tk.Label(self.log_in_frame)
-        self.app_name_label2.configure(
-            background="#F7FAE9",
-            cursor="arrow",
-            font="{arial black} 40 {}",
-            foreground="#fff200",
-            relief="flat",
-            text='U')
-        self.app_name_label2.place(
-            anchor="center", relx=0.0, rely=0.0, x=395, y=80)
+        self.app_name_logo.place(
+            anchor="center",
+            relx=0.052,
+            rely=0.04,
+            x=290,
+            y=80)
         self.log_in_frame.place(
             anchor="center",
             height=150,

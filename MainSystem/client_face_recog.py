@@ -110,71 +110,19 @@ class ClientFaceRecogApp:
             relwidth=0.85,
             relx=0.50,
             rely=0.17)
-        self.app_name_labels = tk.Label(self.face_recog_frame)
-        self.app_name_labels.configure(
+        self.app_name_logo = tk.Label(self.face_recog_frame)
+        self.img_SeekULogotypeextralarge = tk.PhotoImage(
+            file=".\SeekU\SeekU Logotype extra large.png")
+        self.app_name_logo.configure(
             background="#F7FAE9",
-            font="{arial black} 80 {}",
             foreground="#0072bc",
-            relief="flat",
-            text='S')
-        self.app_name_labels.place(
-            anchor="center",
-            relheight=0.10,
-            relwidth=.32,
-            relx=.5,
-            rely=0.29)
-        self.app_name_labele = tk.Label(self.face_recog_frame)
-        self.app_name_labele.configure(
-            background="#F7FAE9",
-            font="{arial black} 80 {}",
-            foreground="#0072bc",
+            image=self.img_SeekULogotypeextralarge,
             relief="flat",
             text='E')
-        self.app_name_labele.place(
+        self.app_name_logo.place(
             anchor="center",
-            relheight=0.12,
-            relwidth=.32,
-            relx=.5,
-            rely=0.4)
-        self.app_name_labele2 = tk.Label(self.face_recog_frame)
-        self.app_name_labele2.configure(
-            background="#F7FAE9",
-            font="{arial black} 80 {}",
-            foreground="#0072bc",
-            relief="flat",
-            text='E')
-        self.app_name_labele2.place(
-            anchor="center",
-            relheight=.12,
-            relwidth=.32,
             relx=.5,
             rely=0.51)
-        self.app_name_labelk = tk.Label(self.face_recog_frame)
-        self.app_name_labelk.configure(
-            background="#F7FAE9",
-            font="{arial black} 80 {}",
-            foreground="#0072bc",
-            relief="flat",
-            text='K')
-        self.app_name_labelk.place(
-            anchor="center",
-            relheight=.12,
-            relwidth=.32,
-            relx=.5,
-            rely=0.62)
-        self.app_name_labelu = tk.Label(self.face_recog_frame)
-        self.app_name_labelu.configure(
-            background="#F7FAE9",
-            font="{arial black} 80 {}",
-            foreground="#fff200",
-            relief="flat",
-            text='U')
-        self.app_name_labelu.place(
-            anchor="center",
-            relheight=0.11,
-            relwidth=0.32,
-            relx=.5,
-            rely=0.75)
         self.sign_out_button = tk.Button(self.face_recog_frame)
         self.sign_out_button.configure(
             font="{arial black} 20 {}",
@@ -286,9 +234,9 @@ class ClientFaceRecogApp:
         if not self.fr_vid.face_detected :
             print('run')
             self.attendance()
-            self.face_recog_app.after(5000, self.next_person)
+            self.face_recog_app.after(4000, self.next_person)
         if self.fr_vid.face_detected:
-            self.fr_vid.face_recognition_func()
+            self.face_recog_app.after(15, self.next_person)
 
         
     def next_person(self):

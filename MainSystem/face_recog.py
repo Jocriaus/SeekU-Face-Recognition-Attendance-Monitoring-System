@@ -165,7 +165,7 @@ class FaceRecognition:
             self.current_time = time.time()
             self.passed_time = self.current_time - self.init_time
             print(self.passed_time)
-            if self.passed_time >= 5:
+            if self.passed_time >= 3:
                 self.init_time = 0
                 self.current_time = 0
                 self.recognized = True

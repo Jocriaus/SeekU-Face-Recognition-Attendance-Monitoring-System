@@ -1,6 +1,6 @@
 import tkinter as tk
 import client_home as cH
-
+import sys
 class ClientCameraApp:
     def __init__(self, login_module):
 
@@ -61,7 +61,6 @@ class ClientCameraApp:
             background="#F7FAE9",
             font="{arial} 18 {}",
             foreground="#010303",
-            show="•",
             state='disabled')
         self.ip_cam_entry.place(
             anchor="center",
@@ -71,7 +70,27 @@ class ClientCameraApp:
             width=350,
             x=250,
             y=400)
-
+        self.log_out_button = tk.Button(self.camera_frame)
+        self.log_out_button.configure(
+            background="#F7FAE9",
+            default="active",
+            font="{arial} 12 {}",
+            foreground="#0072bc",
+            justify="center",
+            relief="ridge",
+            text='Log out',
+            width=10)
+        self.log_out_button.place(
+            anchor="center",
+            height=35,
+            relheight=0.0,
+            relwidth=0.0,
+            relx=0.0,
+            rely=0.0,
+            width=100,
+            x=75,
+            y=550)
+        self.log_out_button.bind("<ButtonPress>", self.logout_press, add="")
         self.open_button = tk.Button(self.camera_frame)
         self.open_button.configure(
             background="#F7FAE9",
@@ -91,7 +110,7 @@ class ClientCameraApp:
             rely=0.0,
             width=200,
             x=250,
-            y=550)
+            y=475)
         self.open_button.bind("<ButtonPress>", self.open_press, add="")
         self.camera_frame.place(
             anchor="center",
@@ -111,25 +130,21 @@ class ClientCameraApp:
             background="#F7FAE9",
             image=self.img_SeekU2)
         self.seeku_logo.place(anchor="center", relx=0.0, rely=0.0, x=150, y=80)
-        self.app_name_label = tk.Label(self.camera_frame2)
-        self.app_name_label.configure(
+        self.app_name_logo = tk.Label(self.camera_frame2)
+        self.img_SeekULogotypemicro = tk.PhotoImage(
+            file=".\SeekU\SeekU Logotype micro.png")
+        self.app_name_logo.configure(
             background="#F7FAE9",
-            font="{arial black} 40 {}",
             foreground="#0072bc",
+            image=self.img_SeekULogotypemicro,
             relief="flat",
             text='SEEK')
-        self.app_name_label.place(
-            anchor="center", relx=0.0, rely=0.0, x=290, y=80)
-        self.app_name_label2 = tk.Label(self.camera_frame2)
-        self.app_name_label2.configure(
-            background="#F7FAE9",
-            cursor="arrow",
-            font="{arial black} 40 {}",
-            foreground="#fff200",
-            relief="flat",
-            text='U')
-        self.app_name_label2.place(
-            anchor="center", relx=0.0, rely=0.0, x=395, y=80)
+        self.app_name_logo.place(
+            anchor="center",
+            relx=0.05,
+            rely=0.04,
+            x=290,
+            y=80)
         self.camera_frame2.place(
             anchor="center",
             height=150,
@@ -137,13 +152,15 @@ class ClientCameraApp:
             x=250,
             y=75)
 
-        self.camera_app.protocol("WM_DELETE_WINDOW", self.show_log_window )
+        self.camera_app.protocol("WM_DELETE_WINDOW", self.exit_program )
 
         self.mainwindow = self.camera_app
         self.center(self.mainwindow)
 
 
 #-----------------------------------------------------------------------------------------
+    def exit_program(self):
+        sys.exit() 
 
     def center(self, win):
         win.update()
@@ -186,4 +203,6 @@ class ClientCameraApp:
     def open_press(self, event=None):
         self.open_logic()
 
+    def logout_press(self, event=None):
+        self.show_log_window()
 

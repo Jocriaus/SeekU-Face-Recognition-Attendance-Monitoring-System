@@ -13,17 +13,234 @@ class AdmindHomeApp:
         self.administrator_app.geometry("%dx%d" % (width, height))
         self.administrator_app.resizable(False, False)
 
-#----------------------------replace----------------------------------           
+
+#CLIENT-------------------------------------------------------------------------------------------------------  
+        self.administrator_client_frame = tk.Frame(self.administrator_app)
+        self.administrator_client_frame.configure(
+            background="#E7E7E7", height=200, width=200)
+        self.time_and_date_label_c = tk.Label(self.administrator_client_frame)
+        self.time_and_date_label_c.configure(
+            background="#F7FAE9",
+            compound="top",
+            font="{arial} 30 {bold}",
+            foreground="#0072bc",
+            text='Time and Date')
+        self.time_and_date_label_c.place(
+            anchor="center",
+            relwidth=1,
+            relx=0.5,
+            rely=0.975,
+            x=0,
+            y=0)
+        self.admin_c_sec1_frame = tk.Frame(self.administrator_client_frame)
+        self.admin_c_sec1_frame.configure(
+            background="#E7E7E7", height=200, width=200)
+        self.add_c_button = tk.Button(self.admin_c_sec1_frame)
+        self.add_c_button.configure(
+            background="#0072bc",
+            font="{arial} 20 {bold}",
+            foreground="#f7fae9",
+            text='Add Students')
+        self.add_c_button.place(
+            anchor="center", relx=0.85, rely=.5, x=0, y=0)
+        self.add_c_button.bind("<Button>", self.add_clients, add="")
+        self.admin_c_sec1_frame.place(
+            anchor="center",
+            relheight=0.1,
+            relwidth=1.0,
+            relx=0.5,
+            rely=0.09)
+        self.admin_c_sec2_frame = tk.Frame(self.administrator_client_frame)
+        self.admin_c_sec2_frame.configure(
+            background="#F7FAE9", height=200, width=200)
+        self.search_c_button = tk.Button(self.admin_c_sec2_frame)
+        self.search_c_button.configure(
+            background="#0072bc",
+            font="{arial} 20 {bold}",
+            foreground="#f7fae9",
+            text='Search')
+        self.search_c_button.place(
+            anchor="center",
+            relheight=.5,
+            relwidth=0.16,
+            relx=0.9,
+            rely=.5,
+            x=0,
+            y=0)
+        self.admin_c_sec1_frame.place(
+            anchor="center",
+            relheight=0.1,
+            relwidth=1.0,
+            relx=0.5,
+            rely=0.09)
+        self.search_c_button.bind("<Button>", self.search_clients_info, add="")
+        self.search_c_entry = tk.Entry(self.admin_c_sec2_frame)
+        self.search_c_entry.configure(background="#E7E7E7", font="{arial} 24 {}")
+        self.search_c_entry.place(anchor="center", relx=0.63, rely=.5, x=0, y=0)
+        self.clients_list = tk.Label(self.admin_c_sec2_frame)
+        self.clients_list.configure(
+            anchor="n",
+            background="#F7FAE9",
+            font="{arial} 24 {bold}",
+            text='Students List')
+        self.clients_list.place(anchor="center", relx=0.125, rely=.5, x=0, y=0)        
+        self.admin_c_sec2_frame.place(
+            anchor="center",
+            relheight=0.1,
+            relwidth=.90,
+            relx=0.5,
+            rely=0.22)
+        self.admin_c_sec3_frame = tk.Frame(self.administrator_client_frame)
+        self.admin_c_sec3_frame.configure(
+            background="#F7FAE9", height=200, width=200)
+        self.admin_c_sec3_frame.place(
+            anchor="center",
+            relheight=0.6,
+            relwidth=0.9,
+            relx=.5,
+            rely=.6,
+            x=0,
+            y=0)
+        self.clients_man_var = tk.StringVar(value='Manage Students')
+        __values = [
+            'Manage Students',
+            'Manage Personnels',
+            'Manage Visitors']
+        self.manage_client_optionmenu = tk.OptionMenu(
+            self.administrator_client_frame,
+            self.clients_man_var,
+            *__values,
+            command=self.open_diff_client)
+        self.manage_client_optionmenu.configure(font="{arial} 20 {bold}")
+        self.manage_client_optionmenu.place(anchor="center", relx=0.17, rely=0.09, x=0, y=0)
+        self.manage_client_options = self.administrator_app.nametowidget(self.manage_client_optionmenu.menuname)
+        self.manage_client_options.config(font="{arial} 16")
+        self.administrator_client_frame.place(
+            anchor="center",
+            relheight=0.95,
+            relwidth=.78,
+            relx=0.61,
+            rely=0.525)
+#CLIENT-------------------------------------------------------------------------------------------------------  
+
+
+
+#REPORT------------------------------------------------------------------------------------------------------- 
+        self.administrator_report_frame = tk.Frame(self.administrator_app)
+        self.administrator_report_frame.configure(
+            background="#E7E7E7", height=200, width=200)
+        self.time_and_date_label_r = tk.Label(self.administrator_report_frame)
+        self.time_and_date_label_r.configure(
+            background="#F7FAE9",
+            compound="top",
+            font="{arial} 30 {bold}",
+            foreground="#0072bc",
+            text='Time and Date')
+        self.time_and_date_label_r.place(
+            anchor="center",
+            relwidth=1,
+            relx=0.5,
+            rely=0.975,
+            x=0,
+            y=0)
+        self.admin_r_sec1_frame = tk.Frame(self.administrator_report_frame)
+        self.admin_r_sec1_frame.configure(
+            background="#E7E7E7", height=200, width=200)
+        self.search_clients_report = tk.Button(self.admin_r_sec1_frame)
+        self.search_clients_report.configure(
+            background="#0072bc",
+            font="{arial} 20 {bold}",
+            foreground="#f7fae9",
+            text='Search')
+        self.search_clients_report.place(
+            anchor="center",
+            relheight=.5,
+            relwidth=0.16,
+            relx=0.9,
+            rely=.5,
+            x=0,
+            y=0)
+        self.search_clients_report.bind(
+            "<Button>", self.search_clients_reports, add="")
+        self.search_r_entry = tk.Entry(self.admin_r_sec1_frame)
+        self.search_r_entry.configure(background="#F7FAE9", font="{arial} 24 {}")
+        self.search_r_entry.place(anchor="center", relx=0.63, rely=.5, x=0, y=0)
+        self.admin_r_sec1_frame.place(
+            anchor="center",
+            relheight=0.1,
+            relwidth=.90,
+            relx=0.5,
+            rely=0.09)
+        self.admin_r_sec2_frame = tk.Frame(self.administrator_report_frame)
+        self.admin_r_sec2_frame.configure(
+            background="#F7FAE9", height=200, width=200)
+        self.admin_r_sec2_frame.place(
+            anchor="center",
+            relheight=0.65,
+            relwidth=0.9,
+            relx=.5,
+            rely=0.5,
+            x=0,
+            y=0)
+        
+
+        self.clients_rep_var = tk.StringVar(value='Students Report')
+        __values = ['Students Report', 'Personnels Report', 'Visitors Report']
+        self.client_report_optionmenu = tk.OptionMenu(
+            self.administrator_report_frame, self.clients_rep_var, *__values, command=None)
+        self.client_report_optionmenu.place(
+            anchor="center", relx=0.17, rely=0.09, x=0, y=0)
+        self.client_report_optionmenu.configure(font="{arial} 20 {bold}")
+        self.client_report_options = self.administrator_app.nametowidget(self.client_report_optionmenu.menuname)
+        self.client_report_options.config(font="{arial} 16")
+        self.print_report = tk.Button(self.administrator_report_frame)
+        self.print_report.configure(
+            background="#0072bc",
+            font="{arial} 20 {bold}",
+            foreground="#f7fae9",
+            text='Print')
+        self.print_report.place(
+            anchor="center",
+            relheight=0.05,
+            relwidth=0.12,
+            relx=0.87,
+            rely=0.875,
+            x=0,
+            y=0)
+        self.print_report.bind("<Button>", self.print_clients_reports, add="")
+        self.save_button = tk.Button(self.administrator_report_frame)
+        self.save_button.configure(
+            background="#0072bc",
+            font="{arial} 20 {bold}",
+            foreground="#f7fae9",
+            text='Extra')
+        self.save_button.place(
+            anchor="center",
+            relheight=0.05,
+            relwidth=0.12,
+            relx=0.7,
+            rely=0.875,
+            x=0,
+            y=0)
+        self.save_button.bind("<Button>", self.save_clients_reports, add="")
+        self.administrator_report_frame.place(
+            anchor="center",
+            relheight=0.95,
+            relwidth=.78,
+            relx=0.61,
+            rely=0.525)
+#REPORT-------------------------------------------------------------------------------------------------------   
+#DB-SECTION--------------------------------------------------------------------------------------          
         self.administrator_db_frame = tk.Frame(self.administrator_app)
         self.administrator_db_frame.configure(
             background="#E7E7E7", height=200, width=200)
-        self.time_and_date_label = tk.Label(self.administrator_db_frame)
-        self.time_and_date_label.configure(
+        self.time_and_date_label_db = tk.Label(self.administrator_db_frame)
+        self.time_and_date_label_db.configure(
             background="#F7FAE9",
             font="{arial} 36 {bold}",
             foreground="#0072bc",
             text='Time and Date')
-        self.time_and_date_label.place(
+        self.time_and_date_label_db.place(
             anchor="center",
             relwidth=1,
             relx=0.5,
@@ -109,7 +326,44 @@ class AdmindHomeApp:
             relwidth=.78,
             relx=0.61,
             rely=0.525)
-#----------------------------replace----------------------------------  
+#DB-SECTION-------------------------------------------------------------------------------------- 
+        self.admin_c_sec1_frame.place_forget()
+        self.add_c_button.place_forget()
+        self.search_c_button.place_forget()
+        self.search_c_entry.place_forget()
+        self.clients_list.place_forget()
+        self.admin_c_sec2_frame.place_forget()
+        self.admin_c_sec3_frame.place_forget()
+        self.manage_client_optionmenu.place_forget()    
+        self.time_and_date_label_c.place_forget()
+        self.administrator_client_frame.place_forget()
+
+        self.admin_r_sec1_frame.place_forget()
+        self.print_report.place_forget()
+        self.save_button.place_forget()
+        self.admin_c_sec2_frame.place_forget()
+        self.search_clients_report.place_forget()
+        self.search_r_entry.place_forget()
+        self.clients_list.place_forget()
+        self.admin_r_sec2_frame.place_forget()
+        self.client_report_optionmenu.place_forget()
+        self.time_and_date_label_r.place_forget()
+        self.administrator_report_frame.place_forget()
+        
+        """
+        self.time_and_date_label_db.place_forget()
+        self.ttl_students_label.place_forget()
+        self.ttl_personnels_label.place_forget()       	
+        self.ttl_visitor_label.place_forget()
+        self.administrator_db_ttl_frame.place_forget()
+        self.ol_students_label.place_forget()
+        self.ol_personnels_label.place_forget()
+        self.ol_visitor_label.place_forget()
+        self.administrator_db_ol_frame.place_forget()
+        self.dashboard_label.place_forget()
+        self.administrator_db_frame.place_forget()
+        """
+#HIDE-OTHER--------------------------------------------------------------------------------
         self.administrator_frame3 = tk.Frame(self.administrator_app)
         self.administrator_frame3.configure(
             background="#0072bc", height=200, width=200)
@@ -201,24 +455,15 @@ class AdmindHomeApp:
         self.administrator_frame2 = tk.Frame(self.administrator_app)
         self.administrator_frame2.configure(
             background="#F7FAE9", height=200, width=200)
-        self.app_name_label = tk.Label(self.administrator_frame2)
-        self.app_name_label.configure(
-            anchor="w",
+        self.app_name_logo = tk.Label(self.administrator_frame2)
+        self.img_SeekULogotypemicro = tk.PhotoImage(
+            file=".\SeekU\SeekU Logotype micro.png")
+        self.app_name_logo.configure(
             background="#F7FAE9",
-            font="{arial} 36 {bold}",
-            foreground="#0072bc",
-            justify="left",
-            text='SEEK')
-        self.app_name_label.place(anchor="w", relx=0.08, rely=.5)
-        self.app_name_labelU = tk.Label(self.administrator_frame2)
-        self.app_name_labelU.configure(
-            anchor="w",
-            background="#F7FAE9",
-            font="{Arial} 36 {bold}",
-            foreground="#FFF200",
-            justify="left",
-            text='U')
-        self.app_name_labelU.place(anchor="w", relx=0.17, rely=0.5)
+            image=self.img_SeekULogotypemicro,
+            text='label1')
+        self.app_name_logo.place(
+            anchor="center", relx=0.15, rely=0.55, x=0, y=0)
         self.app_logo_label = tk.Label(self.administrator_frame2)
         self.img_SeekUmicro = tk.PhotoImage(
             file=".\SeekU\SeekU micro.png")
@@ -240,9 +485,293 @@ class AdmindHomeApp:
 
     def run(self):
         self.mainwindow.mainloop()
+    
+    def db_appear_logic(self):
+        # client_forget------------------------------------
+        self.admin_c_sec1_frame.place_forget()
+        self.add_c_button.place_forget()
+        self.search_c_button.place_forget()
+        self.search_c_entry.place_forget()
+        self.clients_list.place_forget()
+        self.admin_c_sec2_frame.place_forget()
+        self.admin_c_sec3_frame.place_forget()
+        self.manage_client_optionmenu.place_forget()    
+        self.time_and_date_label_c.place_forget()
+        self.administrator_client_frame.place_forget()
+        # client_forget------------------------------------
+        # report_forget------------------------------------
+        self.admin_r_sec1_frame.place_forget()
+        self.print_report.place_forget()
+        self.save_button.place_forget()
+        self.admin_c_sec2_frame.place_forget()
+        self.search_clients_report.place_forget()
+        self.search_r_entry.place_forget()
+        self.clients_list.place_forget()
+        self.admin_r_sec2_frame.place_forget()
+        self.client_report_optionmenu.place_forget()
+        self.time_and_date_label_r.place_forget()
+        self.administrator_report_frame.place_forget()
+        # report_forget------------------------------------
+
+        self.time_and_date_label_db.place(
+            anchor="center",
+            relwidth=1,
+            relx=0.5,
+            rely=0.97,
+            x=0,
+            y=0) 
+        self.ttl_students_label.place(
+            anchor="center", relx=0.16, rely=0.25, x=0, y=0)
+        self.ttl_personnels_label.place(
+            anchor="center", relx=0.5, rely=0.25, x=0, y=0)        	
+        self.ttl_visitor_label.place(
+            anchor="center", relx=0.84, rely=0.25, x=0, y=0)
+        self.administrator_db_ttl_frame.place(
+            anchor="center",
+            relheight=0.35,
+            relwidth=0.9,
+            relx=0.5,
+            rely=0.72,
+            x=0,
+            y=0)
+        self.ol_students_label.place(
+            anchor="center", relx=0.16, rely=0.25, x=0, y=0)
+        self.ol_personnels_label.place(
+            anchor="center", relx=0.5, rely=0.25, x=0, y=0)
+        self.ol_visitor_label.place(
+            anchor="center", relx=0.84, rely=0.25, x=0, y=0)
+        self.administrator_db_ol_frame.place(
+            anchor="center",
+            relheight=0.35,
+            relwidth=0.9,
+            relx=0.5,
+            rely=0.33,
+            x=0,
+            y=0)
+        self.dashboard_label.place(
+            anchor="center", relheight=0.1, relx=0.5, rely=0.09,)
+        self.administrator_db_frame.place(
+            anchor="center",
+            relheight=0.95,
+            relwidth=.78,
+            relx=0.61,
+            rely=0.525)
+        
+    def client_appear_logic(self):
+        # report_forget------------------------------------
+        self.admin_r_sec1_frame.place_forget()
+        self.print_report.place_forget()
+        self.save_button.place_forget()
+        self.admin_c_sec2_frame.place_forget()
+        self.search_clients_report.place_forget()
+        self.search_r_entry.place_forget()
+        self.clients_list.place_forget()
+        self.admin_r_sec2_frame.place_forget()
+        self.client_report_optionmenu.place_forget()
+        self.time_and_date_label_r.place_forget()
+        self.administrator_report_frame.place_forget()
+        # report_forget------------------------------------
+        # db_forget----------------------------------------
+        self.time_and_date_label_db.place_forget()
+        self.ttl_students_label.place_forget()
+        self.ttl_personnels_label.place_forget()       	
+        self.ttl_visitor_label.place_forget()
+        self.administrator_db_ttl_frame.place_forget()
+        self.ol_students_label.place_forget()
+        self.ol_personnels_label.place_forget()
+        self.ol_visitor_label.place_forget()
+        self.administrator_db_ol_frame.place_forget()
+        self.dashboard_label.place_forget()
+        self.administrator_db_frame.place_forget()
+        # db_forget----------------------------------------
+        self.time_and_date_label_c.place(
+            anchor="center",
+            relwidth=1,
+            relx=0.5,
+            rely=0.975,
+            x=0,
+            y=0)
+        self.add_c_button.place(
+            anchor="center", relx=0.85, rely=.5, x=0, y=0)
+        self.admin_c_sec1_frame.place(
+            anchor="center",
+            relheight=0.1,
+            relwidth=1.0,
+            relx=0.5,
+            rely=0.09)
+        self.search_c_button.place(
+            anchor="center",
+            relheight=.5,
+            relwidth=0.16,
+            relx=0.9,
+            rely=.5,
+            x=0,
+            y=0)
+        self.admin_c_sec1_frame.place(
+            anchor="center",
+            relheight=0.1,
+            relwidth=1.0,
+            relx=0.5,
+            rely=0.09)
+        self.search_c_entry.place(anchor="center", relx=0.63, rely=.5, x=0, y=0)
+        self.clients_list.place(anchor="center", relx=0.125, rely=.5, x=0, y=0)        
+        self.admin_c_sec2_frame.place(
+            anchor="center",
+            relheight=0.1,
+            relwidth=.90,
+            relx=0.5,
+            rely=0.22)
+        self.admin_c_sec3_frame.place(
+            anchor="center",
+            relheight=0.6,
+            relwidth=0.9,
+            relx=.5,
+            rely=.6,
+            x=0,
+            y=0)
+        self.manage_client_optionmenu.place(anchor="center", relx=0.17, rely=0.09, x=0, y=0)
+        self.administrator_client_frame.place(
+            anchor="center",
+            relheight=0.95,
+            relwidth=.78,
+            relx=0.61,
+            rely=0.525)
+
+
+    def report_appear_logic(self):
+        # client_forget------------------------------------
+        self.admin_c_sec1_frame.place_forget()
+        self.add_c_button.place_forget()
+        self.search_c_button.place_forget()
+        self.search_c_entry.place_forget()
+        self.clients_list.place_forget()
+        self.admin_c_sec2_frame.place_forget()
+        self.admin_c_sec3_frame.place_forget()
+        self.manage_client_optionmenu.place_forget()    
+        self.time_and_date_label_c.place_forget()
+        self.administrator_client_frame.place_forget()
+        # client_forget------------------------------------
+        #db_forget------------------------------------
+        self.time_and_date_label_db.place_forget()
+        self.ttl_students_label.place_forget()
+        self.ttl_personnels_label.place_forget()       	
+        self.ttl_visitor_label.place_forget()
+        self.administrator_db_ttl_frame.place_forget()
+        self.ol_students_label.place_forget()
+        self.ol_personnels_label.place_forget()
+        self.ol_visitor_label.place_forget()
+        self.administrator_db_ol_frame.place_forget()
+        self.dashboard_label.place_forget()
+        self.administrator_db_frame.place_forget()
+        #db_forget------------------------------------
+        self.time_and_date_label_r.place(
+            anchor="center",
+            relwidth=1,
+            relx=0.5,
+            rely=0.975,
+            x=0,
+            y=0)
+        self.search_clients_report.place(
+            anchor="center",
+            relheight=.5,
+            relwidth=0.16,
+            relx=0.9,
+            rely=.5,
+            x=0,
+            y=0)
+        self.search_r_entry.place(anchor="center", relx=0.63, rely=.5, x=0, y=0)
+        self.admin_r_sec1_frame.place(
+            anchor="center",
+            relheight=0.1,
+            relwidth=.90,
+            relx=0.5,
+            rely=0.09)
+        self.admin_r_sec2_frame.place(
+            anchor="center",
+            relheight=0.65,
+            relwidth=0.9,
+            relx=.5,
+            rely=0.5,
+            x=0,
+            y=0)
+        self.client_report_optionmenu.place(
+            anchor="center", relx=0.17, rely=0.09, x=0, y=0)
+        self.print_report.place(
+            anchor="center",
+            relheight=0.05,
+            relwidth=0.12,
+            relx=0.87,
+            rely=0.875,
+            x=0,
+            y=0)
+        self.save_button.place(
+            anchor="center",
+            relheight=0.05,
+            relwidth=0.12,
+            relx=0.7,
+            rely=0.875,
+            x=0,
+            y=0)
+        self.administrator_report_frame.place(
+            anchor="center",
+            relheight=0.95,
+            relwidth=.78,
+            relx=0.61,
+            rely=0.525)
+
+
+
+    def change_layout(self):
+        if(self.clients_man_var.get() == 'Manage Students'):
+            self.add_c_button.configure(text='Add Students')
+            self.clients_list.configure(text='Students List')
+        if(self.clients_man_var.get() == 'Manage Personnels'):
+            self.add_c_button.configure(text='Add Personnels')
+            self.clients_list.configure(text='Personnels List')
+        if(self.clients_man_var.get() == 'Manage Visitors'):
+            self.add_c_button.configure(text='Add Visitors')
+            self.clients_list.configure(text='Visitors List')
+
+    def add_clients_logic(self):
+        if(self.clients_man_var.get() == 'Manage Students'):
+            pass
+        if(self.clients_man_var.get() == 'Manage Personnels'):
+            pass
+        if(self.clients_man_var.get() == 'Manage Visitors'):
+            pass
+
+    def search_clients_info_logic(self):
+        if(self.clients_man_var.get() == 'Manage Students'):
+            pass
+        if(self.clients_man_var.get() == 'Manage Personnels'):
+            pass
+        if(self.clients_man_var.get() == 'Manage Visitors'):
+            pass
+
+
+    def open_diff_client(self, event):
+        self.change_layout()
+
+
+    def add_clients(self, event=None):
+        self.add_clients_logic()
+
+    def search_clients_info(self, event=None):
+        self.search_clients_info_logic()
+
+
+    def search_clients_reports(self, event=None):
+        pass
+
+    def print_clients_reports(self, event=None):
+        pass
+
+    def save_clients_reports(self, event=None):
+        pass
+
 
     def dashboard_appear(self, event=None):
-        pass
+        self.db_appear_logic()
 
     def dashboard_hover(self, event=None):
         self.dashboard_section_label.configure(foreground="#FFF200")
@@ -251,7 +780,7 @@ class AdmindHomeApp:
         self.dashboard_section_label.configure(foreground="#F7FAE9")
 
     def client_appear(self, event=None):
-        pass
+        self.client_appear_logic()
 
     def client_hover(self, event=None):
         self.client_section_label.configure(foreground="#FFF200")
@@ -269,7 +798,7 @@ class AdmindHomeApp:
         self.user_section_label.configure(foreground="#F7FAE9")
 
     def report_appear(self, event=None):
-        pass
+        self.report_appear_logic()
 
     def report_hover(self, event=None):
         self.report_section_label.configure(foreground="#FFF200")
