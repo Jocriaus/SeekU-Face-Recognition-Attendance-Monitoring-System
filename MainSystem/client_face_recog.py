@@ -3,15 +3,20 @@ from PIL import Image, ImageTk
 import datetime
 import time
 import face_recog as mf
+import sys
 
 class ClientFaceRecogApp:
     def __init__(self,vid_source, login_mod, sel_cam, home_mod, file_path):
-        #assignment for passed parameters
+
+
+    #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.login_window = login_mod
         self.select_cam_window = sel_cam
         self.home_window = home_mod
         
         self.call_cam = False
+    #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
+
         # build ui
         self.face_recog_app = tk.Toplevel()
         self.face_recog_app.configure(
@@ -22,7 +27,7 @@ class ClientFaceRecogApp:
         self.face_recog_app.resizable(False, False)
 
         
-#-----------------------------------------------------------------------------------------
+    #Contains-the-camera-canvas--------------------------------------------------------------------------------------------------------- 
         self.face_recog_frame3 = tk.Frame(self.face_recog_app)
         self.face_recog_frame3.configure(
             background="#0072bc", height=200, width=200)
@@ -45,16 +50,12 @@ class ClientFaceRecogApp:
             rely=.5,
             x=0,
             y=0)
-
-        print(self.camera_canvas.winfo_width())
-        print(self.camera_canvas.winfo_height())
+        #this sets the camera size
         self.fr_vid = mf.FaceRecognition(vid_source,file_path, 1280, 720 )
-        # self.fr_vid = mf.FaceRecognition(vid_source,file_path, 1592, 896 )
-        # self.fr_vid = mf.FaceRecognition(vid_source,file_path, 640, 480 )
-        
+    #Contains-the-camera-canvas--------------------------------------------------------------------------------------------------------- 
 
-
-#-----------------------------------------------------------------------------------------        
+    #Contains-the-sti-logo-attendance-and-student-name--------------------------------------------------------------------------------------------------------- 
+  
         self.face_recog_frame2 = tk.Frame(self.face_recog_app)
         self.face_recog_frame2.configure(
             background="#F7FAE9", height=200, width=200)
@@ -90,10 +91,9 @@ class ClientFaceRecogApp:
             relwidth=1.0,
             relx=0.50,
             rely=0.92)
-
-
-
-#-----------------------------------------------------------------------------------------
+        
+    #Contains-the-sti-logo-attendance-and-student-name--------------------------------------------------------------------------------------------------------- 
+    #Contains-the-signout-and-cancel-buttons-app-logo-and-logotype--------------------------------------------------------------------------------------------------------- 
 
         self.face_recog_frame = tk.Frame(self.face_recog_app)
         self.face_recog_frame.configure(
@@ -123,18 +123,18 @@ class ClientFaceRecogApp:
             anchor="center",
             relx=.5,
             rely=0.51)
-        self.sign_out_button = tk.Button(self.face_recog_frame)
-        self.sign_out_button.configure(
+        self.log_out_button = tk.Button(self.face_recog_frame)
+        self.log_out_button.configure(
             font="{arial black} 20 {}",
             foreground="#0072bc",
             text='Log out')
-        self.sign_out_button.place(
+        self.log_out_button.place(
             anchor="center",
             relheight=0.05,
             relwidth=0.55,
             relx=0.5,
             rely=0.06)
-        self.sign_out_button.bind("<ButtonPress>", self.log_out_func, add="")
+        self.log_out_button.bind("<ButtonPress>", self.log_out_func, add="")
         self.cancel_button = tk.Button(self.face_recog_frame)
         self.cancel_button.configure(
             font="{arial black} 30 {}",
@@ -156,30 +156,41 @@ class ClientFaceRecogApp:
             relwidth=0.16,
             relx=0.92,
             rely=0.5)
-        
+    #Contains-the-signout-button-app-logo-and-logotype--------------------------------------------------------------------------------------------------------- 
+        # see function description
         self.cam_update()
+        # see function descritption
         self.hide_name()
+
         # Main widget
         self.mainwindow = self.face_recog_app
+
+        # will set the window to fullscreen
         self.mainwindow.wm_attributes('-fullscreen', 'True')
-        self.mainwindow.protocol("WM_DELETE_WINDOW", self.show_home_window )
+        # this protocol will do a function after pressing the close button.
+        self.mainwindow.protocol("WM_DELETE_WINDOW", self.exit_program )
 
-#-----------------------------------------------------------------------------------------
+    #-----------------------------------------------------------------------------------------
+    # this function will destroy the window and closes the system/program.
+    def exit_program(self):
+        sys.exit() 
 
+    # this will show the home window and destroy this window
     def show_home_window(self):
         self.home_window.deiconify()
         self.face_recog_app.destroy()
-        # add additional function for destroying camera
 
+    # this function will hide the name and the attendance widgets
     def hide_name(self):
         self.stud_name_label.place_forget()
         self.attendance_label.place_forget()
 
+    # this function will show the name and the attendance widgets
     def show_name(self):
         self.stud_name_label.place(anchor="center", relx=0.5, rely=0.3)
         self.attendance_label.place(anchor="center", relx=0.5, rely=0.75)
 
-        # will update the canvas content
+    # this function updates the canvas content - shows the camera
     def cam_update(self):
         if self.fr_vid.cont:
             return
@@ -192,7 +203,7 @@ class ClientFaceRecogApp:
                 # consistently getting the time and date 
                 self.current_time = time.strftime('%H:%M:%S', time.localtime())
                 self.current_date = datetime.date.today().strftime("%m/%d/%y")
-                self.current_date_n_time = 'Attendance: ' + self.current_date +' '+self.current_time  
+                self.current_date_n_time = self.current_date +' '+self.current_time  
                 self.fr_vid.box_and_dot(frame)
                 # saving the frame from the array unto the photo variable as an "image"
                 self.photo = ImageTk.PhotoImage(image = Image.fromarray(frame))
@@ -205,15 +216,13 @@ class ClientFaceRecogApp:
                 # call again the same method after 15 millisecond
         self.face_recog_app.after(15, self.cam_update)  
 
+    # this function will save the attendance of the students
     def attendance(self):
         print("detected")
         self.show_name()
         # use the self.fr_vid.name to get the name in the database
         self.stud_name_label.config(text = self.fr_vid.name)
         self.attendance_label.config(text = self.current_date_n_time)
-        """
-        system connection to the database
-        """
         # the system will open the image of the client using the array
         # of paths of the image with the index of the image.
         self.load_image = Image.open(self.fr_vid.paths_array[self.fr_vid.image_index])
@@ -225,6 +234,7 @@ class ClientFaceRecogApp:
         # will display the image into the canvas
         self.camera_canvas.create_image(0, 0, image = self.student_image, anchor = tk.NW)
 
+    # this function will check the images if there are similar faces
     def recognize_face(self):
         self.fr_vid.face_recognition_func()
         print(self.fr_vid.face_detected)
@@ -234,22 +244,35 @@ class ClientFaceRecogApp:
         if not self.fr_vid.face_detected :
             print('run')
             self.attendance()
+            # this will call the next person function 
             self.face_recog_app.after(4000, self.next_person)
+            self.save_attendance_func()
+
         if self.fr_vid.face_detected:
+            # this will call the next person function if there is no face detected
             self.face_recog_app.after(15, self.next_person)
 
-        
+    # this function will reset the conditions that enables the face detection 
+    # and camera display, will call the cam_update function to resume cam display
     def next_person(self):
         self.fr_vid.cont = False
         self.fr_vid.face_detected = True
         self.fr_vid.recognized = False
         self.cam_update()
 
+    # this will save the attendance of the student
+    def save_attendance_func(self):
+        """
+        system connection to the database
+        """
+        pass
 
+    # this command will return to the home window
     def log_out_func(self, event=None):
         self.show_home_window()
         self.face_recog_app.destroy()
 
+    # this will cancel the saving the current attendance of the person detected
     def cancel_attendance(self, event=None):
         pass
 

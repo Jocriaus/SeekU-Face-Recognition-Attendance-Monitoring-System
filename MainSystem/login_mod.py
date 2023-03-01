@@ -12,6 +12,7 @@ class LoginApp:
         self.log_in_app.resizable(False, False)
         self.log_in_app.title("SeekU - Login")
         self.log_in_app.iconbitmap(".\SeekU\SeekU.ico")
+    #Contains-the-entry-and-button--------------------------------------------------------------------------------------------------------- 
         self.log_in_frame2 = tk.Frame(self.log_in_app)
         self.log_in_frame2.configure(
             background="#0072bc", height=200, width=200)
@@ -84,6 +85,9 @@ class LoginApp:
             width=500,
             x=250,
             y=250)
+    #Contains-the-entry-and-button--------------------------------------------------------------------------------------------------------- 
+    #Contains-the-logo-and-logotype--------------------------------------------------------------------------------------------------------- 
+       
         self.log_in_frame = tk.Frame(self.log_in_app)
         self.log_in_frame.configure(
             background="#F7FAE9", height=200, width=200)
@@ -114,21 +118,42 @@ class LoginApp:
             width=500,
             x=250,
             y=75)
-
+    #Contains-the-logo-and-logotype--------------------------------------------------------------------------------------------------------- 
+        # this protocol will do a function after pressing the close button.
         self.log_in_app.protocol("WM_DELETE_WINDOW", self.exit_program)
-        #self.center(self.log_in_app)
+
         # Main widget
         self.mainwindow = self.log_in_app
 
+        # refer to the function's comments
+        self.center(self.mainwindow)
+    #-----------------------------------------------------------------------------------------
+
+    # this function will run the main window/the app.
+    def run(self):
+        self.mainwindow.mainloop()
+
+    # this function will destroy the window and closes the system/program.
     def exit_program(self):
         sys.exit() 
 
+    # this function will hide the window after logging in.
+    def hide_this_window(self):
+        self.log_in_app.withdraw()
+
+    # this function will clear the contents of the entry after logging in.
+    def clear_entry(self):
+        self.un_entry.delete(0,'end')
+        self.pw_entry.delete(0,'end')
+
+
+    # this function will enable the user to enter to the system
     def login_logic(self):
         if ((len(self.un_entry.get()) != 0) and (len(self.pw_entry.get()) != 0)):
             print("login")
             self.hide_this_window()
             self.clear_entry()
-            cC.ClientCameraApp(self.log_in_app)
+            cC.ClientCameraSelectApp(self.log_in_app)
 
             # add if else where it checks the un and pw to match
                 # go to the home section
@@ -139,6 +164,7 @@ class LoginApp:
         else:
             messagebox.showwarning("Error", "Please enter value in all field." )
 
+    # this function will center the window
     def center(self, win):
         win.update()
         w_req, h_req = win.winfo_width(), win.winfo_height()
@@ -149,16 +175,9 @@ class LoginApp:
         y = (win.winfo_screenheight() // 2) - (h // 2)
         win.geometry('{0}x{1}+{2}+{3}'.format(w_req, h_req, x, y))
 
-    def hide_this_window(self):
-        self.log_in_app.withdraw()
+    
 
-    def clear_entry(self):
-        self.un_entry.delete(0,'end')
-        self.pw_entry.delete(0,'end')
-
-    def run(self):
-        self.mainwindow.mainloop()
-
+    # this command function is associated with the login button
     def login_press(self, event=None):
         self.login_logic()
 

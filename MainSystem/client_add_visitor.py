@@ -1,23 +1,21 @@
 import tkinter as tk
 from tkinter import filedialog
 import tkinter as tk
-import cv2
 import PIL.Image, PIL.ImageTk
 import os
-
+import sys
 
 class AddVisitorApp:
     def __init__(self, vid_source, login_mod, sel_cam, home_mod, cam_app, file_path):
 
-        #assignment for passed parameters
+    #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.client_cam_app = cam_app
         self.video_source = vid_source
         self.login_window = login_mod
         self.sel_cam_window = sel_cam
         self.home_window = home_mod
         self.img_path = file_path
-        # open video source
-        
+    #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
 
         # build ui
         self.add_visitor_app = tk.Toplevel()
@@ -29,7 +27,7 @@ class AddVisitorApp:
         self.add_visitor_app.resizable(False, False)
 
 
-#-----------------------------------------------------------------------------------------
+    #Contains-Camera-Canvas---------------------------------------------------------------------------------------------------
         self.add_visitor_frame3 = tk.Frame(self.add_visitor_app)
         self.add_visitor_frame3.configure(
             background="#0072bc", height=200, width=200)
@@ -50,8 +48,8 @@ class AddVisitorApp:
             rely=0.36,
             height=480,
             width=854)
-
-#-----------------------------------------------------------------------------------------
+    #Contains-Camera-Canvas---------------------------------------------------------------------------------------------------
+    #Contains-the-returnbutton-logo-and-logotype--------------------------------------------------------------------------------------------------------- 
         self.add_visitor_frame2 = tk.Frame(self.add_visitor_app)
         self.add_visitor_frame2.configure(
             background="#F7FAE9", height=200, width=200)
@@ -74,29 +72,27 @@ class AddVisitorApp:
             image=self.img_SeekUmedium,
             text='label1')
         self.app_logo_label.place(anchor="center", relx=0.47, rely=0.50)
-        self.log_out_button = tk.Button(self.add_visitor_frame2)
-        self.log_out_button.configure(
+        self.return_button = tk.Button(self.add_visitor_frame2)
+        self.return_button.configure(
             font="{arial black} 20 {}",
             foreground="#0072bc",
             text='Return')
-        self.log_out_button.place(
+        self.return_button.place(
             anchor="center",
             relheight=0.15,
             relwidth=0.1,
             relx=0.93,
             rely=0.85)
-        self.log_out_button.bind("<ButtonPress>", self.log_out_func, add="")
+        self.return_button.bind("<ButtonPress>", self.return_func, add="")
         self.add_visitor_frame2.place(
             anchor="center",
             relheight=0.3,
             relwidth=1.0,
             relx=0.50,
             rely=0.85)
-
-
-
-
-#-----------------------------------------------------------------------------------------            
+    #Contains-the-logo-and-logotype--------------------------------------------------------------------------------------------------------- 
+    #Contains-save-info-button-and-diff-entry-------------------------------------------------------------------------------------------------------- 
+          
         self.add_visitor_frame = tk.Frame(self.add_visitor_app)
         self.add_visitor_frame.configure(
             background="#F7FAE9", height=200, width=200)
@@ -189,23 +185,29 @@ class AddVisitorApp:
             relwidth=0.35,
             relx=0.17,
             rely=0.5)
-
+    #Contains-save-info-button-and-diff-entry-------------------------------------------------------------------------------------------------------- 
+        # see the function for description
         self.disp_pic()
         # Main widget
         self.mainwindow = self.add_visitor_app
+        # will set the window to fullscreen
         self.mainwindow.attributes('-topmost', True)
-        self.mainwindow.wm_attributes('-fullscreen', 'True', )
+        # this protocol will do a function after pressing the close button.
+        self.mainwindow.wm_attributes('-fullscreen', 'True')
+        # this protocol will do a function after pressing the close button.
+        self.mainwindow.protocol("WM_DELETE_WINDOW", self.exit_program )
 
 #-----------------------------------------------------------------------------------------
+    # this function will destroy the window and closes the system/program.
+    def exit_program(self):
+        sys.exit() 
+
+    # this will return to the camera app
     def show_cam_app_win(self):
         self.client_cam_app.deiconify()
         self.add_visitor_app.destroy()
 
-    def show_home_window(self):
-        self.home_window.deiconify()
-        self.add_visitor_app.destroy()
-
-
+    # this function will display the image into the canvas
     def disp_pic(self):
         self.load_image = PIL.Image.open(self.img_path + "/temp.jpg")
         # will use the ImageTK.PhotoImage() function to set the image
@@ -215,6 +217,7 @@ class AddVisitorApp:
         # will display the image into the canvas
         self.camera_canvas.create_image(0, 0, image = self.student_image, anchor = tk.NW)
     
+    #this function will save the info to the database and rename the temp image
     def save_info(self):
         # putting the values into variables to save into the database. 
         # create a data for the user then get the PK for the name of the image
@@ -232,15 +235,16 @@ class AddVisitorApp:
         rename img to primary key use os.rename()
         """
     
-
+    # this command will open the camera app
     def change_pic(self, event=None):
         self.show_cam_app_win()
         self.add_visitor_app.destroy()
 
-    def log_out_func(self, event=None):
+    # this command will return to the camera app
+    def return_func(self, event=None):
         self.show_cam_app_win()
         self.add_visitor_app.destroy()
 
-
+    # this command will save the info of the visitor
     def save_func(self, event=None):
         self.save_info()

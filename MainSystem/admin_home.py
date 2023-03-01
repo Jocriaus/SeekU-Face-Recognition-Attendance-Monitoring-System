@@ -1,9 +1,16 @@
 #!/usr/bin/python3
 import tkinter as tk
-
-
+from datetime import datetime
+import sys
 class AdmindHomeApp:
     def __init__(self, master=None):
+
+#PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
+        self.now = datetime.now()
+        self.current_date_n_time = self.now.strftime("%d/%m/%Y %H:%M:%S")
+
+#PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
+      
         # build ui
         self.administrator_app = tk.Tk() if master is None else tk.Toplevel(master)
         self.administrator_app.configure(
@@ -12,7 +19,6 @@ class AdmindHomeApp:
         height= self.administrator_app.winfo_screenheight()               
         self.administrator_app.geometry("%dx%d" % (width, height))
         self.administrator_app.resizable(False, False)
-
 
 #CLIENT-------------------------------------------------------------------------------------------------------  
         self.administrator_client_frame = tk.Frame(self.administrator_app)
@@ -24,7 +30,7 @@ class AdmindHomeApp:
             compound="top",
             font="{arial} 30 {bold}",
             foreground="#0072bc",
-            text='Time and Date')
+            text= self.current_date_n_time)
         self.time_and_date_label_c.place(
             anchor="center",
             relwidth=1,
@@ -135,7 +141,7 @@ class AdmindHomeApp:
             compound="top",
             font="{arial} 30 {bold}",
             foreground="#0072bc",
-            text='Time and Date')
+            text= self.current_date_n_time)
         self.time_and_date_label_r.place(
             anchor="center",
             relwidth=1,
@@ -187,7 +193,7 @@ class AdmindHomeApp:
         self.clients_rep_var = tk.StringVar(value='Students Report')
         __values = ['Students Report', 'Personnels Report', 'Visitors Report']
         self.client_report_optionmenu = tk.OptionMenu(
-            self.administrator_report_frame, self.clients_rep_var, *__values, command=None)
+            self.administrator_report_frame, self.clients_rep_var, *__values, command=self.open_diff_report)
         self.client_report_optionmenu.place(
             anchor="center", relx=0.17, rely=0.09, x=0, y=0)
         self.client_report_optionmenu.configure(font="{arial} 20 {bold}")
@@ -237,16 +243,17 @@ class AdmindHomeApp:
         self.time_and_date_label_db = tk.Label(self.administrator_db_frame)
         self.time_and_date_label_db.configure(
             background="#F7FAE9",
-            font="{arial} 36 {bold}",
+            compound="top",
+            font="{arial} 30 {bold}",
             foreground="#0072bc",
-            text='Time and Date')
+            text= self.current_date_n_time)
         self.time_and_date_label_db.place(
             anchor="center",
             relwidth=1,
             relx=0.5,
-            rely=0.97,
+            rely=0.975,
             x=0,
-            y=0) 
+            y=0)
         self.administrator_db_ttl_frame = tk.Frame(self.administrator_db_frame)
         self.administrator_db_ttl_frame.configure(
             background="#F7FAE9", height=200, width=200)
@@ -478,14 +485,34 @@ class AdmindHomeApp:
             relwidth=1.0,
             relx=0.50,
             rely=0.04)
+    
+
+
+        self.update_time()
 
         # Main widget
         self.mainwindow = self.administrator_app
         self.mainwindow.wm_attributes('-fullscreen', 'True')
+    #-------------------------------------------------------------------------------------------
+
+    # this function will destroy the window and closes the system/program.
+    def exit_program(self):
+        sys.exit() 
 
     def run(self):
         self.mainwindow.mainloop()
-    
+
+    # this function updates the time below the window
+    def update_time(self):
+        self.now = datetime.now()
+        self.current_date_n_time = self.now.strftime("%d/%m/%Y %H:%M:%S")
+        self.time_and_date_label_c.configure(text= self.current_date_n_time )
+        self.time_and_date_label_r.configure(text= self.current_date_n_time )
+        self.time_and_date_label_db.configure(text= self.current_date_n_time )
+        self.administrator_app.after(15,self.update_time)
+
+#APPEAR-LOGIC-------------------------------------------------------------------------------------------------------
+    # this function removes all uncessesary widgets except the dasboard
     def db_appear_logic(self):
         # client_forget------------------------------------
         self.admin_c_sec1_frame.place_forget()
@@ -517,9 +544,9 @@ class AdmindHomeApp:
             anchor="center",
             relwidth=1,
             relx=0.5,
-            rely=0.97,
+            rely=0.975,
             x=0,
-            y=0) 
+            y=0)
         self.ttl_students_label.place(
             anchor="center", relx=0.16, rely=0.25, x=0, y=0)
         self.ttl_personnels_label.place(
@@ -557,6 +584,7 @@ class AdmindHomeApp:
             relx=0.61,
             rely=0.525)
         
+    # this function removes all uncessesary widgets except the client
     def client_appear_logic(self):
         # report_forget------------------------------------
         self.admin_r_sec1_frame.place_forget()
@@ -637,7 +665,7 @@ class AdmindHomeApp:
             relx=0.61,
             rely=0.525)
 
-
+    # this function removes all uncessesary widgets except the reports
     def report_appear_logic(self):
         # client_forget------------------------------------
         self.admin_c_sec1_frame.place_forget()
@@ -719,9 +747,12 @@ class AdmindHomeApp:
             relx=0.61,
             rely=0.525)
 
+#APPEAR-LOGIC-------------------------------------------------------------------------------------------------------
 
-
-    def change_layout(self):
+#CLIENT-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
+    # this function will change the display according to the 
+    # selected option on the option menu for the clent section
+    def change_layout_client(self):
         if(self.clients_man_var.get() == 'Manage Students'):
             self.add_c_button.configure(text='Add Students')
             self.clients_list.configure(text='Students List')
@@ -747,29 +778,22 @@ class AdmindHomeApp:
             pass
         if(self.clients_man_var.get() == 'Manage Visitors'):
             pass
+#CLIENT-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
 
+#REPORT-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
 
-    def open_diff_client(self, event):
-        self.change_layout()
+    # this function will change the display according to the 
+    # selected option on the option menu for the report section
+    def change_layout_reports(self):
+        if(self.clients_rep_var.get() == 'Manage Students'):
+            pass
+        if(self.clients_rep_var.get() == 'Manage Personnels'):
+            pass
+        if(self.clients_rep_var.get() == 'Manage Visitors'):
+            pass
+#REPORT-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
 
-
-    def add_clients(self, event=None):
-        self.add_clients_logic()
-
-    def search_clients_info(self, event=None):
-        self.search_clients_info_logic()
-
-
-    def search_clients_reports(self, event=None):
-        pass
-
-    def print_clients_reports(self, event=None):
-        pass
-
-    def save_clients_reports(self, event=None):
-        pass
-
-
+#DASBOARD-COMMANDS---------------------------------------------------------------------------------------------------------------
     def dashboard_appear(self, event=None):
         self.db_appear_logic()
 
@@ -778,7 +802,8 @@ class AdmindHomeApp:
 
     def dashboard_hover_out(self, event=None):
         self.dashboard_section_label.configure(foreground="#F7FAE9")
-
+#DASBOARD-COMMANDS---------------------------------------------------------------------------------------------------------------
+#CLIENTS-COMMANDS---------------------------------------------------------------------------------------------------------------
     def client_appear(self, event=None):
         self.client_appear_logic()
 
@@ -788,6 +813,18 @@ class AdmindHomeApp:
     def client_hover_out(self, event=None):
         self.client_section_label.configure(foreground="#F7FAE9")
 
+    def open_diff_client(self, event=None):
+        self.change_layout_client()
+
+
+    def add_clients(self, event=None):
+        self.add_clients_logic()
+
+    def search_clients_info(self, event=None):
+        self.search_clients_info_logic()
+#CLIENTS-COMMANDS---------------------------------------------------------------------------------------------------------------
+#USER-COMMANDS---------------------------------------------------------------------------------------------------------------
+
     def user_appear(self, event=None):
         pass
 
@@ -796,6 +833,8 @@ class AdmindHomeApp:
 
     def user_hover_out(self, event=None):
         self.user_section_label.configure(foreground="#F7FAE9")
+#USER-COMMANDS---------------------------------------------------------------------------------------------------------------
+#REPORTS-COMMANDS---------------------------------------------------------------------------------------------------------------
 
     def report_appear(self, event=None):
         self.report_appear_logic()
@@ -806,6 +845,20 @@ class AdmindHomeApp:
     def report_hover_out(self, event=None):
         self.report_section_label.configure(foreground="#F7FAE9")
 
+    def open_diff_report(self, event=None):
+        self.change_layout_reports()
+
+    def search_clients_reports(self, event=None):
+        pass
+
+    def print_clients_reports(self, event=None):
+        pass
+
+    def save_clients_reports(self, event=None):
+        pass
+    
+#REPORTS-COMMANDS---------------------------------------------------------------------------------------------------------------
+#SETTINGS-COMMANDS---------------------------------------------------------------------------------------------------------------
     def settings_appear(self, event=None):
         pass
 
@@ -814,7 +867,8 @@ class AdmindHomeApp:
 
     def settings_hover_out(self, event=None):
         self.settings_section_label.configure(foreground="#F7FAE9")
-
+#SETTINGS-COMMANDS---------------------------------------------------------------------------------------------------------------
+#LOGOUT-COMMANDS---------------------------------------------------------------------------------------------------------------
     def logout(self, event=None):
         # log in module appear
         self.administrator_app.destroy()
@@ -824,6 +878,7 @@ class AdmindHomeApp:
 
     def logout_hover_out(self, event=None):
         self.logout_label.configure(foreground="#F7FAE9")
+#LOGOUT-COMMANDS---------------------------------------------------------------------------------------------------------------
 
 
 

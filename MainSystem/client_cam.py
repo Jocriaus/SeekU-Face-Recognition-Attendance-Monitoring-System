@@ -1,11 +1,13 @@
 import tkinter as tk
 import client_home as cH
 import sys
-class ClientCameraApp:
+class ClientCameraSelectApp:
     def __init__(self, login_module):
 
-        self.login_window = login_module
+    #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
 
+        self.login_window = login_module # this is the login window
+    #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
 
         # build ui
         self.camera_app = tk.Toplevel()
@@ -23,28 +25,29 @@ class ClientCameraApp:
         self.cam_var = tk.IntVar()
         self.cam_var.set(0)
 
-        self.builtin_radiobutton = tk.Radiobutton(self.camera_frame)
-        self.builtin_radiobutton.configure(
+    #Contains-the-radiobuttons-entry-and-button---------------------------------------------------------------------------------------------- 
+        self.first_cam_radiobutton = tk.Radiobutton(self.camera_frame)
+        self.first_cam_radiobutton.configure(
             background="#0072bc",
             font="{arial} 24 {}",
             foreground="#F7FAE9",
-            text='Built in Webcam',
+            text='First Camera',
             selectcolor='black',
             variable = self.cam_var,
             value = 0,
             command= self.check_selection)
-        self.builtin_radiobutton.place(anchor="center", x=210, y=250)
-        self.third_party_radiobutton = tk.Radiobutton(self.camera_frame)
-        self.third_party_radiobutton.configure(
+        self.first_cam_radiobutton.place(anchor="center", x=186, y=250)
+        self.second_cam_radiobutton = tk.Radiobutton(self.camera_frame)
+        self.second_cam_radiobutton.configure(
             background="#0072bc",
             font="{arial} 24 {}",
             foreground="#F7FAE9",
-            text='Third Party Webcam',
+            text='Second Camera',
             selectcolor='black',
             variable = self.cam_var,
             value = 1,
             command= self.check_selection)
-        self.third_party_radiobutton.place(anchor="center", x=240, y=300)
+        self.second_cam_radiobutton.place(anchor="center", x=208, y=300)
         self.ip_cam_radiobutton = tk.Radiobutton(self.camera_frame)
         self.ip_cam_radiobutton.configure(
             background="#0072bc",
@@ -119,8 +122,9 @@ class ClientCameraApp:
             x=250,
             y=300)
 
+    #Contains-the-radiobuttons-entry-and-button----------------------------------------------------------------------------------------------
 
-#---------------------------------------------------------------------------------
+    #Contains-the-logo-and-logotype--------------------------------------------------------------------------------------------------------- 
         self.camera_frame2 = tk.Frame(self.camera_app)
         self.camera_frame2.configure(
             background="#F7FAE9", height=200, width=200)
@@ -151,17 +155,31 @@ class ClientCameraApp:
             width=500,
             x=250,
             y=75)
-
+    #Contains-the-logo-and-logotype--------------------------------------------------------------------------------------------------------- 
+        # this protocol will do a function after pressing the close button.
         self.camera_app.protocol("WM_DELETE_WINDOW", self.exit_program )
 
+        # Main widget
         self.mainwindow = self.camera_app
+
+        # refer to the function's comments
         self.center(self.mainwindow)
 
-
-#-----------------------------------------------------------------------------------------
+    #-----------------------------------------------------------------------------------------
+    # this function will destroy the window and closes the system/program.
     def exit_program(self):
         sys.exit() 
 
+    # this function will hide this window
+    def hide_this_window(self):
+        self.camera_app.withdraw()
+
+    # this function will return to the login window and destroy this window
+    def show_log_window(self):
+        self.login_window.deiconify()
+        self.camera_app.destroy()
+
+    # this function will center the window
     def center(self, win):
         win.update()
         w_req, h_req = win.winfo_width(), win.winfo_height()
@@ -172,6 +190,7 @@ class ClientCameraApp:
         y = (win.winfo_screenheight() // 2) - (h // 2)
         win.geometry('{0}x{1}+{2}+{3}'.format(w_req, h_req, x, y))
 
+    # this function will enable the entry if you didn't chose the ip camera
     def check_selection(self, event=None):
         print(self.cam_var.get())
         if(self.cam_var.get() == 0):
@@ -181,6 +200,7 @@ class ClientCameraApp:
         if(self.cam_var.get() == 2):
             self.ip_cam_entry.configure(state='normal')
 
+    # this function will send the videosource value to the next windows
     def open_logic(self):
         self.hide_this_window()
         if(self.cam_var.get() == 0):
@@ -192,13 +212,6 @@ class ClientCameraApp:
         if(self.cam_var.get() == 2):
             vid_source = self.ip_cam_entry.get()
             cH.HomeApp(vid_source, self.login_window, self.camera_app )   
-
-    def hide_this_window(self):
-        self.camera_app.withdraw()
-
-    def show_log_window(self):
-        self.login_window.deiconify()
-        self.camera_app.destroy()
 
     def open_press(self, event=None):
         self.open_logic()

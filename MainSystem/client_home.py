@@ -6,11 +6,11 @@ import sys
 class HomeApp:
     def __init__(self,vid_source, login_mod, sel_cam):
         
-        #assignment for passed parameters
+    #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.video_source = vid_source
         self.login_window = login_mod
         self.sel_cam_window = sel_cam
-        print(self.video_source)
+    #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
 
         # build ui
         self.home_app = tk.Toplevel()
@@ -20,7 +20,7 @@ class HomeApp:
         self.home_app.title("SeekU - Home")
         self.home_app.iconbitmap(".\SeekU\SeekU.ico")
 
-#-----------------------------------------------------------------------------------------
+    #Contains-the-buttons----------------------------------------------------------------------------------------------------- 
         self.home_app_frame2 = tk.Frame(self.home_app)
         self.home_app_frame2.configure(
             background="#0072bc", height=200, width=200)
@@ -46,8 +46,6 @@ class HomeApp:
             y=230)
         self.attendance_button.bind(
             "<ButtonPress>", self.attendance_press, add="")
-
-
 
         self.add_visitor = tk.Button(self.home_app_frame2)
         self.add_visitor.configure(
@@ -99,9 +97,10 @@ class HomeApp:
             width=500,
             x=250,
             y=250)
+    #Contains-the-buttons----------------------------------------------------------------------------------------------------- 
 
 
-#---------------------------------------------------------------------------------------
+    #Contains-the-logo-and-logotype--------------------------------------------------------------------------------------------------------- 
         self.home_app_frame = tk.Frame(self.home_app)
         self.home_app_frame.configure(
             background="#F7FAE9", height=200, width=200)
@@ -133,19 +132,30 @@ class HomeApp:
             width=500,
             x=250,
             y=75)
+    #Contains-the-logo-and-logotype--------------------------------------------------------------------------------------------------------- 
 
-
+        # this protocol will do a function after pressing the close button.
         self.home_app.protocol("WM_DELETE_WINDOW", self.exit_program )
         # Main widget
         self.mainwindow = self.home_app
+        # refer to the function's comments
         self.center(self.mainwindow)
 
-
-#-----------------------------------------------------------------------------------------
-
+    #-----------------------------------------------------------------------------------------
+    # this function will destroy the window and closes the system/program.
     def exit_program(self):
         sys.exit() 
 
+    # this function will hide the window after logging in.
+    def hide_this_window(self):
+        self.home_app.withdraw()
+
+    # this function will return to the login window
+    def show_log_window(self):
+        self.login_window.deiconify()
+        self.home_app.destroy()
+
+    # this function will center the window
     def center(self, win):
         win.update()
         w_req, h_req = win.winfo_width(), win.winfo_height()
@@ -156,33 +166,28 @@ class HomeApp:
         y = (win.winfo_screenheight() // 2) - (h // 2)
         win.geometry('{0}x{1}+{2}+{3}'.format(w_req, h_req, x, y))
 
-
-    def hide_this_window(self):
-        self.home_app.withdraw()
-
-    def show_log_window(self):
-        self.login_window.deiconify()
-        self.home_app.destroy()
-
+    # this function will let the user choose the folder according to what is needed
     def select_folder(self):
         self.home_app.attributes('-topmost', False)
         self.folder_selected = filedialog.askdirectory()
         print(self.folder_selected)
         self.home_app.attributes('-topmost', True)
 
-
+    # this command will open the attendance module
     def attendance_press(self, event=None):
         self.hide_this_window()
         self.select_folder()
         # add for handling the select folder function if nothing is chosen.
         cFG.ClientFaceRecogApp(
             self.video_source,self.login_window,self.sel_cam_window, self.home_app,self.folder_selected )
-
+        
+    # this command will open the add visitor module
     def add_visitors_press(self, event=None):
         self.hide_this_window()
         self.select_folder()
         cCA.CameraApp(
             self.video_source,self.login_window,self.sel_cam_window, self.home_app,self.folder_selected )
 
+    # this command will open the log in window
     def logout_press(self, event=None):
         self.show_log_window()

@@ -9,31 +9,41 @@ import time
 class FaceRecognition:
     def __init__(self, video_source, file_path, xsize,ysize):    
     
+    #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.recognized = False
         self.enter = False
+
+        # this is used for the detecting if the face is inside the box
         self.init_time = 0
         self.current_time = 0
         self.passed_time = 0
 
-        self.cont = False
-        self.face_detected = True
         # path for training images
         self.path = file_path
+
+        self.cont = False
+        self.face_detected = True
+
         # array for images, image location, and image names
         self.images = []
         self.paths_array = []
         self.classNames = []
+
         # os.listdir is a reserve word to list all the folder inside path
         self.myList = os.listdir(self.path)
 
+        # classifier for face detection
         self.haar_face_cascade = cv2.CascadeClassifier(
         "MainSystem\DetectionData\haarcascade_frontalface_alt.xml"
         )
 
-
-
         print(self.myList)
+    #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
 
+
+
+    #Getting-the-dataset-------------------------------------------------------------------------------------------
+ 
         # for loop to run through all subfolders of the root folders
         for root, dirs, files in os.walk(self.path):
             # for loop in every files on folders
@@ -46,10 +56,11 @@ class FaceRecognition:
                 self.paths_array.append(file_path)
                 # get the className by appending the name of file and removes extension
                 self.classNames.append(os.path.splitext(f)[0])
-            
-
+        
         print(self.paths_array)
         print(self.classNames)
+
+    #Getting-the-dataset-------------------------------------------------------------------------------------------
 
         # function to encode images
         def findEncodings(images):
@@ -83,6 +94,8 @@ class FaceRecognition:
         # Get video source width and height
         self.width = self.live_feed.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = self.live_feed.get(cv2.CAP_PROP_FRAME_HEIGHT)
+    #---------------------------------------------------------------------------------------------------------
+
 
     def get_frame(self):
         if self.live_feed.isOpened():
@@ -96,6 +109,7 @@ class FaceRecognition:
         else:
             return (ret, None)
 
+    # this function detects the faces and return the value of the detected face
     def face_recognition_func(self):
         # function to detect faces and match on the encoded images
         success, self.frame = self.get_frame()
@@ -132,7 +146,8 @@ class FaceRecognition:
                     print('face detected')
                     break
 
-
+    # this function puts a square shape of a frame and puts a circle
+    # on the center of the face
     def box_and_dot(self, frame):
 
         self.center = (0,0)
@@ -153,6 +168,7 @@ class FaceRecognition:
             self.center = (math.floor(x+ w / 2), math.floor(y+ h / 2))
             cv2.circle(frame,self.center,5, (0, 114, 188),5)
 
+    # this function detects if the face is inside the square within the time set.
     def face_in_box(self, recognize_face):
         recognize_face_func = recognize_face
         if self.recognized:
@@ -165,6 +181,7 @@ class FaceRecognition:
             self.current_time = time.time()
             self.passed_time = self.current_time - self.init_time
             print(self.passed_time)
+            # three is the time set 
             if self.passed_time >= 3:
                 self.init_time = 0
                 self.current_time = 0
@@ -174,6 +191,9 @@ class FaceRecognition:
                 recognize_face_func()
         else:
             self.enter = False
+
+
+
 
 """
     def box(self, frame):
@@ -195,10 +215,6 @@ class FaceRecognition:
         for (x, y, w, h) in eyes:
             cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 114, 188), 2)
 """
-
-    
-
-
 
                     
 """
