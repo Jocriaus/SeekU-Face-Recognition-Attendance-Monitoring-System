@@ -16,10 +16,10 @@ class AdminReportStudentsApp:
         
 
 #REPORT------------------------------------------------------------------------------------------------------- 
-        self.administrator_reports_frame = tk.Frame(self.administrator_app)
-        self.administrator_reports_frame.configure(
+        self.administrator_users_frame = tk.Frame(self.administrator_app)
+        self.administrator_users_frame.configure(
             background="#E7E7E7", height=200, width=200)
-        self.time_and_date_label = tk.Label(self.administrator_reports_frame)
+        self.time_and_date_label = tk.Label(self.administrator_users_frame)
         self.time_and_date_label.configure(
             background="#F7FAE9",
             compound="top",
@@ -33,16 +33,16 @@ class AdminReportStudentsApp:
             rely=0.975,
             x=0,
             y=0)
-        self.admin_r_sec1_frame = tk.Frame(self.administrator_reports_frame)
-        self.admin_r_sec1_frame.configure(
+        self.admin_u_sec1_frame = tk.Frame(self.administrator_users_frame)
+        self.admin_u_sec1_frame.configure(
             background="#E7E7E7", height=200, width=200)
-        self.search_clients_report = tk.Button(self.admin_r_sec1_frame)
-        self.search_clients_report.configure(
+        self.search_user_info = tk.Button(self.admin_u_sec1_frame)
+        self.search_user_info.configure(
             background="#0072bc",
             font="{arial} 20 {bold}",
             foreground="#f7fae9",
             text='Search')
-        self.search_clients_report.place(
+        self.search_user_info.place(
             anchor="center",
             relheight=.5,
             relwidth=0.16,
@@ -50,21 +50,21 @@ class AdminReportStudentsApp:
             rely=.5,
             x=0,
             y=0)
-        self.search_clients_report.bind(
-            "<Button>", self.search_clients_reports, add="")
-        self.search_entry = tk.Entry(self.admin_r_sec1_frame)
+        self.search_user_info.bind(
+            "<Button>", self.search_user_infos, add="")
+        self.search_entry = tk.Entry(self.admin_u_sec1_frame)
         self.search_entry.configure(background="#F7FAE9", font="{arial} 24 {}")
         self.search_entry.place(anchor="center", relx=0.63, rely=.5, x=0, y=0)
-        self.admin_r_sec1_frame.place(
+        self.admin_u_sec1_frame.place(
             anchor="center",
             relheight=0.1,
             relwidth=.90,
             relx=0.5,
             rely=0.09)
-        self.admin_r_sec2_frame = tk.Frame(self.administrator_reports_frame)
-        self.admin_r_sec2_frame.configure(
+        self.admin_u_sec1_frame = tk.Frame(self.administrator_users_frame)
+        self.admin_u_sec1_frame.configure(
             background="#F7FAE9", height=200, width=200)
-        self.admin_r_sec2_frame.place(
+        self.admin_u_sec1_frame.place(
             anchor="center",
             relheight=0.65,
             relwidth=0.9,
@@ -72,25 +72,21 @@ class AdminReportStudentsApp:
             rely=0.5,
             x=0,
             y=0)
-        
+        self.user_info_label = tk.Label(self.administrator_users_frame)
+        self.user_info_label.configure(
+            background= "#E7E7E7",
+            font="{arial} 20 {bold}",
+            foreground="#000000",
+            text= 'Users Information')
+        self.user_info_label.place(anchor="center", relx=0.15, rely=0.09, x=0, y=0)
 
-        self.clients_rep_var = tk.StringVar(value='Students Report')
-        __values = ['Students Report', 'Personnels Report', 'Visitors Report']
-        self.client_report_optionmenu = tk.OptionMenu(
-            self.administrator_reports_frame, self.clients_rep_var, *__values, command=None)
-        self.client_report_optionmenu.place(
-            anchor="center", relx=0.15, rely=0.09, x=0, y=0)
-        self.client_report_optionmenu.configure(font="{arial} 20 {bold}")
-        self.client_report_optionmenu.place(anchor="center", relx=0.17, rely=0.09, x=0, y=0)
-        self.client_report_optionmenu = self.administrator_app.nametowidget(self.client_report_optionmenu.menuname)
-        self.client_report_optionmenu.config(font="{arial} 16")
-        self.print_report = tk.Button(self.administrator_reports_frame)
-        self.print_report.configure(
+        self.edit_user_button = tk.Button(self.administrator_users_frame)
+        self.edit_user_button.configure(
             background="#0072bc",
             font="{arial} 20 {bold}",
             foreground="#f7fae9",
-            text='Print')
-        self.print_report.place(
+            text='Edit')
+        self.edit_user_button.place(
             anchor="center",
             relheight=0.05,
             relwidth=0.12,
@@ -98,14 +94,14 @@ class AdminReportStudentsApp:
             rely=0.875,
             x=0,
             y=0)
-        self.print_report.bind("<Button>", self.print_clients_reports, add="")
-        self.extra_button = tk.Button(self.administrator_reports_frame)
-        self.extra_button.configure(
+        self.edit_user_button.bind("<Button>", self.print_clients_reports, add="")
+        self.add_user_button = tk.Button(self.administrator_users_frame)
+        self.add_user_button.configure(
             background="#0072bc",
             font="{arial} 20 {bold}",
             foreground="#f7fae9",
-            text='Extra')
-        self.extra_button.place(
+            text='Add')
+        self.add_user_button.place(
             anchor="center",
             relheight=0.05,
             relwidth=0.12,
@@ -113,9 +109,9 @@ class AdminReportStudentsApp:
             rely=0.875,
             x=0,
             y=0)
-        self.extra_button.bind("<Button>", self.save_clients_reports, add="")
+        self.add_user_button.bind("<Button>", self.save_clients_reports, add="")
 #REPORT-------------------------------------------------------------------------------------------------------   
-        self.administrator_reports_frame.place(
+        self.administrator_users_frame.place(
             anchor="center",
             relheight=0.95,
             relwidth=.78,
@@ -240,7 +236,7 @@ class AdminReportStudentsApp:
     def run(self):
         self.mainwindow.mainloop()
 
-    def search_clients_reports(self, event=None):
+    def search_user_infos(self, event=None):
         pass
 
     def print_clients_reports(self, event=None):

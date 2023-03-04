@@ -12,6 +12,7 @@ class AdmindashboardApp:
         height= self.administrator_app.winfo_screenheight()               
         self.administrator_app.geometry("%dx%d" % (width, height))
         self.administrator_app.resizable(False, False)
+        
         self.administrator_db_frame = tk.Frame(self.administrator_app)
         self.administrator_db_frame.configure(
             background="#E7E7E7", height=200, width=200)

@@ -127,9 +127,110 @@ class AdmindHomeApp:
             relwidth=.78,
             relx=0.61,
             rely=0.525)
-#CLIENT-------------------------------------------------------------------------------------------------------  
+#CLIENT-------------------------------------------------------------------------------------------------------
 
+#USERS------------------------------------------------------------------------------------------------------- 
+        self.administrator_users_frame = tk.Frame(self.administrator_app)
+        self.administrator_users_frame.configure(
+            background="#E7E7E7", height=200, width=200)
+        self.time_and_date_label_u = tk.Label(self.administrator_users_frame)
+        self.time_and_date_label_u.configure(
+            background="#F7FAE9",
+            compound="top",
+            font="{arial} 30 {bold}",
+            foreground="#0072bc",
+            text='Time and Date')
+        self.time_and_date_label_u.place(
+            anchor="center",
+            relwidth=1,
+            relx=0.5,
+            rely=0.975,
+            x=0,
+            y=0)
+        self.admin_u_sec1_frame = tk.Frame(self.administrator_users_frame)
+        self.admin_u_sec1_frame.configure(
+            background="#E7E7E7", height=200, width=200)
+        self.search_user_info = tk.Button(self.admin_u_sec1_frame)
+        self.search_user_info.configure(
+            background="#0072bc",
+            font="{arial} 20 {bold}",
+            foreground="#f7fae9",
+            text='Search')
+        self.search_user_info.place(
+            anchor="center",
+            relheight=.5,
+            relwidth=0.16,
+            relx=0.9,
+            rely=.5,
+            x=0,
+            y=0)
+        self.search_user_info.bind(
+            "<Button>", self.search_user_infos, add="")
+        self.search_u_entry = tk.Entry(self.admin_u_sec1_frame)
+        self.search_u_entry.configure(background="#F7FAE9", font="{arial} 24 {}")
+        self.search_u_entry.place(anchor="center", relx=0.63, rely=.5, x=0, y=0)
+        self.admin_u_sec1_frame.place(
+            anchor="center",
+            relheight=0.1,
+            relwidth=.90,
+            relx=0.5,
+            rely=0.09)
+        self.admin_u_sec1_frame = tk.Frame(self.administrator_users_frame)
+        self.admin_u_sec1_frame.configure(
+            background="#F7FAE9", height=200, width=200)
+        self.admin_u_sec1_frame.place(
+            anchor="center",
+            relheight=0.65,
+            relwidth=0.9,
+            relx=.5,
+            rely=0.5,
+            x=0,
+            y=0)
+        self.user_info_label = tk.Label(self.administrator_users_frame)
+        self.user_info_label.configure(
+            background= "#E7E7E7",
+            font="{arial} 20 {bold}",
+            foreground="#000000",
+            text= 'Users Information')
+        self.user_info_label.place(anchor="center", relx=0.15, rely=0.09, x=0, y=0)
 
+        self.edit_user_button = tk.Button(self.administrator_users_frame)
+        self.edit_user_button.configure(
+            background="#0072bc",
+            font="{arial} 20 {bold}",
+            foreground="#f7fae9",
+            text='Edit')
+        self.edit_user_button.place(
+            anchor="center",
+            relheight=0.05,
+            relwidth=0.12,
+            relx=0.87,
+            rely=0.875,
+            x=0,
+            y=0)
+        self.edit_user_button.bind("<Button>", self.edit_user_infos, add="")
+        self.add_user_button = tk.Button(self.administrator_users_frame)
+        self.add_user_button.configure(
+            background="#0072bc",
+            font="{arial} 20 {bold}",
+            foreground="#f7fae9",
+            text='Add')
+        self.add_user_button.place(
+            anchor="center",
+            relheight=0.05,
+            relwidth=0.12,
+            relx=0.7,
+            rely=0.875,
+            x=0,
+            y=0)
+        self.add_user_button.bind("<Button>", self.add_user_infos, add="")
+        self.administrator_users_frame.place(
+            anchor="center",
+            relheight=0.95,
+            relwidth=.78,
+            relx=0.61,
+            rely=0.525)
+#USERS------------------------------------------------------------------------------------------------------- 
 
 #REPORT------------------------------------------------------------------------------------------------------- 
         self.administrator_report_frame = tk.Frame(self.administrator_app)
@@ -219,7 +320,7 @@ class AdmindHomeApp:
             background="#0072bc",
             font="{arial} 20 {bold}",
             foreground="#f7fae9",
-            text='Extra')
+            text='Save')
         self.save_button.place(
             anchor="center",
             relheight=0.05,
@@ -334,42 +435,8 @@ class AdmindHomeApp:
             relx=0.61,
             rely=0.525)
 #DB-SECTION-------------------------------------------------------------------------------------- 
-        self.admin_c_sec1_frame.place_forget()
-        self.add_c_button.place_forget()
-        self.search_c_button.place_forget()
-        self.search_c_entry.place_forget()
-        self.clients_list.place_forget()
-        self.admin_c_sec2_frame.place_forget()
-        self.admin_c_sec3_frame.place_forget()
-        self.manage_client_optionmenu.place_forget()    
-        self.time_and_date_label_c.place_forget()
-        self.administrator_client_frame.place_forget()
-
-        self.admin_r_sec1_frame.place_forget()
-        self.print_report.place_forget()
-        self.save_button.place_forget()
-        self.admin_c_sec2_frame.place_forget()
-        self.search_clients_report.place_forget()
-        self.search_r_entry.place_forget()
-        self.clients_list.place_forget()
-        self.admin_r_sec2_frame.place_forget()
-        self.client_report_optionmenu.place_forget()
-        self.time_and_date_label_r.place_forget()
-        self.administrator_report_frame.place_forget()
-        
-        """
-        self.time_and_date_label_db.place_forget()
-        self.ttl_students_label.place_forget()
-        self.ttl_personnels_label.place_forget()       	
-        self.ttl_visitor_label.place_forget()
-        self.administrator_db_ttl_frame.place_forget()
-        self.ol_students_label.place_forget()
-        self.ol_personnels_label.place_forget()
-        self.ol_visitor_label.place_forget()
-        self.administrator_db_ol_frame.place_forget()
-        self.dashboard_label.place_forget()
-        self.administrator_db_frame.place_forget()
-        """
+#HIDE-OTHER--------------------------------------------------------------------------------
+        self.db_appear_logic()
 #HIDE-OTHER--------------------------------------------------------------------------------
         self.administrator_frame3 = tk.Frame(self.administrator_app)
         self.administrator_frame3.configure(
@@ -509,6 +576,7 @@ class AdmindHomeApp:
         self.time_and_date_label_c.configure(text= self.current_date_n_time )
         self.time_and_date_label_r.configure(text= self.current_date_n_time )
         self.time_and_date_label_db.configure(text= self.current_date_n_time )
+        self.time_and_date_label_u.configure(text= self.current_date_n_time )
         self.administrator_app.after(15,self.update_time)
 
 #APPEAR-LOGIC-------------------------------------------------------------------------------------------------------
@@ -526,6 +594,17 @@ class AdmindHomeApp:
         self.time_and_date_label_c.place_forget()
         self.administrator_client_frame.place_forget()
         # client_forget------------------------------------
+        # users_forget------------------------------------
+        self.time_and_date_label_u.place_forget()
+        self.search_user_info.place_forget()
+        self.search_u_entry.place_forget()
+        self.admin_u_sec1_frame.place_forget()
+        self.admin_u_sec1_frame.place_forget()
+        self.user_info_label.place_forget()
+        self.edit_user_button.place_forget()
+        self.add_user_button.place_forget()
+        self.administrator_users_frame.place_forget()
+        # users_forget------------------------------------
         # report_forget------------------------------------
         self.admin_r_sec1_frame.place_forget()
         self.print_report.place_forget()
@@ -586,6 +665,17 @@ class AdmindHomeApp:
         
     # this function removes all uncessesary widgets except the client
     def client_appear_logic(self):
+        # users_forget------------------------------------
+        self.time_and_date_label_u.place_forget()
+        self.search_user_info.place_forget()
+        self.search_u_entry.place_forget()
+        self.admin_u_sec1_frame.place_forget()
+        self.admin_u_sec1_frame.place_forget()
+        self.user_info_label.place_forget()
+        self.edit_user_button.place_forget()
+        self.add_user_button.place_forget()
+        self.administrator_users_frame.place_forget()
+        # users_forget------------------------------------
         # report_forget------------------------------------
         self.admin_r_sec1_frame.place_forget()
         self.print_report.place_forget()
@@ -665,6 +755,101 @@ class AdmindHomeApp:
             relx=0.61,
             rely=0.525)
 
+    def users_appear_logic(self):
+        # client_forget------------------------------------
+        self.admin_c_sec1_frame.place_forget()
+        self.add_c_button.place_forget()
+        self.search_c_button.place_forget()
+        self.search_c_entry.place_forget()
+        self.clients_list.place_forget()
+        self.admin_c_sec2_frame.place_forget()
+        self.admin_c_sec3_frame.place_forget()
+        self.manage_client_optionmenu.place_forget()    
+        self.time_and_date_label_c.place_forget()
+        self.administrator_client_frame.place_forget()
+        # client_forget------------------------------------
+        # report_forget------------------------------------
+        self.admin_r_sec1_frame.place_forget()
+        self.print_report.place_forget()
+        self.save_button.place_forget()
+        self.admin_c_sec2_frame.place_forget()
+        self.search_clients_report.place_forget()
+        self.search_r_entry.place_forget()
+        self.clients_list.place_forget()
+        self.admin_r_sec2_frame.place_forget()
+        self.client_report_optionmenu.place_forget()
+        self.time_and_date_label_r.place_forget()
+        self.administrator_report_frame.place_forget()
+        # report_forget------------------------------------
+        # db_forget----------------------------------------
+        self.time_and_date_label_db.place_forget()
+        self.ttl_students_label.place_forget()
+        self.ttl_personnels_label.place_forget()       	
+        self.ttl_visitor_label.place_forget()
+        self.administrator_db_ttl_frame.place_forget()
+        self.ol_students_label.place_forget()
+        self.ol_personnels_label.place_forget()
+        self.ol_visitor_label.place_forget()
+        self.administrator_db_ol_frame.place_forget()
+        self.dashboard_label.place_forget()
+        self.administrator_db_frame.place_forget()
+        # db_forget----------------------------------------
+
+        self.time_and_date_label_u.place(
+            anchor="center",
+            relwidth=1,
+            relx=0.5,
+            rely=0.975,
+            x=0,
+            y=0)
+        self.search_user_info.place(
+            anchor="center",
+            relheight=.5,
+            relwidth=0.16,
+            relx=0.9,
+            rely=.5,
+            x=0,
+            y=0)
+        self.search_u_entry.place(anchor="center", relx=0.63, rely=.5, x=0, y=0)
+        self.admin_u_sec1_frame.place(
+            anchor="center",
+            relheight=0.1,
+            relwidth=.90,
+            relx=0.5,
+            rely=0.09)
+        self.admin_u_sec1_frame.place(
+            anchor="center",
+            relheight=0.65,
+            relwidth=0.9,
+            relx=.5,
+            rely=0.5,
+            x=0,
+            y=0)
+        self.user_info_label.place(anchor="center", relx=0.15, rely=0.09, x=0, y=0)
+        self.edit_user_button.place(
+            anchor="center",
+            relheight=0.05,
+            relwidth=0.12,
+            relx=0.87,
+            rely=0.875,
+            x=0,
+            y=0)
+        self.add_user_button.place(
+            anchor="center",
+            relheight=0.05,
+            relwidth=0.12,
+            relx=0.7,
+            rely=0.875,
+            x=0,
+            y=0)
+        self.administrator_users_frame.place(
+            anchor="center",
+            relheight=0.95,
+            relwidth=.78,
+            relx=0.61,
+            rely=0.525)
+
+
     # this function removes all uncessesary widgets except the reports
     def report_appear_logic(self):
         # client_forget------------------------------------
@@ -679,6 +864,16 @@ class AdmindHomeApp:
         self.time_and_date_label_c.place_forget()
         self.administrator_client_frame.place_forget()
         # client_forget------------------------------------
+        # users_forget------------------------------------
+        self.time_and_date_label_u.place_forget()
+        self.search_user_info.place_forget()
+        self.search_u_entry.place_forget()
+        self.admin_u_sec1_frame.place_forget()
+        self.admin_u_sec1_frame.place_forget()
+        self.user_info_label.place_forget()
+        self.edit_user_button.place_forget()
+        self.add_user_button.place_forget()
+        # users_forget------------------------------------
         #db_forget------------------------------------
         self.time_and_date_label_db.place_forget()
         self.ttl_students_label.place_forget()
@@ -803,6 +998,8 @@ class AdmindHomeApp:
     def dashboard_hover_out(self, event=None):
         self.dashboard_section_label.configure(foreground="#F7FAE9")
 #DASBOARD-COMMANDS---------------------------------------------------------------------------------------------------------------
+
+
 #CLIENTS-COMMANDS---------------------------------------------------------------------------------------------------------------
     def client_appear(self, event=None):
         self.client_appear_logic()
@@ -826,13 +1023,22 @@ class AdmindHomeApp:
 #USER-COMMANDS---------------------------------------------------------------------------------------------------------------
 
     def user_appear(self, event=None):
-        pass
-
+        self.users_appear_logic()
+    
     def user_hover(self, event=None):
         self.user_section_label.configure(foreground="#FFF200")
 
     def user_hover_out(self, event=None):
         self.user_section_label.configure(foreground="#F7FAE9")
+
+    def search_user_infos(self, event=None):
+        pass
+    
+    def edit_user_infos(self, event=None):
+        pass
+
+    def add_user_infos(self, event=None):
+        pass
 #USER-COMMANDS---------------------------------------------------------------------------------------------------------------
 #REPORTS-COMMANDS---------------------------------------------------------------------------------------------------------------
 
