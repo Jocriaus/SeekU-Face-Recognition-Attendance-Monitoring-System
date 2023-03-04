@@ -61,10 +61,10 @@ class AdminReportStudentsApp:
             relwidth=.90,
             relx=0.5,
             rely=0.09)
-        self.admin_u_sec1_frame = tk.Frame(self.administrator_users_frame)
-        self.admin_u_sec1_frame.configure(
+        self.admin_r_sec2_frame = tk.Frame(self.administrator_users_frame)
+        self.admin_r_sec2_frame.configure(
             background="#F7FAE9", height=200, width=200)
-        self.admin_u_sec1_frame.place(
+        self.admin_r_sec2_frame.place(
             anchor="center",
             relheight=0.65,
             relwidth=0.9,
@@ -72,20 +72,24 @@ class AdminReportStudentsApp:
             rely=0.5,
             x=0,
             y=0)
-        self.user_info_label = tk.Label(self.administrator_users_frame)
-        self.user_info_label.configure(
-            background= "#E7E7E7",
-            font="{arial} 20 {bold}",
-            foreground="#000000",
-            text= 'Users Information')
-        self.user_info_label.place(anchor="center", relx=0.15, rely=0.09, x=0, y=0)
+        
 
+        self.clients_rep_var = tk.StringVar(value='Students Report')
+        __values = ['Students Report', 'Personnels Report', 'Visitors Report']
+        self.client_report_optionmenu = tk.OptionMenu(
+            self.administrator_users_frame, self.clients_rep_var, *__values, command=None)
+        self.client_report_optionmenu.place(
+            anchor="center", relx=0.15, rely=0.09, x=0, y=0)
+        self.client_report_optionmenu.configure(font="{arial} 20 {bold}")
+        self.client_report_optionmenu.place(anchor="center", relx=0.17, rely=0.09, x=0, y=0)
+        self.client_report_optionmenu = self.administrator_app.nametowidget(self.client_report_optionmenu.menuname)
+        self.client_report_optionmenu.config(font="{arial} 16")
         self.edit_user_button = tk.Button(self.administrator_users_frame)
         self.edit_user_button.configure(
             background="#0072bc",
             font="{arial} 20 {bold}",
             foreground="#f7fae9",
-            text='Edit')
+            text='Print')
         self.edit_user_button.place(
             anchor="center",
             relheight=0.05,
@@ -100,7 +104,7 @@ class AdminReportStudentsApp:
             background="#0072bc",
             font="{arial} 20 {bold}",
             foreground="#f7fae9",
-            text='Add')
+            text='Extra')
         self.add_user_button.place(
             anchor="center",
             relheight=0.05,
