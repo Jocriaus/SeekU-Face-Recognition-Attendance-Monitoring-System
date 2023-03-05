@@ -381,7 +381,7 @@ class AdmindHomeApp:
             relheight=0.08,
             relwidth=0.25,
             relx=0.25,
-            rely=0.52)
+            rely=0.47)
         self.import_db_button.bind("<Button>", self.import_database, add="")
         self.gen_settings_label = tk.Label(self.admin_s_sec1_frame)
         self.gen_settings_label.configure(
@@ -403,7 +403,79 @@ class AdmindHomeApp:
             font="{arial} 14 {bold}",
             text='Restore Database')
         self.restore_db_label.place(
-            anchor="center", relx=0.25, rely=0.43, x=0, y=0)
+            anchor="center", relx=0.25, rely=0.38, x=0, y=0)
+        self.student_stat_label = tk.Label(self.admin_s_sec1_frame)
+        self.student_stat_label.configure(
+            background="#F7FAE9",
+            font="{arial} 14 {bold}",
+            text='Student Status')
+        self.student_stat_label.place(
+            anchor="center", relx=0.22, rely=0.55, x=0, y=0)
+        self.stud_stat_rem_label = tk.Label(self.admin_s_sec1_frame)
+        self.stud_stat_rem_label.configure(
+            background="#F7FAE9",
+            font="{arial} 12 {}",
+            justify="left",
+            text='Student Informations will be activated\nand deactivated on selected dates\nFormat = MM/DD/YY')
+        self.stud_stat_rem_label.place(
+            anchor="center", relx=0.325, rely=0.63, x=0, y=0)
+        self.activation_date_entry = tk.Entry(self.admin_s_sec1_frame)
+        self.activation_date_entry.configure(            
+            borderwidth=2,
+            font="{arial} 12 {}",
+            highlightbackground="#000000",
+            highlightthickness=2)
+        self.activation_date_entry.place(
+            anchor="center",
+            relheight=0.05,
+            relwidth=0.3,
+            relx=0.25,
+            rely=0.79,
+            x=0,
+            y=0)
+        self.activation_date_label = tk.Label(self.admin_s_sec1_frame)
+        self.activation_date_label.configure(
+            background="#F7FAE9",
+            font="{arial} 11 {bold}",
+            text='Account Activation Date')
+        self.activation_date_label.place(
+            anchor="center", relx=0.23, rely=0.73, x=0, y=0)
+        self.deactivation_date_entry = tk.Entry(self.admin_s_sec1_frame)
+        self.deactivation_date_entry.configure(            
+            borderwidth=2,
+            font="{arial} 12 {}",
+            highlightbackground="#000000",
+            highlightthickness=2)
+        self.deactivation_date_entry.place(
+            anchor="center",
+            relheight=0.05,
+            relwidth=0.3,
+            relx=0.25,
+            rely=0.92,
+            x=0,
+            y=0)
+        self.deactivation_date_label = tk.Label(self.admin_s_sec1_frame)
+        self.deactivation_date_label.configure(
+            background="#F7FAE9",
+            font="{arial} 11 {bold}",
+            text='Account Deactivation Date')
+        self.deactivation_date_label.place(
+            anchor="center", relx=0.23, rely=0.86, x=0, y=0)
+        self.save_dates_button = tk.Button(self.admin_s_sec1_frame)
+        self.save_dates_button.configure(
+            background="#0072bc",
+            font="{arial} 20 {bold}",
+            foreground="#f7fae9",
+            text='Save Dates')
+        self.save_dates_button.place(
+            anchor="center",
+            relheight=0.08,
+            relwidth=0.3,
+            relx=0.68,
+            rely=0.87,
+            x=0,
+            y=0)
+        self.save_dates_button.bind("<Button>", self.save_dates, add="")
         self.admin_s_sec1_frame.place(
             anchor="center",
             relheight=0.65,
@@ -809,6 +881,13 @@ class AdmindHomeApp:
         self.admin_s_sec2_frame.place_forget()
         self.settings_label.place_forget()
         self.administrator_settings_frame.place_forget()
+        self.student_stat_label.place_forget()
+        self.stud_stat_rem_label.place_forget()
+        self.activation_date_entry.place_forget()
+        self.activation_date_label.place_forget()
+        self.deactivation_date_entry.place_forget()
+        self.deactivation_date_label.place_forget()
+        self.save_dates_button.place_forget()
         # settings_forget-------------------------------------
         self.time_and_date_label_db.place(
             anchor="center",
@@ -899,6 +978,13 @@ class AdmindHomeApp:
         self.admin_s_sec2_frame.place_forget()
         self.settings_label.place_forget()
         self.administrator_settings_frame.place_forget()
+        self.student_stat_label.place_forget()
+        self.stud_stat_rem_label.place_forget()
+        self.activation_date_entry.place_forget()
+        self.activation_date_label.place_forget()
+        self.deactivation_date_entry.place_forget()
+        self.deactivation_date_label.place_forget()
+        self.save_dates_button.place_forget()
         # settings_forget-------------------------------------
         # db_forget----------------------------------------
         self.time_and_date_label_db.place_forget()
@@ -1011,6 +1097,13 @@ class AdmindHomeApp:
         self.admin_s_sec2_frame.place_forget()
         self.settings_label.place_forget()
         self.administrator_settings_frame.place_forget()
+        self.student_stat_label.place_forget()
+        self.stud_stat_rem_label.place_forget()
+        self.activation_date_entry.place_forget()
+        self.activation_date_label.place_forget()
+        self.deactivation_date_entry.place_forget()
+        self.deactivation_date_label.place_forget()
+        self.save_dates_button.place_forget()
         # settings_forget-------------------------------------
         # db_forget----------------------------------------
         self.time_and_date_label_db.place_forget()
@@ -1137,6 +1230,13 @@ class AdmindHomeApp:
         self.admin_s_sec2_frame.place_forget()
         self.settings_label.place_forget()
         self.administrator_settings_frame.place_forget()
+        self.student_stat_label.place_forget()
+        self.stud_stat_rem_label.place_forget()
+        self.activation_date_entry.place_forget()
+        self.activation_date_label.place_forget()
+        self.deactivation_date_entry.place_forget()
+        self.deactivation_date_label.place_forget()
+        self.save_dates_button.place_forget()
         # settings_forget-------------------------------------
         #db_forget------------------------------------
         self.time_and_date_label_db.place_forget()
@@ -1269,13 +1369,45 @@ class AdmindHomeApp:
             relheight=0.08,
             relwidth=0.25,
             relx=0.25,
-            rely=0.52)
+            rely=0.47)
         self.gen_settings_label.place(
             anchor="center", relx=0.5, rely=0.1, x=0, y=0)
         self.backup_db_label.place(
             anchor="center", relx=0.25, rely=0.19, x=0, y=0)
         self.restore_db_label.place(
-            anchor="center", relx=0.25, rely=0.43, x=0, y=0)
+            anchor="center", relx=0.25, rely=0.38, x=0, y=0)
+        self.student_stat_label.place(
+            anchor="center", relx=0.22, rely=0.55, x=0, y=0)
+        self.stud_stat_rem_label.place(
+            anchor="center", relx=0.325, rely=0.63, x=0, y=0)
+        self.activation_date_entry.place(
+            anchor="center",
+            relheight=0.05,
+            relwidth=0.3,
+            relx=0.25,
+            rely=0.79,
+            x=0,
+            y=0)
+        self.activation_date_label.place(
+            anchor="center", relx=0.23, rely=0.73, x=0, y=0)
+        self.deactivation_date_entry.place(
+            anchor="center",
+            relheight=0.05,
+            relwidth=0.3,
+            relx=0.25,
+            rely=0.92,
+            x=0,
+            y=0)
+        self.deactivation_date_label.place(
+            anchor="center", relx=0.23, rely=0.86, x=0, y=0)
+        self.save_dates_button.place(
+            anchor="center",
+            relheight=0.08,
+            relwidth=0.3,
+            relx=0.68,
+            rely=0.87,
+            x=0,
+            y=0)
         self.admin_s_sec1_frame.place(
             anchor="center",
             relheight=0.65,
@@ -1471,6 +1603,9 @@ class AdmindHomeApp:
         pass
 
     def import_database(self, event=None):
+        pass
+
+    def save_dates(self, event=None):
         pass
 
 #SETTINGS-COMMANDS---------------------------------------------------------------------------------------------------------------
