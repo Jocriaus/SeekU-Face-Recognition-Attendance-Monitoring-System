@@ -123,18 +123,18 @@ class ClientFaceRecogApp:
             anchor="center",
             relx=.5,
             rely=0.51)
-        self.log_out_button = tk.Button(self.face_recog_frame)
-        self.log_out_button.configure(
+        self.return_button = tk.Button(self.face_recog_frame)
+        self.return_button.configure(
             font="{arial black} 20 {}",
             foreground="#0072bc",
             text='Log out')
-        self.log_out_button.place(
+        self.return_button.place(
             anchor="center",
             relheight=0.05,
             relwidth=0.55,
             relx=0.5,
             rely=0.06)
-        self.log_out_button.bind("<ButtonPress>", self.log_out_func, add="")
+        self.return_button.bind("<ButtonPress>", self.return_func, add="")
         self.cancel_button = tk.Button(self.face_recog_frame)
         self.cancel_button.configure(
             font="{arial black} 30 {}",
@@ -268,7 +268,7 @@ class ClientFaceRecogApp:
         pass
 
     # this command will return to the home window
-    def log_out_func(self, event=None):
+    def return_func(self, event=None):
         self.show_home_window()
         self.face_recog_app.destroy()
 
