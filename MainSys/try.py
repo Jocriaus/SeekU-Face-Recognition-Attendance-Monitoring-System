@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import tkinter as tk
-
+from datetime import datetime
+import sys
 
 class AdminReportStudentsApp:
     def __init__(self, master=None):
@@ -12,37 +13,56 @@ class AdminReportStudentsApp:
         height= self.administrator_app.winfo_screenheight()               
         self.administrator_app.geometry("%dx%d" % (width, height))
         self.administrator_app.resizable(False, False)
-
+        self.now = datetime.now()
+        self.current_date_n_time = self.now.strftime("%d/%m/%Y %H:%M:%S")
         
 
-#REPORT------------------------------------------------------------------------------------------------------- 
-        self.administrator_users_frame = tk.Frame(self.administrator_app)
-        self.administrator_users_frame.configure(
+#CLIENT-------------------------------------------------------------------------------------------------------  
+        self.administrator_client_frame = tk.Frame(self.administrator_app)
+        self.administrator_client_frame.configure(
             background="#E7E7E7", height=200, width=200)
-        self.time_and_date_label = tk.Label(self.administrator_users_frame)
-        self.time_and_date_label.configure(
+        self.time_and_date_label_c = tk.Label(self.administrator_client_frame)
+        self.time_and_date_label_c.configure(
             background="#F7FAE9",
             compound="top",
             font="{arial} 30 {bold}",
             foreground="#0072bc",
-            text='Time and Date')
-        self.time_and_date_label.place(
+            text= self.current_date_n_time)
+        self.time_and_date_label_c.place(
             anchor="center",
             relwidth=1,
             relx=0.5,
             rely=0.975,
             x=0,
             y=0)
-        self.admin_u_sec1_frame = tk.Frame(self.administrator_users_frame)
-        self.admin_u_sec1_frame.configure(
+        self.admin_c_sec1_frame = tk.Frame(self.administrator_client_frame)
+        self.admin_c_sec1_frame.configure(
             background="#E7E7E7", height=200, width=200)
-        self.search_user_info = tk.Button(self.admin_u_sec1_frame)
-        self.search_user_info.configure(
+        self.add_c_button = tk.Button(self.admin_c_sec1_frame)
+        self.add_c_button.configure(
+            background="#0072bc",
+            font="{arial} 20 {bold}",
+            foreground="#f7fae9",
+            text='Add Students')
+        self.add_c_button.place(
+            anchor="center", relx=0.85, rely=.5, x=0, y=0)
+        self.add_c_button.bind("<Button>", self.add_clients, add="")
+        self.admin_c_sec1_frame.place(
+            anchor="center",
+            relheight=0.1,
+            relwidth=1.0,
+            relx=0.5,
+            rely=0.09)
+        self.admin_c_sec2_frame = tk.Frame(self.administrator_client_frame)
+        self.admin_c_sec2_frame.configure(
+            background="#F7FAE9", height=200, width=200)
+        self.search_c_button = tk.Button(self.admin_c_sec2_frame)
+        self.search_c_button.configure(
             background="#0072bc",
             font="{arial} 20 {bold}",
             foreground="#f7fae9",
             text='Search')
-        self.search_user_info.place(
+        self.search_c_button.place(
             anchor="center",
             relheight=.5,
             relwidth=0.16,
@@ -50,77 +70,73 @@ class AdminReportStudentsApp:
             rely=.5,
             x=0,
             y=0)
-        self.search_user_info.bind(
-            "<Button>", self.search_user_infos, add="")
-        self.search_entry = tk.Entry(self.admin_u_sec1_frame)
-        self.search_entry.configure(background="#F7FAE9", font="{arial} 24 {}")
-        self.search_entry.place(anchor="center", relx=0.63, rely=.5, x=0, y=0)
-        self.admin_u_sec1_frame.place(
+        self.admin_c_sec1_frame.place(
+            anchor="center",
+            relheight=0.1,
+            relwidth=1.0,
+            relx=0.5,
+            rely=0.09)
+        self.search_c_button.bind("<Button>", self.search_clients_info, add="")
+        self.search_c_entry = tk.Entry(self.admin_c_sec2_frame)
+        self.search_c_entry.configure(background="#E7E7E7", font="{arial} 24 {}")
+        self.search_c_entry.place(anchor="center", relx=0.63, rely=.5, x=0, y=0)
+        self.clients_list = tk.Label(self.admin_c_sec2_frame)
+        self.clients_list.configure(
+            anchor="n",
+            background="#F7FAE9",
+            font="{arial} 24 {bold}",
+            text='Students List')
+        self.clients_list.place(anchor="center", relx=0.125, rely=.5, x=0, y=0)        
+        self.admin_c_sec2_frame.place(
             anchor="center",
             relheight=0.1,
             relwidth=.90,
             relx=0.5,
-            rely=0.09)
-        self.admin_r_sec2_frame = tk.Frame(self.administrator_users_frame)
-        self.admin_r_sec2_frame.configure(
+            rely=0.22)
+        self.admin_c_sec3_frame = tk.Frame(self.administrator_client_frame)
+        self.admin_c_sec3_frame.configure(
             background="#F7FAE9", height=200, width=200)
-        self.admin_r_sec2_frame.place(
+        self.label2= tk.Label(self.admin_c_sec3_frame)
+        self.label2.configure(
             anchor="center",
-            relheight=0.65,
+            background="#F7FAE9",
+            font="{arial} 24 {bold}",
+            text='TITE')
+        self.label2.place(anchor="center", relheight=0.6,
+            relwidth=0.9,
+            )
+
+
+        self.admin_c_sec3_frame.place(
+            anchor="center",
+            relheight=0.6,
             relwidth=0.9,
             relx=.5,
-            rely=0.5,
+            rely=.6,
             x=0,
             y=0)
-        
-
-        self.clients_rep_var = tk.StringVar(value='Students Report')
-        __values = ['Students Report', 'Personnels Report', 'Visitors Report']
-        self.client_report_optionmenu = tk.OptionMenu(
-            self.administrator_users_frame, self.clients_rep_var, *__values, command=None)
-        self.client_report_optionmenu.place(
-            anchor="center", relx=0.15, rely=0.09, x=0, y=0)
-        self.client_report_optionmenu.configure(font="{arial} 20 {bold}")
-        self.client_report_optionmenu.place(anchor="center", relx=0.17, rely=0.09, x=0, y=0)
-        self.client_report_optionmenu = self.administrator_app.nametowidget(self.client_report_optionmenu.menuname)
-        self.client_report_optionmenu.config(font="{arial} 16")
-        self.edit_user_button = tk.Button(self.administrator_users_frame)
-        self.edit_user_button.configure(
-            background="#0072bc",
-            font="{arial} 20 {bold}",
-            foreground="#f7fae9",
-            text='Print')
-        self.edit_user_button.place(
-            anchor="center",
-            relheight=0.05,
-            relwidth=0.12,
-            relx=0.87,
-            rely=0.875,
-            x=0,
-            y=0)
-        self.edit_user_button.bind("<Button>", self.print_clients_reports, add="")
-        self.add_user_button = tk.Button(self.administrator_users_frame)
-        self.add_user_button.configure(
-            background="#0072bc",
-            font="{arial} 20 {bold}",
-            foreground="#f7fae9",
-            text='Extra')
-        self.add_user_button.place(
-            anchor="center",
-            relheight=0.05,
-            relwidth=0.12,
-            relx=0.7,
-            rely=0.875,
-            x=0,
-            y=0)
-        self.add_user_button.bind("<Button>", self.save_clients_reports, add="")
-#REPORT-------------------------------------------------------------------------------------------------------   
-        self.administrator_users_frame.place(
+        self.clients_man_var = tk.StringVar(value='Manage Students')
+        __values = [
+            'Manage Students',
+            'Manage Personnels',
+            'Manage Visitors']
+        self.manage_client_optionmenu = tk.OptionMenu(
+            self.administrator_client_frame,
+            self.clients_man_var,
+            *__values,
+            command=self.open_diff_client)
+        self.manage_client_optionmenu.configure(font="{arial} 20 {bold}")
+        self.manage_client_optionmenu.place(anchor="center", relx=0.17, rely=0.09, x=0, y=0)
+        self.manage_client_options = self.administrator_app.nametowidget(self.manage_client_optionmenu.menuname)
+        self.manage_client_options.config(font="{arial} 16")
+        self.administrator_client_frame.place(
             anchor="center",
             relheight=0.95,
             relwidth=.78,
             relx=0.61,
             rely=0.525)
+#CLIENT-------------------------------------------------------------------------------------------------------
+
         self.administrator_frame3 = tk.Frame(self.administrator_app)
         self.administrator_frame3.configure(
             background="#0072bc", height=200, width=200)
@@ -240,14 +256,61 @@ class AdminReportStudentsApp:
     def run(self):
         self.mainwindow.mainloop()
 
-    def search_user_infos(self, event=None):
-        pass
+#CLIENT-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
+    # this function will change the display according to the 
+    # selected option on the option menu for the clent section
+    def change_layout_client(self):
+        if(self.clients_man_var.get() == 'Manage Students'):
+            self.add_c_button.configure(text='Add Students')
 
-    def print_clients_reports(self, event=None):
-        pass
 
-    def save_clients_reports(self, event=None):
-        pass
+            
+            self.clients_list.configure(text='Students List')
+        if(self.clients_man_var.get() == 'Manage Personnels'):
+            self.add_c_button.configure(text='Add Personnels')
+            self.clients_list.configure(text='Personnels List')
+        if(self.clients_man_var.get() == 'Manage Visitors'):
+            self.add_c_button.configure(text='Add Visitors')
+            self.clients_list.configure(text='Visitors List')
+
+    
+    def add_clients_logic(self):
+        if(self.clients_man_var.get() == 'Manage Students'):
+            pass
+        if(self.clients_man_var.get() == 'Manage Personnels'):
+            pass
+        if(self.clients_man_var.get() == 'Manage Visitors'):
+            pass
+
+    def search_clients_info_logic(self):
+        if(self.clients_man_var.get() == 'Manage Students'):
+            pass
+        if(self.clients_man_var.get() == 'Manage Personnels'):
+            pass
+        if(self.clients_man_var.get() == 'Manage Visitors'):
+            pass
+#CLIENT-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
+
+#CLIENTS-COMMANDS---------------------------------------------------------------------------------------------------------------
+    # def client_appear(self, event=None):
+    #    self.client_appear_logic()
+
+    def client_hover(self, event=None):
+        self.client_section_label.configure(foreground="#FFF200")
+
+    def client_hover_out(self, event=None):
+        self.client_section_label.configure(foreground="#F7FAE9")
+
+    def open_diff_client(self, event=None):
+        self.change_layout_client()
+
+
+    def add_clients(self, event=None):
+        self.add_clients_logic()
+
+    def search_clients_info(self, event=None):
+        self.search_clients_info_logic()
+#CLIENTS-COMMANDS---------------------------------------------------------------------------------------------------------------
 
     def dashboard_appear(self, event=None):
         pass
@@ -295,7 +358,7 @@ class AdminReportStudentsApp:
         pass
 
     def logout(self, event=None):
-        pass
+        sys.exit() 
 
     def logout_hover(self, event=None):
         pass

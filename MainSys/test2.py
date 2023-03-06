@@ -14,7 +14,6 @@ class AdminSettingsApp:
         self.administrator_app.resizable(False, False)
 
 
-
         self.administrator_frame3 = tk.Frame(self.administrator_app)
         self.administrator_frame3.configure(
             background="#0072bc", height=200, width=200)
