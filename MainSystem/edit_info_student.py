@@ -17,6 +17,8 @@ class RegisterStudentApp:
         height= self.register_student_app.winfo_screenheight()               
         self.register_student_app.geometry("%dx%d" % (width, height))
         self.register_student_app.resizable(False, False)
+        self.register_student_app.title("SeekU - Admin Edit Student Info")
+        self.register_student_app.iconbitmap(".\SeekU\SeekU.ico")
         #Contains-the-camera-canvas--------------------------------------------------------------------------------------------------------- 
         self.register_stud_frame4 = tk.Frame(self.register_student_app)
         self.register_stud_frame4.configure(

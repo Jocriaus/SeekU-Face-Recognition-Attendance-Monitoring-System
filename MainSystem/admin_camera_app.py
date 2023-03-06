@@ -8,13 +8,12 @@ import os
 import sys
 
 class CameraApp:
-    def __init__(self, vid_source, login_mod, sel_cam, home_mod,file_path ):
+    def __init__(self, vid_source, login_mod, sel_cam, file_path ):
 
     #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.video_source = vid_source
         self.login_window = login_mod
         self.sel_cam_window = sel_cam
-        self.home_window = home_mod
         self.img_path = file_path
     #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         # build ui
@@ -25,7 +24,7 @@ class CameraApp:
         height= self.snapshot_app.winfo_screenheight()               
         self.snapshot_app.geometry("%dx%d" % (width, height))
         self.snapshot_app.resizable(False, False)
-        self.snapshot_app.title("SeekU - Client Camera App")
+        self.snapshot_app.title("SeekU - Admin Camera App")
         self.snapshot_app.iconbitmap(".\SeekU\SeekU.ico")
     #Contains-Camera-Canvas---------------------------------------------------------------------------------------------------
         self.snapshot_frame4 = tk.Frame(self.snapshot_app)

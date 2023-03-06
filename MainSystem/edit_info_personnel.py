@@ -18,6 +18,8 @@ class EditPersonnelApp:
         height= self.register_personnel_app.winfo_screenheight()               
         self.register_personnel_app.geometry("%dx%d" % (width, height))
         self.register_personnel_app.resizable(False, False)
+        self.register_personnel_app.title("SeekU - Admin Edit Personnel Info")
+        self.register_personnel_app.iconbitmap(".\SeekU\SeekU.ico")
         #Contains-the-camera-canvas--------------------------------------------------------------------------------------------------------- 
         self.register_pers_frame4 = tk.Frame(self.register_personnel_app)
         self.register_pers_frame4.configure(

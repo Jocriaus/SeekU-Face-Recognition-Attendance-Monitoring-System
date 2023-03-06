@@ -9,6 +9,7 @@ class EditUserApp:
 
         self.edit_bool = True
     #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
+    
         self.edit_user_app = tk.Tk()
         self.edit_user_app.configure(
             background="#F7FAE9", height=200, width=200)
@@ -16,6 +17,7 @@ class EditUserApp:
         self.edit_user_app.resizable(False, False)
         self.edit_user_app.title("SeekU - Edit User")
         self.edit_user_app.iconbitmap(".\SeekU\SeekU.ico")
+    #Contains-the-edit-label-and-entry-widgets--------------------------------------------------------------------------------------------------------- 
         self.edit_user_frame2 = tk.Frame(self.edit_user_app)
         self.edit_user_frame2.configure(
             background="#F7FAE9", height=200, width=200)
@@ -178,6 +180,8 @@ class EditUserApp:
             relx=0.5,
             rely=0.59)
         
+    #Contains-the-edit-label-and-entry-widgets--------------------------------------------------------------------------------------------------------- 
+    #Contains-the-logo-and-logotype--------------------------------------------------------------------------------------------------------- 
 
         self.edit_user_frame1 = tk.Frame(self.edit_user_app)
         self.edit_user_frame1.configure(
@@ -196,6 +200,7 @@ class EditUserApp:
             relwidth=1.0,
             relx=0.5,
             rely=0.09)
+    #Contains-the-logo-and-logotype--------------------------------------------------------------------------------------------------------- 
 
         self.disable_entry()
         # Main widget
@@ -203,7 +208,7 @@ class EditUserApp:
 
     def run(self):
         self.mainwindow.mainloop()
-
+    # disables entry widgets
     def disable_entry(self):  
         self.username_entry.configure(state='disabled') 
         self.password_entry.configure(state='disabled')    
@@ -221,6 +226,7 @@ class EditUserApp:
         self.active_radiobutton.configure(state='normal')
         self.inactive_radiobutton.configure(state='normal')
 
+    # enables and disables entry
     def edit_user(self, event=None):
         if self.edit_bool == True:
             self.enable_entry()

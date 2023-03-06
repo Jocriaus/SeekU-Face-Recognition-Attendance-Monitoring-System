@@ -4,6 +4,11 @@ import tkinter as tk
 
 class CreateUserApp:
     def __init__(self, master=None):
+
+    #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
+
+        
+    #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         # build ui
         self.register_user_app = tk.Tk()
         self.register_user_app.configure(
@@ -12,6 +17,7 @@ class CreateUserApp:
         self.register_user_app.resizable(False, False)
         self.register_user_app.title("SeekU - Register User")
         self.register_user_app.iconbitmap(".\SeekU\SeekU.ico")
+    #Contains-the-edit-label-and-entry-widgets--------------------------------------------------------------------------------------------------------- 
         self.register_user_frame2 = tk.Frame(self.register_user_app)
         self.register_user_frame2.configure(
             background="#F7FAE9", height=200, width=200)
@@ -121,6 +127,9 @@ class CreateUserApp:
             relwidth=1.0,
             relx=0.5,
             rely=0.59)
+    #Contains-the-edit-label-and-entry-widgets---------------------------------------------------------------------------------------------------------         
+    #Contains-the-logo-and-logotype--------------------------------------------------------------------------------------------------------- 
+
         self.register_user_frame1 = tk.Frame(self.register_user_app)
         self.register_user_frame1.configure(
             background="#fff000", height=200, width=200)
@@ -138,6 +147,7 @@ class CreateUserApp:
             relwidth=1.0,
             relx=0.5,
             rely=0.09)
+    #Contains-the-logo-and-logotype--------------------------------------------------------------------------------------------------------- 
 
         # Main widget
         self.mainwindow = self.register_user_app

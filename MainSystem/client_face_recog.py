@@ -25,7 +25,8 @@ class ClientFaceRecogApp:
         height= self.face_recog_app.winfo_screenheight()               
         self.face_recog_app.geometry("%dx%d" % (width, height))
         self.face_recog_app.resizable(False, False)
-
+        self.face_recog_app.title("SeekU - Client Face Recognition Attendance")
+        self.face_recog_app.iconbitmap(".\SeekU\SeekU.ico")
         
     #Contains-the-camera-canvas--------------------------------------------------------------------------------------------------------- 
         self.face_recog_frame3 = tk.Frame(self.face_recog_app)

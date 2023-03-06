@@ -25,7 +25,8 @@ class AddVisitorApp:
         height= self.add_visitor_app.winfo_screenheight() 
         self.add_visitor_app.geometry("%dx%d" % (width, height))
         self.add_visitor_app.resizable(False, False)
-
+        self.add_visitor_app.title("SeekU - Client Add Visitor")
+        self.add_visitor_app.iconbitmap(".\SeekU\SeekU.ico")
 
     #Contains-Camera-Canvas---------------------------------------------------------------------------------------------------
         self.add_visitor_frame3 = tk.Frame(self.add_visitor_app)

@@ -2,6 +2,12 @@
 import tkinter as tk
 from datetime import datetime
 import sys
+import register_personnel as rP
+import register_student as rS
+import edit_info_personnel as eIP
+import edit_info_student as eIS
+import admin_camera_app as aCA
+
 class AdmindHomeApp:
     def __init__(self, master=None):
 
@@ -19,7 +25,8 @@ class AdmindHomeApp:
         height= self.administrator_app.winfo_screenheight()               
         self.administrator_app.geometry("%dx%d" % (width, height))
         self.administrator_app.resizable(False, False)
-
+        self.administrator_app.title("SeekU - Administrator")
+        self.administrator_app.iconbitmap(".\SeekU\SeekU.ico")
 #CLIENT-------------------------------------------------------------------------------------------------------  
         self.administrator_client_frame = tk.Frame(self.administrator_app)
         self.administrator_client_frame.configure(
@@ -558,6 +565,21 @@ class AdmindHomeApp:
             text='Consecutive failed log in attempts will \nresult of a locked account ')
         self.acc_lockout_rem_label.place(
             anchor="center", relx=0.3, rely=0.57, x=0, y=0)
+        self.save_settings_button = tk.Button(self.admin_s_sec2_frame)
+        self.save_settings_button.configure(
+            background="#0072bc",
+            font="{arial} 20 {bold}",
+            foreground="#f7fae9",
+            text='Save Settings')
+        self.save_settings_button.place(
+            anchor="center",
+            relheight=0.08,
+            relwidth=0.4,
+            relx=0.29,
+            rely=0.7,
+            x=0,
+            y=0)
+        self.save_settings_button.bind("<Button>", self.save_security, add="")
         self.admin_s_sec2_frame.place(
             anchor="center",
             relheight=0.65,
@@ -888,6 +910,7 @@ class AdmindHomeApp:
         self.deactivation_date_entry.place_forget()
         self.deactivation_date_label.place_forget()
         self.save_dates_button.place_forget()
+        self.save_settings_button.place_forget()
         # settings_forget-------------------------------------
         self.time_and_date_label_db.place(
             anchor="center",
@@ -985,6 +1008,7 @@ class AdmindHomeApp:
         self.deactivation_date_entry.place_forget()
         self.deactivation_date_label.place_forget()
         self.save_dates_button.place_forget()
+        self.save_settings_button.place_forget()
         # settings_forget-------------------------------------
         # db_forget----------------------------------------
         self.time_and_date_label_db.place_forget()
@@ -1104,6 +1128,7 @@ class AdmindHomeApp:
         self.deactivation_date_entry.place_forget()
         self.deactivation_date_label.place_forget()
         self.save_dates_button.place_forget()
+        self.save_settings_button.place_forget()
         # settings_forget-------------------------------------
         # db_forget----------------------------------------
         self.time_and_date_label_db.place_forget()
@@ -1237,6 +1262,7 @@ class AdmindHomeApp:
         self.deactivation_date_entry.place_forget()
         self.deactivation_date_label.place_forget()
         self.save_dates_button.place_forget()
+        self.save_settings_button.place_forget()
         # settings_forget-------------------------------------
         #db_forget------------------------------------
         self.time_and_date_label_db.place_forget()
@@ -1444,6 +1470,14 @@ class AdmindHomeApp:
             anchor="center", relx=0.35, rely=0.49, x=0, y=0)
         self.acc_lockout_rem_label.place(
             anchor="center", relx=0.3, rely=0.57, x=0, y=0)
+        self.save_settings_button.place(
+            anchor="center",
+            relheight=0.08,
+            relwidth=0.4,
+            relx=0.29,
+            rely=0.7,
+            x=0,
+            y=0)
         self.admin_s_sec2_frame.place(
             anchor="center",
             relheight=0.65,
@@ -1606,6 +1640,9 @@ class AdmindHomeApp:
         pass
 
     def save_dates(self, event=None):
+        pass
+
+    def save_security(self, event=None):
         pass
 
 #SETTINGS-COMMANDS---------------------------------------------------------------------------------------------------------------
