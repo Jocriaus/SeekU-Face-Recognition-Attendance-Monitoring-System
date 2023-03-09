@@ -1,23 +1,23 @@
 import pyodbc as odbc
+import connection as conn
 
-server = "DESKTOP-DG7AK17\SQLEXPRESS"
-database = "seeku_database"
-username = ""
-password = ""
 
-connection_string = f"Driver={{SQL Server}};Server={server};Database={database};UID={username};PWD={password}"
+class dbLogin:
+    def __init__(self, master=None):
+        self.db_connection = conn.dbConnect()
 
-connection = odbc.connect(connection_string)
-print(connection)
+        self.cursor = self.db_connection.connection.cursor()
 
-cursor = connection.cursor()
+        self.cursor.execute("SELECT * FROM tbl_personnel")
 
-cursor.execute("SELECT * FROM tbl_personnel")
+        self.result = self.cursor.fetchall()
 
-result = cursor.fetchall()
+        for row in self.result:
+            print(row)
 
-for row in result:
-    print(row)
+        self.cursor.close()
+        self.db_connection.connection.close()
 
-cursor.close()
-connection.close()
+
+if __name__ == "__main__":
+    app = dbLogin()
