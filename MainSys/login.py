@@ -8,7 +8,7 @@ class dbLogin:
 
         self.cursor = self.db_connection.connection.cursor()
 
-        self.cursor.execute("SELECT * FROM tbl_personnel")
+        self.cursor.execute("SELECT * FROM tbl_user")
 
         self.result = self.cursor.fetchall()
 
