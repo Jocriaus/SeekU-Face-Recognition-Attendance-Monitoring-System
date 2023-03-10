@@ -11,9 +11,11 @@ VS Code
 -Visual Studio IntelliCode
 
 
+
 install python 3.10.0
 file on repo
 
+(Remove hypen[-] when using pip install)
 intall opencv
 -pip install opencv
 -pip install opencv-contrib-python
@@ -23,6 +25,10 @@ install face_recognition library
 
 install dlib
 -pip install dlib 
+
+install database library
+-pip install pyodbc
+
 
 install pyinstaller for compiling the program 
 -pip install pyinstaller
