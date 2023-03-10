@@ -1,4 +1,3 @@
-import pyodbc as odbc
 import connection as conn
 
 
