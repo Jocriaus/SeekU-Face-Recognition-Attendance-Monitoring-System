@@ -1,13 +1,11 @@
 import tkinter as tk
 from tkinter import messagebox
 import client_cam as cC
-import login as lg
 import sys
 
 
 class LoginApp:
     def __init__(self, master=None):
-        self.sqlLogin = lg.dbQuery()
         # build ui
         self.log_in_app = tk.Tk() if master is None else tk.Toplevel(master)
         self.log_in_app.configure(background="#0072bc", height=200, width=200)
@@ -126,8 +124,6 @@ class LoginApp:
 
     # this function will enable the user to enter to the system
     def login_logic(self):
-        self.username_entry = self.un_entry.get()
-        self.password_entry = self.pw_entry.get()
         if (len(self.un_entry.get()) != 0) and (len(self.pw_entry.get()) != 0):
             print("login")
             self.hide_this_window()
