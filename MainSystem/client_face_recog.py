@@ -2,7 +2,7 @@ import tkinter as tk
 from PIL import Image, ImageTk
 import datetime
 import time
-import face_recog as mf
+import face_recog_mod as mf
 import sys
 
 class ClientFaceRecogApp:
