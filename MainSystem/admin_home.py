@@ -849,106 +849,17 @@ class AdmindHomeApp:
     # this function removes all uncessesary widgets except the dasboard
     def db_appear_logic(self):
         # client_forget------------------------------------
-        self.admin_c_sec1_frame.place_forget()
-        self.add_c_button.place_forget()
-        self.search_c_button.place_forget()
-        self.search_c_entry.place_forget()
-        self.clients_list.place_forget()
-        self.admin_c_sec2_frame.place_forget()
-        self.admin_c_sec3_frame.place_forget()
-        self.manage_client_optionmenu.place_forget()    
-        self.time_and_date_label_c.place_forget()
         self.administrator_client_frame.place_forget()
         # client_forget------------------------------------
         # users_forget------------------------------------
-        self.time_and_date_label_u.place_forget()
-        self.search_user_info.place_forget()
-        self.search_u_entry.place_forget()
-        self.admin_u_sec1_frame.place_forget()
-        self.admin_u_sec2_frame.place_forget()
-        self.user_info_label.place_forget()
-        self.edit_user_button.place_forget()
-        self.add_user_button.place_forget()
         self.administrator_users_frame.place_forget()
         # users_forget------------------------------------
         # report_forget------------------------------------
-        self.admin_r_sec1_frame.place_forget()
-        self.print_report.place_forget()
-        self.save_button.place_forget()
-        self.admin_c_sec2_frame.place_forget()
-        self.search_clients_report.place_forget()
-        self.search_r_entry.place_forget()
-        self.clients_list.place_forget()
-        self.admin_r_sec2_frame.place_forget()
-        self.client_report_optionmenu.place_forget()
-        self.time_and_date_label_r.place_forget()
         self.administrator_report_frame.place_forget()
         # report_forget------------------------------------
         # settings_forget-------------------------------------
-        self.time_and_date_label_s.place_forget()
-        self.export_db_button.place_forget()
-        self.import_db_button.place_forget()
-        self.gen_settings_label.place_forget()
-        self.backup_db_label.place_forget()
-        self.restore_db_label.place_forget()
-        self.admin_s_sec1_frame.place_forget()
-        self.secu_settings_label.place_forget()
-        self.min_pass_req_label.place_forget()
-        self.pass_len_entry.place_forget()
-        self.pass_len_label.place_forget()
-        self.account_lockout_label.place_forget()
-        self.login_attempt_entry.place_forget()
-        self.login_attem_label.place_forget()
-        self.acc_lockout_rem_label.place_forget()
-        self.admin_s_sec2_frame.place_forget()
-        self.settings_label.place_forget()
         self.administrator_settings_frame.place_forget()
-        self.student_stat_label.place_forget()
-        self.stud_stat_rem_label.place_forget()
-        self.activation_date_entry.place_forget()
-        self.activation_date_label.place_forget()
-        self.deactivation_date_entry.place_forget()
-        self.deactivation_date_label.place_forget()
-        self.save_dates_button.place_forget()
-        self.save_settings_button.place_forget()
         # settings_forget-------------------------------------
-        self.time_and_date_label_db.place(
-            anchor="center",
-            relwidth=1,
-            relx=0.5,
-            rely=0.975,
-            x=0,
-            y=0)
-        self.ttl_students_label.place(
-            anchor="center", relx=0.16, rely=0.25, x=0, y=0)
-        self.ttl_personnels_label.place(
-            anchor="center", relx=0.5, rely=0.25, x=0, y=0)        	
-        self.ttl_visitor_label.place(
-            anchor="center", relx=0.84, rely=0.25, x=0, y=0)
-        self.administrator_db_ttl_frame.place(
-            anchor="center",
-            relheight=0.35,
-            relwidth=0.9,
-            relx=0.5,
-            rely=0.72,
-            x=0,
-            y=0)
-        self.ol_students_label.place(
-            anchor="center", relx=0.16, rely=0.25, x=0, y=0)
-        self.ol_personnels_label.place(
-            anchor="center", relx=0.5, rely=0.25, x=0, y=0)
-        self.ol_visitor_label.place(
-            anchor="center", relx=0.84, rely=0.25, x=0, y=0)
-        self.administrator_db_ol_frame.place(
-            anchor="center",
-            relheight=0.35,
-            relwidth=0.9,
-            relx=0.5,
-            rely=0.33,
-            x=0,
-            y=0)
-        self.dashboard_label.place(
-            anchor="center", relheight=0.1, relx=0.5, rely=0.09,)
         self.administrator_db_frame.place(
             anchor="center",
             relheight=0.95,
@@ -959,116 +870,17 @@ class AdmindHomeApp:
     # this function removes all uncessesary widgets except the client
     def client_appear_logic(self):
         # users_forget------------------------------------
-        self.time_and_date_label_u.place_forget()
-        self.search_user_info.place_forget()
-        self.search_u_entry.place_forget()
-        self.admin_u_sec1_frame.place_forget()
-        self.admin_u_sec2_frame.place_forget()
-        self.user_info_label.place_forget()
-        self.edit_user_button.place_forget()
-        self.add_user_button.place_forget()
         self.administrator_users_frame.place_forget()
         # users_forget------------------------------------
         # report_forget------------------------------------
-        self.admin_r_sec1_frame.place_forget()
-        self.print_report.place_forget()
-        self.save_button.place_forget()
-        self.admin_c_sec2_frame.place_forget()
-        self.search_clients_report.place_forget()
-        self.search_r_entry.place_forget()
-        self.clients_list.place_forget()
-        self.admin_r_sec2_frame.place_forget()
-        self.client_report_optionmenu.place_forget()
-        self.time_and_date_label_r.place_forget()
         self.administrator_report_frame.place_forget()
         # report_forget------------------------------------
         # settings_forget-------------------------------------
-        self.time_and_date_label_s.place_forget()
-        self.export_db_button.place_forget()
-        self.import_db_button.place_forget()
-        self.gen_settings_label.place_forget()
-        self.backup_db_label.place_forget()
-        self.restore_db_label.place_forget()
-        self.admin_s_sec1_frame.place_forget()
-        self.secu_settings_label.place_forget()
-        self.min_pass_req_label.place_forget()
-        self.pass_len_entry.place_forget()
-        self.pass_len_label.place_forget()
-        self.account_lockout_label.place_forget()
-        self.login_attempt_entry.place_forget()
-        self.login_attem_label.place_forget()
-        self.acc_lockout_rem_label.place_forget()
-        self.admin_s_sec2_frame.place_forget()
-        self.settings_label.place_forget()
         self.administrator_settings_frame.place_forget()
-        self.student_stat_label.place_forget()
-        self.stud_stat_rem_label.place_forget()
-        self.activation_date_entry.place_forget()
-        self.activation_date_label.place_forget()
-        self.deactivation_date_entry.place_forget()
-        self.deactivation_date_label.place_forget()
-        self.save_dates_button.place_forget()
-        self.save_settings_button.place_forget()
         # settings_forget-------------------------------------
         # db_forget----------------------------------------
-        self.time_and_date_label_db.place_forget()
-        self.ttl_students_label.place_forget()
-        self.ttl_personnels_label.place_forget()       	
-        self.ttl_visitor_label.place_forget()
-        self.administrator_db_ttl_frame.place_forget()
-        self.ol_students_label.place_forget()
-        self.ol_personnels_label.place_forget()
-        self.ol_visitor_label.place_forget()
-        self.administrator_db_ol_frame.place_forget()
-        self.dashboard_label.place_forget()
         self.administrator_db_frame.place_forget()
         # db_forget----------------------------------------
-        self.time_and_date_label_c.place(
-            anchor="center",
-            relwidth=1,
-            relx=0.5,
-            rely=0.975,
-            x=0,
-            y=0)
-        self.add_c_button.place(
-            anchor="center", relx=0.85, rely=.5, x=0, y=0)
-        self.admin_c_sec1_frame.place(
-            anchor="center",
-            relheight=0.1,
-            relwidth=1.0,
-            relx=0.5,
-            rely=0.09)
-        self.search_c_button.place(
-            anchor="center",
-            relheight=.5,
-            relwidth=0.16,
-            relx=0.9,
-            rely=.5,
-            x=0,
-            y=0)
-        self.admin_c_sec1_frame.place(
-            anchor="center",
-            relheight=0.1,
-            relwidth=1.0,
-            relx=0.5,
-            rely=0.09)
-        self.search_c_entry.place(anchor="center", relx=0.63, rely=.5, x=0, y=0)
-        self.clients_list.place(anchor="center", relx=0.125, rely=.5, x=0, y=0)        
-        self.admin_c_sec2_frame.place(
-            anchor="center",
-            relheight=0.1,
-            relwidth=.90,
-            relx=0.5,
-            rely=0.22)
-        self.admin_c_sec3_frame.place(
-            anchor="center",
-            relheight=0.6,
-            relwidth=0.9,
-            relx=.5,
-            rely=.6,
-            x=0,
-            y=0)
-        self.manage_client_optionmenu.place(anchor="center", relx=0.17, rely=0.09, x=0, y=0)
         self.administrator_client_frame.place(
             anchor="center",
             relheight=0.95,
@@ -1078,119 +890,17 @@ class AdmindHomeApp:
 
     def users_appear_logic(self):
         # client_forget------------------------------------
-        self.admin_c_sec1_frame.place_forget()
-        self.add_c_button.place_forget()
-        self.search_c_button.place_forget()
-        self.search_c_entry.place_forget()
-        self.clients_list.place_forget()
-        self.admin_c_sec2_frame.place_forget()
-        self.admin_c_sec3_frame.place_forget()
-        self.manage_client_optionmenu.place_forget()    
-        self.time_and_date_label_c.place_forget()
         self.administrator_client_frame.place_forget()
         # client_forget------------------------------------
         # report_forget------------------------------------
-        self.admin_r_sec1_frame.place_forget()
-        self.print_report.place_forget()
-        self.save_button.place_forget()
-        self.admin_c_sec2_frame.place_forget()
-        self.search_clients_report.place_forget()
-        self.search_r_entry.place_forget()
-        self.clients_list.place_forget()
-        self.admin_r_sec2_frame.place_forget()
-        self.client_report_optionmenu.place_forget()
-        self.time_and_date_label_r.place_forget()
         self.administrator_report_frame.place_forget()
         # report_forget------------------------------------
         # settings_forget-------------------------------------
-        self.time_and_date_label_s.place_forget()
-        self.export_db_button.place_forget()
-        self.import_db_button.place_forget()
-        self.gen_settings_label.place_forget()
-        self.backup_db_label.place_forget()
-        self.restore_db_label.place_forget()
-        self.admin_s_sec1_frame.place_forget()
-        self.secu_settings_label.place_forget()
-        self.min_pass_req_label.place_forget()
-        self.pass_len_entry.place_forget()
-        self.pass_len_label.place_forget()
-        self.account_lockout_label.place_forget()
-        self.login_attempt_entry.place_forget()
-        self.login_attem_label.place_forget()
-        self.acc_lockout_rem_label.place_forget()
-        self.admin_s_sec2_frame.place_forget()
-        self.settings_label.place_forget()
         self.administrator_settings_frame.place_forget()
-        self.student_stat_label.place_forget()
-        self.stud_stat_rem_label.place_forget()
-        self.activation_date_entry.place_forget()
-        self.activation_date_label.place_forget()
-        self.deactivation_date_entry.place_forget()
-        self.deactivation_date_label.place_forget()
-        self.save_dates_button.place_forget()
-        self.save_settings_button.place_forget()
         # settings_forget-------------------------------------
         # db_forget----------------------------------------
-        self.time_and_date_label_db.place_forget()
-        self.ttl_students_label.place_forget()
-        self.ttl_personnels_label.place_forget()       	
-        self.ttl_visitor_label.place_forget()
-        self.administrator_db_ttl_frame.place_forget()
-        self.ol_students_label.place_forget()
-        self.ol_personnels_label.place_forget()
-        self.ol_visitor_label.place_forget()
-        self.administrator_db_ol_frame.place_forget()
-        self.dashboard_label.place_forget()
         self.administrator_db_frame.place_forget()
         # db_forget----------------------------------------
-
-        self.time_and_date_label_u.place(
-            anchor="center",
-            relwidth=1,
-            relx=0.5,
-            rely=0.975,
-            x=0,
-            y=0)
-        self.search_user_info.place(
-            anchor="center",
-            relheight=.5,
-            relwidth=0.16,
-            relx=0.9,
-            rely=.5,
-            x=0,
-            y=0)
-        self.search_u_entry.place(anchor="center", relx=0.63, rely=.5, x=0, y=0)
-        self.admin_u_sec1_frame.place(
-            anchor="center",
-            relheight=0.1,
-            relwidth=.90,
-            relx=0.5,
-            rely=0.09)
-        self.admin_u_sec2_frame.place(
-            anchor="center",
-            relheight=0.65,
-            relwidth=0.9,
-            relx=.5,
-            rely=0.5,
-            x=0,
-            y=0)
-        self.user_info_label.place(anchor="center", relx=0.15, rely=0.09, x=0, y=0)
-        self.edit_user_button.place(
-            anchor="center",
-            relheight=0.05,
-            relwidth=0.12,
-            relx=0.87,
-            rely=0.875,
-            x=0,
-            y=0)
-        self.add_user_button.place(
-            anchor="center",
-            relheight=0.05,
-            relwidth=0.12,
-            relx=0.7,
-            rely=0.875,
-            x=0,
-            y=0)
         self.administrator_users_frame.place(
             anchor="center",
             relheight=0.95,
@@ -1202,129 +912,20 @@ class AdmindHomeApp:
     # this function removes all uncessesary widgets except the reports
     def report_appear_logic(self):
         # client_forget------------------------------------
-        self.admin_c_sec1_frame.place_forget()
-        self.add_c_button.place_forget()
-        self.search_c_button.place_forget()
-        self.search_c_entry.place_forget()
-        self.clients_list.place_forget()
-        self.admin_c_sec2_frame.place_forget()
-        self.admin_c_sec3_frame.place_forget()
-        self.manage_client_optionmenu.place_forget()    
-        self.time_and_date_label_c.place_forget()
         self.administrator_client_frame.place_forget()
         # client_forget------------------------------------
         # users_forget------------------------------------
-        self.time_and_date_label_u.place_forget()
-        self.search_user_info.place_forget()
-        self.search_u_entry.place_forget()
-        self.admin_u_sec1_frame.place_forget()
-        self.admin_u_sec2_frame.place_forget()
-        self.user_info_label.place_forget()
-        self.edit_user_button.place_forget()
-        self.add_user_button.place_forget()
+        self.administrator_users_frame.place_forget()
         # users_forget------------------------------------
         # report_forget------------------------------------
-        self.admin_r_sec1_frame.place_forget()
-        self.print_report.place_forget()
-        self.save_button.place_forget()
-        self.admin_c_sec2_frame.place_forget()
-        self.search_clients_report.place_forget()
-        self.search_r_entry.place_forget()
-        self.clients_list.place_forget()
-        self.admin_r_sec2_frame.place_forget()
-        self.client_report_optionmenu.place_forget()
-        self.time_and_date_label_r.place_forget()
         self.administrator_report_frame.place_forget()
         # report_forget------------------------------------
         # settings_forget-------------------------------------
-        self.time_and_date_label_s.place_forget()
-        self.export_db_button.place_forget()
-        self.import_db_button.place_forget()
-        self.gen_settings_label.place_forget()
-        self.backup_db_label.place_forget()
-        self.restore_db_label.place_forget()
-        self.admin_s_sec1_frame.place_forget()
-        self.secu_settings_label.place_forget()
-        self.min_pass_req_label.place_forget()
-        self.pass_len_entry.place_forget()
-        self.pass_len_label.place_forget()
-        self.account_lockout_label.place_forget()
-        self.login_attempt_entry.place_forget()
-        self.login_attem_label.place_forget()
-        self.acc_lockout_rem_label.place_forget()
-        self.admin_s_sec2_frame.place_forget()
-        self.settings_label.place_forget()
         self.administrator_settings_frame.place_forget()
-        self.student_stat_label.place_forget()
-        self.stud_stat_rem_label.place_forget()
-        self.activation_date_entry.place_forget()
-        self.activation_date_label.place_forget()
-        self.deactivation_date_entry.place_forget()
-        self.deactivation_date_label.place_forget()
-        self.save_dates_button.place_forget()
-        self.save_settings_button.place_forget()
         # settings_forget-------------------------------------
         #db_forget------------------------------------
-        self.time_and_date_label_db.place_forget()
-        self.ttl_students_label.place_forget()
-        self.ttl_personnels_label.place_forget()       	
-        self.ttl_visitor_label.place_forget()
-        self.administrator_db_ttl_frame.place_forget()
-        self.ol_students_label.place_forget()
-        self.ol_personnels_label.place_forget()
-        self.ol_visitor_label.place_forget()
-        self.administrator_db_ol_frame.place_forget()
-        self.dashboard_label.place_forget()
         self.administrator_db_frame.place_forget()
         #db_forget------------------------------------
-        self.time_and_date_label_r.place(
-            anchor="center",
-            relwidth=1,
-            relx=0.5,
-            rely=0.975,
-            x=0,
-            y=0)
-        self.search_clients_report.place(
-            anchor="center",
-            relheight=.5,
-            relwidth=0.16,
-            relx=0.9,
-            rely=.5,
-            x=0,
-            y=0)
-        self.search_r_entry.place(anchor="center", relx=0.63, rely=.5, x=0, y=0)
-        self.admin_r_sec1_frame.place(
-            anchor="center",
-            relheight=0.1,
-            relwidth=.90,
-            relx=0.5,
-            rely=0.09)
-        self.admin_r_sec2_frame.place(
-            anchor="center",
-            relheight=0.65,
-            relwidth=0.9,
-            relx=.5,
-            rely=0.5,
-            x=0,
-            y=0)
-        self.client_report_optionmenu.place(
-            anchor="center", relx=0.17, rely=0.09, x=0, y=0)
-        self.print_report.place(
-            anchor="center",
-            relheight=0.05,
-            relwidth=0.12,
-            relx=0.87,
-            rely=0.875,
-            x=0,
-            y=0)
-        self.save_button.place(
-            anchor="center",
-            relheight=0.05,
-            relwidth=0.12,
-            relx=0.7,
-            rely=0.875,
-            x=0,
-            y=0)
         self.administrator_report_frame.place(
             anchor="center",
             relheight=0.95,
@@ -1333,161 +934,17 @@ class AdmindHomeApp:
             rely=0.525)
     def settings_appear_logic(self):
         # client_forget------------------------------------
-        self.admin_c_sec1_frame.place_forget()
-        self.add_c_button.place_forget()
-        self.search_c_button.place_forget()
-        self.search_c_entry.place_forget()
-        self.clients_list.place_forget()
-        self.admin_c_sec2_frame.place_forget()
-        self.admin_c_sec3_frame.place_forget()
-        self.manage_client_optionmenu.place_forget()    
-        self.time_and_date_label_c.place_forget()
         self.administrator_client_frame.place_forget()
         # client_forget------------------------------------
         # users_forget------------------------------------
-        self.time_and_date_label_u.place_forget()
-        self.search_user_info.place_forget()
-        self.search_u_entry.place_forget()
-        self.admin_u_sec1_frame.place_forget()
-        self.admin_u_sec2_frame.place_forget()
-        self.user_info_label.place_forget()
-        self.edit_user_button.place_forget()
-        self.add_user_button.place_forget()
+        self.administrator_users_frame.place_forget()
         # users_forget------------------------------------
         # report_forget------------------------------------
-        self.admin_r_sec1_frame.place_forget()
-        self.print_report.place_forget()
-        self.save_button.place_forget()
-        self.admin_c_sec2_frame.place_forget()
-        self.search_clients_report.place_forget()
-        self.search_r_entry.place_forget()
-        self.clients_list.place_forget()
-        self.admin_r_sec2_frame.place_forget()
-        self.client_report_optionmenu.place_forget()
-        self.time_and_date_label_r.place_forget()
         self.administrator_report_frame.place_forget()
         # report_forget------------------------------------
         #db_forget------------------------------------
-        self.time_and_date_label_db.place_forget()
-        self.ttl_students_label.place_forget()
-        self.ttl_personnels_label.place_forget()       	
-        self.ttl_visitor_label.place_forget()
-        self.administrator_db_ttl_frame.place_forget()
-        self.ol_students_label.place_forget()
-        self.ol_personnels_label.place_forget()
-        self.ol_visitor_label.place_forget()
-        self.administrator_db_ol_frame.place_forget()
-        self.dashboard_label.place_forget()
         self.administrator_db_frame.place_forget()
         #db_forget------------------------------------
-        self.time_and_date_label_s.place(
-            anchor="center", relwidth=1, relx=0.5, rely=0.975, x=0, y=0)
-        self.export_db_button.place(
-            anchor="center",
-            relheight=0.08,
-            relwidth=0.25,
-            relx=0.25,
-            rely=0.29,
-            x=0,
-            y=0)
-        self.import_db_button.place(
-            anchor="center",
-            relheight=0.08,
-            relwidth=0.25,
-            relx=0.25,
-            rely=0.47)
-        self.gen_settings_label.place(
-            anchor="center", relx=0.5, rely=0.1, x=0, y=0)
-        self.backup_db_label.place(
-            anchor="center", relx=0.25, rely=0.19, x=0, y=0)
-        self.restore_db_label.place(
-            anchor="center", relx=0.25, rely=0.38, x=0, y=0)
-        self.student_stat_label.place(
-            anchor="center", relx=0.22, rely=0.55, x=0, y=0)
-        self.stud_stat_rem_label.place(
-            anchor="center", relx=0.325, rely=0.63, x=0, y=0)
-        self.activation_date_entry.place(
-            anchor="center",
-            relheight=0.05,
-            relwidth=0.3,
-            relx=0.25,
-            rely=0.79,
-            x=0,
-            y=0)
-        self.activation_date_label.place(
-            anchor="center", relx=0.23, rely=0.73, x=0, y=0)
-        self.deactivation_date_entry.place(
-            anchor="center",
-            relheight=0.05,
-            relwidth=0.3,
-            relx=0.25,
-            rely=0.92,
-            x=0,
-            y=0)
-        self.deactivation_date_label.place(
-            anchor="center", relx=0.23, rely=0.86, x=0, y=0)
-        self.save_dates_button.place(
-            anchor="center",
-            relheight=0.08,
-            relwidth=0.3,
-            relx=0.68,
-            rely=0.87,
-            x=0,
-            y=0)
-        self.admin_s_sec1_frame.place(
-            anchor="center",
-            relheight=0.65,
-            relwidth=0.45,
-            relx=.26,
-            rely=0.5,
-            x=0,
-            y=0)
-        self.secu_settings_label.place(
-            anchor="center", relx=0.5, rely=0.1)
-        self.min_pass_req_label.place(
-            anchor="center", relx=0.4, rely=0.19)
-        self.pass_len_entry.place(
-            anchor="center",
-            relheight=0.05,
-            relwidth=0.12,
-            relx=0.12,
-            rely=0.28,
-            x=0,
-            y=0)
-        self.pass_len_label.place(
-            anchor="center", relx=0.35, rely=0.28)
-        self.account_lockout_label.place(
-            anchor="center", relx=0.26, rely=0.4)
-        self.login_attempt_entry.place(
-            anchor="center",
-            relheight=0.05,
-            relwidth=0.12,
-            relx=0.12,
-            rely=0.49,
-            x=0,
-            y=0)
-        self.login_attem_label.place(
-            anchor="center", relx=0.35, rely=0.49, x=0, y=0)
-        self.acc_lockout_rem_label.place(
-            anchor="center", relx=0.3, rely=0.57, x=0, y=0)
-        self.save_settings_button.place(
-            anchor="center",
-            relheight=0.08,
-            relwidth=0.4,
-            relx=0.29,
-            rely=0.7,
-            x=0,
-            y=0)
-        self.admin_s_sec2_frame.place(
-            anchor="center",
-            relheight=0.65,
-            relwidth=0.45,
-            relx=.74,
-            rely=0.5,
-            x=0,
-            y=0)
-        self.settings_label.place(
-                anchor="center", relx=0.1, rely=0.09, x=0, y=0)
         self.administrator_settings_frame.place(
             anchor="center", relheight=0.95, relwidth=.78, relx=0.61, rely=0.525)
 
