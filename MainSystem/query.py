@@ -53,6 +53,26 @@ class dbQueries:
         self.connection.commit()
         print(f"User {personnel_firstname} has been registered successfully!")
 
+    def register_visitor(
+        self,
+        visitor_firstname,
+        visitor_lastname,
+        visitor_contact_number,
+        visitor_address,
+    ):
+        query = f"INSERT INTO tbl_visitor(visitor_firstname, visitor_lastname, visitor_contact_no, visitor_address) VALUES (?, ?, ?, ?)"
+        self.cursor.execute(
+            query,
+            (
+                visitor_firstname,
+                visitor_lastname,
+                visitor_contact_number,
+                visitor_address,
+            ),
+        )
+        self.connection.commit()
+        print(f"User {visitor_firstname} has been registered successfully!")
+
 
 # if db.login_entry("systemeror12", "RanOnline124"):
 # print("Login successful")
