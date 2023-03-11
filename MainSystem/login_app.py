@@ -128,14 +128,20 @@ class LoginApp:
 
     # this function will enable the user to enter to the system
     def login_logic(self):
-        self.username_entry = len(self.un_entry.get())
-        self.password_entry = len(self.pw_entry.get())
-        if self.sqlQueries.login_entry(self.username_entry, self.password_entry):
-            print("login")
-            self.hide_this_window()
-            self.clear_entry()
-            cC.ClientCameraSelectApp(self.log_in_app)
+        self.username_var = self.un_entry.get()
+        self.password_var = self.pw_entry.get()
+        if (len(self.username_var) != 0) and (len(self.password_var) != 0):
+            if self.sql_query.login_entry(self.username_var, self.password_var):
 
+                print("login")
+                self.hide_this_window()
+                self.clear_entry()
+                cC.ClientCameraSelectApp(self.log_in_app)
+            elif (
+                self.sql_query.login_entry(self.username_var, self.password_var)
+                == False
+            ):
+                print("Username or password is not match")
             # add if else where it checks the un and pw to match
             # go to the home section
             # add check if the usertype

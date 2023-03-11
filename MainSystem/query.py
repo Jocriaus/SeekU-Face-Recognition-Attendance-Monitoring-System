@@ -1,7 +1,8 @@
 import pyodbc as odbc
 
+
 class dbQueries:
-    def __init__(self, master = None):
+    def __init__(self, master=None):
         self.server = "DESKTOP-DG7AK17\SQLEXPRESS"
         self.database = "seeku_database"
         self.username = ""
@@ -21,8 +22,10 @@ class dbQueries:
         query = f"SELECT * FROM tbl_user WHERE username = ? AND password = ?"
         self.cursor.execute(query, (username, password))
         row = self.cursor.fetchone()
-        count = row[0]
-        return count > 0
+        if row:
+            return True
+        else:
+            return False
 
 
 # if db.login_entry("systemeror12", "RanOnline124"):
