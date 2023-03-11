@@ -27,6 +27,32 @@ class dbQueries:
         else:
             return False
 
+    def register_personnel(
+        self,
+        personnel_number,
+        personnel_firstname,
+        personnel_lastname,
+        personnel_middlename,
+        personnel_contact_number,
+        personnel_address,
+        personnel_type,
+    ):
+        query = f"INSERT INTO tbl_personnel (personnel_no, personnel_firstname, personnel_lastname, personnel_middlename, personnel_contact_no, personnel_address, personnel_type) VALUES  (?, ?, ?, ?, ?, ?, ?)"
+        self.cursor.execute(
+            query,
+            (
+                personnel_number,
+                personnel_firstname,
+                personnel_lastname,
+                personnel_middlename,
+                personnel_contact_number,
+                personnel_address,
+                personnel_type,
+            ),
+        )
+        self.connection.commit()
+        print(f"User {personnel_firstname} has been registered successfully!")
+
 
 # if db.login_entry("systemeror12", "RanOnline124"):
 # print("Login successful")
