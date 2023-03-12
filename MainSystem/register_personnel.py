@@ -6,6 +6,9 @@ import query as qry
 class RegisterPersonnelApp:
     def __init__(self, master=None):
         # build ui
+        # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
+        self.sql_query = qry.dbQueries()
+        # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.register_personnel_app = tk.Tk() if master is None else tk.Toplevel(master)
         self.register_personnel_app.configure(
             background="#F7FAE9", height=200, width=200
