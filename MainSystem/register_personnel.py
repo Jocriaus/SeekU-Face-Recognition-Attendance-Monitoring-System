@@ -233,8 +233,19 @@ class RegisterPersonnelApp:
         self.first_name_var = self.first_name_entry.get()
         self.mid_name_var = self.mid_name_entry.get()
         self.last_name_var = self.last_name_entry.get()
+        self.contact_num_var = self.contact_num_entry.get()
         self.personnel_type_var = self.personnel_type_entry.get()
-        self.address_entry = self.address_entry.get()
+        self.address_var = self.address_entry.get()
+
+        self.sql_query.register_personnel(
+            self.personnel_num_var,
+            self.first_name_var,
+            self.last_name_var,
+            self.mid_name_var,
+            self.contact_num_var,
+            self.address_var,
+            self.personnel_type_var,
+        )
 
 
 if __name__ == "__main__":
