@@ -221,8 +221,7 @@ class RegisterPersonnelApp:
         self.mainwindow.mainloop()
 
     def register_personnel(self, event=None):
-
-        pass
+        self.register_personnel_function()
 
     def return_func(self, event=None):
         # return to admin module
