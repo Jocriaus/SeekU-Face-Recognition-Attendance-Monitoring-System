@@ -73,6 +73,34 @@ class dbQueries:
         self.connection.commit()
         print(f"User {visitor_firstname} has been registered successfully!")
 
+    def register_student(
+        self,
+        student_number,
+        student_firstname,
+        student_lastname,
+        student_middlename,
+        student_program,
+        student_section,
+        student_contact_number,
+        student_address,
+    ):
+        query = f"INSERT INTO tbl_student(student_no, student_firstname, student_lastname, student_middlename, student_program, student_section, student_contact_no, student_address) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+        self.cursor.execute(
+            query,
+            (
+                student_number,
+                student_firstname,
+                student_lastname,
+                student_middlename,
+                student_program,
+                student_section,
+                student_contact_number,
+                student_address,
+            ),
+        )
+        self.connection.commit()
+        print(f"Student {student_firstname} has been registered successfully!")
+
 
 # if db.login_entry("systemeror12", "RanOnline124"):
 # print("Login successful")
