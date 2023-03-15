@@ -101,6 +101,34 @@ class dbQueries:
         self.connection.commit()
         print(f"Student {student_firstname} has been registered successfully!")
 
+    def update_student(
+        self,
+        student_number,
+        student_firstname,
+        student_lastname,
+        student_middlename,
+        student_program,
+        student_section,
+        student_contact_number,
+        student_address,
+    ):
+        query = f"UPDATE tbl_student SET student_firstname = ?, student_lastname = ?, student_middlename = ?, student_program = ?, student_section = ?, student_contact_number = ?, student_address = ? WHERE student_number = ?"
+        self.cursor.execute(
+            query,
+            (
+                student_firstname,
+                student_lastname,
+                student_middlename,
+                student_program,
+                student_section,
+                student_contact_number,
+                student_address,
+                student_number,
+            ),
+        )
+        self.connection.commit()
+        print(f"Student {student_number} has been updated successfully!")
+
 
 # if db.login_entry("systemeror12", "RanOnline124"):
 # print("Login successful")
