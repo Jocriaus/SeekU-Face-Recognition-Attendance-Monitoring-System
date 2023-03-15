@@ -53,6 +53,32 @@ class dbQueries:
         self.connection.commit()
         print(f"User {personnel_firstname} has been registered successfully!")
 
+    def update_personnel(
+        self,
+        personnel_number,
+        personnel_firstname,
+        personnel_lastname,
+        personnel_middlename,
+        personnel_contact_number,
+        personnel_address,
+        personnel_type,
+    ):
+        query = f"UPDATE tbl_personnel SET personnel_firstname = ?, personnel_lastname = ?, personnel_middlename = ?, personnel_contact_no = ?, personnel_address = ?, personnel_type = ? WHERE personnel_no = ?"
+        self.cursor.execute(
+            query,
+            (
+                personnel_firstname,
+                personnel_lastname,
+                personnel_middlename,
+                personnel_contact_number,
+                personnel_address,
+                personnel_type,
+                personnel_number,
+            ),
+        )
+        self.connection.commit()
+        print(f"Personnel {personnel_number} has been updated successfully!")
+
     def register_visitor(
         self,
         visitor_firstname,
