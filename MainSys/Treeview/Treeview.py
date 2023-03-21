@@ -7,10 +7,10 @@ class Mainsys:
     def __init__(self, master=None):
         self.treeview = tv.TreeviewGUI()
         self.root = tk.Tk()
-        self.frame = self.treeview.visitor_treeview(self.root)
+        self.frame = self.treeview.student_report_treeview(self.root)
 
     def run(self):
-        self.treeview.visitor_treeview_root.mainloop()
+        self.treeview.student_report_treeview_root.mainloop()
 
 
 if __name__ == "__main__":
