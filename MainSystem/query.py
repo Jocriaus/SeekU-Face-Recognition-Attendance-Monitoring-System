@@ -79,6 +79,13 @@ class dbQueries:
         self.connection.commit()
         print(f"Personnel {personnel_number} has been updated successfully!")
 
+    def delete_personnel_status(self, personnel_status, personnel_number):
+        query = f"UPDATE tbl_personnel SET personnel_status = IsDeleted WHERE personnel_no = ?"
+        self.cursor.execute(query, (personnel_status, personnel_status))
+
+        self.connection.commit()
+        print(f"Personnel {personnel_number} has been updated successfully!")
+
     def register_visitor(
         self,
         visitor_firstname,
@@ -120,6 +127,15 @@ class dbQueries:
         )
         self.connection.commit()
         print(f"Personnel {visitor_number} has been updated successfully!")
+
+    def delete_visitor_status(self, visitor_status, visitor_number):
+        query = (
+            f"UPDATE tbl_visitor SET visitor_status = IsDeleted WHERE visitor_no = ?"
+        )
+        self.cursor.execute(query, (visitor_status, visitor_number))
+
+        self.connection.commit()
+        print(f"Visitor {visitor_number} has been updated successfully!")
 
     def register_student(
         self,
@@ -174,6 +190,15 @@ class dbQueries:
                 student_number,
             ),
         )
+        self.connection.commit()
+        print(f"Student {student_number} has been updated successfully!")
+
+    def delete_student_status(self, student_status, student_number):
+        query = (
+            f"UPDATE tbl_student SET student_status = IsDeleted WHERE student_no = ?"
+        )
+        self.cursor.execute(query, (student_status, student_number))
+
         self.connection.commit()
         print(f"Student {student_number} has been updated successfully!")
 
