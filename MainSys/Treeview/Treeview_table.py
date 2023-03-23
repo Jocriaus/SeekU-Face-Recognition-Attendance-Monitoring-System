@@ -26,6 +26,17 @@ class TreeviewGUI:
         self.student_treeview_root.title("Learning code - Treeview")
         self.student_treeview_root.geometry("1600x900")
 
+        # Configure Style of Treeview
+        self.style = ttk.Style()
+        self.style.theme_use("clam")
+
+        self.style.configure(
+            "Treeview",
+            background="#F7FAE9",
+            fieldbackground="F7FAE9",
+            font="{arial} 10 {bold}",
+        )
+
         # Create Treeview Frame
         self.student_treeview_frame = tk.Frame(self.student_treeview_root)
         self.student_treeview_frame.pack(pady=20)
@@ -42,6 +53,11 @@ class TreeviewGUI:
 
         # Configure the scrollbar
         self.student_treeview_scrollbar.config(command=self.student_tree.yview)
+
+        # Configure Treeview Position
+        self.student_treeview_frame.place(
+            anchor="center", relheight=1, relwidth=1, relx=0.5, rely=0.5
+        )
         self.student_tree.pack()
 
         # Defining Columns
@@ -92,6 +108,17 @@ class TreeviewGUI:
         self.student_report_treeview_root.title("Learning code - Treeview")
         self.student_report_treeview_root.geometry("1600x900")
 
+        # Configure Style of Treeview
+        self.style = ttk.Style()
+        self.style.theme_use("clam")
+
+        self.style.configure(
+            "Treeview",
+            background="#F7FAE9",
+            fieldbackground="F7FAE9",
+            font="{arial} 10 {bold}",
+        )
+
         # Create Treeview Frame
         self.student_report_treeview_frame = tk.Frame(self.student_report_treeview_root)
         self.student_report_treeview_frame.pack(pady=20)
@@ -112,6 +139,12 @@ class TreeviewGUI:
         self.student_report_treeview_scrollbar.config(
             command=self.student_report_tree.yview
         )
+
+        # Configure Treeview Position
+        self.student_report_treeview_frame.place(
+            anchor="center", relheight=1, relwidth=1, relx=0.5, rely=0.5
+        )
+
         self.student_report_tree.pack()
 
         # Defining Columns
@@ -175,6 +208,17 @@ class TreeviewGUI:
         self.personnel_treeview_root.title("Learning code - Treeview")
         self.personnel_treeview_root.geometry("1600x900")
 
+        # Configure Style of Treeview
+        self.style = ttk.Style()
+        self.style.theme_use("clam")
+
+        self.style.configure(
+            "Treeview",
+            background="#F7FAE9",
+            fieldbackground="F7FAE9",
+            font="{arial} 10 {bold}",
+        )
+
         # Create Treeview Frame
         self.personnel_treeview_frame = tk.Frame(self.personnel_treeview_root)
         self.personnel_treeview_frame.pack(pady=20)
@@ -191,6 +235,12 @@ class TreeviewGUI:
 
         # Configure the scrollbar
         self.personnel_treeview_scrollbar.config(command=self.personnel_tree.yview)
+
+        # Configure Treeview Position
+        self.personnel_treeview_frame.place(
+            anchor="center", relheight=1, relwidth=1, relx=0.5, rely=0.5
+        )
+
         self.personnel_tree.pack()
 
         # Defining Columns
@@ -244,6 +294,17 @@ class TreeviewGUI:
         self.personnel_report_treeview_root.title("Learning code - Treeview")
         self.personnel_report_treeview_root.geometry("1600x900")
 
+        # Configure Style of Treeview
+        self.style = ttk.Style()
+        self.style.theme_use("clam")
+
+        self.style.configure(
+            "Treeview",
+            background="#F7FAE9",
+            fieldbackground="F7FAE9",
+            font="{arial} 10 {bold}",
+        )
+
         # Create Treeview Frame
         self.personnel_report_treeview_frame = tk.Frame(
             self.personnel_report_treeview_root
@@ -266,6 +327,12 @@ class TreeviewGUI:
         self.personnel_report_treeview_scrollbar.config(
             command=self.personnel_report_tree.yview
         )
+
+        # Configure Treeview Position
+        self.personnel_report_treeview_frame.place(
+            anchor="center", relheight=1, relwidth=1, relx=0.5, rely=0.5
+        )
+
         self.personnel_report_tree.pack()
 
         # Defining Columns
@@ -329,6 +396,17 @@ class TreeviewGUI:
         self.visitor_treeview_root.title("Learning code - Treeview")
         self.visitor_treeview_root.geometry("1600x900")
 
+        # Configure Style of Treeview
+        self.style = ttk.Style()
+        self.style.theme_use("clam")
+
+        self.style.configure(
+            "Treeview",
+            background="#F7FAE9",
+            fieldbackground="F7FAE9",
+            font="{arial} 10 {bold}",
+        )
+
         # Create Treeview Frame
         self.visitor_treeview_frame = tk.Frame(self.visitor_treeview_root)
         self.visitor_treeview_frame.pack(pady=20)
@@ -345,6 +423,12 @@ class TreeviewGUI:
 
         # Configure the scrollbar
         self.visitor_treeview_scrollbar.config(command=self.visitor_tree.yview)
+
+        # Configure Treeview Position
+        self.visitor_treeview_frame.place(
+            anchor="center", relheight=1, relwidth=1, relx=0.5, rely=0.5
+        )
+
         self.visitor_tree.pack()
 
         # Defining Columns
@@ -388,6 +472,17 @@ class TreeviewGUI:
         self.visitor_report_treeview_root.title("Learning code - Treeview")
         self.visitor_report_treeview_root.geometry("1600x900")
 
+        # Configure Style of Treeview
+        self.style = ttk.Style()
+        self.style.theme_use("clam")
+
+        self.style.configure(
+            "Treeview",
+            background="#F7FAE9",
+            fieldbackground="F7FAE9",
+            font="{arial} 10 {bold}",
+        )
+
         # Create Treeview Frame
         self.visitor_report_treeview_frame = tk.Frame(self.visitor_report_treeview_root)
         self.visitor_report_treeview_frame.pack(pady=20)
@@ -408,6 +503,12 @@ class TreeviewGUI:
         self.visitor_report_treeview_scrollbar.config(
             command=self.visitor_report_tree.yview
         )
+
+        # Configure Treeview Position
+        self.visitor_report_treeview_frame.place(
+            anchor="center", relheight=1, relwidth=1, relx=0.5, rely=0.5
+        )
+
         self.visitor_report_tree.pack()
 
         # Defining Columns
@@ -458,6 +559,80 @@ class TreeviewGUI:
 
         self.populate_visitor_report_treeview()
         return self.visitor_report_treeview_frame
+
+    def user_treeview(self, root):
+        self.user_treeview_root = root
+        self.user_treeview_root.title("Learning code - Treeview")
+        self.user_treeview_root.geometry("1600x900")
+
+        # Configure Style of Treeview
+        self.style = ttk.Style()
+        self.style.theme_use("clam")
+
+        self.style.configure(
+            "Treeview",
+            background="#F7FAE9",
+            fieldbackground="F7FAE9",
+            font="{arial} 10 {bold}",
+        )
+
+        # Create Treeview Frame
+        self.user_treeview_frame = tk.Frame(self.user_treeview_root)
+        self.user_treeview_frame.pack(pady=20)
+
+        # Treeview Scrollbar
+        self.user_treeview_scrollbar = tk.Scrollbar(self.user_treeview_frame)
+        self.user_treeview_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
+        # Create Treeview
+        self.user_tree = ttk.Treeview(
+            self.user_treeview_frame,
+            yscrollcommand=self.user_treeview_scrollbar.set,
+        )
+
+        # Configure the scrollbar
+        self.user_treeview_scrollbar.config(command=self.user_tree.yview)
+
+        # Configure Treeview Position
+        self.user_treeview_frame.place(
+            anchor="center", relheight=1, relwidth=1, relx=0.5, rely=0.5
+        )
+
+        self.user_tree.pack()
+
+        # Defining Columns
+        self.user_tree["columns"] = (
+            "User Number",
+            "Username",
+            "Password",
+            "Firstname",
+            "Lastname",
+            "User Type",
+            "User Status",
+        )
+
+        # Format the columns
+        self.user_tree.column("#0", width=0, stretch=tk.NO)
+        self.user_tree.column("User Number", anchor=tk.CENTER, width=140)
+        self.user_tree.column("Username", anchor=tk.W, width=100)
+        self.user_tree.column("Password", anchor=tk.W, width=140)
+        self.user_tree.column("Firstname", anchor=tk.W, width=140)
+        self.user_tree.column("Lastname", anchor=tk.W, width=140)
+        self.user_tree.column("User Type", anchor=tk.W, width=140)
+        self.user_tree.column("User Status", anchor=tk.W, width=140)
+
+        # Create Headings
+        self.user_tree.heading("#0", text="", anchor=tk.W)
+        self.user_tree.heading("User Number", text="User Number", anchor=tk.CENTER)
+        self.user_tree.heading("Username", text="Username", anchor=tk.W)
+        self.user_tree.heading("Password", text="Password", anchor=tk.W)
+        self.user_tree.heading("Firstname", text="Firstname", anchor=tk.W)
+        self.user_tree.heading("Lastname", text="Lastname", anchor=tk.W)
+        self.user_tree.heading("User Type", text="User Type", anchor=tk.W)
+        self.user_tree.heading("User Status", text="User Status", anchor=tk.W)
+
+        self.populate_user_treeview()
+        return self.user_treeview_frame
 
     def populate_student_treeview(self):
         self.cursor.execute("SELECT * FROM tbl_student")
@@ -590,6 +765,25 @@ class TreeviewGUI:
                     row[7],
                     row[8],
                     row[9],
+                ),
+            )
+
+    def populate_user_treeview(self):
+        self.cursor.execute("SELECT * FROM tbl_user")
+
+        for row in self.cursor.fetchall():
+            self.user_tree.insert(
+                "",
+                "end",
+                text=[0],
+                values=(
+                    row[0],
+                    row[1],
+                    row[2],
+                    row[3],
+                    row[4],
+                    row[5],
+                    row[6],
                 ),
             )
 
