@@ -284,7 +284,7 @@ class dbQueries:
         row = self.cursor.fetchone()
 
         if row:
-            insert_query_attendance = f"INSERT INTO tbl_personnel_attendance(personnel_no, personnel_attendance_date, personnel_time_out) VALUES (?, ?, ?)"
+            insert_query_attendance = f"INSERT INTO tbl_personnel_attendance (personnel_no, personnel_attendance_date, personnel_time_out) VALUES (?, ?, ?)"
             self.cursor.execute(
                 insert_query_attendance,
                 (personnel_number, personnel_attendance_date, personnel_time_out),
@@ -303,12 +303,48 @@ class dbQueries:
     def visitor_attendance_entry(
         self, visitor_number, visitor_attendance_date, visitor_time_in
     ):
-        pass
+        query = f"SELECT * FROM tbl_visitor WHERE visitor_no = ?"
+        self.cursor.execute(query(visitor_number))
+        row = self.cursor.fetchone()
+
+        if row:
+            insert_query_attendance = f"INSERT INTO tbl_visitor_attendance (visitor_no, visitor_attendance_date, visitor_time_in) VALUES (?, ?, ?)"
+            self.cursor.execute(
+                insert_query_attendance,
+                (visitor_number, visitor_attendance_date, visitor_time_in),
+            )
+            self.connection.commit()
+
+            join_query_attendance = f"SELECT tbl_visitor.visitor_no, tbl_visitor.visitor_firstname, tbl_visitor.visitor_lastname, tbl_visitor.visitor_contact_no, tbl_visitor.visitor_address, tbl_visitor.visitor_status, tbl_visitor_attendance.visitor_attendance_date, tbl_visitor_attendance.visitor_time_in FROM tbl_visitor INNER JOIN tbl_visitor.visitor_no = tbl_visitor_attendance.visitor_no WHERE tbl_visitor.visitor_no = ? AND tbl_visitor_attendance.visitor_attendance_date = ?"
+            self.cursor.execute(
+                join_query_attendance, (visitor_number, visitor_attendance_date)
+            )
+            print("Attendance added successfully!")
+        else:
+            print("Student not found.")
 
     def visitor_attendance_exit(
-        self, visitor_number, visitor_attendance_date, visitor_time_in
+        self, visitor_number, visitor_attendance_date, visitor_time_out
     ):
-        pass
+        query = f"SELECT * FROM tbl_visitor WHERE visitor_no = ?"
+        self.cursor.execute(query(visitor_number))
+        row = self.cursor.fetchone()
+
+        if row:
+            insert_query_attendance = f"INSERT INTO tbl_visitor_attendance (visitor_no, visitor_attendance_date, visitor_time_out) VALUES (?, ?, ?)"
+            self.cursor.execute(
+                insert_query_attendance,
+                (visitor_number, visitor_attendance_date, visitor_time_out),
+            )
+            self.connection.commit()
+
+            join_query_attendance = f"SELECT tbl_visitor.visitor_no, tbl_visitor.visitor_firstname, tbl_visitor.visitor_lastname, tbl_visitor.visitor_contact_no, tbl_visitor.visitor_address, tbl_visitor.visitor_status, tbl_visitor_attendance.visitor_attendance_date, tbl_visitor_attendance.visitor_time_out FROM tbl_visitor INNER JOIN tbl_visitor.visitor_no = tbl_visitor_attendance.visitor_no WHERE tbl_visitor.visitor_no = ? AND tbl_visitor_attendance.visitor_attendance_date = ?"
+            self.cursor.execute(
+                join_query_attendance, (visitor_number, visitor_attendance_date)
+            )
+            print("Attendance added successfully!")
+        else:
+            print("Student not found.")
 
 
 # if db.login_entry("systemeror12", "RanOnline124"):
