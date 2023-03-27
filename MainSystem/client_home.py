@@ -176,6 +176,7 @@ class HomeApp:
     # this command will open the attendance module
     def attendance_press(self, event=None):
         self.hide_this_window()
+        # if else condition if date setting is similar to current date
         self.select_folder()
         # add for handling the select folder function if nothing is chosen.
         cFG.ClientFaceRecogApp(

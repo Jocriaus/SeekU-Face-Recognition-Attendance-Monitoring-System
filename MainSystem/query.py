@@ -364,7 +364,41 @@ class dbQueries:
         else:
             print("Student not found.")
 
+    def get_password_length(self):
+        #Select pasword length and display to entry text
+        pass
 
+    def get_login_attempts(self):
+        # Select login attempt and display to entry text
+        pass
+
+    def set_pass_len_log_att(self):
+        # Save pass len & log in attempt to the database
+        pass
+
+    def get_start_settings(self):
+        # select date and insert to entry text
+        pass
+
+    def get_end_settings(self):
+        # select date and insert to entry text
+        pass
+
+    def set_sem_settings(self):
+        # save date to the database
+        pass
+
+    def set_face_recog_path(self):
+        # save face recog path to database
+        pass
+
+    def set_path_file_date(self):
+        # save date 
+        pass
+
+    def get_path_file_date(self):
+        # save date 
+        pass
 # if db.login_entry("systemeror12", "RanOnline124"):
 # print("Login successful")
 # else:
