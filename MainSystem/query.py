@@ -3,7 +3,7 @@ import pyodbc as odbc
 
 class dbQueries:
     def __init__(self, master=None):
-        self.server = "DESKTOP-DG7AK17\SQLEXPRESS"
+        self.server = "LAB-A-PC16\SQLEXPRESS"
         self.database = "seeku_database"
         self.username = ""
         self.password = ""
@@ -105,6 +105,24 @@ class dbQueries:
         )
         self.connection.commit()
         print(f"User {visitor_firstname} has been registered successfully!")
+
+    def capture_visitor_image(self,
+        visitor_firstname,
+        visitor_lastname,
+        visitor_contact_number,
+        visitor_address,):
+        query = f"SELECT visitor_no FROM tbl_visitor WHERE visitor_firstname = ? AND visitor_lastname = ? AND visitor_contact_no = ? AND visitor_address = ?"
+        self.cursor.execute(query, (visitor_firstname,
+        visitor_lastname,
+        visitor_contact_number,
+        visitor_address,))
+
+        row = self.cursor.fetchone()
+
+        if row:
+            return row
+        else:
+            pass
 
     def update_visitor(
         self,

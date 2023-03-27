@@ -7,6 +7,8 @@ import register_student as rS
 import edit_info_personnel as eIP
 import edit_info_student as eIS
 import admin_camera_app as aCA
+import Treeview_table as tbl
+
 
 class AdmindHomeApp:
     def __init__(self, master=None):
@@ -14,7 +16,7 @@ class AdmindHomeApp:
 #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.now = datetime.now()
         self.current_date_n_time = self.now.strftime("%d/%m/%Y %H:%M:%S")
-
+        self.treeview = tbl.TreeviewGUI()
 #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
       
         # build ui
@@ -106,6 +108,7 @@ class AdmindHomeApp:
         self.admin_c_sec3_frame = tk.Frame(self.administrator_client_frame)
         self.admin_c_sec3_frame.configure(
             background="#F7FAE9", height=200, width=200)
+        self.treeview.student_treeview(self.admin_c_sec3_frame)
         self.admin_c_sec3_frame.place(
             anchor="center",
             relheight=0.6,
@@ -185,10 +188,11 @@ class AdmindHomeApp:
         self.admin_u_sec2_frame = tk.Frame(self.administrator_users_frame)
         self.admin_u_sec2_frame.configure(
             background="#F7FAE9", height=200, width=200)
+        self.treeview.user_treeview(self.admin_u_sec2_frame)
         self.admin_u_sec2_frame.place(
             anchor="center",
             relheight=0.65,
-            relwidth=0.9,
+            relwidth=0.88,
             relx=.5,
             rely=0.5,
             x=0,
@@ -288,6 +292,7 @@ class AdmindHomeApp:
         self.admin_r_sec2_frame = tk.Frame(self.administrator_report_frame)
         self.admin_r_sec2_frame.configure(
             background="#F7FAE9", height=200, width=200)
+        self.treeview.student_report_treeview(self.admin_r_sec2_frame)
         self.admin_r_sec2_frame.place(
             anchor="center",
             relheight=0.65,
@@ -958,12 +963,17 @@ class AdmindHomeApp:
         if(self.clients_man_var.get() == 'Manage Students'):
             self.add_c_button.configure(text='Add Students')
             self.clients_list.configure(text='Students List')
+            self.treeview.student_treeview(self.admin_c_sec3_frame)
+        
         if(self.clients_man_var.get() == 'Manage Personnels'):
             self.add_c_button.configure(text='Add Personnels')
             self.clients_list.configure(text='Personnels List')
+            self.treeview.personnel_treeview(self.admin_c_sec3_frame)
+
         if(self.clients_man_var.get() == 'Manage Visitors'):
             self.add_c_button.configure(text='Add Visitors')
             self.clients_list.configure(text='Visitors List')
+            self.treeview.visitor_treeview(self.admin_c_sec3_frame)
 
     
     def add_clients_logic(self):
@@ -988,12 +998,15 @@ class AdmindHomeApp:
     # this function will change the display according to the 
     # selected option on the option menu for the report section
     def change_layout_reports(self):
-        if(self.clients_rep_var.get() == 'Manage Students'):
-            pass
-        if(self.clients_rep_var.get() == 'Manage Personnels'):
-            pass
-        if(self.clients_rep_var.get() == 'Manage Visitors'):
-            pass
+        if(self.clients_rep_var.get() == 'Students Report'):
+            self.treeview.student_report_treeview(self.admin_r_sec2_frame)
+
+        if(self.clients_rep_var.get() == 'Personnels Report'):
+            self.treeview.personnel_report_treeview(self.admin_r_sec2_frame)
+
+        if(self.clients_rep_var.get() == 'Visitors Report'):
+            self.treeview.visitor_report_treeview(self.admin_r_sec2_frame)
+
 #REPORT-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
 #USERS-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
 

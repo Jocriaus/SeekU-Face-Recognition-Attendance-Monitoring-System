@@ -210,6 +210,13 @@ class AddVisitorApp:
             self.contact_num_var,
             self.address_var,
         )
+
+        img_name = self.sql_query.capture_visitor_image(self.first_name_var, self.last_name_var, self.contact_num_var, self.address_var)
+
+
+        os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/temp.jpg")
+        
+
         """
         Save to database
         Get the primary key

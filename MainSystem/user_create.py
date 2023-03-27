@@ -66,7 +66,7 @@ class CreateUserApp:
         self.password_label.place(
             anchor="center", relx=0.385, rely=0.28, x=0, y=0)
         self.password_entry = tk.Entry(self.register_user_frame2)
-        self.password_entry.configure(font="{arial} 14 {}")
+        self.password_entry.configure(font="{arial} 14 {}" ,show="•")
         self.password_entry.place(
             anchor="center",
             relwidth=0.4,
