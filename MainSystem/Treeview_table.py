@@ -6,7 +6,7 @@ import tkinter.ttk as ttk
 class TreeviewGUI:
     def __init__(self, master=None):
 
-        self.server = "LAB-A-PC16\SQLEXPRESS"
+        self.server = "DESKTOP-DG7AK17\SQLEXPRESS"
         self.database = "seeku_database"
         self.username = ""
         self.password = ""
@@ -98,9 +98,13 @@ class TreeviewGUI:
         self.student_tree.heading("Middle Name", text="Middle Name", anchor=tk.CENTER)
         self.student_tree.heading("Program", text="Program", anchor=tk.CENTER)
         self.student_tree.heading("Section", text="Section", anchor=tk.CENTER)
-        self.student_tree.heading("Contact Number", text="Contact Number", anchor=tk.CENTER)
+        self.student_tree.heading(
+            "Contact Number", text="Contact Number", anchor=tk.CENTER
+        )
         self.student_tree.heading("Address", text="Address", anchor=tk.CENTER)
-        self.student_tree.heading("Student Status", text="Student Status", anchor=tk.CENTER)
+        self.student_tree.heading(
+            "Student Status", text="Student Status", anchor=tk.CENTER
+        )
 
         self.populate_student_treeview()
 
@@ -182,8 +186,12 @@ class TreeviewGUI:
         self.student_report_tree.heading(
             "Student Number", text="Student Number", anchor=tk.CENTER
         )
-        self.student_report_tree.heading("First Name", text="First Name", anchor=tk.CENTER)
-        self.student_report_tree.heading("Last Name", text="Last Name", anchor=tk.CENTER)
+        self.student_report_tree.heading(
+            "First Name", text="First Name", anchor=tk.CENTER
+        )
+        self.student_report_tree.heading(
+            "Last Name", text="Last Name", anchor=tk.CENTER
+        )
         self.student_report_tree.heading("Program", text="Program", anchor=tk.CENTER)
         self.student_report_tree.heading("Section", text="Section", anchor=tk.CENTER)
         self.student_report_tree.heading("Date", text="Date", anchor=tk.CENTER)
@@ -361,14 +369,20 @@ class TreeviewGUI:
         self.personnel_report_tree.heading(
             "Personnel Number", text="Personnel Number", anchor=tk.CENTER
         )
-        self.personnel_report_tree.heading("First Name", text="First Name", anchor=tk.CENTER)
-        self.personnel_report_tree.heading("Last Name", text="Last Name", anchor=tk.CENTER)
+        self.personnel_report_tree.heading(
+            "First Name", text="First Name", anchor=tk.CENTER
+        )
+        self.personnel_report_tree.heading(
+            "Last Name", text="Last Name", anchor=tk.CENTER
+        )
         self.personnel_report_tree.heading(
             "Personnel Type", text="Personnel Type", anchor=tk.CENTER
         )
         self.personnel_report_tree.heading("Date", text="Date", anchor=tk.CENTER)
         self.personnel_report_tree.heading("Time In", text="Time In", anchor=tk.CENTER)
-        self.personnel_report_tree.heading("Time Out", text="Time Out", anchor=tk.CENTER)
+        self.personnel_report_tree.heading(
+            "Time Out", text="Time Out", anchor=tk.CENTER
+        )
 
         self.populate_personnel_report_treeview()
         return self.personnel_report_treeview_frame
@@ -442,9 +456,13 @@ class TreeviewGUI:
         )
         self.visitor_tree.heading("First Name", text="First Name", anchor=tk.CENTER)
         self.visitor_tree.heading("Last Name", text="Last Name", anchor=tk.CENTER)
-        self.visitor_tree.heading("Contact Number", text="Contact Number", anchor=tk.CENTER)
+        self.visitor_tree.heading(
+            "Contact Number", text="Contact Number", anchor=tk.CENTER
+        )
         self.visitor_tree.heading("Address", text="Address", anchor=tk.CENTER)
-        self.visitor_tree.heading("Visitor Status", text="Visitor Status", anchor=tk.CENTER)
+        self.visitor_tree.heading(
+            "Visitor Status", text="Visitor Status", anchor=tk.CENTER
+        )
 
         self.populate_visitor_treeview()
         return self.visitor_treeview_frame
@@ -520,8 +538,12 @@ class TreeviewGUI:
         self.visitor_report_tree.heading(
             "Visitor Number", text="Visitor Number", anchor=tk.CENTER
         )
-        self.visitor_report_tree.heading("First Name", text="First Name", anchor=tk.CENTER)
-        self.visitor_report_tree.heading("Last Name", text="Last Name", anchor=tk.CENTER)
+        self.visitor_report_tree.heading(
+            "First Name", text="First Name", anchor=tk.CENTER
+        )
+        self.visitor_report_tree.heading(
+            "Last Name", text="Last Name", anchor=tk.CENTER
+        )
         self.visitor_report_tree.heading("Date", text="Date", anchor=tk.CENTER)
         self.visitor_report_tree.heading("Time In", text="Time In", anchor=tk.CENTER)
         self.visitor_report_tree.heading("Time Out", text="Time Out", anchor=tk.CENTER)

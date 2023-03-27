@@ -3,7 +3,7 @@ import pyodbc as odbc
 
 class dbQueries:
     def __init__(self, master=None):
-        self.server = "LAB-A-PC16\SQLEXPRESS"
+        self.server = "DESKTOP-DG7AK17\SQLEXPRESS"
         self.database = "seeku_database"
         self.username = ""
         self.password = ""
@@ -26,6 +26,16 @@ class dbQueries:
             return True
         else:
             return False
+
+    def register_user(
+        self, username, password, user_firstname, user_lastname, user_type
+    ):
+        query = f"INSERT INTO tbl_user (username, password, user_firstname, user_lastname, user_type) VALUES (?, ?, ?, ?, ?)"
+        self.cursor.execute(
+            query, (username, password, user_firstname, user_lastname, user_type)
+        )
+        self.connection.commit()
+        print(f"User {user_firstname} has been registered successfully!")
 
     def register_personnel(
         self,
@@ -106,16 +116,23 @@ class dbQueries:
         self.connection.commit()
         print(f"User {visitor_firstname} has been registered successfully!")
 
-    def capture_visitor_image(self,
+    def capture_visitor_image(
+        self,
         visitor_firstname,
         visitor_lastname,
         visitor_contact_number,
-        visitor_address,):
+        visitor_address,
+    ):
         query = f"SELECT visitor_no FROM tbl_visitor WHERE visitor_firstname = ? AND visitor_lastname = ? AND visitor_contact_no = ? AND visitor_address = ?"
-        self.cursor.execute(query, (visitor_firstname,
-        visitor_lastname,
-        visitor_contact_number,
-        visitor_address,))
+        self.cursor.execute(
+            query,
+            (
+                visitor_firstname,
+                visitor_lastname,
+                visitor_contact_number,
+                visitor_address,
+            ),
+        )
 
         row = self.cursor.fetchone()
 
@@ -365,7 +382,7 @@ class dbQueries:
             print("Student not found.")
 
     def get_password_length(self):
-        #Select pasword length and display to entry text
+        # Select pasword length and display to entry text
         pass
 
     def get_login_attempts(self):
@@ -393,12 +410,14 @@ class dbQueries:
         pass
 
     def set_path_file_date(self):
-        # save date 
+        # save date
         pass
 
     def get_path_file_date(self):
-        # save date 
+        # save date
         pass
+
+
 # if db.login_entry("systemeror12", "RanOnline124"):
 # print("Login successful")
 # else:
