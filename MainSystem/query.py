@@ -382,40 +382,54 @@ class dbQueries:
             print("Student not found.")
 
     def get_password_length(self):
+        query = f"SELECT password_length FROM tbl_setting"
+        self.cursor.execute(query)
         # Select pasword length and display to entry text
-        pass
 
     def get_login_attempts(self):
+        query = f"SELECT login_attempt FROM tbl_setting"
+        self.cursor.execute(query)
         # Select login attempt and display to entry text
-        pass
 
-    def set_pass_len_log_att(self):
+    def set_pass_len_log_att(self, pass_length, log_attempt):
+        query = (
+            f"INSERT INTO tbl_setting (password_length, login_attempt) VALUES (?, ?, ?)"
+        )
+        self.cursor.execute(query, (pass_length, log_attempt))
+        self.connection.commit()
         # Save pass len & log in attempt to the database
-        pass
 
     def get_start_settings(self):
+        query = f"SELECT sem_start_setting FROM tbl_setting"
+        self.cursor.execute(query)
         # select date and insert to entry text
-        pass
 
     def get_end_settings(self):
+        query = f"SELECT sem_end_setting FROM tbl_setting"
+        self.cursor.execute(query)
         # select date and insert to entry text
-        pass
 
-    def set_sem_settings(self):
+    def set_sem_settings(self, sem_start, sem_end):
+        query = f"INSERT INTO tbl_setting (sem_start_setting, sem_end_setting) VALUES (?, ?)"
+        self.cursor.execute(query, (sem_start, sem_end))
+        self.connection.commit()
         # save date to the database
-        pass
 
-    def set_face_recog_path(self):
+    def set_face_recog_path(self, facerecog_filepath):
+        query = f"INSERT INTO tbl_setting (face_recog_file_path) VALUES (?)"
+        self.cursor.execute(query, (facerecog_filepath))
+        self.connection.commit()
         # save face recog path to database
-        pass
 
-    def set_path_file_date(self):
+    def set_path_file_date(self, facerecog_date):
+        query = f"INSERT INTO tbl_setting (face_recog_date) VALUES (?)"
+        self.cursor.execute(query, (facerecog_date))
         # save date
-        pass
 
     def get_path_file_date(self):
+        query = f"SELECT face_recog_date FROM tbl_setting"
+        self.cursor.execute(query)
         # save date
-        pass
 
 
 # if db.login_entry("systemeror12", "RanOnline124"):
