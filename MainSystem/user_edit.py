@@ -4,7 +4,7 @@ import treeview_table as tbl
 
 
 class EditUserApp:
-    def __init__(self):
+    def __init__(self, master=None):
         # build ui
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.treeview = tbl.TreeviewGUI()
@@ -160,8 +160,8 @@ class EditUserApp:
             anchor="center", relheight=0.17, relwidth=1.0, relx=0.5, rely=0.09
         )
         # Contains-the-logo-and-logotype---------------------------------------------------------------------------------------------------------
-        self.selected_user()
-        self.disable_entry()
+        # self.selected_user()
+        # self.disable_entry()
         # Main widget
         self.mainwindow = self.edit_user_app
 
@@ -196,9 +196,11 @@ class EditUserApp:
     def save_user(self, event=None):
         pass
 
-    def selected_user(self):
-        self.username_entry.insert(0, self.treeview.values[1])
-        self.password_entry.insert(0, self.treeview.values[2])
-        self.first_name_entry.insert(0, self.treeview.values[3])
-        self.last_name_entry.insert(0, self.treeview.values[4])
-        self.user_role_var.set(0, self.treeview.values[5])
+    # def selected_user(self):
+
+    # self.username_entry.insert(0, self.values[1])
+    # self.password_entry.insert(0, self.values[2])
+    # self.first_name_entry.insert(0, self.values[3])
+    # self.last_name_entry.insert(0, self.values[4])
+    # self.user_role_var.set(0, self.values[5])
+    # pass

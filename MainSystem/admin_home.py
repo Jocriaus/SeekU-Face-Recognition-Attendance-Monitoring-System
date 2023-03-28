@@ -19,6 +19,7 @@ class AdmindHomeApp:
         self.now = datetime.now()
         self.current_date_n_time = self.now.strftime("%d/%m/%Y %H:%M:%S")
         self.treeview = tbl.TreeviewGUI()
+
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         # build ui
         self.administrator_app = tk.Tk() if master is None else tk.Toplevel(master)
@@ -991,8 +992,10 @@ class AdmindHomeApp:
     def edit_user_infos(self, event=None):
         self.hide_this_window()
         self.treeview.select_user_treeview_row()
+
         print(self.treeview.values)
-        uE.EditUserApp()
+        uE.EditUserApp().username_entry.insert(0, self.treeview.values[1])
+        uE.EditUserApp().password_entry.insert(0, self.treeview.values[2])
         pass
 
     def add_user_infos(self, event=None):

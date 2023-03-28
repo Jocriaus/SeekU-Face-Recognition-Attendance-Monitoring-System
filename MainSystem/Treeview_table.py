@@ -5,7 +5,6 @@ import tkinter.ttk as ttk
 
 class TreeviewGUI:
     def __init__(self, master=None):
-
         self.server = "DESKTOP-DG7AK17\SQLEXPRESS"
         self.database = "seeku_database"
         self.username = ""
@@ -628,7 +627,9 @@ class TreeviewGUI:
         return self.user_treeview_frame
 
     def populate_student_treeview(self):
-        self.cursor.execute("SELECT * FROM tbl_student")  # add where status is isActive
+        self.cursor.execute(
+            "SELECT * FROM tbl_student WHERE student_status = 'IsActive'"
+        )  # add where status is isActive
 
         for row in self.cursor.fetchall():
             self.student_tree.insert(
@@ -672,7 +673,7 @@ class TreeviewGUI:
 
     def populate_personnel_treeview(self):
         self.cursor.execute(
-            "SELECT * FROM tbl_personnel"
+            "SELECT * FROM tbl_personnel WHERE personnel_status = 'IsActive'"
         )  # add where status is isActive
 
         for row in self.cursor.fetchall():
@@ -713,7 +714,9 @@ class TreeviewGUI:
             )
 
     def populate_visitor_treeview(self):
-        self.cursor.execute("SELECT * FROM tbl_visitor")  # add where status is isActive
+        self.cursor.execute(
+            "SELECT * FROM tbl_visitor WHERE visitor_status = 'IsActive'"
+        )  # add where status is isActive
 
         for row in self.cursor.fetchall():
             self.visitor_tree.insert(
@@ -751,7 +754,9 @@ class TreeviewGUI:
             )
 
     def populate_user_treeview(self):
-        self.cursor.execute("SELECT * FROM tbl_user")  # add where status is isActive
+        self.cursor.execute(
+            "SELECT * FROM tbl_user WHERE user_status = 'IsActive'"
+        )  # add where status is isActive
 
         for row in self.cursor.fetchall():
             self.user_tree.insert(
