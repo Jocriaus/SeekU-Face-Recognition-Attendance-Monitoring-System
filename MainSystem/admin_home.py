@@ -849,6 +849,8 @@ class AdmindHomeApp:
     def run(self):
         self.mainwindow.mainloop()
 
+    def hide_this_window(self):
+        self.administrator_app.withdraw()
     # this function updates the time below the window
     def update_time(self):
         self.now = datetime.now()
@@ -991,9 +993,11 @@ class AdmindHomeApp:
     
     def add_clients_logic(self):
         if(self.clients_man_var.get() == 'Manage Students'):
+            self.hide_this_window()
             #rS.RegisterStudentApp()
             pass
         if(self.clients_man_var.get() == 'Manage Personnels'):
+            self.hide_this_window()
             #rS.RegisterStudentApp()
             pass
         if(self.clients_man_var.get() == 'Manage Visitors'):
@@ -1080,10 +1084,12 @@ class AdmindHomeApp:
         pass
     
     def edit_user_infos(self, event=None):
+        self.hide_this_window()
         #uE.EditUserApp()
         pass
 
     def add_user_infos(self, event=None):
+        self.hide_this_window()
         #uC.CreateUserApp()
         pass
 #USER-COMMANDS---------------------------------------------------------------------------------------------------------------
