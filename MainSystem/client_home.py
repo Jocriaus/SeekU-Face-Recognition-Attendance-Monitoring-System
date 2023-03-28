@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import filedialog
 import client_face_recog as cFG
 import client_camera_app as cCA
+import datetime
+import query as qry
 import sys
 class HomeApp:
     def __init__(self,vid_source, login_mod, sel_cam):
@@ -10,6 +12,7 @@ class HomeApp:
         self.video_source = vid_source
         self.login_window = login_mod
         self.sel_cam_window = sel_cam
+        self.sql_query = qry.dbQueries()
     #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
 
         # build ui
@@ -176,8 +179,13 @@ class HomeApp:
     # this command will open the attendance module
     def attendance_press(self, event=None):
         self.hide_this_window()
+        current_date = self.current_date = datetime.date.today().strftime("%m/%d/%y")
         # if else condition if date setting is similar to current date
-        self.select_folder()
+        if self.sql_query.get_fr_path_file_date == current_date:
+            self.folder_selected = self.sql_query.get_face_recog_path()
+            self.sql_query.set_fr_path_file_date(current_date)
+        else:
+            self.select_folder()
         # add for handling the select folder function if nothing is chosen.
         cFG.ClientFaceRecogApp(
             self.video_source,self.login_window,self.sel_cam_window, self.home_app,self.folder_selected )

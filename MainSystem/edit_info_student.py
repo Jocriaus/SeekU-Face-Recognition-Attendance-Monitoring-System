@@ -2,11 +2,10 @@
 import tkinter as tk
 
 
-class RegisterStudentApp:
+class EditStudentApp:
     def __init__(self, master=None):
 
     #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
-
         self.edit_bool = True
     #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         # build ui
@@ -274,9 +273,6 @@ class RegisterStudentApp:
         self.mainwindow = self.register_student_app
         self.mainwindow.wm_attributes('-fullscreen', 'True')
 
-    def run(self):
-        self.mainwindow.mainloop()
-
     # enables entry widgets
     def disable_entry(self):
         self.address_entry.configure(state='disabled')
@@ -314,7 +310,3 @@ class RegisterStudentApp:
         # return to admin module
         pass
 
-
-if __name__ == "__main__":
-    app = RegisterStudentApp()
-    app.run()

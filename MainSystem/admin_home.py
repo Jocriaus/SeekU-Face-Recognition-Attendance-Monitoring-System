@@ -6,8 +6,10 @@ import register_personnel as rP
 import register_student as rS
 import edit_info_personnel as eIP
 import edit_info_student as eIS
+import user_create as uC
+import user_edit as uE
 import admin_camera_app as aCA
-import Treeview_table as tbl
+import treeview_table as tbl
 
 
 class AdmindHomeApp:
@@ -18,7 +20,6 @@ class AdmindHomeApp:
         self.current_date_n_time = self.now.strftime("%d/%m/%Y %H:%M:%S")
         self.treeview = tbl.TreeviewGUI()
 #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
-      
         # build ui
         self.administrator_app = tk.Tk() if master is None else tk.Toplevel(master)
         self.administrator_app.configure(
@@ -59,6 +60,15 @@ class AdmindHomeApp:
         self.add_c_button.place(
             anchor="center", relx=0.85, rely=.5, x=0, y=0)
         self.add_c_button.bind("<Button>", self.add_clients, add="")
+        self.edit_c_button = tk.Button(self.admin_c_sec1_frame)
+        self.edit_c_button.configure(
+            background="#0072bc",
+            font="{arial} 20 {bold}",
+            foreground="#f7fae9",
+            text='Edit Students')
+        self.edit_c_button.place(
+            anchor="center", relx=0.65, rely=.5, x=0, y=0)
+        self.edit_c_button.bind("<Button>", self.add_clients, add="")
         self.admin_c_sec1_frame.place(
             anchor="center",
             relheight=0.1,
@@ -962,26 +972,32 @@ class AdmindHomeApp:
     def change_layout_client(self):
         if(self.clients_man_var.get() == 'Manage Students'):
             self.add_c_button.configure(text='Add Students')
+            self.edit_c_button.configure(text='Edit Students')
             self.clients_list.configure(text='Students List')
             self.treeview.student_treeview(self.admin_c_sec3_frame)
         
         if(self.clients_man_var.get() == 'Manage Personnels'):
             self.add_c_button.configure(text='Add Personnels')
+            self.edit_c_button.configure(text='Edit Personnels')
             self.clients_list.configure(text='Personnels List')
             self.treeview.personnel_treeview(self.admin_c_sec3_frame)
 
         if(self.clients_man_var.get() == 'Manage Visitors'):
             self.add_c_button.configure(text='Add Visitors')
+            self.edit_c_button.configure(text='Edit Visitors')
             self.clients_list.configure(text='Visitors List')
             self.treeview.visitor_treeview(self.admin_c_sec3_frame)
 
     
     def add_clients_logic(self):
         if(self.clients_man_var.get() == 'Manage Students'):
+            #rS.RegisterStudentApp()
             pass
         if(self.clients_man_var.get() == 'Manage Personnels'):
+            #rS.RegisterStudentApp()
             pass
         if(self.clients_man_var.get() == 'Manage Visitors'):
+            # open camera
             pass
 
     def search_clients_info_logic(self):
@@ -1064,9 +1080,11 @@ class AdmindHomeApp:
         pass
     
     def edit_user_infos(self, event=None):
+        #uE.EditUserApp()
         pass
 
     def add_user_infos(self, event=None):
+        #uC.CreateUserApp()
         pass
 #USER-COMMANDS---------------------------------------------------------------------------------------------------------------
 #REPORTS-COMMANDS---------------------------------------------------------------------------------------------------------------

@@ -3,7 +3,7 @@ import pyodbc as odbc
 
 class dbQueries:
     def __init__(self, master=None):
-        self.server = "DESKTOP-DG7AK17\SQLEXPRESS"
+        self.server = "STAR-PLATINUM\SQLEXPRESS01"
         self.database = "seeku_database"
         self.username = ""
         self.password = ""
@@ -421,15 +421,46 @@ class dbQueries:
         self.connection.commit()
         # save face recog path to database
 
-    def set_path_file_date(self, facerecog_date):
+    def get_face_recog_path(self):
+        query = f"SELECT face_recog_file_path FROM tbl_setting"
+        self.cursor.execute(query)
+        # get face recog path from database
+
+    def set_fr_path_file_date(self, facerecog_date):
         query = f"INSERT INTO tbl_setting (face_recog_date) VALUES (?)"
         self.cursor.execute(query, (facerecog_date))
         # save date
 
-    def get_path_file_date(self):
+    def get_fr_path_file_date(self):
         query = f"SELECT face_recog_date FROM tbl_setting"
         self.cursor.execute(query)
+        # get date
+
+
+
+"""
+    def set_add_visitor_path(self, facerecog_filepath):
+        query = f"INSERT INTO tbl_setting (face_recog_file_path) VALUES (?)"
+        self.cursor.execute(query, (facerecog_filepath))
+        self.connection.commit()
+        # save face recog path to database
+
+    def get_add_visitor_path(self):
+        query = f"SELECT face_recog_file_path FROM tbl_setting"
+        self.cursor.execute(query)
+        # get face recog path from database
+
+    def set_av_path_file_date(self, facerecog_date):
+        query = f"INSERT INTO tbl_setting (face_recog_date) VALUES (?)"
+        self.cursor.execute(query, (facerecog_date))
         # save date
+
+    def get_av_path_file_date(self):
+        query = f"SELECT face_recog_date FROM tbl_setting"
+        self.cursor.execute(query)
+        # get date
+"""
+
 
 
 # if db.login_entry("systemeror12", "RanOnline124"):

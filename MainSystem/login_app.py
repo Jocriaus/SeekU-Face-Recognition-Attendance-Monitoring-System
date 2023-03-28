@@ -132,11 +132,18 @@ class LoginApp:
         self.password_var = self.pw_entry.get()
         if (len(self.username_var) != 0) and (len(self.password_var) != 0):
             if self.sql_query.login_entry(self.username_var, self.password_var):
-
+                
+                #if usertype == Security Guard
                 print("login")
                 self.hide_this_window()
                 self.clear_entry()
                 cC.ClientCameraSelectApp(self.log_in_app)
+                #elif usertype == HighAdmin
+
+
+                #elif usertype == LowAdmin
+            
+
             elif (
                 self.sql_query.login_entry(self.username_var, self.password_var)
                 == False

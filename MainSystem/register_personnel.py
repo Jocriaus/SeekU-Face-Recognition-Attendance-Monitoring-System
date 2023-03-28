@@ -217,9 +217,6 @@ class RegisterPersonnelApp:
         self.mainwindow = self.register_personnel_app
         self.mainwindow.wm_attributes("-fullscreen", "True")
 
-    def run(self):
-        self.mainwindow.mainloop()
-
     def register_personnel(self, event=None):
         self.register_personnel_function()
 
@@ -245,8 +242,3 @@ class RegisterPersonnelApp:
             self.address_var,
             self.personnel_type_var,
         )
-
-
-if __name__ == "__main__":
-    app = RegisterPersonnelApp()
-    app.run()
