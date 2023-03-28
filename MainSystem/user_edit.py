@@ -3,7 +3,7 @@ import tkinter as tk
 
 
 class EditUserApp:
-    def __init__(self, master=None):
+    def __init__(self):
         # build ui
     #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
 
@@ -206,8 +206,6 @@ class EditUserApp:
         # Main widget
         self.mainwindow = self.edit_user_app
 
-    def run(self):
-        self.mainwindow.mainloop()
     # disables entry widgets
     def disable_entry(self):  
         self.username_entry.configure(state='disabled') 
@@ -237,8 +235,3 @@ class EditUserApp:
 
     def save_user(self, event=None):
         pass
-
-
-if __name__ == "__main__":
-    app = EditUserApp()
-    app.run()
