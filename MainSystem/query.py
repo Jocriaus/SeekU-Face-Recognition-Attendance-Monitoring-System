@@ -3,7 +3,7 @@ import pyodbc as odbc
 
 class dbQueries:
     def __init__(self, master=None):
-        self.server = "STAR-PLATINUM\SQLEXPRESS01"
+        self.server = "DESKTOP-DG7AK17\SQLEXPRESS"
         self.database = "seeku_database"
         self.username = ""
         self.password = ""
@@ -437,7 +437,6 @@ class dbQueries:
         # get date
 
 
-
 """
     def set_add_visitor_path(self, facerecog_filepath):
         query = f"INSERT INTO tbl_setting (face_recog_file_path) VALUES (?)"
@@ -460,7 +459,6 @@ class dbQueries:
         self.cursor.execute(query)
         # get date
 """
-
 
 
 # if db.login_entry("systemeror12", "RanOnline124"):

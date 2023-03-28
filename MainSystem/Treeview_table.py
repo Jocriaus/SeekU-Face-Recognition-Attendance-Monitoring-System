@@ -6,7 +6,7 @@ import tkinter.ttk as ttk
 class TreeviewGUI:
     def __init__(self, master=None):
 
-        self.server = "STAR-PLATINUM\SQLEXPRESS01"
+        self.server = "DESKTOP-DG7AK17\SQLEXPRESS"
         self.database = "seeku_database"
         self.username = ""
         self.password = ""
@@ -769,9 +769,9 @@ class TreeviewGUI:
                 ),
             )
 
-    def update_user_treeview(self, username, password, firstname, lastname, user_type):
+    def select_user_treeview_row(self):
         self.selected = self.user_tree.focus()
-        self.user_tree.item(self.selected, text="", values="")
+        self.values = self.user_tree.item(self.selected, "values")
 
     def run(self):
         self.visitor_report_treeview_root.mainloop()
