@@ -628,7 +628,7 @@ class TreeviewGUI:
         return self.user_treeview_frame
 
     def populate_student_treeview(self):
-        self.cursor.execute("SELECT * FROM tbl_student") #add where status is isActive
+        self.cursor.execute("SELECT * FROM tbl_student")  # add where status is isActive
 
         for row in self.cursor.fetchall():
             self.student_tree.insert(
@@ -671,7 +671,9 @@ class TreeviewGUI:
             )
 
     def populate_personnel_treeview(self):
-        self.cursor.execute("SELECT * FROM tbl_personnel")  #add where status is isActive
+        self.cursor.execute(
+            "SELECT * FROM tbl_personnel"
+        )  # add where status is isActive
 
         for row in self.cursor.fetchall():
             self.personnel_tree.insert(
@@ -711,7 +713,7 @@ class TreeviewGUI:
             )
 
     def populate_visitor_treeview(self):
-        self.cursor.execute("SELECT * FROM tbl_visitor") #add where status is isActive
+        self.cursor.execute("SELECT * FROM tbl_visitor")  # add where status is isActive
 
         for row in self.cursor.fetchall():
             self.visitor_tree.insert(
@@ -749,7 +751,7 @@ class TreeviewGUI:
             )
 
     def populate_user_treeview(self):
-        self.cursor.execute("SELECT * FROM tbl_user")  #add where status is isActive
+        self.cursor.execute("SELECT * FROM tbl_user")  # add where status is isActive
 
         for row in self.cursor.fetchall():
             self.user_tree.insert(
@@ -766,6 +768,10 @@ class TreeviewGUI:
                     row[6],
                 ),
             )
+
+    def update_user_treeview(self, username, password, firstname, lastname, user_type):
+        self.selected = self.user_tree.focus()
+        self.user_tree.item(self.selected, text="", values="")
 
     def run(self):
         self.visitor_report_treeview_root.mainloop()
