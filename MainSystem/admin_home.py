@@ -944,8 +944,9 @@ class AdmindHomeApp:
         password = self.treeview.values[2]
         firstname = self.treeview.values[3]
         lastname = self.treeview.values[4]
-        user_status = self.treeview.values[5]
-        uE.EditUserApp(username, password, firstname, lastname, user_status)
+        user_type = self.treeview.values[5]
+        user_status = self.treeview.values[6]
+        uE.EditUserApp(username, password, firstname, lastname, user_type, user_status)
 
     # USERS-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
     # SETTINGS-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------

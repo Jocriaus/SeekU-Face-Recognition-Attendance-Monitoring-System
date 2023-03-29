@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 import tkinter as tk
 import Treeview_table as tbl
+import query as qry
 
 
 class EditUserApp:
-    def __init__(self, un, pw, ufn, uln, ut):
+    def __init__(self, un, pw, ufn, uln, ut, us):
         # build ui
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.username = un
@@ -12,7 +13,9 @@ class EditUserApp:
         self.firstname = ufn
         self.lastname = uln
         self.user_type = ut
+        self.user_status = us
         self.treeview = tbl.TreeviewGUI()
+        self.sql_query = qry.dbQueries()
         self.edit_bool = True
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
 
@@ -138,7 +141,7 @@ class EditUserApp:
         self.save_user_button.place(
             anchor="center", relheight=0.08, relwidth=0.27, relx=0.7, rely=0.9
         )
-        self.save_user_button.bind("<ButtonPress>", self.edit_user, add="")
+        self.save_user_button.bind("<ButtonPress>", self.save_user, add="")
         self.edit_user_frame2.place(
             anchor="center", relheight=0.82, relwidth=1.0, relx=0.5, rely=0.59
         )
@@ -166,7 +169,7 @@ class EditUserApp:
         )
         # Contains-the-logo-and-logotype---------------------------------------------------------------------------------------------------------
         self.selected_user()
-        # self.disable_entry()
+        self.disable_entry()
         # Main widget
         self.mainwindow = self.edit_user_app
 
@@ -199,7 +202,7 @@ class EditUserApp:
             self.edit_bool = True
 
     def save_user(self, event=None):
-        pass
+        self.update_user()
 
     def selected_user(self):
 
@@ -208,4 +211,23 @@ class EditUserApp:
         self.first_name_entry.insert(0, self.firstname)
         self.last_name_entry.insert(0, self.lastname)
         self.user_role_var.set(value=self.user_type)
+        self.stat_var.set(value=self.user_status)
+
         # if status is = IsActive then stat var set to Active else Inactive
+
+    def update_user(self):
+        self.username_var = self.username_entry.get()
+        self.password_var = self.password_entry.get()
+        self.firstname_var = self.first_name_entry.get()
+        self.lastname_var = self.last_name_entry.get()
+        self.user_role_variable = self.user_role_var.get()
+        self.user_status_var = self.stat_var.get()
+
+        self.sql_query.update_user(
+            self.username_var,
+            self.password_var,
+            self.firstname_var,
+            self.lastname_var,
+            self.user_role_variable,
+            self.user_status_var,
+        )

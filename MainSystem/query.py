@@ -39,6 +39,31 @@ class dbQueries:
         self.connection.commit()
         print(f"User {user_firstname} has been registered successfully!")
 
+    def update_user(
+        self,
+        user_username,
+        user_password,
+        user_firstname,
+        user_lastname,
+        user_role,
+        user_status,
+    ):
+        query = f"UPDATE tbl_user SET username = ?, password = ?, user_firstname = ?, user_lastname = ?, user_type = ?, user_status = ? WHERE username = ?"
+        self.cursor.execute(
+            query,
+            (
+                user_username,
+                user_password,
+                user_firstname,
+                user_lastname,
+                user_role,
+                user_status,
+                user_username,
+            ),
+        )
+        self.connection.commit()
+        print(f"User {user_username} has been updated successfully!")
+
     def register_personnel(
         self,
         personnel_number,
@@ -460,6 +485,14 @@ class dbQueries:
         query = f"SELECT face_recog_date FROM tbl_setting"
         self.cursor.execute(query)
         # get date
+
+    def check_username(self):
+    query for checking username if existed
+
+    def check_user_type(self):
+    query for checking user type
+
+    def 
 """
 
 
