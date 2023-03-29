@@ -16,7 +16,7 @@ class EditUserApp:
         self.edit_bool = True
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
 
-        self.edit_user_app = tk.Tk()
+        self.edit_user_app = tk.Toplevel()
         self.edit_user_app.configure(background="#F7FAE9", height=200, width=200)
         self.edit_user_app.geometry("600x700")
         self.edit_user_app.resizable(False, False)
@@ -152,15 +152,14 @@ class EditUserApp:
         self.edit_user_frame1 = tk.Frame(self.edit_user_app)
         self.edit_user_frame1.configure(background="#fff000", height=200, width=200)
         self.school_logo_label = tk.Label(self.edit_user_frame1)
-        # self.img_STICollegeBalagtasLogomedium = tk.PhotoImage(
-        # file="./SeekU/STI College Balagtas Logo medium.png"
-        # )
-        # self.school_logo_label.configure(
-        # background="#fff000",
-        # image=self.img_STICollegeBalagtasLogomedium,
-        # text="label1",
-        # )
-        # self.school_logo_label.place(anchor="center", relx=0.25, rely=0.5)
+        self.img_STICollegeBalagtasLogomedium = tk.PhotoImage(
+        file="./SeekU/STI College Balagtas Logo medium.png")
+        self.school_logo_label.configure(
+            background="#fff000",
+            image=self.img_STICollegeBalagtasLogomedium,
+            text="label1",
+        )
+        self.school_logo_label.place(anchor="center", relx=0.25, rely=0.5)
         self.edit_user_frame1.place(
             anchor="center", relheight=0.17, relwidth=1.0, relx=0.5, rely=0.09
         )

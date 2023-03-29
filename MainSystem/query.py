@@ -3,7 +3,9 @@ import pyodbc as odbc
 
 class dbQueries:
     def __init__(self, master=None):
-        self.server = "DESKTOP-DG7AK17\SQLEXPRESS"
+        # "DESKTOP-DG7AK17\SQLEXPRESS"
+        # "STAR-PLATINUM\SQLEXPRESS01"
+        self.server = "STAR-PLATINUM\SQLEXPRESS01"
         self.database = "seeku_database"
         self.username = ""
         self.password = ""
