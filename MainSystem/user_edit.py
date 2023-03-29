@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 import tkinter as tk
-import treeview_table as tbl
+import Treeview_table as tbl
 
 
 class EditUserApp:
@@ -103,16 +103,16 @@ class EditUserApp:
             font="{arial} 14 {}",
             text="Active",
             variable=self.stat_var,
-            value="Active",
+            value="IsActive",
         )
         self.active_radiobutton.place(anchor="center", relx=0.4, rely=0.82, x=0, y=0)
         self.inactive_radiobutton = tk.Radiobutton(self.edit_user_frame2)
         self.inactive_radiobutton.configure(
             background="#F7FAE9",
             font="{arial} 14 {}",
-            text="Inactive",
+            text="Archive",
             variable=self.stat_var,
-            value="Inactive",
+            value="IsArchive",
         )
         self.inactive_radiobutton.place(anchor="center", relx=0.6, rely=0.82, x=0, y=0)
 
@@ -153,7 +153,8 @@ class EditUserApp:
         self.edit_user_frame1.configure(background="#fff000", height=200, width=200)
         self.school_logo_label = tk.Label(self.edit_user_frame1)
         self.img_STICollegeBalagtasLogomedium = tk.PhotoImage(
-        file="./SeekU/STI College Balagtas Logo medium.png")
+            file="./SeekU/STI College Balagtas Logo medium.png"
+        )
         self.school_logo_label.configure(
             background="#fff000",
             image=self.img_STICollegeBalagtasLogomedium,
@@ -206,3 +207,5 @@ class EditUserApp:
         self.password_entry.insert(0, self.password)
         self.first_name_entry.insert(0, self.firstname)
         self.last_name_entry.insert(0, self.lastname)
+        self.user_role_var.set(value=self.user_type)
+        # if status is = IsActive then stat var set to Active else Inactive

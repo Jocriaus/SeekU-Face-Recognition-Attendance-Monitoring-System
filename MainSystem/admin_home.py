@@ -9,7 +9,7 @@ import edit_info_student as eIS
 import user_create as uC
 import user_edit as uE
 import admin_camera_app as aCA
-import treeview_table as tbl
+import Treeview_table as tbl
 
 
 class AdmindHomeApp:
