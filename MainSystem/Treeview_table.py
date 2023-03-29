@@ -780,9 +780,10 @@ class TreeviewGUI:
         self.selected = self.user_tree.focus()
         self.user_values = self.user_tree.item(self.selected, "values")
 
+    def select_student_treeview_row(self):
+        self.selected = self.student_tree.focus()
+        self.student_values = self.student_tree.item(self.selected, "values")
+
     def select_personnel_treeview_row(self):
         self.selected = self.personnel_tree.focus()
         self.personnel_values = self.personnel_tree.item(self.selected, "values")
-
-    def run(self):
-        self.visitor_report_treeview_root.mainloop()

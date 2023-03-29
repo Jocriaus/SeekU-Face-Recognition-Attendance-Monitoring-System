@@ -239,10 +239,6 @@ class EditPersonnelApp:
         self.mainwindow = self.register_personnel_app
         self.mainwindow.wm_attributes("-fullscreen", "True")
 
-    def run(self):
-        # Delete this function
-        self.mainwindow.mainloop()
-
     # enables entry widgets
     def disable_entry(self):
         self.address_entry.configure(state="disabled")
@@ -279,7 +275,6 @@ class EditPersonnelApp:
     def save_personnel(self, event=None):
         self.save_personnel_function()
         # save infos
-        pass
 
     def select_personnel(self):
         self.personnel_num_entry.insert(0, self.personnel_num)
@@ -295,6 +290,7 @@ class EditPersonnelApp:
         self.personnel_firstname_var = self.first_name_entry.get()
         self.personnel_lastname_var = self.last_name_entry.get()
         self.personnel_middlename_var = self.mid_name_entry.get()
+        self.personnel_contact_num_var = self.contact_num_entry.get()
         self.personnel_address_var = self.address_entry.get()
         self.personnel_type_variable = self.personnel_type_var.get()
 
@@ -303,17 +299,11 @@ class EditPersonnelApp:
             self.personnel_firstname_var,
             self.personnel_lastname_var,
             self.personnel_middlename_var,
+            self.personnel_contact_num_var,
             self.personnel_address_var,
             self.personnel_type_variable,
-            self.personnel_num_var,
         )
 
     def return_func(self, event=None):
         # return to admin module
         pass
-
-
-if __name__ == "__main__":
-    app = EditPersonnelApp()
-    app.run()
-# delete this function

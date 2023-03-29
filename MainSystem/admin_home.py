@@ -913,7 +913,8 @@ class AdmindHomeApp:
     def edit_clients_logic(self):
         if self.clients_man_var.get() == "Manage Students":
             self.hide_this_window()
-            pass
+            self.edit_student_function()
+
         if self.clients_man_var.get() == "Manage Personnels":
             self.hide_this_window()
             self.edit_personnel_function()
@@ -929,6 +930,30 @@ class AdmindHomeApp:
             pass
         if self.clients_man_var.get() == "Manage Visitors":
             pass
+
+    def edit_student_function(self):
+        self.treeview.select_student_treeview_row()
+        print(self.treeview.student_values)
+
+        student_num = self.treeview.student_values[0]
+        student_firstname = self.treeview.student_values[1]
+        student_lastname = self.treeview.student_values[2]
+        student_middlename = self.treeview.student_values[3]
+        student_program = self.treeview.student_values[4]
+        student_section = self.treeview.student_values[5]
+        student_contact_num = self.treeview.student_values[6]
+        student_address = self.treeview.student_values[7]
+
+        eIS.EditStudentApp(
+            student_num,
+            student_firstname,
+            student_lastname,
+            student_middlename,
+            student_program,
+            student_section,
+            student_contact_num,
+            student_address,
+        )
 
     def edit_personnel_function(self):
         self.treeview.select_personnel_treeview_row()

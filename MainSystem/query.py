@@ -239,10 +239,11 @@ class dbQueries:
         student_contact_number,
         student_address,
     ):
-        query = f"UPDATE tbl_student SET student_firstname = ?, student_lastname = ?, student_middlename = ?, student_program = ?, student_section = ?, student_contact_number = ?, student_address = ? WHERE student_number = ?"
+        query = f"UPDATE tbl_student SET student_no = ?, student_firstname = ?, student_lastname = ?, student_middlename = ?, student_program = ?, student_section = ?, student_contact_no = ?, student_address = ? WHERE student_no = ?"
         self.cursor.execute(
             query,
             (
+                student_number,
                 student_firstname,
                 student_lastname,
                 student_middlename,
