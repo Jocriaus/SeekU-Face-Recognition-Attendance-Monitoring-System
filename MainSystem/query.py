@@ -100,10 +100,11 @@ class dbQueries:
         personnel_address,
         personnel_type,
     ):
-        query = f"UPDATE tbl_personnel SET personnel_firstname = ?, personnel_lastname = ?, personnel_middlename = ?, personnel_contact_no = ?, personnel_address = ?, personnel_type = ? WHERE personnel_no = ?"
+        query = f"UPDATE tbl_personnel SET personnel_no = ?, personnel_firstname = ?, personnel_lastname = ?, personnel_middlename = ?, personnel_contact_no = ?, personnel_address = ?, personnel_type = ? WHERE personnel_no = ?"
         self.cursor.execute(
             query,
             (
+                personnel_number,
                 personnel_firstname,
                 personnel_lastname,
                 personnel_middlename,

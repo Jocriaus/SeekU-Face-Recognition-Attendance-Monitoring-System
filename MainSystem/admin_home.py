@@ -939,13 +939,13 @@ class AdmindHomeApp:
     def edit_user_function(self):
         self.treeview.select_user_treeview_row()
 
-        print(self.treeview.values)
-        username = self.treeview.values[1]
-        password = self.treeview.values[2]
-        firstname = self.treeview.values[3]
-        lastname = self.treeview.values[4]
-        user_type = self.treeview.values[5]
-        user_status = self.treeview.values[6]
+        print(self.treeview.user_values)
+        username = self.treeview.user_values[1]
+        password = self.treeview.user_values[2]
+        firstname = self.treeview.user_values[3]
+        lastname = self.treeview.user_values[4]
+        user_type = self.treeview.user_values[5]
+        user_status = self.treeview.user_values[6]
         uE.EditUserApp(username, password, firstname, lastname, user_type, user_status)
 
     # USERS-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
