@@ -64,7 +64,7 @@ class AdmindHomeApp:
             text="Edit Students",
         )
         self.edit_c_button.place(anchor="center", relx=0.65, rely=0.5, x=0, y=0)
-        self.edit_c_button.bind("<Button>", self.add_clients, add="")
+        self.edit_c_button.bind("<Button>", self.edit_clients, add="")
         self.admin_c_sec1_frame.place(
             anchor="center", relheight=0.1, relwidth=1.0, relx=0.5, rely=0.09
         )
@@ -910,6 +910,19 @@ class AdmindHomeApp:
             # open camera
             pass
 
+    def edit_clients_logic(self):
+        if self.clients_man_var.get() == "Manage Students":
+            self.hide_this_window()
+            # rS.RegisterStudentApp()
+            pass
+        if self.clients_man_var.get() == "Manage Personnels":
+            self.hide_this_window()
+            # rS.RegisterStudentApp()
+            pass
+        if self.clients_man_var.get() == "Manage Visitors":
+            # open camera
+            pass
+
     def search_clients_info_logic(self):
         if self.clients_man_var.get() == "Manage Students":
             pass
@@ -980,6 +993,9 @@ class AdmindHomeApp:
 
     def add_clients(self, event=None):
         self.add_clients_logic()
+
+    def edit_clients(self, event=None):
+        self.edit_clients_logic()
 
     def search_clients_info(self, event=None):
         self.search_clients_info_logic()
