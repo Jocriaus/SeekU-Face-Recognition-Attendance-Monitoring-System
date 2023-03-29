@@ -913,12 +913,11 @@ class AdmindHomeApp:
     def edit_clients_logic(self):
         if self.clients_man_var.get() == "Manage Students":
             self.hide_this_window()
-            # rS.RegisterStudentApp()
             pass
         if self.clients_man_var.get() == "Manage Personnels":
             self.hide_this_window()
-            # rS.RegisterStudentApp()
-            pass
+            self.edit_personnel_function()
+
         if self.clients_man_var.get() == "Manage Visitors":
             # open camera
             pass
@@ -930,6 +929,28 @@ class AdmindHomeApp:
             pass
         if self.clients_man_var.get() == "Manage Visitors":
             pass
+
+    def edit_personnel_function(self):
+        self.treeview.select_personnel_treeview_row()
+        print(self.treeview.personnel_values)
+
+        personnel_number = self.treeview.personnel_values[0]
+        personnel_firstname = self.treeview.personnel_values[1]
+        personnel_lastname = self.treeview.personnel_values[2]
+        personnel_middlename = self.treeview.personnel_values[3]
+        personnel_contact_num = self.treeview.personnel_values[4]
+        personnel_address = self.treeview.personnel_values[5]
+        personnel_type = self.treeview.personnel_values[6]
+
+        eIP.EditPersonnelApp(
+            personnel_number,
+            personnel_firstname,
+            personnel_lastname,
+            personnel_middlename,
+            personnel_contact_num,
+            personnel_address,
+            personnel_type,
+        )
 
     # CLIENT-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
 

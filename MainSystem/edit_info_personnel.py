@@ -1,12 +1,22 @@
 #!/usr/bin/python3
 import tkinter as tk
+import Treeview_table as tbl
+import query as qry
 
 
 class EditPersonnelApp:
-    def __init__(self):
+    def __init__(self, pn, pfn, pln, pm, pcn, pad, pt):
 
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
-
+        self.personnel_num = pn
+        self.personnel_firstname = pfn
+        self.personnel_lastname = pln
+        self.personnel_middlename = pm
+        self.personnel_contact_num = pcn
+        self.personnel_address = pad
+        self.personnel_type = pt
+        self.treeview = tbl.TreeviewGUI()
+        self.sql_query = qry.dbQueries()
         self.edit_bool = True
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
 
@@ -223,6 +233,7 @@ class EditPersonnelApp:
             anchor="center", relheight=0.13, relwidth=1.0, relx=0.5, rely=0.065
         )
         # Contains-school-logo-------------------------------------------------------------------------------------------------------------------------------------
+        self.put_info()
         self.disable_entry()
         # Main widget
         self.mainwindow = self.register_personnel_app
@@ -253,8 +264,8 @@ class EditPersonnelApp:
         self.personnel_optionmenu.configure(state="normal")
 
     def put_info(self):
+        self.select_personnel()
         # set the content of the entry as the users information
-        pass
 
     def edit_personnel(self, event=None):
         # enables and disables the entry and optionmenu
@@ -266,8 +277,36 @@ class EditPersonnelApp:
             self.edit_bool = True
 
     def save_personnel(self, event=None):
+        self.save_personnel_function()
         # save infos
         pass
+
+    def select_personnel(self):
+        self.personnel_num_entry.insert(0, self.personnel_num)
+        self.first_name_entry.insert(0, self.personnel_firstname)
+        self.last_name_entry.insert(0, self.personnel_lastname)
+        self.mid_name_entry.insert(0, self.personnel_middlename)
+        self.contact_num_entry.insert(0, self.personnel_contact_num)
+        self.address_entry.insert(0, self.personnel_address)
+        self.personnel_type_var.set(value=self.personnel_type)
+
+    def save_personnel_function(self):
+        self.personnel_num_var = self.personnel_num_entry.get()
+        self.personnel_firstname_var = self.first_name_entry.get()
+        self.personnel_lastname_var = self.last_name_entry.get()
+        self.personnel_middlename_var = self.mid_name_entry.get()
+        self.personnel_address_var = self.address_entry.get()
+        self.personnel_type_variable = self.personnel_type_var.get()
+
+        self.sql_query.update_personnel(
+            self.personnel_num_var,
+            self.personnel_firstname_var,
+            self.personnel_lastname_var,
+            self.personnel_middlename_var,
+            self.personnel_address_var,
+            self.personnel_type_variable,
+            self.personnel_num_var,
+        )
 
     def return_func(self, event=None):
         # return to admin module
