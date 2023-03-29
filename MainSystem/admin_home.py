@@ -19,7 +19,6 @@ class AdmindHomeApp:
         self.now = datetime.now()
         self.current_date_n_time = self.now.strftime("%d/%m/%Y %H:%M:%S")
         self.treeview = tbl.TreeviewGUI()
-
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         # build ui
         self.administrator_app = tk.Tk() if master is None else tk.Toplevel(master)
@@ -937,6 +936,16 @@ class AdmindHomeApp:
 
     # REPORT-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
     # USERS-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
+    def edit_user_function(self):
+        self.treeview.select_user_treeview_row()
+
+        print(self.treeview.values)
+        username = self.treeview.values[1]
+        password = self.treeview.values[2]
+        firstname = self.treeview.values[3]
+        lastname = self.treeview.values[4]
+        user_status = self.treeview.values[5]
+        uE.EditUserApp(username, password, firstname, lastname, user_status)
 
     # USERS-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
     # SETTINGS-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
@@ -991,12 +1000,7 @@ class AdmindHomeApp:
 
     def edit_user_infos(self, event=None):
         self.hide_this_window()
-        self.treeview.select_user_treeview_row()
-
-        print(self.treeview.values)
-        uE.EditUserApp().username_entry.insert(0, self.treeview.values[1])
-        uE.EditUserApp().password_entry.insert(0, self.treeview.values[2])
-        pass
+        self.edit_user_function()
 
     def add_user_infos(self, event=None):
         self.hide_this_window()

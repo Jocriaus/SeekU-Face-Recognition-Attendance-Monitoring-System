@@ -4,9 +4,14 @@ import treeview_table as tbl
 
 
 class EditUserApp:
-    def __init__(self, master=None):
+    def __init__(self, un, pw, ufn, uln, ut):
         # build ui
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
+        self.username = un
+        self.password = pw
+        self.firstname = ufn
+        self.lastname = uln
+        self.user_type = ut
         self.treeview = tbl.TreeviewGUI()
         self.edit_bool = True
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
@@ -151,16 +156,16 @@ class EditUserApp:
         # file="./SeekU/STI College Balagtas Logo medium.png"
         # )
         # self.school_logo_label.configure(
-        #  background="#fff000",
-        #  image=self.img_STICollegeBalagtasLogomedium,
-        #  text="label1",
+        # background="#fff000",
+        # image=self.img_STICollegeBalagtasLogomedium,
+        # text="label1",
         # )
-        self.school_logo_label.place(anchor="center", relx=0.25, rely=0.5)
+        # self.school_logo_label.place(anchor="center", relx=0.25, rely=0.5)
         self.edit_user_frame1.place(
             anchor="center", relheight=0.17, relwidth=1.0, relx=0.5, rely=0.09
         )
         # Contains-the-logo-and-logotype---------------------------------------------------------------------------------------------------------
-        # self.selected_user()
+        self.selected_user()
         # self.disable_entry()
         # Main widget
         self.mainwindow = self.edit_user_app
@@ -196,11 +201,9 @@ class EditUserApp:
     def save_user(self, event=None):
         pass
 
-    # def selected_user(self):
+    def selected_user(self):
 
-    # self.username_entry.insert(0, self.values[1])
-    # self.password_entry.insert(0, self.values[2])
-    # self.first_name_entry.insert(0, self.values[3])
-    # self.last_name_entry.insert(0, self.values[4])
-    # self.user_role_var.set(0, self.values[5])
-    # pass
+        self.username_entry.insert(0, self.username)
+        self.password_entry.insert(0, self.password)
+        self.first_name_entry.insert(0, self.firstname)
+        self.last_name_entry.insert(0, self.lastname)
