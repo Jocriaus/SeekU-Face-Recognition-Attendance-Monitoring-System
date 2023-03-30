@@ -486,15 +486,20 @@ class dbQueries:
         self.cursor.execute(query)
         # get date
 
-    def check_username(self, username):
-        query = f"SELECT * FROM tbl_user WHERE username = ?"
-        self.cursor.execute(query, (username))
+    def check_username(self, username, password):
+        query = f"SELECT * FROM tbl_user WHERE username = ? AND password = ?"
+        self.cursor.execute(query, (username, password))
+        row = self.cursor.fetchone()
+        if row:
+            return True
+        else:
+            return False
 
         # query for checking username if existed
 
-    def check_user_type(self, user_type):
-        query = f"SELECT * FROM tbl_user WHERE user_type = ?"
-        self.cursor.execute(query, (user_type))
+    def check_user_type(self, username, password):
+        query = f"SELECT user_type FROM tbl_user WHERE username = ? AND password = ?"
+        self.cursor.execute(query, (username, password))
         # query for checking user type
 
 
