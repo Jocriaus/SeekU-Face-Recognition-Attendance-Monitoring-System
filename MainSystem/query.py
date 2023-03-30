@@ -465,37 +465,37 @@ class dbQueries:
         self.cursor.execute(query)
         # get date
 
-
-"""
-    def set_add_visitor_path(self, facerecog_filepath):
-        query = f"INSERT INTO tbl_setting (face_recog_file_path) VALUES (?)"
-        self.cursor.execute(query, (facerecog_filepath))
+    def set_add_visitor_path(self, add_visitor_filepath):
+        query = f"INSERT INTO tbl_setting (add_visitor_file_path) VALUES (?)"
+        self.cursor.execute(query, (add_visitor_filepath))
         self.connection.commit()
         # save face recog path to database
 
     def get_add_visitor_path(self):
-        query = f"SELECT face_recog_file_path FROM tbl_setting"
+        query = f"SELECT add_visitor_file_path FROM tbl_setting"
         self.cursor.execute(query)
         # get face recog path from database
 
-    def set_av_path_file_date(self, facerecog_date):
-        query = f"INSERT INTO tbl_setting (face_recog_date) VALUES (?)"
-        self.cursor.execute(query, (facerecog_date))
+    def set_av_path_file_date(self, add_visitor_file_date):
+        query = f"INSERT INTO tbl_setting (add_visitor_date) VALUES (?)"
+        self.cursor.execute(query, (add_visitor_file_date))
         # save date
 
     def get_av_path_file_date(self):
-        query = f"SELECT face_recog_date FROM tbl_setting"
+        query = f"SELECT add_visitor_date FROM tbl_setting"
         self.cursor.execute(query)
         # get date
 
-    def check_username(self):
-    query for checking username if existed
+    def check_username(self, username):
+        query = f"SELECT * FROM tbl_user WHERE username = ?"
+        self.cursor.execute(query, (username))
 
-    def check_user_type(self):
-    query for checking user type
+        # query for checking username if existed
 
-    def 
-"""
+    def check_user_type(self, user_type):
+        query = f"SELECT * FROM tbl_user WHERE user_type = ?"
+        self.cursor.execute(query, (user_type))
+        # query for checking user type
 
 
 # if db.login_entry("systemeror12", "RanOnline124"):
