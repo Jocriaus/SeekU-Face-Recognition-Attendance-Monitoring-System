@@ -1,10 +1,12 @@
 import pyodbc as odbc
 import tkinter as tk
 import tkinter.ttk as ttk
+import query as qry
 
 
 class TreeviewGUI:
     def __init__(self, master=None):
+        self.sql_query = qry.dbQueries()
         # "DESKTOP-DG7AK17\SQLEXPRESS"
         # "STAR-PLATINUM\SQLEXPRESS01"
         self.server = "DESKTOP-DG7AK17\SQLEXPRESS"
@@ -787,3 +789,13 @@ class TreeviewGUI:
     def select_personnel_treeview_row(self):
         self.selected = self.personnel_tree.focus()
         self.personnel_values = self.personnel_tree.item(self.selected, "values")
+
+    def do_search_student(self):
+        for child in self.student_tree.get_children():
+            self.student_tree.delete(child)
+
+        # search_term = need to pass the search_entry
+        # result = self.sql_query.search_student(search_term)
+
+        # for row in result:
+        # self.student_tree.insert("", "end", text=row[0], values=row[1:])

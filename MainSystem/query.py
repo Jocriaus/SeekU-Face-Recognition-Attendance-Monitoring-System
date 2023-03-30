@@ -410,6 +410,71 @@ class dbQueries:
         else:
             print("Student not found.")
 
+    def search_student(self, search_term):
+        query = f"SELECT * FROM tbl_student WHERE student_no LIKE ? OR student_firstname LIKE ? OR student_lastname LIKE ? OR student_middlename LIKE ? OR student_program LIKE ? OR student_section LIKE ? OR student_contact_no LIKE ? OR student_address LIKE ?"
+        self.cursor.execute(
+            query,
+            (
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+            ),
+        )
+        results = self.cursor.fetchall()
+        return results
+
+    def search_personnel(self, search_term):
+        query = f"SELECT * FROM tbl_personnel WHERE personnel_no LIKE ? OR personnel_firstname LIKE ? OR personnel_lastname LIKE ? OR personnel_middlename LIKE ? OR personnel_contact_no LIKE ? OR personnel_address LIKE ? OR personnel_type LIKE ?"
+        self.cursor.execute(
+            query,
+            (
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+            ),
+        )
+        results = self.cursor.fetchall()
+        return results
+
+    def search_visitor(self, search_term):
+        query = f"SELECT * FROM tbl_visitor WHERE visitor_firstname LIKE ? OR visitor_lastname LIKE ? OR visitor_contact_no LIKE ? OR visitor_address LIKE ?"
+        self.cursor.execute(
+            query,
+            (
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+            ),
+        )
+        results = self.cursor.fetchall()
+        return results
+
+    def search_user(self, search_term):
+        query = f"SELECT * FROM tbl_user WHERE username LIKE ? OR password LIKE ? OR user_firstname LIKE ? OR user_lastname LIKE ? OR user_type LIKE ?"
+        self.cursor.execute(
+            query,
+            (
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+            ),
+        )
+
+        results = self.cursor.fetchall()
+        return results
+
     def get_password_length(self):
         query = f"SELECT password_length FROM tbl_setting"
         self.cursor.execute(query)
