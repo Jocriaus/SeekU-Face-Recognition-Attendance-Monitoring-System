@@ -13,6 +13,8 @@ import sys
 
 class CameraApp:
     def __init__(self, vid_source, login_mod, sel_cam,admin_hom, file_path, condition):
+    
+    #set this window file as it will only open through canvas
 
     #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.video_source = vid_source

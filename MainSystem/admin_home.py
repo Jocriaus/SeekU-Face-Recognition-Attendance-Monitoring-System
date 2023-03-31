@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import tkinter as tk
 from datetime import datetime
+from tkinter import filedialog
 import sys
 import register_personnel as rP
 import register_student as rS
@@ -12,16 +13,21 @@ import admin_camera_app as aCA
 import Treeview_table as tbl
 
 
-class AdmindHomeApp:
-    def __init__(self, master=None):
+class AdminHomeApp:
+    def __init__(self, user ,vid_source, login_mod, sel_cam):
 
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
+        self.user = user
+        # add a condition if the user is high admin or low admin to restrict some access
+        self.video_source = vid_source
+        self.login_window = login_mod
+        self.sel_cam_window = sel_cam
         self.now = datetime.now()
         self.current_date_n_time = self.now.strftime("%d/%m/%Y %H:%M:%S")
         self.treeview = tbl.TreeviewGUI()
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         # build ui
-        self.administrator_app = tk.Tk() if master is None else tk.Toplevel(master)
+        self.administrator_app = tk.Toplevel()
         self.administrator_app.configure(background="#E7E7E7", height=200, width=200)
         width = self.administrator_app.winfo_screenwidth()
         height = self.administrator_app.winfo_screenheight()
@@ -764,11 +770,15 @@ class AdmindHomeApp:
     def exit_program(self):
         sys.exit()
 
-    def run(self):
-        self.mainwindow.mainloop()
-
     def hide_this_window(self):
         self.administrator_app.withdraw()
+
+    def select_folder(self):
+        self.administrator_app.attributes('-topmost', False)
+        self.folder_selected = filedialog.askdirectory()
+        print(self.folder_selected)
+        self.administrator_app.attributes('-topmost', True)
+
 
     # this function updates the time below the window
     def update_time(self):
@@ -900,14 +910,18 @@ class AdmindHomeApp:
     def add_clients_logic(self):
         if self.clients_man_var.get() == "Manage Students":
             self.hide_this_window()
-            # rS.RegisterStudentApp()
+            self.select_folder()
+            aCA.CameraApp( self.video_source,self.login_window,self.sel_cam_window, self.administrator_app,self.folder_selected, self.clients_man_var.get())
             pass
         if self.clients_man_var.get() == "Manage Personnels":
             self.hide_this_window()
-            # rS.RegisterStudentApp()
+            self.select_folder()
+            aCA.CameraApp( self.video_source,self.login_window,self.sel_cam_window, self.administrator_app,self.folder_selected, self.clients_man_var.get())
             pass
         if self.clients_man_var.get() == "Manage Visitors":
-            # open camera
+            self.hide_this_window()
+            self.select_folder()
+            aCA.CameraApp( self.video_source,self.login_window,self.sel_cam_window, self.administrator_app,self.folder_selected, self.clients_man_var.get())
             pass
 
     def edit_clients_logic(self):
@@ -925,11 +939,14 @@ class AdmindHomeApp:
 
     def search_clients_info_logic(self):
         if self.clients_man_var.get() == "Manage Students":
-            pass
+            data = self.search_c_entry.get()
+            self.treeview.do_search_student(data)
         if self.clients_man_var.get() == "Manage Personnels":
-            pass
+            data = self.search_c_entry.get()
+            self.treeview.do_search_personnel(data)
         if self.clients_man_var.get() == "Manage Visitors":
-            pass
+            data = self.search_c_entry.get()
+            self.treeview.do_search_visitor(data)
 
     def edit_student_function(self):
         self.treeview.select_student_treeview_row()
@@ -992,6 +1009,17 @@ class AdmindHomeApp:
 
         if self.clients_rep_var.get() == "Visitors Report":
             self.treeview.visitor_report_treeview(self.admin_r_sec2_frame)
+
+    def search_report_info_logic(self):
+        if self.clients_rep_var.get() == "Students Report":
+            data = self.search_r_entry.get()
+            self.treeview.do_search_student_report(data)
+        if self.clients_rep_var.get() == "Personnels Report":
+            data = self.search_r_entry.get()
+            self.treeview.do_search_personnel_report(data)
+        if self.clients_rep_var.get() == "Visitors Report":
+            data = self.search_r_entry.get()
+            self.treeview.do_search_visitor_report(data)
 
     # REPORT-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
     # USERS-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
@@ -1059,7 +1087,8 @@ class AdmindHomeApp:
         self.user_section_label.configure(foreground="#F7FAE9")
 
     def search_user_infos(self, event=None):
-        pass
+        data = self.search_u_entry.get()
+        self.treeview.do_search_user(data)
 
     def edit_user_infos(self, event=None):
         self.hide_this_window()
@@ -1086,7 +1115,7 @@ class AdmindHomeApp:
         self.change_layout_reports()
 
     def search_clients_reports(self, event=None):
-        pass
+        self.search_report_info_logic()
 
     def print_clients_reports(self, event=None):
         pass
@@ -1131,8 +1160,3 @@ class AdmindHomeApp:
 
 
 # LOGOUT-COMMANDS---------------------------------------------------------------------------------------------------------------
-
-
-if __name__ == "__main__":
-    app = AdmindHomeApp()
-    app.run()
