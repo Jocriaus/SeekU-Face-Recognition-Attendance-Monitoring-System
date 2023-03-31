@@ -925,11 +925,14 @@ class AdmindHomeApp:
 
     def search_clients_info_logic(self):
         if self.clients_man_var.get() == "Manage Students":
-            pass
+            data = self.search_c_entry.get()
+            self.treeview.do_search_student(data)
         if self.clients_man_var.get() == "Manage Personnels":
-            pass
+            data = self.search_c_entry.get()
+            self.treeview.do_search_personnel(data)
         if self.clients_man_var.get() == "Manage Visitors":
-            pass
+            data = self.search_c_entry.get()
+            self.treeview.do_search_visitor(data)
 
     def edit_student_function(self):
         self.treeview.select_student_treeview_row()
@@ -992,6 +995,17 @@ class AdmindHomeApp:
 
         if self.clients_rep_var.get() == "Visitors Report":
             self.treeview.visitor_report_treeview(self.admin_r_sec2_frame)
+
+    def search_report_info_logic(self):
+        if self.clients_rep_var.get() == "Students Report":
+            data = self.search_r_entry.get()
+            self.treeview.do_search_student_report(data)
+        if self.clients_rep_var.get() == "Personnels Report":
+            data = self.search_r_entry.get()
+            self.treeview.do_search_personnel_report(data)
+        if self.clients_rep_var.get() == "Visitors Report":
+            data = self.search_r_entry.get()
+            self.treeview.do_search_visitor_report(data)
 
     # REPORT-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
     # USERS-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
@@ -1059,7 +1073,8 @@ class AdmindHomeApp:
         self.user_section_label.configure(foreground="#F7FAE9")
 
     def search_user_infos(self, event=None):
-        pass
+        data = self.search_u_entry.get()
+        self.treeview.do_search_user(data)
 
     def edit_user_infos(self, event=None):
         self.hide_this_window()
@@ -1086,7 +1101,7 @@ class AdmindHomeApp:
         self.change_layout_reports()
 
     def search_clients_reports(self, event=None):
-        pass
+        self.search_report_info_logic()
 
     def print_clients_reports(self, event=None):
         pass

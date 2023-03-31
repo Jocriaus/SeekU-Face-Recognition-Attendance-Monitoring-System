@@ -9,7 +9,8 @@ class TreeviewGUI:
         self.sql_query = qry.dbQueries()
         # "DESKTOP-DG7AK17\SQLEXPRESS"
         # "STAR-PLATINUM\SQLEXPRESS01"
-        self.server = "DESKTOP-DG7AK17\SQLEXPRESS"
+        # "LAB-A-PC16\SQLEXPRESS"
+        self.server = "LAB-A-PC16\SQLEXPRESS"
         self.database = "seeku_database"
         self.username = ""
         self.password = ""
@@ -90,6 +91,8 @@ class TreeviewGUI:
         self.student_tree.column("Contact Number", anchor=tk.CENTER, width=150)
         self.student_tree.column("Address", anchor=tk.CENTER, width=240)
         self.student_tree.column("Student Status", anchor=tk.CENTER, width=140)
+        # Hide status, show only on edit
+            # di daw pede sabi ni vrix
 
         # Create Headings
         self.student_tree.heading("#0", text="", anchor=tk.CENTER)
@@ -799,7 +802,36 @@ class TreeviewGUI:
         result = self.sql_query.search_student(search_term)
 
         for row in result:
-            self.student_tree.insert("", "end", text=row[0], values=row[1:])
+            self.student_tree.insert("", "end", text=row[0], values=(
+                    row[0],
+                    row[1],
+                    row[2],
+                    row[3],
+                    row[4],
+                    row[5],
+                    row[6],
+                    row[7],
+                    row[8],))
+
+    def do_search_student_report(self, search_term):
+        self.search_term = search_term
+        for child in self.student_report_tree.get_children():
+            self.student_report_tree.delete(child)
+
+        # search_term = search_entry.get()
+        result = self.sql_query.search_student_report(search_term)
+
+        for row in result:
+            self.student_report_tree.insert("", "end", text=row[0], values=(
+                    row[0],
+                    row[1],
+                    row[2],
+                    row[3],
+                    row[4],
+                    row[5],
+                    row[6],
+                    row[7],))
+            
 
     def do_search_personnel(self, search_term):
         self.search_term = search_term
@@ -809,7 +841,43 @@ class TreeviewGUI:
         result = self.sql_query.search_personnel(self.search_term)
 
         for row in result:
-            self.personnel_tree.insert("", "end", text=row[0], values=row[1:])
+            self.personnel_tree.insert(
+                "",
+                "end",
+                text=[0],
+                values=(
+                    row[0],
+                    row[1],
+                    row[2],
+                    row[3],
+                    row[4],
+                    row[5],
+                    row[6],
+                ),
+            )
+
+    def do_search_personnel_report(self, search_term):
+        self.search_term = search_term
+        for child in self.personnel_report_tree.get_children():
+            self.personnel_report_tree.delete(child)
+
+        result = self.sql_query.search_personnel_report(self.search_term)
+
+        for row in result:
+            self.personnel_report_tree.insert(
+                "",
+                "end",
+                text=[0],
+                values=(
+                    row[0],
+                    row[1],
+                    row[2],
+                    row[3],
+                    row[4],
+                    row[5],
+                    row[6],
+                ),
+            )
 
     def do_search_visitor(self, search_term):
         self.search_term = search_term
@@ -819,8 +887,41 @@ class TreeviewGUI:
         result = self.sql_query.search_visitor(self.search_term)
 
         for row in result:
-            self.visitor_tree.insert("", "end", text=row[0], values=row[1:])
+            self.visitor_tree.insert(
+                "",
+                "end",
+                text=[0],
+                values=(
+                    row[0],
+                    row[1],
+                    row[2],
+                    row[3],
+                    row[4],
+                    row[5],
+                ),
+            )
 
+    def do_search_visitor_report(self, search_term):
+        self.search_term = search_term
+        for child in self.visitor_report_tree.get_children():
+            self.visitor_report_tree.delete(child)
+
+        result = self.sql_query.search_visitor_report(self.search_term)
+
+        for row in result:
+            self.visitor_report_tree.insert(
+                "",
+                "end",
+                text=[0],
+                values=(
+                    row[0],
+                    row[1],
+                    row[2],
+                    row[3],
+                    row[4],
+                    row[5],
+                ),
+            )  
     def do_search_user(self, search_term):
         self.search_term = search_term
         for child in self.user_tree.get_children():
@@ -829,4 +930,13 @@ class TreeviewGUI:
         result = self.sql_query.search_user(self.search_term)
 
         for row in result:
-            self.user_tree.insert("", "end", text=row[0], values=row[1:])
+            self.user_tree.insert("", "end", text=row[0], 
+                values=(
+                    row[0],
+                    row[1],
+                    row[2],
+                    row[3],
+                    row[4],
+                    row[5],
+                    row[6],
+                ),)
