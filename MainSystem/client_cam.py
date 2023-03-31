@@ -1,11 +1,12 @@
 import tkinter as tk
 import client_home as cH
+import admin_home as aH
 import sys
 class ClientCameraSelectApp:
-    def __init__(self, login_module):
+    def __init__(self, user ,login_module):
 
     #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
-
+        self.user = user
         self.login_window = login_module # this is the login window
     #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
 
@@ -203,15 +204,36 @@ class ClientCameraSelectApp:
     # this function will send the videosource value to the next windows
     def open_logic(self):
         self.hide_this_window()
-        if(self.cam_var.get() == 0):
-            vid_source = 0
-            cH.HomeApp(vid_source, self.login_window, self.camera_app )
-        if(self.cam_var.get() == 1):
-            vid_source = 1
-            cH.HomeApp(vid_source, self.login_window, self.camera_app )
-        if(self.cam_var.get() == 2):
-            vid_source = self.ip_cam_entry.get()
-            cH.HomeApp(vid_source, self.login_window, self.camera_app )   
+        if self.user == "Security Guard":
+            if(self.cam_var.get() == 0):
+                vid_source = 0
+                cH.HomeApp(vid_source, self.login_window, self.camera_app )
+            elif(self.cam_var.get() == 1):
+                vid_source = 1
+                cH.HomeApp(vid_source, self.login_window, self.camera_app )
+            elif(self.cam_var.get() == 2):
+                vid_source = self.ip_cam_entry.get()
+                cH.HomeApp(vid_source, self.login_window, self.camera_app )  
+        if self.user == "High Admin": 
+            if(self.cam_var.get() == 0):
+                vid_source = 0
+                aH.AdminHomeApp(self.user, vid_source, self.login_window, self.camera_app )
+            elif(self.cam_var.get() == 1):
+                vid_source = 1
+                aH.AdminHomeApp(self.user, vid_source, self.login_window, self.camera_app )
+            elif(self.cam_var.get() == 2):
+                vid_source = self.ip_cam_entry.get()
+                aH.AdminHomeApp(self.user, vid_source, self.login_window, self.camera_app )
+        if self.user == "Low Admin": 
+            if(self.cam_var.get() == 0):
+                vid_source = 0
+                aH.AdminHomeApp(self.user, vid_source, self.login_window, self.camera_app )
+            elif(self.cam_var.get() == 1):
+                vid_source = 1
+                aH.AdminHomeApp(self.user, vid_source, self.login_window, self.camera_app )
+            elif(self.cam_var.get() == 2):
+                vid_source = self.ip_cam_entry.get()
+                aH.AdminHomeApp(self.user, vid_source, self.login_window, self.camera_app )
 
     def open_press(self, event=None):
         self.open_logic()

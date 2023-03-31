@@ -646,6 +646,11 @@ class dbQueries:
     def check_user_type(self, username, password):
         query = f"SELECT user_type FROM tbl_user WHERE username = ? AND password = ?"
         self.cursor.execute(query, (username, password))
+        row = self.cursor.fetchone()[0]
+        if row:
+            return row
+        else:
+            return False
         # query for checking user type
 
 

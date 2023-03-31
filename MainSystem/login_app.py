@@ -9,6 +9,7 @@ class LoginApp:
     def __init__(self, master=None):
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.sql_query = qry.dbQueries()
+        self.user = "None"
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         # build ui
         self.log_in_app = tk.Tk() if master is None else tk.Toplevel(master)
@@ -132,22 +133,35 @@ class LoginApp:
         self.password_var = self.pw_entry.get()
         if (len(self.username_var) != 0) and (len(self.password_var) != 0):
             if self.sql_query.login_entry(self.username_var, self.password_var):
-                
-                #if usertype == Security Guard
-                print("login")
-                self.hide_this_window()
-                self.clear_entry()
-                cC.ClientCameraSelectApp(self.log_in_app)
-                #elif usertype == HighAdmin
 
+                # test for admin = jus    jus123
+                # test for security guard = Jocriaus   password123
 
-                #elif usertype == LowAdmin
-            
+                print(self.sql_query.check_user_type(self.username_var, self.password_var))
+                if self.sql_query.check_user_type(self.username_var, self.password_var) == "Security Guard":
+                    print("login")
+                    # add message box
+                    self.hide_this_window()
+                    self.clear_entry()
+                    self.user = "Security Guard"
+                    cC.ClientCameraSelectApp(self.user, self.log_in_app)
+                elif self.sql_query.check_user_type(self.username_var, self.password_var) == "High Admin":
+                    print("login")
+                    # add message box
+                    self.hide_this_window()
+                    self.clear_entry()
+                    self.user = "High Admin"
+                    cC.ClientCameraSelectApp(self.user, self.log_in_app)
 
-            elif (
-                self.sql_query.login_entry(self.username_var, self.password_var)
-                == False
-            ):
+                elif self.sql_query.check_user_type(self.username_var, self.password_var) == "Low Admin":
+                    print("login")
+                    # add message box
+                    self.hide_this_window()
+                    self.clear_entry()
+                    self.user = "Low Admin"
+                    cC.ClientCameraSelectApp(self.user, self.log_in_app)
+                    
+            elif (self.sql_query.login_entry(self.username_var, self.password_var) == False):
                 print("Username or password is not match")
             # add if else where it checks the un and pw to match
             # go to the home section
