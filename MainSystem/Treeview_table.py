@@ -790,12 +790,43 @@ class TreeviewGUI:
         self.selected = self.personnel_tree.focus()
         self.personnel_values = self.personnel_tree.item(self.selected, "values")
 
-    def do_search_student(self):
+    def do_search_student(self, search_term):
+        self.search_term = search_term
         for child in self.student_tree.get_children():
             self.student_tree.delete(child)
 
-        # search_term = need to pass the search_entry
-        # result = self.sql_query.search_student(search_term)
+        # search_term = search_entry.get()
+        result = self.sql_query.search_student(search_term)
 
-        # for row in result:
-        # self.student_tree.insert("", "end", text=row[0], values=row[1:])
+        for row in result:
+            self.student_tree.insert("", "end", text=row[0], values=row[1:])
+
+    def do_search_personnel(self, search_term):
+        self.search_term = search_term
+        for child in self.personnel_tree.get_children():
+            self.personnel_tree.delete(child)
+
+        result = self.sql_query.search_personnel(self.search_term)
+
+        for row in result:
+            self.personnel_tree.insert("", "end", text=row[0], values=row[1:])
+
+    def do_search_visitor(self, search_term):
+        self.search_term = search_term
+        for child in self.visitor_tree.get_children():
+            self.visitor_tree.delete(child)
+
+        result = self.sql_query.search_visitor(self.search_term)
+
+        for row in result:
+            self.visitor_tree.insert("", "end", text=row[0], values=row[1:])
+
+    def do_search_user(self, search_term):
+        self.search_term = search_term
+        for child in self.user_tree.get_children():
+            self.user_tree.delete(child)
+
+        result = self.sql_query.search_user(self.search_term)
+
+        for row in result:
+            self.user_tree.insert("", "end", text=row[0], values=row[1:])
