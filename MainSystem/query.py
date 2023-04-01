@@ -75,8 +75,10 @@ class dbQueries:
         personnel_address,
         personnel_type,
     ):
-        query = (f"INSERT INTO tbl_personnel (personnel_no, personnel_firstname, personnel_lastname, personnel_middlename, personnel_contact_no,"+
-                 " personnel_address, personnel_type) VALUES  (?, ?, ?, ?, ?, ?, ?)")
+        query = (
+            f"INSERT INTO tbl_personnel (personnel_no, personnel_firstname, personnel_lastname, personnel_middlename, personnel_contact_no,"
+            + " personnel_address, personnel_type) VALUES  (?, ?, ?, ?, ?, ?, ?)"
+        )
         self.cursor.execute(
             query,
             (
@@ -101,9 +103,12 @@ class dbQueries:
         personnel_contact_number,
         personnel_address,
         personnel_type,
+        personnel_status,
     ):
-        query = (f"UPDATE tbl_personnel SET personnel_no = ?, personnel_firstname = ?, personnel_lastname = ?, personnel_middlename = ?,"+
-                 " personnel_contact_no = ?, personnel_address = ?, personnel_type = ? WHERE personnel_no = ?")
+        query = (
+            f"UPDATE tbl_personnel SET personnel_no = ?, personnel_firstname = ?, personnel_lastname = ?, personnel_middlename = ?,"
+            + " personnel_contact_no = ?, personnel_address = ?, personnel_type = ?, personnel_status = ? WHERE personnel_no = ?"
+        )
         self.cursor.execute(
             query,
             (
@@ -114,6 +119,7 @@ class dbQueries:
                 personnel_contact_number,
                 personnel_address,
                 personnel_type,
+                personnel_status,
                 personnel_number,
             ),
         )
@@ -179,8 +185,10 @@ class dbQueries:
         visitor_lastname,
         visitor_contact_number,
         visitor_address,
+        visitor_status,
     ):
-        query = f"UPDATE tbl_visitor SET visitor_firstname = ?, visitor_lastname = ?, visitor_contact_no = ?, visitor_address = ? WHERE visitor_no = ?"
+        query = (f"UPDATE tbl_visitor SET visitor_firstname = ?, visitor_lastname = ?, visitor_contact_no = ?, "+
+                 "visitor_address = ?, visitor_status = ? WHERE visitor_no = ?")
         self.cursor.execute(
             query,
             (
@@ -188,16 +196,12 @@ class dbQueries:
                 visitor_lastname,
                 visitor_contact_number,
                 visitor_address,
+                visitor_status,
                 visitor_number,
             ),
         )
         self.connection.commit()
         print(f"Personnel {visitor_number} has been updated successfully!")
-
-
-    def update_visitor (self):
-        pass
-
 
     # ano tong delete visitor status
     def delete_visitor_status(self, visitor_status, visitor_number):
@@ -247,8 +251,12 @@ class dbQueries:
         student_section,
         student_contact_number,
         student_address,
+        student_status,
     ):
-        query = f"UPDATE tbl_student SET student_no = ?, student_firstname = ?, student_lastname = ?, student_middlename = ?, student_program = ?, student_section = ?, student_contact_no = ?, student_address = ? WHERE student_no = ?"
+        query = (
+            f"UPDATE tbl_student SET student_no = ?, student_firstname = ?, student_lastname = ?, student_middlename = ?,"
+            + " student_program = ?, student_section = ?, student_contact_no = ?, student_address = ?,"+
+            " student_status = ? WHERE student_no = ?")
         self.cursor.execute(
             query,
             (
@@ -260,6 +268,7 @@ class dbQueries:
                 student_section,
                 student_contact_number,
                 student_address,
+                student_status,
                 student_number,
             ),
         )
@@ -325,9 +334,7 @@ class dbQueries:
         else:
             print("Student not found.")
 
-
     # add exit time for every null entries on time out
-
 
     def personnel_attendance_entry(
         self, personnel_number, personnel_attendance_date, personnel_time_in
@@ -461,12 +468,14 @@ class dbQueries:
         return results
 
     def search_personnel_report(self, search_term):
-        query = (f"SELECT tbl_personnel.personnel_no, tbl_personnel.personnel_firstname, tbl_personnel.personnel_lastname, tbl_personnel.personnel_type,"+
-                 " tbl_personnel_attendance.personnel_attendance_date, tbl_personnel_attendance.personnel_time_in, tbl_personnel_attendance.personnel_time_out"+
-                 " FROM tbl_personnel FULL JOIN tbl_personnel_attendance ON tbl_personnel.personnel_no = tbl_personnel_attendance.personnel_no"+
-                 " WHERE tbl_personnel.personnel_no LIKE ? OR tbl_personnel.personnel_firstname LIKE ? OR tbl_personnel.personnel_lastname LIKE ? OR tbl_personnel.personnel_type LIKE ? OR"+
-                 " tbl_personnel_attendance.personnel_attendance_date LIKE ? OR tbl_personnel_attendance.personnel_time_in LIKE ? OR tbl_personnel_attendance.personnel_time_out LIKE ?")
-        
+        query = (
+            f"SELECT tbl_personnel.personnel_no, tbl_personnel.personnel_firstname, tbl_personnel.personnel_lastname, tbl_personnel.personnel_type,"
+            + " tbl_personnel_attendance.personnel_attendance_date, tbl_personnel_attendance.personnel_time_in, tbl_personnel_attendance.personnel_time_out"
+            + " FROM tbl_personnel FULL JOIN tbl_personnel_attendance ON tbl_personnel.personnel_no = tbl_personnel_attendance.personnel_no"
+            + " WHERE tbl_personnel.personnel_no LIKE ? OR tbl_personnel.personnel_firstname LIKE ? OR tbl_personnel.personnel_lastname LIKE ? OR tbl_personnel.personnel_type LIKE ? OR"
+            + " tbl_personnel_attendance.personnel_attendance_date LIKE ? OR tbl_personnel_attendance.personnel_time_in LIKE ? OR tbl_personnel_attendance.personnel_time_out LIKE ?"
+        )
+
         self.cursor.execute(
             query,
             (
@@ -483,8 +492,10 @@ class dbQueries:
         return results
 
     def search_visitor(self, search_term):
-        query = (f"SELECT * FROM tbl_visitor WHERE visitor_firstname LIKE ? OR visitor_lastname LIKE ? OR visitor_contact_no LIKE ?"+
-                 " OR visitor_address LIKE ? OR visitor_status LIKE ?")
+        query = (
+            f"SELECT * FROM tbl_visitor WHERE visitor_firstname LIKE ? OR visitor_lastname LIKE ? OR visitor_contact_no LIKE ?"
+            + " OR visitor_address LIKE ? OR visitor_status LIKE ?"
+        )
         self.cursor.execute(
             query,
             (
@@ -499,13 +510,15 @@ class dbQueries:
         return results
 
     def search_visitor_report(self, search_term):
-        query = (f"SELECT tbl_visitor.visitor_no, tbl_visitor.visitor_firstname, tbl_visitor.visitor_lastname, tbl_visitor_attendance.visitor_attendance_date,"+
-                 " tbl_visitor_attendance.visitor_time_in, tbl_visitor_attendance.visitor_time_out"+
-                 " FROM  tbl_visitor FULL JOIN tbl_visitor_attendance ON tbl_visitor.visitor_no = tbl_visitor_attendance.visitor_no"+
-                 " WHERE tbl_visitor.visitor_no LIKE ? OR tbl_visitor.visitor_firstname LIKE ? OR tbl_visitor.visitor_lastname LIKE ? OR"+
-                 " tbl_visitor_attendance.visitor_attendance_date LIKE ? OR tbl_visitor_attendance.visitor_time_in LIKE ? OR"+
-                 " tbl_visitor_attendance.visitor_time_out LIKE ?")
-        
+        query = (
+            f"SELECT tbl_visitor.visitor_no, tbl_visitor.visitor_firstname, tbl_visitor.visitor_lastname, tbl_visitor_attendance.visitor_attendance_date,"
+            + " tbl_visitor_attendance.visitor_time_in, tbl_visitor_attendance.visitor_time_out"
+            + " FROM  tbl_visitor FULL JOIN tbl_visitor_attendance ON tbl_visitor.visitor_no = tbl_visitor_attendance.visitor_no"
+            + " WHERE tbl_visitor.visitor_no LIKE ? OR tbl_visitor.visitor_firstname LIKE ? OR tbl_visitor.visitor_lastname LIKE ? OR"
+            + " tbl_visitor_attendance.visitor_attendance_date LIKE ? OR tbl_visitor_attendance.visitor_time_in LIKE ? OR"
+            + " tbl_visitor_attendance.visitor_time_out LIKE ?"
+        )
+
         self.cursor.execute(
             query,
             (
@@ -519,10 +532,12 @@ class dbQueries:
         )
         results = self.cursor.fetchall()
         return results
-    
+
     def search_user(self, search_term):
-        query = (f"SELECT * FROM tbl_user WHERE username LIKE ? OR password LIKE ? OR user_firstname LIKE ? "+
-                 "OR user_lastname LIKE ? OR user_type LIKE ? OR user_status LIKE ?")
+        query = (
+            f"SELECT * FROM tbl_user WHERE username LIKE ? OR password LIKE ? OR user_firstname LIKE ? "
+            + "OR user_lastname LIKE ? OR user_type LIKE ? OR user_status LIKE ?"
+        )
         self.cursor.execute(
             query,
             (
@@ -539,12 +554,14 @@ class dbQueries:
         return results
 
     def search_student_report(self, search_term):
-        query = (f"SELECT tbl_student.student_no, tbl_student.student_firstname, tbl_student.student_lastname, tbl_student.student_program,"+
-        " tbl_student.student_section, tbl_student_attendance.student_attendance_date, tbl_student_attendance.student_time_in, tbl_student_attendance.student_time_out "+
-        "FROM tbl_student FULL JOIN tbl_student_attendance ON tbl_student.student_no = tbl_student_attendance.student_no WHERE  tbl_student.student_no LIKE ? "+
-        "OR tbl_student.student_firstname LIKE ? OR tbl_student.student_lastname LIKE ? OR tbl_student.student_program LIKE ? "+
-        "OR tbl_student.student_section LIKE ? OR tbl_student_attendance.student_attendance_date LIKE ? OR tbl_student_attendance.student_time_in LIKE ?"+
-        " OR tbl_student_attendance.student_time_out LIKE ? ")
+        query = (
+            f"SELECT tbl_student.student_no, tbl_student.student_firstname, tbl_student.student_lastname, tbl_student.student_program,"
+            + " tbl_student.student_section, tbl_student_attendance.student_attendance_date, tbl_student_attendance.student_time_in, tbl_student_attendance.student_time_out "
+            + "FROM tbl_student FULL JOIN tbl_student_attendance ON tbl_student.student_no = tbl_student_attendance.student_no WHERE  tbl_student.student_no LIKE ? "
+            + "OR tbl_student.student_firstname LIKE ? OR tbl_student.student_lastname LIKE ? OR tbl_student.student_program LIKE ? "
+            + "OR tbl_student.student_section LIKE ? OR tbl_student_attendance.student_attendance_date LIKE ? OR tbl_student_attendance.student_time_in LIKE ?"
+            + " OR tbl_student_attendance.student_time_out LIKE ? "
+        )
         self.cursor.execute(
             query,
             (
@@ -561,7 +578,7 @@ class dbQueries:
 
         results = self.cursor.fetchall()
         return results
-    
+
     def get_password_length(self):
         query = f"SELECT password_length FROM tbl_setting"
         self.cursor.execute(query)
@@ -658,8 +675,6 @@ class dbQueries:
         else:
             return False
         # query for checking user type
-
-
 
 
 # if db.login_entry("systemeror12", "RanOnline124"):

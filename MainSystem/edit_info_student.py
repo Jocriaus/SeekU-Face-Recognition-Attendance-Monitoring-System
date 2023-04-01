@@ -8,7 +8,7 @@ import sys
 import os
 
 class EditStudentApp:
-    def __init__(self, sn, sfn, sln, sm, sp, ss, scn, sa, vid_source, admin_win, img_path):
+    def __init__(self, sn, sfn, sln, sm, sp, ss, scn, sa, sstat, vid_source, admin_win, img_path):
 
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.video_source = vid_source
@@ -22,7 +22,7 @@ class EditStudentApp:
         self.student_section = ss
         self.student_contact_number = scn
         self.student_address = sa
-        # self.student_status = sstat
+        self.student_status = sstat
         self.treeview = tbl.TreeviewGUI()
         self.sql_query = qry.dbQueries()
         self.edit_bool = True
@@ -207,7 +207,7 @@ class EditStudentApp:
         self.user_status_label.place(anchor="center", relx=0.370, rely=0.8, x=0, y=0)
                 # variable for the radiobuttons, to connect them
         self.stat_var = tk.StringVar()
-        self.stat_var.set("IsActive")
+        self.stat_var.set(self.student_status)
         self.active_radiobutton = tk.Radiobutton(self.edit_stud_frame2)
         self.active_radiobutton.configure(
             background="#F7FAE9",

@@ -8,7 +8,7 @@ import sys
 import os
 
 class EditPersonnelApp:
-    def __init__(self, pn, pfn, pln, pm, pcn, pad, pt, vid_source, admin_win, img_path):
+    def __init__(self, pn, pfn, pln, pm, pcn, pad, pt, ps, vid_source, admin_win, img_path):
 
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.video_source = vid_source
@@ -21,7 +21,7 @@ class EditPersonnelApp:
         self.personnel_contact_num = pcn
         self.personnel_address = pad
         self.personnel_type = pt
-        # self.personnel_status = ps
+        self.personnel_status = ps
         self.treeview = tbl.TreeviewGUI()
         self.sql_query = qry.dbQueries()
         self.edit_bool = True
@@ -208,7 +208,7 @@ class EditPersonnelApp:
         self.user_status_label.place(anchor="center", relx=0.390, rely=0.8, x=0, y=0)
                 # variable for the radiobuttons, to connect them
         self.stat_var = tk.StringVar()
-        self.stat_var.set("IsActive")
+        self.stat_var.set(self.personnel_status)
         self.active_radiobutton = tk.Radiobutton(self.edit_pers_frame2)
         self.active_radiobutton.configure(
             background="#F7FAE9",

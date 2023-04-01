@@ -964,6 +964,7 @@ class AdminHomeApp:
         student_section = self.treeview.student_values[5]
         student_contact_num = self.treeview.student_values[6]
         student_address = self.treeview.student_values[7]
+        student_status = self.treeview.student_values[8]
 
         eIS.EditStudentApp(
             student_num,
@@ -974,6 +975,7 @@ class AdminHomeApp:
             student_section,
             student_contact_num,
             student_address,
+            student_status,
             self.video_source,
             self.administrator_app,
             self.folder_selected ,
@@ -990,6 +992,7 @@ class AdminHomeApp:
         personnel_contact_num = self.treeview.personnel_values[4]
         personnel_address = self.treeview.personnel_values[5]
         personnel_type = self.treeview.personnel_values[6]
+        personnel_status = self.treeview.personnel_values[7]
 
         eIP.EditPersonnelApp(
             personnel_number,
@@ -999,6 +1002,7 @@ class AdminHomeApp:
             personnel_contact_num,
             personnel_address,
             personnel_type,
+            personnel_status,
             self.video_source,
             self.administrator_app,
             self.folder_selected ,
