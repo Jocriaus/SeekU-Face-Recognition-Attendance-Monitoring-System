@@ -908,33 +908,37 @@ class AdminHomeApp:
             self.treeview.visitor_treeview(self.admin_c_sec3_frame)
 
     def add_clients_logic(self):
-        if self.clients_man_var.get() == "Manage Students":
-            self.hide_this_window()
-            self.select_folder()
-            aCA.CameraApp( self.video_source,self.login_window,self.sel_cam_window, self.administrator_app,self.folder_selected, self.clients_man_var.get())
+        # if self.clients_man_var.get() == "Manage Students":
+        self.hide_this_window()
+        self.select_folder()
+        aCA.CameraApp(self.video_source,self.login_window,self.sel_cam_window, self.administrator_app,self.folder_selected, self.clients_man_var.get())
+        """
             pass
         if self.clients_man_var.get() == "Manage Personnels":
             self.hide_this_window()
             self.select_folder()
-            aCA.CameraApp( self.video_source,self.login_window,self.sel_cam_window, self.administrator_app,self.folder_selected, self.clients_man_var.get())
+            aCA.CameraApp(self.video_source,self.login_window,self.sel_cam_window, self.administrator_app,self.folder_selected, self.clients_man_var.get())
             pass
         if self.clients_man_var.get() == "Manage Visitors":
             self.hide_this_window()
             self.select_folder()
-            aCA.CameraApp( self.video_source,self.login_window,self.sel_cam_window, self.administrator_app,self.folder_selected, self.clients_man_var.get())
+            aCA.CameraApp(self.video_source,self.login_window,self.sel_cam_window, self.administrator_app,self.folder_selected, self.clients_man_var.get())
             pass
+        """
 
     def edit_clients_logic(self):
         if self.clients_man_var.get() == "Manage Students":
             self.hide_this_window()
+            self.select_folder()
             self.edit_student_function()
 
         if self.clients_man_var.get() == "Manage Personnels":
             self.hide_this_window()
+            self.select_folder()
             self.edit_personnel_function()
 
         if self.clients_man_var.get() == "Manage Visitors":
-            # open camera
+            self.select_folder()
             pass
 
     def search_clients_info_logic(self):
@@ -970,6 +974,9 @@ class AdminHomeApp:
             student_section,
             student_contact_num,
             student_address,
+            self.video_source,
+            self.administrator_app,
+            self.folder_selected ,
         )
 
     def edit_personnel_function(self):
@@ -992,6 +999,9 @@ class AdminHomeApp:
             personnel_contact_num,
             personnel_address,
             personnel_type,
+            self.video_source,
+            self.administrator_app,
+            self.folder_selected ,
         )
 
     # CLIENT-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
@@ -1033,13 +1043,18 @@ class AdminHomeApp:
         lastname = self.treeview.user_values[4]
         user_type = self.treeview.user_values[5]
         user_status = self.treeview.user_values[6]
-        uE.EditUserApp(username, password, firstname, lastname, user_type, user_status)
+        uE.EditUserApp(username, password, firstname, lastname, user_type, user_status, self.administrator_app)
+        self.hide_this_window()
+
+    def register_user(self):
+        uC.CreateUserApp(self.administrator_app)
+        self.hide_this_window()
 
     # USERS-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
     # SETTINGS-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
 
     # SETTINGS-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
-
+    
     # DASBOARD-COMMANDS---------------------------------------------------------------------------------------------------------------
     def dashboard_appear(self, event=None):
         self.db_appear_logic()
@@ -1150,6 +1165,7 @@ class AdminHomeApp:
     # LOGOUT-COMMANDS---------------------------------------------------------------------------------------------------------------
     def logout(self, event=None):
         # log in module appear
+        self.login_window.deiconify()
         self.administrator_app.destroy()
 
     def logout_hover(self, event=None):

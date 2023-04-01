@@ -2,12 +2,18 @@
 import tkinter as tk
 import Treeview_table as tbl
 import query as qry
-
+import PIL.Image, PIL.ImageTk
+import admin_camera_app as aCA
+import sys
+import os
 
 class EditStudentApp:
-    def __init__(self, sn, sfn, sln, sm, sp, ss, scn, sa):
+    def __init__(self, sn, sfn, sln, sm, sp, ss, scn, sa, vid_source, admin_win, img_path):
 
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
+        self.video_source = vid_source
+        self.admin_home_window = admin_win
+        self.img_path = img_path
         self.student_number = sn
         self.student_firstname = sfn
         self.student_lastname = sln
@@ -21,16 +27,16 @@ class EditStudentApp:
         self.edit_bool = True
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         # build ui
-        self.register_student_app = tk.Toplevel()
-        self.register_student_app.configure(background="#F7FAE9", height=200, width=200)
-        width = self.register_student_app.winfo_screenwidth()
-        height = self.register_student_app.winfo_screenheight()
-        self.register_student_app.geometry("%dx%d" % (width, height))
-        self.register_student_app.resizable(False, False)
-        self.register_student_app.title("SeekU - Admin Edit Student Info")
-        self.register_student_app.iconbitmap(".\SeekU\SeekU.ico")
+        self.edit_student_app = tk.Toplevel()
+        self.edit_student_app.configure(background="#F7FAE9", height=200, width=200)
+        width = self.edit_student_app.winfo_screenwidth()
+        height = self.edit_student_app.winfo_screenheight()
+        self.edit_student_app.geometry("%dx%d" % (width, height))
+        self.edit_student_app.resizable(False, False)
+        self.edit_student_app.title("SeekU - Admin Edit Student Info")
+        self.edit_student_app.iconbitmap(".\SeekU\SeekU.ico")
         # Contains-the-camera-canvas---------------------------------------------------------------------------------------------------------
-        self.register_stud_frame4 = tk.Frame(self.register_student_app)
+        self.register_stud_frame4 = tk.Frame(self.edit_student_app)
         self.register_stud_frame4.configure(background="#0072bc", height=200, width=200)
         self.camera_canvas = tk.Canvas(self.register_stud_frame4)
         self.camera_canvas.configure(
@@ -39,12 +45,13 @@ class EditStudentApp:
         self.camera_canvas.place(
             anchor="center", relheight=1.0, relwidth=1.0, relx=0.5, rely=0.5, x=0, y=0
         )
+        self.camera_canvas.bind("<1>",  self.change_pic, add="")
         self.register_stud_frame4.place(
             anchor="center", relheight=0.50, relwidth=0.50, relx=0.65, rely=0.47
         )
         # Contains-the-camera-canvas---------------------------------------------------------------------------------------------------------
         # Contains-return-button-the-app-name-logotype-and-app-logo---------------------------------------------------------------------------------------------------------
-        self.register_stud_frame3 = tk.Frame(self.register_student_app)
+        self.register_stud_frame3 = tk.Frame(self.edit_student_app)
         self.register_stud_frame3.configure(background="#F7FAE9", height=200, width=200)
         self.app_name_logo = tk.Label(self.register_stud_frame3)
         self.img_SeekULogotypesmall = tk.PhotoImage(
@@ -80,7 +87,7 @@ class EditStudentApp:
         )
         # Contains-return-button-the-app-name-logotype-and-app-logo---------------------------------------------------------------------------------------------------------
         # Contains-register-button-the-entry-widgets---------------------------------------------------------------------------------------------------------
-        self.register_stud_frame2 = tk.Frame(self.register_student_app)
+        self.register_stud_frame2 = tk.Frame(self.edit_student_app)
         self.register_stud_frame2.configure(background="#F7FAE9", height=200, width=200)
         self.register_stud_label = tk.Label(self.register_stud_frame2)
         self.register_stud_label.configure(
@@ -214,7 +221,7 @@ class EditStudentApp:
         )
         # Contains-register-button-the-entry-widgets---------------------------------------------------------------------------------------------------------
         # Contains-school-logo-------------------------------------------------------------------------------------------------------------------------------------
-        self.register_stud_frame1 = tk.Frame(self.register_student_app)
+        self.register_stud_frame1 = tk.Frame(self.edit_student_app)
         self.register_stud_frame1.configure(background="#fff000", height=200, width=200)
         self.school_logo_label = tk.Label(self.register_stud_frame1)
         self.img_STICollegeBalagtasLogomedium = tk.PhotoImage(
@@ -230,11 +237,38 @@ class EditStudentApp:
             anchor="center", relheight=0.13, relwidth=1.0, relx=0.5, rely=0.065
         )
         # Contains-school-logo-------------------------------------------------------------------------------------------------------------------------------------
+        self.disp_pic()
         self.put_info()
         self.disable_entry()
         # Main widget
-        self.mainwindow = self.register_student_app
+        self.mainwindow = self.edit_student_app
+        # will set the window to fullscreen
+        self.mainwindow.attributes("-topmost", True)
+        # this protocol will do a function after pressing the close button.
         self.mainwindow.wm_attributes("-fullscreen", "True")
+        # this protocol will do a function after pressing the close button.
+        self.mainwindow.protocol("WM_DELETE_WINDOW", self.exit_program)
+
+    # this function will destroy the window and closes the system/program.
+    def exit_program(self):
+        sys.exit() 
+
+    # this will return to the camera app
+    def show_home_win(self):
+        self.admin_home_window.deiconify()
+        self.edit_student_app.destroy()
+
+    def hide_this_window(self):
+        self.edit_student_app.withdraw()
+
+    # this function will destroy the current window and return to camera app
+    def show_cam_app_window(self):
+        self.hide_this_window()
+        aCA.CameraEditApp(self.disp_temp_pic,self.video_source,self.edit_student_app, self.img_path)
+        
+
+    def put_info(self):
+        self.select_student()
 
     # enables entry widgets
     def disable_entry(self):
@@ -257,22 +291,6 @@ class EditStudentApp:
         self.student_num_entry.configure(state="normal")
         self.program_entry.configure(state="normal")
         self.section_entry.configure(state="normal")
-
-    def edit_student(self, event=None):
-        # enables and disables the entry and optionmenu
-        if self.edit_bool == True:
-            self.enable_entry()
-            self.edit_bool = False
-        elif self.edit_bool == False:
-            self.disable_entry()
-            self.edit_bool = True
-
-    def put_info(self):
-        self.select_student()
-
-    def save_student(self, event=None):
-        self.save_student_function()
-        # save infos
 
     def select_student(self):
         self.student_num_entry.insert(0, self.student_number)
@@ -305,6 +323,49 @@ class EditStudentApp:
             self.student_address_var,
         )
 
+        if os.path.exists(self.img_path + "/temp.jpg"):
+            img_name = self.student_number
+            os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/temp.jpg")
+        
+    # this function will display the image into the canvas
+    def disp_pic(self):
+        self.load_image = PIL.Image.open(self.img_path +"/" + self.student_number +".jpg")
+        # will use the ImageTK.PhotoImage() function to set the image
+        # as a readable image.
+        self.resized_image = self.load_image.resize((854, 480), PIL.Image.ANTIALIAS)
+        self.student_image = PIL.ImageTk.PhotoImage(self.resized_image)
+        # will display the image into the canvas
+        self.camera_canvas.create_image(0, 0, image=self.student_image, anchor=tk.NW)
+    
+    def disp_temp_pic(self):
+        self.load_image = PIL.Image.open(self.img_path +"/temp.jpg")
+        # will use the ImageTK.PhotoImage() function to set the image
+        # as a readable image.
+        self.resized_image = self.load_image.resize((854, 480), PIL.Image.ANTIALIAS)
+        self.student_image = PIL.ImageTk.PhotoImage(self.resized_image)
+        # will display the image into the canvas
+        self.camera_canvas.create_image(0, 0, image=self.student_image, anchor=tk.NW)
+
+    def edit_student(self, event=None):
+        # enables and disables the entry and optionmenu
+        if self.edit_bool == True:
+            self.enable_entry()
+            self.edit_bool = False
+        elif self.edit_bool == False:
+            self.disable_entry()
+            self.edit_bool = True
+
+    def save_student(self, event=None):
+        self.save_student_function()
+        # save infos
+
+    # this command will open the camera app
+    def change_pic(self, event=None):
+        self.show_cam_app_window()
+
     def return_func(self, event=None):
-        # return to admin module
-        pass
+        self.show_home_win()
+        if os.path.exists(self.img_path + "/temp.jpg"):
+            os.remove(self.img_path + "/temp.jpg")
+
+    

@@ -127,7 +127,7 @@ class TreeviewGUI:
             "Treeview",
             background="#F7FAE9",
             fieldbackground="F7FAE9",
-            font="{arial} 11 {bold}",
+            font="{arial} 11 {}",
         )
 
         self.style.configure(
@@ -309,7 +309,7 @@ class TreeviewGUI:
             "Treeview",
             background="#F7FAE9",
             fieldbackground="F7FAE9",
-            font="{arial} 11 {bold}",
+            font="{arial} 11 {}",
         )
 
         self.style.configure(
@@ -484,7 +484,7 @@ class TreeviewGUI:
             "Treeview",
             background="#F7FAE9",
             fieldbackground="F7FAE9",
-            font="{arial} 11 {bold}",
+            font="{arial} 11 {}",
         )
 
         self.style.configure(

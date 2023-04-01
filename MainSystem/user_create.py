@@ -4,9 +4,10 @@ import query as qry
 
 
 class CreateUserApp:
-    def __init__(self, master=None):
+    def __init__(self, admin_hom):
 
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
+        self.admin_home_window = admin_hom
         self.sql_query = qry.dbQueries()
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         # build ui
@@ -118,9 +119,11 @@ class CreateUserApp:
 
         # Main widget
         self.mainwindow = self.register_user_app
+        self.mainwindow.protocol("WM_DELETE_WINDOW", self.destroy_this_window)
 
-    def run(self):
-        self.mainwindow.mainloop()
+    def destroy_this_window(self):
+        self.admin_home_window.deiconify()
+        self.register_user_app.destroy() 
 
     def register_user_function(self):
         self.username_var = self.username_entry.get()
@@ -140,7 +143,3 @@ class CreateUserApp:
     def register_user(self, event=None):
         self.register_user_function()
 
-
-if __name__ == "__main__":
-    app = CreateUserApp()
-    app.run()

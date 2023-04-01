@@ -1,15 +1,20 @@
 #!/usr/bin/python3
 import tkinter as tk
 import query as qry
-
+import PIL.Image, PIL.ImageTk
+import os
+import sys
 
 class RegisterPersonnelApp:
-    def __init__(self, master=None):
+    def __init__(self, cam_app, file_path, condition):
         # build ui
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
+        self.admin_cam_window = cam_app
+        self.img_path = file_path
+        self.window_will_open = condition
         self.sql_query = qry.dbQueries()
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
-        self.register_personnel_app = tk.Tk() if master is None else tk.Toplevel(master)
+        self.register_personnel_app = tk.Toplevel()
         self.register_personnel_app.configure(
             background="#F7FAE9", height=200, width=200
         )
@@ -29,6 +34,7 @@ class RegisterPersonnelApp:
         self.camera_canvas.place(
             anchor="center", relheight=1.0, relwidth=1.0, relx=0.5, rely=0.5, x=0, y=0
         )
+        self.camera_canvas.bind("<1>", self.change_pic, add="")
         self.register_pers_frame4.place(
             anchor="center", relheight=0.50, relwidth=0.50, relx=0.65, rely=0.47
         )
@@ -212,17 +218,26 @@ class RegisterPersonnelApp:
             anchor="center", relheight=0.13, relwidth=1.0, relx=0.5, rely=0.065
         )
         # Contains-school-logo-------------------------------------------------------------------------------------------------------------------------------------
-
+        # see the function for description
+        self.disp_pic()
         # Main widget
         self.mainwindow = self.register_personnel_app
+        self.mainwindow.attributes("-topmost", True)
+        # this protocol will do a function after pressing the close button.
         self.mainwindow.wm_attributes("-fullscreen", "True")
+        # this protocol will do a function after pressing the close button.
+        self.mainwindow.protocol("WM_DELETE_WINDOW", self.exit_program)
 
-    def register_personnel(self, event=None):
-        self.register_personnel_function()
 
-    def return_func(self, event=None):
-        # return to admin module
-        pass
+    # this function will destroy the window and closes the system/program.
+    def exit_program(self):
+        sys.exit() 
+
+    # this function will destroy the current window and return to camera app
+    def back_cam_app_window(self):
+        self.admin_cam_window.deiconify()
+        self.register_personnel_app.destroy()
+
 
     def register_personnel_function(self):
         self.personnel_num_var = self.personnel_num_entry.get()
@@ -242,3 +257,31 @@ class RegisterPersonnelApp:
             self.address_var,
             self.personnel_type_var,
         )
+
+        img_name = self.personnel_num_var
+
+
+        os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/temp.jpg")
+
+        # this function will display the image into the canvas
+    def disp_pic(self):
+        self.load_image = PIL.Image.open(self.img_path + "/temp.jpg")
+        # will use the ImageTK.PhotoImage() function to set the image
+        # as a readable image.
+        self.resized_image = self.load_image.resize((854, 480), PIL.Image.ANTIALIAS)
+        self.student_image = PIL.ImageTk.PhotoImage(self.resized_image)
+        # will display the image into the canvas
+        self.camera_canvas.create_image(0, 0, image=self.student_image, anchor=tk.NW)
+
+
+    def register_personnel(self, event=None):
+        self.register_personnel_function()
+
+    # this command will open the camera app
+    def change_pic(self, event=None):
+        self.back_cam_app_window()
+
+    def return_func(self, event=None):
+        self.back_cam_app_window()
+        
+

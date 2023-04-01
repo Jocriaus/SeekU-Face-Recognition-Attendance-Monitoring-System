@@ -5,9 +5,10 @@ import query as qry
 
 
 class EditUserApp:
-    def __init__(self, un, pw, ufn, uln, ut, us):
+    def __init__(self, un, pw, ufn, uln, ut, us, admin_hom):
         # build ui
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
+        self.admin_home_window = admin_hom 
         self.username = un
         self.password = pw
         self.firstname = ufn
@@ -172,6 +173,11 @@ class EditUserApp:
         self.disable_entry()
         # Main widget
         self.mainwindow = self.edit_user_app
+        self.mainwindow.protocol("WM_DELETE_WINDOW", self.destroy_this_window)
+
+    def destroy_this_window(self):
+        self.admin_home_window.deiconify()
+        self.edit_user_app.destroy() 
 
     # disables entry widgets
     def disable_entry(self):

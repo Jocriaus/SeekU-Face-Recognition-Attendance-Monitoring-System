@@ -194,6 +194,12 @@ class dbQueries:
         self.connection.commit()
         print(f"Personnel {visitor_number} has been updated successfully!")
 
+
+    def update_visitor (self):
+        pass
+
+
+    # ano tong delete visitor status
     def delete_visitor_status(self, visitor_status, visitor_number):
         query = (
             f"UPDATE tbl_visitor SET visitor_status = IsDeleted WHERE visitor_no = ?"
@@ -652,6 +658,8 @@ class dbQueries:
         else:
             return False
         # query for checking user type
+
+
 
 
 # if db.login_entry("systemeror12", "RanOnline124"):

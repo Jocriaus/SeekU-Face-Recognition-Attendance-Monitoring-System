@@ -1,15 +1,19 @@
 #!/usr/bin/python3
 import tkinter as tk
 import query as qry
-
+import os
+import sys
 
 class RegisterStudentApp:
-    def __init__(self, master=None):
+    def __init__(self,cam_app, file_path, condition):
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
+        self.admin_cam_window = cam_app
+        self.img_path = file_path
+        self.window_will_open = condition
         self.sql_query = qry.dbQueries()
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         # build ui
-        self.register_student_app = tk.Tk() if master is None else tk.Toplevel(master)
+        self.register_student_app = tk.Toplevel()
         self.register_student_app.configure(background="#F7FAE9", height=200, width=200)
         width = self.register_student_app.winfo_screenwidth()
         height = self.register_student_app.winfo_screenheight()
@@ -27,6 +31,7 @@ class RegisterStudentApp:
         self.camera_canvas.place(
             anchor="center", relheight=1.0, relwidth=1.0, relx=0.5, rely=0.5, x=0, y=0
         )
+        self.camera_canvas.bind("<1>", self.change_pic, add="")
         self.register_stud_frame4.place(
             anchor="center", relheight=0.50, relwidth=0.50, relx=0.65, rely=0.47
         )
@@ -212,10 +217,21 @@ class RegisterStudentApp:
 
         # Main widget
         self.mainwindow = self.register_student_app
+        self.mainwindow.attributes("-topmost", True)
+        # this protocol will do a function after pressing the close button.
         self.mainwindow.wm_attributes("-fullscreen", "True")
+        # this protocol will do a function after pressing the close button.
+        self.mainwindow.protocol("WM_DELETE_WINDOW", self.exit_program)
 
-    def run(self):
-        self.mainwindow.mainloop()
+    # this function will destroy the window and closes the system/program.
+    def exit_program(self):
+        sys.exit() 
+
+    # this function will destroy the current window and return to camera app
+    def back_cam_app_window(self):
+        self.admin_cam_window.deiconify()
+        self.register_student_app.destroy()
+
 
     def register_student_function(self):
         self.student_num_var = self.student_num_entry.get()
@@ -238,15 +254,20 @@ class RegisterStudentApp:
             self.address_var,
         )
 
+        img_name = self.student_num_var
+
+
+        os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/temp.jpg")
+
     def register_student(self, event=None):
         self.register_student_function()
-        pass
+        
+
+
+    # this command will open the camera app
+    def change_pic(self, event=None):
+        self.back_cam_app_window()
 
     def return_func(self, event=None):
-        # return to admin module
-        pass
+        self.back_cam_app_window()
 
-
-if __name__ == "__main__":
-    app = RegisterStudentApp()
-    app.run()

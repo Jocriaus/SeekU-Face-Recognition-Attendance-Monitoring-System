@@ -7,12 +7,11 @@ import os
 import sys
 
 
-class AddVisitorApp:
-    def __init__(self, home_mod, cam_app, file_path):
+class EditVisitorApp:
+    def __init__(self, cam_app, file_path):
 
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.client_cam_app = cam_app
-        self.home_window = home_mod
         self.img_path = file_path
         self.sql_query = qry.dbQueries()
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
@@ -212,6 +211,8 @@ class AddVisitorApp:
 
 
         os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/temp.jpg")
+        
+
         """
         Save to database
         Get the primary key
