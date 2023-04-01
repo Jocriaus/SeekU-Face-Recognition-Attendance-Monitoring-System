@@ -6,12 +6,11 @@ import os
 import sys
 
 class RegisterPersonnelApp:
-    def __init__(self, cam_app, file_path, condition):
+    def __init__(self, cam_app, file_path):
         # build ui
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.admin_cam_window = cam_app
         self.img_path = file_path
-        self.window_will_open = condition
         self.sql_query = qry.dbQueries()
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.register_personnel_app = tk.Toplevel()
