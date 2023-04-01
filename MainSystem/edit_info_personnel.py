@@ -21,6 +21,7 @@ class EditPersonnelApp:
         self.personnel_contact_num = pcn
         self.personnel_address = pad
         self.personnel_type = pt
+        # self.personnel_status = ps
         self.treeview = tbl.TreeviewGUI()
         self.sql_query = qry.dbQueries()
         self.edit_bool = True
@@ -200,6 +201,33 @@ class EditPersonnelApp:
         self.address_entry.place(
             anchor="center", relwidth=0.62, relx=0.5, rely=0.735, x=0, y=0
         )
+        self.user_status_label = tk.Label(self.edit_pers_frame2)
+        self.user_status_label.configure(
+            background="#F7FAE9", font="{arial} 20 {bold}", text="Personnel Status"
+        )
+        self.user_status_label.place(anchor="center", relx=0.390, rely=0.8, x=0, y=0)
+                # variable for the radiobuttons, to connect them
+        self.stat_var = tk.StringVar()
+        self.stat_var.set("IsActive")
+        self.active_radiobutton = tk.Radiobutton(self.edit_pers_frame2)
+        self.active_radiobutton.configure(
+            background="#F7FAE9",
+            font="{arial} 18 {}",
+            text="Active",
+            variable=self.stat_var,
+            value="IsActive",
+        )
+        self.active_radiobutton.place(anchor="center", relx=0.4, rely=0.85, x=0, y=0)
+        self.inactive_radiobutton = tk.Radiobutton(self.edit_pers_frame2)
+        self.inactive_radiobutton.configure(
+            background="#F7FAE9",
+            font="{arial} 18 {}",
+            text="Archive",
+            variable=self.stat_var,
+            value="IsArchive",
+        )
+        self.inactive_radiobutton.place(anchor="center", relx=0.6, rely=0.85, x=0, y=0)
+
         self.save_changes_button = tk.Button(self.edit_pers_frame2)
         self.save_changes_button.configure(
             background="#0072bc",
@@ -279,6 +307,8 @@ class EditPersonnelApp:
         self.contact_num_entry.configure(state="disabled")
         self.personnel_num_entry.configure(state="disabled")
         self.personnel_optionmenu.configure(state="disabled")
+        self.active_radiobutton.configure(state="disabled")
+        self.inactive_radiobutton.configure(state="disabled")
 
     # enables entry widgets
     def enable_entry(self):
@@ -289,6 +319,8 @@ class EditPersonnelApp:
         self.contact_num_entry.configure(state="normal")
         self.personnel_num_entry.configure(state="normal")
         self.personnel_optionmenu.configure(state="normal")
+        self.active_radiobutton.configure(state="normal")
+        self.inactive_radiobutton.configure(state="normal")
 
     def put_info(self):
         self.select_personnel()
