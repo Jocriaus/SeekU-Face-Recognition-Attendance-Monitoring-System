@@ -6,6 +6,8 @@ import PIL.Image, PIL.ImageTk
 import os
 import sys
 
+# DI PA TO NAGAGAWA 
+
 
 class EditVisitorApp:
     def __init__(self, cam_app, file_path):
@@ -186,6 +188,18 @@ class EditVisitorApp:
         self.student_image = PIL.ImageTk.PhotoImage(self.resized_image)
         # will display the image into the canvas
         self.camera_canvas.create_image(0, 0, image=self.student_image, anchor=tk.NW)
+
+
+    # this function will display the image into the canvas
+    def disp_pic(self):
+        self.load_image = PIL.Image.open(self.img_path + "/temp.jpg")
+        # will use the ImageTK.PhotoImage() function to set the image
+        # as a readable image.
+        self.resized_image = self.load_image.resize((854, 480), PIL.Image.ANTIALIAS)
+        self.student_image = PIL.ImageTk.PhotoImage(self.resized_image)
+        # will display the image into the canvas
+        self.camera_canvas.create_image(0, 0, image=self.student_image, anchor=tk.NW)
+
 
     # this function will save the info to the database and rename the temp image
     def save_info(self):
