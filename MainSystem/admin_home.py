@@ -859,9 +859,9 @@ class AdminHomeApp:
         # settings_forget-------------------------------------
         self.administrator_settings_frame.place_forget()
         # settings_forget-------------------------------------
-        # db_forget------------------------------------
+        #db_forget------------------------------------
         self.administrator_db_frame.place_forget()
-        # db_forget------------------------------------
+        #db_forget------------------------------------
         self.administrator_report_frame.place(
             anchor="center", relheight=0.95, relwidth=0.78, relx=0.61, rely=0.525
         )
@@ -876,9 +876,9 @@ class AdminHomeApp:
         # report_forget------------------------------------
         self.administrator_report_frame.place_forget()
         # report_forget------------------------------------
-        # db_forget------------------------------------
+        #db_forget------------------------------------
         self.administrator_db_frame.place_forget()
-        # db_forget------------------------------------
+        #db_forget------------------------------------
         self.administrator_settings_frame.place(
             anchor="center", relheight=0.95, relwidth=0.78, relx=0.61, rely=0.525
         )
