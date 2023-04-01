@@ -1007,7 +1007,35 @@ class AdminHomeApp:
             self.administrator_app,
             self.folder_selected ,
         )
+        
+    """
+    def edit_visitor_function(self):
+        self.treeview.select_personnel_treeview_row()
+        print(self.treeview.personnel_values)
 
+        visitor_number = self.treeview.personnel_values[0]
+        personnel_firstname = self.treeview.personnel_values[1]
+        personnel_lastname = self.treeview.personnel_values[2]
+        personnel_middlename = self.treeview.personnel_values[3]
+        personnel_contact_num = self.treeview.personnel_values[4]
+        personnel_address = self.treeview.personnel_values[5]
+        personnel_type = self.treeview.personnel_values[6]
+        personnel_status = self.treeview.personnel_values[7]
+
+        eIP.EditPersonnelApp(
+            personnel_number,
+            personnel_firstname,
+            personnel_lastname,
+            personnel_middlename,
+            personnel_contact_num,
+            personnel_address,
+            personnel_type,
+            personnel_status,
+            self.video_source,
+            self.administrator_app,
+            self.folder_selected ,
+        )
+    """
     # CLIENT-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
 
     # REPORT-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
