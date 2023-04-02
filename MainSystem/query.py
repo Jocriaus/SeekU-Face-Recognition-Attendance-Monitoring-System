@@ -6,7 +6,7 @@ class dbQueries:
         # "DESKTOP-DG7AK17\SQLEXPRESS"
         # "STAR-PLATINUM\SQLEXPRESS01"
         # "LAB-A-PC16\SQLEXPRESS"
-        self.server = "STAR-PLATINUM\SQLEXPRESS01"
+        self.server = "DESKTOP-DG7AK17\SQLEXPRESS"
         self.database = "seeku_database"
         self.username = ""
         self.password = ""
@@ -187,8 +187,10 @@ class dbQueries:
         visitor_address,
         visitor_status,
     ):
-        query = (f"UPDATE tbl_visitor SET visitor_firstname = ?, visitor_lastname = ?, visitor_contact_no = ?, "+
-                 "visitor_address = ?, visitor_status = ? WHERE visitor_no = ?")
+        query = (
+            f"UPDATE tbl_visitor SET visitor_firstname = ?, visitor_lastname = ?, visitor_contact_no = ?, "
+            + "visitor_address = ?, visitor_status = ? WHERE visitor_no = ?"
+        )
         self.cursor.execute(
             query,
             (
@@ -255,8 +257,9 @@ class dbQueries:
     ):
         query = (
             f"UPDATE tbl_student SET student_no = ?, student_firstname = ?, student_lastname = ?, student_middlename = ?,"
-            + " student_program = ?, student_section = ?, student_contact_no = ?, student_address = ?,"+
-            " student_status = ? WHERE student_no = ?")
+            + " student_program = ?, student_section = ?, student_contact_no = ?, student_address = ?,"
+            + " student_status = ? WHERE student_no = ?"
+        )
         self.cursor.execute(
             query,
             (
@@ -299,11 +302,6 @@ class dbQueries:
             )
             self.connection.commit()
 
-            join_query_attendance = f"SELECT tbl_student.student_no, tbl_student.student_firstname, tbl_student.student_lastname, tbl_student.student_middlename, tbl_student.student_contact_no, tbl_student.student_address, tbl_student.student_status, tbl_student_attendance.student_attendance_date, tbl_student_attendance.student_time_in FROM tbl_student INNER JOIN tbl_student_attendance ON tbl_student.student_no = tbl_student_attendance.student_no WHERE tbl_student.student_no = ? AND tbl_student_attendance.student_attendance_date = ?"
-
-            self.cursor.execute(
-                join_query_attendance, (student_number, student_attendance_date)
-            )
             print("Attendance added successfully!")
 
         else:
@@ -324,11 +322,6 @@ class dbQueries:
             )
             self.connection.commit()
 
-            join_query_attendance = f"SELECT tbl_student.student_no, tbl_student.student_firstname, tbl_student.student_lastname, tbl_student.student_middlename, tbl_student.student_contact_no, tbl_student.student_address, tbl_student.student_status, tbl_student_attendance.student_attendance_date, tbl_student_attendance.student_time_out FROM tbl_student INNER JOIN tbl_student_attendance ON tbl_student.student_no = tbl_student_attendance.student_no WHERE tbl_student.student_no = ? AND tbl_student_attendance.student_attendance_date = ?"
-
-            self.cursor.execute(
-                join_query_attendance, (student_number, student_attendance_date)
-            )
             print("Attendance added successfully!")
 
         else:
@@ -351,11 +344,6 @@ class dbQueries:
             )
             self.connection.commit()
 
-            join_query_attendance = f"SELECT tbl_personnel.personnel_no, tbl_personnel.personnel_firstname, tbl_personnel.personnel_lastname, tbl_personnel.personnel_middlename, tbl_personnel.personnel_contact_no, tbl_personnel.personnel_address, tbl_personnel.personnel_type, tbl_personnel.personnel_status, tbl_personnel_attendance.personnel_attendance_date, tbl_personnel_attendance.personnel_time_in FROM tbl_personnel INNER JOIN tbl_personnel.personnel_no = tbl_personnel_attendance.personnel_no WHERE tbl_personnel.personnel_no = ? AND tbl_personnel_attendance.personnel_attendance_date = ?"
-
-            self.cursor.execute(
-                join_query_attendance, (personnel_number, personnel_attendance_date)
-            )
             print("Attendance added successfully!")
         else:
             print("Student not found.")
@@ -375,11 +363,6 @@ class dbQueries:
             )
             self.connection.commit()
 
-            join_query_attendance = f"SELECT tbl_personnel.personnel_no, tbl_personnel.personnel_firstname, tbl_personnel.personnel_lastname, tbl_personnel.personnel_middlename, tbl_personnel.personnel_contact_no, tbl_personnel.personnel_address, tbl_personnel.personnel_type, tbl_personnel.personnel_status, tbl_personnel_attendance.personnel_attendance_date, tbl_personnel_attendance.personnel_time_out FROM tbl_personnel INNER JOIN tbl_personnel.personnel_no = tbl_personnel_attendance.personnel_no WHERE tbl_personnel.personnel_no = ? AND tbl_personnel_attendance.personnel_attendance_date = ?"
-
-            self.cursor.execute(
-                join_query_attendance, (personnel_number, personnel_attendance_date)
-            )
             print("Attendance added successfully!")
         else:
             print("Student not found.")
@@ -399,10 +382,6 @@ class dbQueries:
             )
             self.connection.commit()
 
-            join_query_attendance = f"SELECT tbl_visitor.visitor_no, tbl_visitor.visitor_firstname, tbl_visitor.visitor_lastname, tbl_visitor.visitor_contact_no, tbl_visitor.visitor_address, tbl_visitor.visitor_status, tbl_visitor_attendance.visitor_attendance_date, tbl_visitor_attendance.visitor_time_in FROM tbl_visitor INNER JOIN tbl_visitor.visitor_no = tbl_visitor_attendance.visitor_no WHERE tbl_visitor.visitor_no = ? AND tbl_visitor_attendance.visitor_attendance_date = ?"
-            self.cursor.execute(
-                join_query_attendance, (visitor_number, visitor_attendance_date)
-            )
             print("Attendance added successfully!")
         else:
             print("Student not found.")
@@ -422,18 +401,16 @@ class dbQueries:
             )
             self.connection.commit()
 
-            join_query_attendance = f"SELECT tbl_visitor.visitor_no, tbl_visitor.visitor_firstname, tbl_visitor.visitor_lastname, tbl_visitor.visitor_contact_no, tbl_visitor.visitor_address, tbl_visitor.visitor_status, tbl_visitor_attendance.visitor_attendance_date, tbl_visitor_attendance.visitor_time_out FROM tbl_visitor INNER JOIN tbl_visitor.visitor_no = tbl_visitor_attendance.visitor_no WHERE tbl_visitor.visitor_no = ? AND tbl_visitor_attendance.visitor_attendance_date = ?"
-            self.cursor.execute(
-                join_query_attendance, (visitor_number, visitor_attendance_date)
-            )
             print("Attendance added successfully!")
         else:
             print("Student not found.")
 
     def search_student(self, search_term, status):
-        query = (f"SELECT * FROM tbl_student WHERE (student_no LIKE ? OR student_firstname LIKE ? OR student_lastname LIKE ? "+
-                 "OR student_middlename LIKE ? OR student_program LIKE ? OR student_section LIKE ? OR student_contact_no LIKE ? OR "+
-                 "student_address LIKE ?) AND (student_status LIKE ?)")
+        query = (
+            f"SELECT * FROM tbl_student WHERE (student_no LIKE ? OR student_firstname LIKE ? OR student_lastname LIKE ? "
+            + "OR student_middlename LIKE ? OR student_program LIKE ? OR student_section LIKE ? OR student_contact_no LIKE ? OR "
+            + "student_address LIKE ?) AND (student_status LIKE ?)"
+        )
         self.cursor.execute(
             query,
             (
@@ -478,9 +455,11 @@ class dbQueries:
         return results
 
     def search_personnel(self, search_term, status):
-        query = (f"SELECT * FROM tbl_personnel WHERE (personnel_no LIKE ? OR personnel_firstname LIKE ? OR personnel_lastname LIKE ? "+
-                 "OR personnel_middlename LIKE ? OR personnel_contact_no LIKE ? OR personnel_address LIKE ? OR personnel_type LIKE ?)"+
-                 " AND (personnel_status LIKE ?)")
+        query = (
+            f"SELECT * FROM tbl_personnel WHERE (personnel_no LIKE ? OR personnel_firstname LIKE ? OR personnel_lastname LIKE ? "
+            + "OR personnel_middlename LIKE ? OR personnel_contact_no LIKE ? OR personnel_address LIKE ? OR personnel_type LIKE ?)"
+            + " AND (personnel_status LIKE ?)"
+        )
         self.cursor.execute(
             query,
             (
@@ -583,7 +562,6 @@ class dbQueries:
         results = self.cursor.fetchall()
         return results
 
-
     def get_password_length(self):
         query = f"SELECT password_length FROM tbl_setting"
         self.cursor.execute(query)
@@ -680,6 +658,112 @@ class dbQueries:
         else:
             return False
         # query for checking user type
+
+    def check_student_no(self, student_number):
+        query = f"SELECT student_no FROM tbl_student WHERE student_no = ?"
+        self.cursor.execute(query(student_number))
+        row = self.cursor.fetchone()
+
+        if row:
+            return True
+        else:
+            return False
+
+    def get_student_info(self, student_number):
+        query = f"SELECT * FROM tbl_student WHERE student_no = ?"
+        self.cursor.execute(query, (student_number))
+
+    def get_student_count(self, count):
+        self.count = count
+        query = f"SELECT COUNT(*) FROM tbl_student WHERE student_status = 'IsActive'"
+        self.cursor.execute(query)
+        self.count = self.cursor.fetchone()[0]
+
+        return self.count
+
+    def get_student_attendance_count(self, count):
+        self.count = count
+        query = (
+            f"SELECT COUNT(*) FROM tbl_student INNER JOIN tbl_student_attendance"
+            + " ON tbl_student.student_no = tbl_student_attendance.student_no"
+        )
+
+        self.cursor.execute(query)
+        self.count = self.cursor.fetchone()[0]
+
+        return self.count
+
+    def check_personnel_no(self, personnel_number):
+        query = f"SELECT personnel_no FROM tbl_personnel WHERE personnel_no = ?"
+        self.cursor.execute(query(personnel_number))
+        row = self.cursor.fetchone()
+
+        if row:
+            return True
+        else:
+            return False
+
+    def get_personnel_info(self, personnel_number):
+        query = f"SELECT * FROM tbl_personnel WHERE personnel_no = ?"
+        self.cursor.execute(query, (personnel_number))
+
+    def get_personnel_count(self, count):
+        self.count = count
+        query = (
+            f"SELECT COUNT(*) FROM tbl_personnel WHERE personnel_status = 'IsActive'"
+        )
+
+        self.cursor.execute(query)
+        self.count = self.cursor.fetchone()[0]
+
+        return self.count
+
+    def get_personnel_attendance_count(self, count):
+        self.count = count
+        query = (
+            f"SELECT COUNT(*) FROM tbl_personnel INNER JOIN tbl_personnel_attendance"
+            + " ON tbl_personnel.personnel_no = tbl_personnel_attendance.personnel_no"
+        )
+
+        self.cursor.execute(query)
+        self.count = self.cursor.fetchone()[0]
+
+        return self.count
+
+    def check_visitor_no(self, visitor_number):
+        query = f"SELECT visitor_no FROM tbl_visitor WHERE visitor_no = ?"
+        self.cursor.execute(query(visitor_number))
+        row = self.cursor.fetchone()
+
+        if row:
+            return True
+        else:
+            return False
+
+    def get_visitor_info(self, visitor_number):
+        query = f"SELECT * FROM tbl_visitor WHERE visitor_no = ?"
+        self.cursor.execute(query, (visitor_number))
+
+    def get_visitor_count(self, count):
+        self.count = count
+        query = f"SELECT COUNT(*) FROM tbl_visitor WHERE visitor_status = 'IsActive'"
+
+        self.cursor.execute(query)
+        count = self.cursor.fetchone()[0]
+
+        return count
+
+    def get_visitor_attendance_count(self, count):
+        self.count = count
+        query = (
+            f"SELECT COUNT(*) FROM tbl_visitor INNER JOIN tbl_visitor_attendance"
+            + " ON tbl_visitor.visitor_no = tbl_visitor_attendance.visitor_no"
+        )
+
+        self.cursor.execute(query)
+        self.count = self.cursor.fetchone()[0]
+
+        return self.count
 
 
 # if db.login_entry("systemeror12", "RanOnline124"):
