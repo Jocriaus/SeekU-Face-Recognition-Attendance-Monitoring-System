@@ -25,7 +25,7 @@ class TreeviewGUI:
         self.connection.close()
         print("Connection closed")
 
-    def student_treeview(self, root):
+    def student_treeview(self, root, status):
         self.student_treeview_root = root
         # Configure Style of Treeview
         self.style = ttk.Style()
@@ -112,7 +112,7 @@ class TreeviewGUI:
             "Student Status", text="Student Status", anchor=tk.CENTER
         )
 
-        self.populate_student_treeview()
+        self.populate_student_treeview(status)
 
         return self.student_treeview_frame
 
@@ -208,7 +208,7 @@ class TreeviewGUI:
 
         return self.student_report_treeview_frame
 
-    def personnel_treeview(self, root):
+    def personnel_treeview(self, root,status):
         self.personnel_treeview_root = root
 
         # Configure Style of Treeview
@@ -294,7 +294,7 @@ class TreeviewGUI:
             "Personnel Status", text="Personnel Status", anchor=tk.CENTER
         )
 
-        self.populate_personnel_treeview()
+        self.populate_personnel_treeview(status)
 
         return self.personnel_treeview_frame
 
@@ -393,7 +393,7 @@ class TreeviewGUI:
         self.populate_personnel_report_treeview()
         return self.personnel_report_treeview_frame
 
-    def visitor_treeview(self, root):
+    def visitor_treeview(self, root, status):
         self.visitor_treeview_root = root
 
         # Configure Style of Treeview
@@ -470,7 +470,7 @@ class TreeviewGUI:
             "Visitor Status", text="Visitor Status", anchor=tk.CENTER
         )
 
-        self.populate_visitor_treeview()
+        self.populate_visitor_treeview(status)
         return self.visitor_treeview_frame
 
     def visitor_report_treeview(self, root):
@@ -557,7 +557,7 @@ class TreeviewGUI:
         self.populate_visitor_report_treeview()
         return self.visitor_report_treeview_frame
 
-    def user_treeview(self, root):
+    def user_treeview(self, root, status):
         self.user_treeview_root = root
 
         # Configure Style of Treeview
@@ -630,12 +630,12 @@ class TreeviewGUI:
         self.user_tree.heading("User Type", text="User Type", anchor=tk.CENTER)
         self.user_tree.heading("User Status", text="User Status", anchor=tk.CENTER)
 
-        self.populate_user_treeview()
+        self.populate_user_treeview(status)
         return self.user_treeview_frame
 
-    def populate_student_treeview(self):
+    def populate_student_treeview(self,status):
         self.cursor.execute(
-            "SELECT * FROM tbl_student WHERE student_status = 'IsActive'"
+            "SELECT * FROM tbl_student WHERE student_status = '"+ status +"'"
         )  # add where status is isActive
 
         for row in self.cursor.fetchall():
@@ -678,9 +678,9 @@ class TreeviewGUI:
                 ),
             )
 
-    def populate_personnel_treeview(self):
+    def populate_personnel_treeview(self, status):
         self.cursor.execute(
-            "SELECT * FROM tbl_personnel WHERE personnel_status = 'IsActive'"
+            "SELECT * FROM tbl_personnel WHERE personnel_status = '"+ status +"'"
         )  # add where status is isActive
 
         for row in self.cursor.fetchall():
@@ -720,9 +720,9 @@ class TreeviewGUI:
                 ),
             )
 
-    def populate_visitor_treeview(self):
+    def populate_visitor_treeview(self,status):
         self.cursor.execute(
-            "SELECT * FROM tbl_visitor WHERE visitor_status = 'IsActive'"
+            "SELECT * FROM tbl_visitor WHERE visitor_status = '"+ status +"'"
         )  # add where status is isActive
 
         for row in self.cursor.fetchall():
@@ -760,9 +760,9 @@ class TreeviewGUI:
                 ),
             )
 
-    def populate_user_treeview(self):
+    def populate_user_treeview(self,status):
         self.cursor.execute(
-            "SELECT * FROM tbl_user WHERE user_status = 'IsActive'"
+            "SELECT * FROM tbl_user WHERE user_status = '"+ status +"'"
         )  # add where status is isActive
 
         for row in self.cursor.fetchall():
@@ -793,13 +793,13 @@ class TreeviewGUI:
         self.selected = self.personnel_tree.focus()
         self.personnel_values = self.personnel_tree.item(self.selected, "values")
 
-    def do_search_student(self, search_term):
+    def do_search_student(self, search_term, status):
         self.search_term = search_term
         for child in self.student_tree.get_children():
             self.student_tree.delete(child)
 
         # search_term = search_entry.get()
-        result = self.sql_query.search_student(search_term)
+        result = self.sql_query.search_student(search_term, status)
 
         for row in result:
             self.student_tree.insert("", "end", text=row[0], values=(
@@ -833,12 +833,12 @@ class TreeviewGUI:
                     row[7],))
             
 
-    def do_search_personnel(self, search_term):
+    def do_search_personnel(self, search_term, status):
         self.search_term = search_term
         for child in self.personnel_tree.get_children():
             self.personnel_tree.delete(child)
 
-        result = self.sql_query.search_personnel(self.search_term)
+        result = self.sql_query.search_personnel(self.search_term, status)
 
         for row in result:
             self.personnel_tree.insert(
@@ -879,12 +879,12 @@ class TreeviewGUI:
                 ),
             )
 
-    def do_search_visitor(self, search_term):
+    def do_search_visitor(self, search_term, status):
         self.search_term = search_term
         for child in self.visitor_tree.get_children():
             self.visitor_tree.delete(child)
 
-        result = self.sql_query.search_visitor(self.search_term)
+        result = self.sql_query.search_visitor(self.search_term, status)
 
         for row in result:
             self.visitor_tree.insert(
@@ -922,12 +922,12 @@ class TreeviewGUI:
                     row[5],
                 ),
             )  
-    def do_search_user(self, search_term):
+    def do_search_user(self, search_term, status):
         self.search_term = search_term
         for child in self.user_tree.get_children():
             self.user_tree.delete(child)
 
-        result = self.sql_query.search_user(self.search_term)
+        result = self.sql_query.search_user(self.search_term, status)
 
         for row in result:
             self.user_tree.insert("", "end", text=row[0], 
