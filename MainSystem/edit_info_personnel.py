@@ -224,7 +224,7 @@ class EditPersonnelApp:
             font="{arial} 18 {}",
             text="Archive",
             variable=self.stat_var,
-            value="IsArchive",
+            value="IsArchived",
         )
         self.inactive_radiobutton.place(anchor="center", relx=0.6, rely=0.85, x=0, y=0)
 
