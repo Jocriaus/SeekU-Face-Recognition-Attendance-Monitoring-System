@@ -3,6 +3,7 @@ from PIL import Image, ImageTk
 import datetime
 import time
 import face_recog_mod as mf
+import query as qry
 import sys
 
 
@@ -13,8 +14,8 @@ class ClientFaceRecogApp:
         self.login_window = login_mod
         self.select_cam_window = sel_cam
         self.home_window = home_mod
-
         self.call_cam = False
+        self.sql_query = qry.dbQueries()
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
 
         # build ui
@@ -231,11 +232,13 @@ class ClientFaceRecogApp:
 
     # this will save the attendance of the student
     def save_attendance_func(self):
-        """
-        system connection to the database
-        """
-        pass
-
+        #if sn exist
+        self.sql_query.student_attendance_entry(self.fr_vid.name,self.current_date, self.current_time)
+        #if personnelnum exist
+        self.sql_query.personnel_attendance_entry(self.fr_vid.name,self.current_date, self.current_time)
+        #if vn exist
+        self.sql_query.visitor_attendance_entry(self.fr_vid.name,self.current_date, self.current_time)
+        
     # this command will return to the home window
     def return_func(self, event=None):
         self.show_home_window()
