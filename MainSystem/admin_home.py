@@ -3,8 +3,7 @@ import tkinter as tk
 from datetime import datetime
 from tkinter import filedialog
 import sys
-import register_personnel as rP
-import register_student as rS
+import query as qry
 import edit_info_personnel as eIP
 import edit_info_student as eIS
 import user_create as uC
@@ -25,6 +24,7 @@ class AdminHomeApp:
         self.now = datetime.now()
         self.current_date_n_time = self.now.strftime("%d/%m/%Y %H:%M:%S")
         self.treeview = tbl.TreeviewGUI()
+        self.sql_query = qry.dbQueries()
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         # build ui
         self.administrator_app = tk.Toplevel()
@@ -653,7 +653,7 @@ class AdminHomeApp:
         self.administrator_settings_frame.place(
             anchor="center", relheight=0.95, relwidth=0.78, relx=0.61, rely=0.525
         )
-
+        self.display_settings()
         # SETTINGS-------------------------------------------------------------------------------------------------------
 
         # DB-SECTION--------------------------------------------------------------------------------------
@@ -681,6 +681,12 @@ class AdminHomeApp:
             background="#F7FAE9", font="{arial} 24 {bold}", text="Total Students"
         )
         self.ttl_students_label.place(anchor="center", relx=0.16, rely=0.25, x=0, y=0)
+        self.total_student = self.sql_query.get_student_count()
+        self.ttl_students_no_label = tk.Label(self.administrator_db_ttl_frame)
+        self.ttl_students_no_label.configure(
+            background="#F7FAE9", font="{arial} 30 {bold}", text = self.total_student
+        )
+        self.ttl_students_no_label.place(anchor="center", relx=0.16, rely=0.65, x=0, y=0)
         self.ttl_personnels_label = tk.Label(self.administrator_db_ttl_frame)
         self.ttl_personnels_label.configure(
             anchor="n",
@@ -689,11 +695,26 @@ class AdminHomeApp:
             text="Total Personnels",
         )
         self.ttl_personnels_label.place(anchor="center", relx=0.5, rely=0.25, x=0, y=0)
+        self.total_personnel = self.sql_query.get_personnel_count()
+        self.ttl_personnels_no_label = tk.Label(self.administrator_db_ttl_frame)
+        self.ttl_personnels_no_label.configure(
+            anchor="n",
+            background="#F7FAE9",
+            font="{arial} 30 {bold}",
+            text= self.total_personnel,
+        )
+        self.ttl_personnels_no_label.place(anchor="center", relx=0.5, rely=0.65, x=0, y=0)
         self.ttl_visitor_label = tk.Label(self.administrator_db_ttl_frame)
         self.ttl_visitor_label.configure(
             background="#F7FAE9", font="{arial} 24 {bold}", text="Total Visitors"
         )
         self.ttl_visitor_label.place(anchor="center", relx=0.84, rely=0.25, x=0, y=0)
+        self.total_visitor = self.sql_query.get_visitor_count()
+        self.ttl_visitor_no_label = tk.Label(self.administrator_db_ttl_frame)
+        self.ttl_visitor_no_label.configure(
+            background="#F7FAE9", font="{arial} 30 {bold}", text="0"
+        )
+        self.ttl_visitor_no_label.place(anchor="center", relx=0.84, rely=0.65, x=0, y=0)
         self.administrator_db_ttl_frame.place(
             anchor="center", relheight=0.35, relwidth=0.9, relx=0.5, rely=0.72, x=0, y=0
         )
@@ -706,6 +727,14 @@ class AdminHomeApp:
             background="#F7FAE9", font="{arial} 24 {bold}", text="Present Students"
         )
         self.ol_students_label.place(anchor="center", relx=0.16, rely=0.25, x=0, y=0)
+
+        self.present_students = self.sql_query.get_student_attendance_count()
+
+        self.ol_students_no_label = tk.Label(self.administrator_db_ol_frame)
+        self.ol_students_no_label.configure(
+            background="#F7FAE9", font="{arial} 30 {bold}", text= self.present_students
+        )
+        self.ol_students_no_label.place(anchor="center", relx=0.16, rely=0.65, x=0, y=0)
         self.ol_personnels_label = tk.Label(self.administrator_db_ol_frame)
         self.ol_personnels_label.configure(
             anchor="n",
@@ -714,11 +743,33 @@ class AdminHomeApp:
             text="Present Personnels",
         )
         self.ol_personnels_label.place(anchor="center", relx=0.5, rely=0.25, x=0, y=0)
+
+        self.present_personnels = self.sql_query.get_personnel_attendance_count()
+
+        self.ol_personnels_no_label = tk.Label(self.administrator_db_ol_frame)
+        self.ol_personnels_no_label.configure(
+            anchor="n",
+            background="#F7FAE9",
+            font="{arial} 30 {bold}",
+            text= self.present_personnels ,
+        )
+        self.ol_personnels_no_label.place(anchor="center", relx=0.5, rely=0.65, x=0, y=0)
+
+
         self.ol_visitor_label = tk.Label(self.administrator_db_ol_frame)
         self.ol_visitor_label.configure(
             background="#F7FAE9", font="{arial} 24 {bold}", text="Present Visitors"
         )
         self.ol_visitor_label.place(anchor="center", relx=0.84, rely=0.25, x=0, y=0)
+
+        self.present_visitor = self.sql_query.get_visitor_attendance_count()
+
+        self.ol_visitor_no_label = tk.Label(self.administrator_db_ol_frame)
+        self.ol_visitor_no_label.configure(
+            background="#F7FAE9", font="{arial} 30 {bold}", text= self.present_visitor
+        )
+        self.ol_visitor_no_label.place(anchor="center", relx=0.84, rely=0.65, x=0, y=0)
+
         self.administrator_db_ol_frame.place(
             anchor="center", relheight=0.35, relwidth=0.9, relx=0.5, rely=0.33, x=0, y=0
         )
@@ -1386,7 +1437,23 @@ class AdminHomeApp:
     # ARCHIVED-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
 
     # SETTINGS-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
+    def display_settings(self):
+        log_in_attempt = self.sql_query.get_login_attempts()
+        password_len = self.sql_query.get_password_length()
+        sem_start = self.sql_query.get_start_settings()
+        sem_end = self.sql_query.get_end_settings()
+        
+        self.login_attempt_entry.insert(0, log_in_attempt)
+        self.pass_len_entry.insert(0, password_len)
+        self.activation_date_entry.insert(0, sem_start)
+        self.deactivation_date_entry.insert(0,sem_end)
 
+
+    def activation_settings_save(self):
+        self.sql_query.set_sem_settings(self.activation_date_entry.get(), self.deactivation_date_entry.get())
+
+    def security_settings_save(self):
+        self.sql_query.set_pass_len_log_att(self.pass_len_entry.get(), self.login_attempt_entry.get())
     # SETTINGS-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
     
     # DASBOARD-COMMANDS---------------------------------------------------------------------------------------------------------------
@@ -1445,8 +1512,8 @@ class AdminHomeApp:
 
     def add_user_infos(self, event=None):
         self.hide_this_window()
-        # uC.CreateUserApp()
-        pass
+        uC.CreateUserApp()
+        
 
     # USER-COMMANDS---------------------------------------------------------------------------------------------------------------
     # REPORTS-COMMANDS---------------------------------------------------------------------------------------------------------------
@@ -1512,10 +1579,10 @@ class AdminHomeApp:
         pass
 
     def save_dates(self, event=None):
-        pass
+        self.activation_settings_save()
 
     def save_security(self, event=None):
-        pass
+        self.security_settings_save()
 
     # SETTINGS-COMMANDS---------------------------------------------------------------------------------------------------------------
     # LOGOUT-COMMANDS---------------------------------------------------------------------------------------------------------------

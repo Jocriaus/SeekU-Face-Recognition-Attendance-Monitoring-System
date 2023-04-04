@@ -9,6 +9,7 @@ class LoginApp:
     def __init__(self, master=None):
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.sql_query = qry.dbQueries()
+        self.sql_query.default_settings_if_not_exist()
         self.user = "None"
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         # build ui

@@ -6,7 +6,7 @@ class dbQueries:
         # "DESKTOP-DG7AK17\SQLEXPRESS"
         # "STAR-PLATINUM\SQLEXPRESS01"
         # "LAB-A-PC16\SQLEXPRESS"
-        self.server = "DESKTOP-DG7AK17\SQLEXPRESS"
+        self.server = "STAR-PLATINUM\SQLEXPRESS01"
         self.database = "seeku_database"
         self.username = ""
         self.password = ""
@@ -562,82 +562,6 @@ class dbQueries:
         results = self.cursor.fetchall()
         return results
 
-    def get_password_length(self):
-        query = f"SELECT password_length FROM tbl_setting"
-        self.cursor.execute(query)
-        # Select pasword length and display to entry text
-
-    def get_login_attempts(self):
-        query = f"SELECT login_attempt FROM tbl_setting"
-        self.cursor.execute(query)
-        # Select login attempt and display to entry text
-
-    def set_pass_len_log_att(self, pass_length, log_attempt):
-        query = (
-            f"INSERT INTO tbl_setting (password_length, login_attempt) VALUES (?, ?, ?)"
-        )
-        self.cursor.execute(query, (pass_length, log_attempt))
-        self.connection.commit()
-        # Save pass len & log in attempt to the database
-
-    def get_start_settings(self):
-        query = f"SELECT sem_start_setting FROM tbl_setting"
-        self.cursor.execute(query)
-        # select date and insert to entry text
-
-    def get_end_settings(self):
-        query = f"SELECT sem_end_setting FROM tbl_setting"
-        self.cursor.execute(query)
-        # select date and insert to entry text
-
-    def set_sem_settings(self, sem_start, sem_end):
-        query = f"INSERT INTO tbl_setting (sem_start_setting, sem_end_setting) VALUES (?, ?)"
-        self.cursor.execute(query, (sem_start, sem_end))
-        self.connection.commit()
-        # save date to the database
-
-    def set_face_recog_path(self, facerecog_filepath):
-        query = f"INSERT INTO tbl_setting (face_recog_file_path) VALUES (?)"
-        self.cursor.execute(query, (facerecog_filepath))
-        self.connection.commit()
-        # save face recog path to database
-
-    def get_face_recog_path(self):
-        query = f"SELECT face_recog_file_path FROM tbl_setting"
-        self.cursor.execute(query)
-        # get face recog path from database
-
-    def set_fr_path_file_date(self, facerecog_date):
-        query = f"INSERT INTO tbl_setting (face_recog_date) VALUES (?)"
-        self.cursor.execute(query, (facerecog_date))
-        # save date
-
-    def get_fr_path_file_date(self):
-        query = f"SELECT face_recog_date FROM tbl_setting"
-        self.cursor.execute(query)
-        # get date
-
-    def set_add_visitor_path(self, add_visitor_filepath):
-        query = f"INSERT INTO tbl_setting (add_visitor_file_path) VALUES (?)"
-        self.cursor.execute(query, (add_visitor_filepath))
-        self.connection.commit()
-        # save face recog path to database
-
-    def get_add_visitor_path(self):
-        query = f"SELECT add_visitor_file_path FROM tbl_setting"
-        self.cursor.execute(query)
-        # get face recog path from database
-
-    def set_av_path_file_date(self, add_visitor_file_date):
-        query = f"INSERT INTO tbl_setting (add_visitor_date) VALUES (?)"
-        self.cursor.execute(query, (add_visitor_file_date))
-        # save date
-
-    def get_av_path_file_date(self):
-        query = f"SELECT add_visitor_date FROM tbl_setting"
-        self.cursor.execute(query)
-        # get date
-
     def check_username(self, username, password):
         query = f"SELECT * FROM tbl_user WHERE username = ? AND password = ?"
         self.cursor.execute(query, (username, password))
@@ -660,8 +584,8 @@ class dbQueries:
         # query for checking user type
 
     def check_student_no(self, student_number):
-        query = f"SELECT student_no FROM tbl_student WHERE student_no = ?"
-        self.cursor.execute(query(student_number))
+        query = f"SELECT * FROM tbl_student WHERE student_no = ?"
+        self.cursor.execute(query,(student_number))
         row = self.cursor.fetchone()
 
         if row:
@@ -682,29 +606,27 @@ class dbQueries:
             full_name = student_firstname +" "+ student_middlename +" "+ student_lastname
             return full_name
 
-    def get_student_count(self, count):
-        self.count = count
+    def get_student_count(self):
         query = f"SELECT COUNT(*) FROM tbl_student WHERE student_status = 'IsActive'"
         self.cursor.execute(query)
-        self.count = self.cursor.fetchone()[0]
+        count = self.cursor.fetchone()[0]
 
-        return self.count
+        return count
 
-    def get_student_attendance_count(self, count):
-        self.count = count
+    def get_student_attendance_count(self):
         query = (
             f"SELECT COUNT(*) FROM tbl_student INNER JOIN tbl_student_attendance"
             + " ON tbl_student.student_no = tbl_student_attendance.student_no"
         )
 
         self.cursor.execute(query)
-        self.count = self.cursor.fetchone()[0]
+        count = self.cursor.fetchone()[0]
 
-        return self.count
+        return count
 
     def check_personnel_no(self, personnel_number):
-        query = f"SELECT personnel_no FROM tbl_personnel WHERE personnel_no = ?"
-        self.cursor.execute(query(personnel_number))
+        query = f"SELECT * FROM tbl_personnel WHERE personnel_no = ?"
+        self.cursor.execute(query,(personnel_number))
         row = self.cursor.fetchone()
 
         if row:
@@ -726,32 +648,30 @@ class dbQueries:
 
             return full_name
 
-    def get_personnel_count(self, count):
-        self.count = count
+    def get_personnel_count(self):
         query = (
             f"SELECT COUNT(*) FROM tbl_personnel WHERE personnel_status = 'IsActive'"
         )
 
         self.cursor.execute(query)
-        self.count = self.cursor.fetchone()[0]
+        count = self.cursor.fetchone()[0]
 
-        return self.count
+        return count
 
-    def get_personnel_attendance_count(self, count):
-        self.count = count
+    def get_personnel_attendance_count(self):
         query = (
             f"SELECT COUNT(*) FROM tbl_personnel INNER JOIN tbl_personnel_attendance"
             + " ON tbl_personnel.personnel_no = tbl_personnel_attendance.personnel_no"
         )
 
         self.cursor.execute(query)
-        self.count = self.cursor.fetchone()[0]
+        count = self.cursor.fetchone()[0]
 
-        return self.count
+        return count
 
     def check_visitor_no(self, visitor_number):
-        query = f"SELECT visitor_no FROM tbl_visitor WHERE visitor_no = ?"
-        self.cursor.execute(query(visitor_number))
+        query = f"SELECT * FROM tbl_visitor WHERE visitor_no = ?"
+        self.cursor.execute(query,(visitor_number))
         row = self.cursor.fetchone()
 
         if row:
@@ -770,8 +690,9 @@ class dbQueries:
             visitor_lastname = row[1]
             full_name = visitor_firstname +" "+ visitor_lastname
             return full_name
-    def get_visitor_count(self, count):
-        self.count = count
+        
+
+    def get_visitor_count(self):
         query = f"SELECT COUNT(*) FROM tbl_visitor WHERE visitor_status = 'IsActive'"
 
         self.cursor.execute(query)
@@ -779,17 +700,176 @@ class dbQueries:
 
         return count
 
-    def get_visitor_attendance_count(self, count):
-        self.count = count
+    def get_visitor_attendance_count(self):
         query = (
             f"SELECT COUNT(*) FROM tbl_visitor INNER JOIN tbl_visitor_attendance"
             + " ON tbl_visitor.visitor_no = tbl_visitor_attendance.visitor_no"
         )
 
         self.cursor.execute(query)
-        self.count = self.cursor.fetchone()[0]
+        count = self.cursor.fetchone()[0]
 
-        return self.count
+        return count
+
+    #SETTINGS-TABLE-QUERY--------------------------------------------------------------------------------------------------------------
+
+    def default_settings_if_not_exist(self):
+        query = f"SELECT * FROM tbl_setting"
+        self.cursor.execute(query)
+        row = self.cursor.fetchone()
+        condition = False
+        if row:
+            condition =  True
+            print(condition)
+        else:
+            condition = False
+            print(condition)
+            
+        if not condition:
+
+            pass_length = 6
+            log_attempt = 5
+            sem_start = "04/04/2024"
+            sem_end = "04/04/2024"
+            facerecog_filepath = "C:\\Users\\JC Austria\\Documents\\GitHub\\Face-Recognition-Attendance-Monitoring-System\\MainSystem\\DataSet"
+            facerecog_date = "04/04/2023"
+            add_visitor_filepath =  "C:\\Users\\JC Austria\\Documents\\GitHub\\Face-Recognition-Attendance-Monitoring-System\\MainSystem\\DataSet\\Guest"
+            add_visitor_date = "04/04/2023"
+            query2 = (f"INSERT INTO tbl_setting (password_length, login_attempt,sem_start_setting,sem_end_setting,"+
+                     "face_recog_file_path,face_recog_date,av_file_path,av_date) VALUES (?, ?, ?, ? ,? ,? ,? ,?)")
+            self.cursor.execute(query2, 
+                                (pass_length, 
+                                 log_attempt,
+                                 sem_start,
+                                 sem_end,
+                                 facerecog_filepath,
+                                 facerecog_date,
+                                 add_visitor_filepath,
+                                 add_visitor_date)
+                                 )
+            self.connection.commit()
+
+
+    def get_password_length(self):
+        query = f"SELECT password_length FROM tbl_setting WHERE setting_no = 1 "
+        self.cursor.execute(query)
+        row = self.cursor.fetchone()[0]
+        if row:
+            return row
+        else:
+            return False
+        # Select pasword length and display to entry text
+
+    def get_login_attempts(self):
+        query = f"SELECT login_attempt FROM tbl_setting WHERE setting_no = 1 "
+        self.cursor.execute(query)
+        row = self.cursor.fetchone()[0]
+        if row:
+            return row
+        else:
+            return False
+        # Select login attempt and display to entry text
+
+    def set_pass_len_log_att(self, pass_length, log_attempt):
+        query = (
+            f"INSERT INTO tbl_setting (password_length, login_attempt) VALUES (?, ?) WHERE setting_no = 1 "
+        )
+        self.cursor.execute(query, (pass_length, log_attempt))
+        self.connection.commit()
+        # Save pass len & log in attempt to the database
+
+    def get_start_settings(self):
+        query = f"SELECT sem_start_setting FROM tbl_setting WHERE setting_no = 1 "
+        self.cursor.execute(query)
+        row = self.cursor.fetchone()[0]
+        if row:
+            return row
+        else:
+            return False
+        # select date and insert to entry text
+
+    def get_end_settings(self):
+        query = f"SELECT sem_end_setting FROM tbl_setting WHERE setting_no = 1 "
+        self.cursor.execute(query)
+        row = self.cursor.fetchone()[0]
+        if row:
+            return row
+        else:
+            return False
+        # select date and insert to entry text 
+
+    def set_sem_settings(self, sem_start, sem_end):
+        query = f"INSERT INTO tbl_setting (sem_start_setting, sem_end_setting) VALUES (?, ?) WHERE setting_no = 1 "
+        self.cursor.execute(query, (sem_start, sem_end))
+        self.connection.commit()
+        # save date to the database
+
+    def set_face_recog_path(self, facerecog_filepath):
+        query = f"INSERT INTO tbl_setting (face_recog_file_path) VALUES (?) WHERE setting_no = 1 "
+        self.cursor.execute(query, (facerecog_filepath))
+        self.connection.commit()
+        # save face recog path to database
+
+    def get_face_recog_path(self):
+        query = f"SELECT face_recog_file_path FROM tbl_setting WHERE setting_no = 1 "
+        self.cursor.execute(query)
+        row = self.cursor.fetchone()[0]
+        if row:
+            return row
+        else:
+            return False
+        # get face recog path from database
+
+    def set_fr_path_file_date(self, facerecog_date):
+        query = f"INSERT INTO tbl_setting (face_recog_date) VALUES (?) WHERE setting_no = 1 "
+        self.cursor.execute(query, (facerecog_date))
+        self.connection.commit()
+        # save date
+
+    def get_fr_path_file_date(self):
+        query = f"SELECT face_recog_date FROM tbl_setting WHERE setting_no = 1 "
+        self.cursor.execute(query)
+        row = self.cursor.fetchone()[0]
+        if row:
+            return row
+        else:
+            return False
+        # get date
+
+    def set_add_visitor_path(self, add_visitor_filepath):
+        query = f"INSERT INTO tbl_setting (av_file_path) VALUES (?) WHERE setting_no = 1 "
+        self.cursor.execute(query, (add_visitor_filepath))
+        self.connection.commit()
+        # save face recog path to database
+
+    def get_add_visitor_path(self):
+        query = f"SELECT av_file_path FROM tbl_setting WHERE setting_no = 1 "
+        self.cursor.execute(query)
+        row = self.cursor.fetchone()[0]
+        if row:
+            return row
+        else:
+            return False
+        # get face recog path from database
+
+    def set_av_path_file_date(self, add_visitor_file_date):
+        query = f"INSERT INTO tbl_setting (av_date) VALUES (?) WHERE setting_no = 1 "
+        self.cursor.execute(query, (add_visitor_file_date))
+        self.connection.commit()
+        # save date
+
+    def get_av_path_file_date(self):
+        query = f"SELECT av_date FROM tbl_setting WHERE setting_no = 1 "
+        self.cursor.execute(query)
+        row = self.cursor.fetchone()[0]
+        if row:
+            return row
+        else:
+            return False
+        # get date
+
+    #SETTINGS-TABLE-QUERY--------------------------------------------------------------------------------------------------------------
+
 
 
 # if db.login_entry("systemeror12", "RanOnline124"):

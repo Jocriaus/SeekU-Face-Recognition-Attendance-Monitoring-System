@@ -50,16 +50,16 @@ class ClientFaceRecogApp:
 
         self.face_recog_frame2 = tk.Frame(self.face_recog_app)
         self.face_recog_frame2.configure(background="#F7FAE9", height=200, width=200)
-        self.stud_name_label = tk.Label(self.face_recog_frame2)
-        self.stud_name_label.configure(
+        self.client_name_label = tk.Label(self.face_recog_frame2)
+        self.client_name_label.configure(
             anchor="w",
             background="#F7FAE9",
             font="{arial} 54 {}",
             foreground="#0072bc",
             justify="left",
-            text="Jose Crisanto Austria",
+            text="Client Name",
         )
-        self.stud_name_label.place(anchor="center", relx=0.5, rely=0.3)
+        self.client_name_label.place(anchor="center", relx=0.5, rely=0.3)
         self.attendance_label = tk.Label(self.face_recog_frame2)
         self.attendance_label.configure(
             background="#F7FAE9",
@@ -67,7 +67,7 @@ class ClientFaceRecogApp:
             font="{arial} 40 {}",
             foreground="#0072bc",
             justify="left",
-            text="19/23/2023 - 07:30:30",
+            text="Attendance",
         )
         self.attendance_label.place(anchor="center", relx=0.5, rely=0.75)
         self.school_logo_label = tk.Label(self.face_recog_frame2)
@@ -152,12 +152,12 @@ class ClientFaceRecogApp:
 
     # this function will hide the name and the attendance widgets
     def hide_name(self):
-        self.stud_name_label.place_forget()
+        self.client_name_label.place_forget()
         self.attendance_label.place_forget()
 
     # this function will show the name and the attendance widgets
     def show_name(self):
-        self.stud_name_label.place(anchor="center", relx=0.5, rely=0.3)
+        self.client_name_label.place(anchor="center", relx=0.5, rely=0.3)
         self.attendance_label.place(anchor="center", relx=0.5, rely=0.75)
 
     # this function updates the canvas content - shows the camera
@@ -191,7 +191,16 @@ class ClientFaceRecogApp:
         print("detected")
         self.show_name()
         # use the self.fr_vid.name to get the name in the database
-        self.stud_name_label.config(text=self.fr_vid.name)
+        client_num = self.fr_vid.name
+        print(client_num)
+        if self.sql_query.check_student_no(client_num):
+            full_name = self.sql_query.get_student_name(client_num)
+        elif self.sql_query.check_personnel_no(client_num):
+            full_name = self.sql_query.get_personnel_name(client_num)
+        elif self.sql_query.check_visitor_no(client_num):      
+            full_name = self.sql_query.get_visitor_name(client_num) 
+
+        self.client_name_label.config(text=full_name)
         self.attendance_label.config(text=self.current_date_n_time)
         # the system will open the image of the client using the array
         # of paths of the image with the index of the image.
@@ -216,7 +225,7 @@ class ClientFaceRecogApp:
             self.attendance()
             # this will call the next person function
             self.face_recog_app.after(4000, self.next_person)
-            self.save_attendance_func()
+            #self.save_attendance_func()
 
         if self.fr_vid.face_detected:
             # this will call the next person function if there is no face detected
@@ -232,12 +241,12 @@ class ClientFaceRecogApp:
 
     # this will save the attendance of the student
     def save_attendance_func(self):
-        #if sn exist
-        self.sql_query.student_attendance_entry(self.fr_vid.name,self.current_date, self.current_time)
-        #if personnelnum exist
-        self.sql_query.personnel_attendance_entry(self.fr_vid.name,self.current_date, self.current_time)
-        #if vn exist
-        self.sql_query.visitor_attendance_entry(self.fr_vid.name,self.current_date, self.current_time)
+        if self.sql_query.check_student_no(int(self.fr_vid.name)):
+            self.sql_query.student_attendance_entry(int(self.fr_vid.name),self.current_date, self.current_time)
+        if self.sql_query.check_personnel_no(int(self.fr_vid.name)):
+            self.sql_query.personnel_attendance_entry(int(self.fr_vid.name),self.current_date, self.current_time)
+        if self.sql_query.check_visitor_no(int(self.fr_vid.name)):
+            self.sql_query.visitor_attendance_entry(int(self.fr_vid.name),self.current_date, self.current_time)
         
     # this command will return to the home window
     def return_func(self, event=None):
