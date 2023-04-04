@@ -669,21 +669,18 @@ class dbQueries:
         else:
             return False
 
-    def get_student_info(self, student_number):
+    def get_student_name(self, student_number):
         query = f"SELECT student_firstname, student_lastname, student_middlename FROM tbl_student WHERE student_no = ?"
         self.cursor.execute(query, (student_number))
 
         row = self.cursor.fetchone()
 
         if row:
-            self.student_firstname = row[0]
-            self.student_lastname = row[1]
-            self.student_middlename = row[2]
-            return (
-                self.student_firstname,
-                self.student_lastname,
-                self.student_middlename,
-            )
+            student_firstname = row[0]
+            student_lastname = row[1]
+            student_middlename = row[2]
+            full_name = student_firstname +" "+ student_middlename +" "+ student_lastname
+            return full_name
 
     def get_student_count(self, count):
         self.count = count
@@ -715,22 +712,19 @@ class dbQueries:
         else:
             return False
 
-    def get_personnel_info(self, personnel_number):
+    def get_personnel_name(self, personnel_number):
         query = f"SELECT personnel_firstname, personnel_lastname, personnel_middlename FROM tbl_personnel WHERE personnel_no = ?"
         self.cursor.execute(query, (personnel_number))
 
         row = self.cursor.fetchone()
 
         if row:
-            self.personnel_firstname = row[0]
-            self.personnel_lastname = row[1]
-            self.personnel_middlename = row[2]
+            personnel_firstname = row[0]
+            personnel_lastname = row[1]
+            personnel_middlename = row[2]
+            full_name = personnel_firstname +" "+ personnel_middlename+" " + personnel_lastname 
 
-            return (
-                self.personnel_firstname,
-                self.personnel_lastname,
-                self.personnel_middlename,
-            )
+            return full_name
 
     def get_personnel_count(self, count):
         self.count = count
@@ -765,18 +759,17 @@ class dbQueries:
         else:
             return False
 
-    def get_visitor_info(self, visitor_number):
+    def get_visitor_name(self, visitor_number):
         query = f"SELECT visitor_firstname, visitor_lastname FROM tbl_visitor WHERE visitor_no = ?"
         self.cursor.execute(query, (visitor_number))
 
         row = self.cursor.fetchone()
 
         if row:
-            self.visitor_firstname = row[0]
-            self.visitor_lastname = row[1]
-
-            return self.visitor_firstname, self.visitor_lastname
-
+            visitor_firstname = row[0]
+            visitor_lastname = row[1]
+            full_name = visitor_firstname +" "+ visitor_lastname
+            return full_name
     def get_visitor_count(self, count):
         self.count = count
         query = f"SELECT COUNT(*) FROM tbl_visitor WHERE visitor_status = 'IsActive'"
