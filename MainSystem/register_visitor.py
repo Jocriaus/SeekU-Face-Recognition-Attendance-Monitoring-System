@@ -183,7 +183,7 @@ class RegisterVisitorApp:
 
     # this function will destroy the current window and return to camera app
     def back_cam_app_window(self):
-        self.admin_cam_window.deiconify()
+        self.client_cam_app.deiconify()
         self.register_visitor_app.destroy()
 
 
@@ -209,7 +209,7 @@ class RegisterVisitorApp:
         img_name = self.sql_query.capture_visitor_image(self.first_name_var, self.last_name_var, self.contact_num_var, self.address_var)
 
 
-        os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/temp.jpg")
+        os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/000000000.jpg")
         """
         Save to database
         Get the primary key
@@ -218,7 +218,7 @@ class RegisterVisitorApp:
 
         # this function will display the image into the canvas
     def disp_pic(self):
-        self.load_image = PIL.Image.open(self.img_path + "/temp.jpg")
+        self.load_image = PIL.Image.open(self.img_path + "/000000000.jpg")
         # will use the ImageTK.PhotoImage() function to set the image
         # as a readable image.
         self.resized_image = self.load_image.resize((854, 480), PIL.Image.ANTIALIAS)
@@ -236,5 +236,6 @@ class RegisterVisitorApp:
 
     def return_func(self, event=None):
         self.back_cam_app_window()
-        
+        if os.path.exists(self.img_path + "/000000000.jpg"):
+            os.remove(self.img_path + "/000000000.jpg")
 

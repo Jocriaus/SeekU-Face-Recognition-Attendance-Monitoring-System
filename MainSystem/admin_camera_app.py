@@ -190,7 +190,7 @@ class CameraApp:
         ret, frame = self.vid.get_frame()
         resized = cv2.resize(frame, (1280, 720), interpolation=cv2.INTER_AREA)
         if ret:
-            cv2.imwrite(os.path.join(self.img_path ,("temp.jpg")), cv2.cvtColor(resized, cv2.COLOR_RGB2BGR))
+            cv2.imwrite(os.path.join(self.img_path ,("000000000.jpg")), cv2.cvtColor(resized, cv2.COLOR_RGB2BGR))
             # this will open the window that saves the info of the visitor.
             if self.window_will_open == "Manage Students":
                 rS.RegisterStudentApp(self.snapshot_app, self.img_path)
@@ -387,7 +387,7 @@ class CameraEditApp:
         ret, frame = self.vid.get_frame()
         resized = cv2.resize(frame, (1280, 720), interpolation=cv2.INTER_AREA)
         if ret:
-            cv2.imwrite(os.path.join(self.img_path ,("temp.jpg")), cv2.cvtColor(resized, cv2.COLOR_RGB2BGR))
+            cv2.imwrite(os.path.join(self.img_path ,("000000000.jpg")), cv2.cvtColor(resized, cv2.COLOR_RGB2BGR))
             # this will open the window that saves the info of the visitor.
             self.display_temp_pic()
             self.show_edit_window()
@@ -396,6 +396,8 @@ class CameraEditApp:
     def log_out_func(self, event=None):
         self.show_edit_window()
         self.snapshot_app.destroy()
+        if os.path.exists(self.img_path + "/000000000.jpg"):
+            os.remove(self.img_path + "/000000000.jpg")
 
     # this command will take a picture
     def take_picture(self, event=None):

@@ -355,9 +355,9 @@ class EditPersonnelApp:
             self.personnel_type_variable,
         )
 
-        if os.path.exists(self.img_path + "/temp.jpg"):
+        if os.path.exists(self.img_path + "/000000000.jpg"):
             img_name = self.personnel_num
-            os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/temp.jpg")
+            os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/000000000.jpg")
 
     # this function will display the image into the canvas
     def disp_pic(self):
@@ -370,7 +370,7 @@ class EditPersonnelApp:
         self.camera_canvas.create_image(0, 0, image=self.student_image, anchor=tk.NW)
     
     def disp_temp_pic(self):
-        self.load_image = PIL.Image.open(self.img_path +"/temp.jpg")
+        self.load_image = PIL.Image.open(self.img_path +"/000000000.jpg")
         # will use the ImageTK.PhotoImage() function to set the image
         # as a readable image.
         self.resized_image = self.load_image.resize((854, 480), PIL.Image.ANTIALIAS)
@@ -397,6 +397,6 @@ class EditPersonnelApp:
 
     def return_func(self, event=None):
         self.show_home_win()
-        if os.path.exists(self.img_path + "/temp.jpg"):
-            os.remove(self.img_path + "/temp.jpg")
+        if os.path.exists(self.img_path + "/000000000.jpg"):
+            os.remove(self.img_path + "/000000000.jpg")
 

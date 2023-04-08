@@ -260,11 +260,11 @@ class RegisterPersonnelApp:
         img_name = self.personnel_num_var
 
 
-        os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/temp.jpg")
+        os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/000000000.jpg")
 
         # this function will display the image into the canvas
     def disp_pic(self):
-        self.load_image = PIL.Image.open(self.img_path + "/temp.jpg")
+        self.load_image = PIL.Image.open(self.img_path + "/000000000.jpg")
         # will use the ImageTK.PhotoImage() function to set the image
         # as a readable image.
         self.resized_image = self.load_image.resize((854, 480), PIL.Image.ANTIALIAS)
@@ -282,5 +282,6 @@ class RegisterPersonnelApp:
 
     def return_func(self, event=None):
         self.back_cam_app_window()
-        
+        if os.path.exists(self.img_path + "/000000000.jpg"):
+            os.remove(self.img_path + "/000000000.jpg")        
 

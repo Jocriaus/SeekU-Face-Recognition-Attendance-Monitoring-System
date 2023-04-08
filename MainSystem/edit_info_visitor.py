@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import tkinter as tk
 import query as qry
+import admin_camera_app as aCA
 import PIL.Image, PIL.ImageTk
 import os
 import sys
@@ -19,6 +20,7 @@ class EditVisitorApp:
         self.visitor_address = vad
         self.visitor_status = vs
         self.sql_query = qry.dbQueries()
+        self.edit_bool = True
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.edit_visitor_app = tk.Toplevel()
         self.edit_visitor_app.configure(
@@ -146,7 +148,7 @@ class EditVisitorApp:
         self.user_status_label.configure(
             background="#F7FAE9", font="{arial} 20 {bold}", text="Visitor Status"
         )
-        self.user_status_label.place(anchor="center", relx=0.370, rely=0.49, x=0, y=0)
+        self.user_status_label.place(anchor="center", relx=0.370, rely=0.51, x=0, y=0)
                 # variable for the radiobuttons, to connect them
         self.stat_var = tk.StringVar()
         self.stat_var.set(self.visitor_status)
@@ -158,7 +160,7 @@ class EditVisitorApp:
             variable=self.stat_var,
             value="IsActive",
         )
-        self.active_radiobutton.place(anchor="center", relx=0.4, rely=0.535, x=0, y=0)
+        self.active_radiobutton.place(anchor="center", relx=0.4, rely=0.55, x=0, y=0)
         self.inactive_radiobutton = tk.Radiobutton(self.edit_visitor_frame2)
         self.inactive_radiobutton.configure(
             background="#F7FAE9",
@@ -167,7 +169,7 @@ class EditVisitorApp:
             variable=self.stat_var,
             value="IsArchived",
         )
-        self.inactive_radiobutton.place(anchor="center", relx=0.6, rely=0.575, x=0, y=0)
+        self.inactive_radiobutton.place(anchor="center", relx=0.6, rely=0.55, x=0, y=0)
         self.save_changes_button = tk.Button(self.edit_visitor_frame2)
         self.save_changes_button.configure(
             background="#0072bc",
@@ -209,6 +211,8 @@ class EditVisitorApp:
         # Contains-school-logo-------------------------------------------------------------------------------------------------------------------------------------
         # see the function for description
         self.disp_pic()
+        self.select_visitor()
+        self.disable_entry()
         # Main widget
         self.mainwindow = self.edit_visitor_app
         self.mainwindow.attributes("-topmost", True)
@@ -221,6 +225,19 @@ class EditVisitorApp:
     # this function will destroy the window and closes the system/program.
     def exit_program(self):
         sys.exit() 
+
+    # this will return to the camera app
+    def show_home_win(self):
+        self.admin_home_window.deiconify()
+        self.edit_visitor_app.destroy()
+
+    def hide_this_window(self):
+        self.edit_visitor_app.withdraw()
+
+    # this function will destroy the current window and return to camera app
+    def show_cam_app_window(self):
+        self.hide_this_window()
+        aCA.CameraEditApp(self.disp_temp_pic,self.video_source,self.edit_visitor_app, self.img_path)
 
     # this function will destroy the current window and return to camera app
     def back_cam_app_window(self):
@@ -242,7 +259,7 @@ class EditVisitorApp:
         self.first_name_entry.configure(state="normal")
         self.contact_num_entry.configure(state="normal")
 
-    def select_student(self):
+    def select_visitor(self):
         self.first_name_entry.insert(0, self.visitor_firstname)
         self.last_name_entry.insert(0, self.visitor_lastname)
         self.contact_num_entry.insert(0, self.visitor_contact_number)
@@ -271,27 +288,27 @@ class EditVisitorApp:
             self.visitor_number,
         )
 
-        if os.path.exists(self.img_path + "/temp.jpg"):
+        if os.path.exists(self.img_path + "/000000000.jpg"):
             img_name = self.visitor_number
-            os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/temp.jpg")
+            os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/000000000.jpg")
         """
         Save to database
         Get the primary key
         rename img to primary key use os.rename()
         """
 
-        # this function will display the image into the canvas
+    # this function will display the image into the canvas
     def disp_pic(self):
-        self.load_image = PIL.Image.open(self.img_path + "/temp.jpg")
+        self.load_image = PIL.Image.open(self.img_path +"/" + self.visitor_number +".jpg")
         # will use the ImageTK.PhotoImage() function to set the image
         # as a readable image.
         self.resized_image = self.load_image.resize((854, 480), PIL.Image.ANTIALIAS)
-        self.visitor_image = PIL.ImageTk.PhotoImage(self.resized_image)
+        self.student_image = PIL.ImageTk.PhotoImage(self.resized_image)
         # will display the image into the canvas
-        self.camera_canvas.create_image(0, 0, image=self.visitor_image, anchor=tk.NW)
+        self.camera_canvas.create_image(0, 0, image=self.student_image, anchor=tk.NW)
 
     def disp_temp_pic(self):
-        self.load_image = PIL.Image.open(self.img_path +"/temp.jpg")
+        self.load_image = PIL.Image.open(self.img_path +"/000000000.jpg")
         # will use the ImageTK.PhotoImage() function to set the image
         # as a readable image.
         self.resized_image = self.load_image.resize((854, 480), PIL.Image.ANTIALIAS)
@@ -317,11 +334,11 @@ class EditVisitorApp:
 
     # this command will open the camera app
     def change_pic(self, event=None):
-        self.back_cam_app_window()
+        self.show_cam_app_window()
 
     def return_func(self, event=None):
-        self.back_cam_app_window()
-        if os.path.exists(self.img_path + "/temp.jpg"):
-            os.remove(self.img_path + "/temp.jpg")
+        self.show_home_win()
+        if os.path.exists(self.img_path + "/000000000.jpg"):
+            os.remove(self.img_path + "/000000000.jpg")
 
 
