@@ -199,7 +199,7 @@ class ClientFaceRecogApp:
             full_name = self.sql_query.get_personnel_name(client_num)
         elif self.sql_query.check_visitor_no(client_num):      
             full_name = self.sql_query.get_visitor_name(client_num) 
-
+        
         self.client_name_label.config(text=full_name)
         self.attendance_label.config(text=self.current_date_n_time)
         # the system will open the image of the client using the array

@@ -475,7 +475,7 @@ class AdminHomeApp:
             background="#F7FAE9",
             font="{arial} 12 {}",
             justify="left",
-            text="Student Informations will be activated\nand deactivated on selected dates\nFormat = MM/DD/YY",
+            text="Student Informations will be activated\nand deactivated on selected dates\nFormat = YYYY-MM-DD",
         )
         self.stud_stat_rem_label.place(anchor="center", relx=0.325, rely=0.63, x=0, y=0)
         self.activation_date_entry = tk.Entry(self.admin_s_sec1_frame)
@@ -1194,9 +1194,9 @@ class AdminHomeApp:
         visitor_number = self.treeview.visitor_values[0]
         visitor_firstname = self.treeview.visitor_values[1]
         visitor_lastname = self.treeview.visitor_values[2]
-        visitor_contact_num = self.treeview.visitor_values[4]
-        visitor_address = self.treeview.visitor_values[5]
-        visitor_status = self.treeview.visitor_values[7]
+        visitor_contact_num = self.treeview.visitor_values[3]
+        visitor_address = self.treeview.visitor_values[4]
+        visitor_status = self.treeview.visitor_values[5]
 
         eIV.EditVisitorApp(
             visitor_number,

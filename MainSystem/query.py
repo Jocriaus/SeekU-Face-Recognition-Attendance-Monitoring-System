@@ -729,12 +729,12 @@ class dbQueries:
 
             pass_length = 6
             log_attempt = 5
-            sem_start = "04/04/2024"
-            sem_end = "04/04/2024"
+            sem_start = "2022-12-30"
+            sem_end = "2022-12-30"
             facerecog_filepath = "C:\\Users\\JC Austria\\Documents\\GitHub\\Face-Recognition-Attendance-Monitoring-System\\MainSystem\\DataSet"
-            facerecog_date = "04/04/2023"
+            facerecog_date = "2022-12-30"
             add_visitor_filepath =  "C:\\Users\\JC Austria\\Documents\\GitHub\\Face-Recognition-Attendance-Monitoring-System\\MainSystem\\DataSet\\Guest"
-            add_visitor_date = "04/04/2023"
+            add_visitor_date = "2022-12-30"
             query2 = (f"INSERT INTO tbl_setting (password_length, login_attempt,sem_start_setting,sem_end_setting,"+
                      "face_recog_file_path,face_recog_date,av_file_path,av_date) VALUES (?, ?, ?, ? ,? ,? ,? ,?)")
             self.cursor.execute(query2, 
@@ -772,7 +772,7 @@ class dbQueries:
 
     def set_pass_len_log_att(self, pass_length, log_attempt):
         query = (
-            f"INSERT INTO tbl_setting (password_length, login_attempt) VALUES (?, ?) WHERE setting_no = 1 "
+            f"UPDATE tbl_setting SET password_length = ?, login_attempt = ? WHERE setting_no = 1 "
         )
         self.cursor.execute(query, (pass_length, log_attempt))
         self.connection.commit()
@@ -799,13 +799,13 @@ class dbQueries:
         # select date and insert to entry text 
 
     def set_sem_settings(self, sem_start, sem_end):
-        query = f"INSERT INTO tbl_setting (sem_start_setting, sem_end_setting) VALUES (?, ?) WHERE setting_no = 1 "
+        query = f"UPDATE tbl_setting SET sem_start_setting = ?, sem_end_setting = ? WHERE setting_no = 1 "
         self.cursor.execute(query, (sem_start, sem_end))
         self.connection.commit()
         # save date to the database
 
     def set_face_recog_path(self, facerecog_filepath):
-        query = f"INSERT INTO tbl_setting (face_recog_file_path) VALUES (?) WHERE setting_no = 1 "
+        query = f"UPDATE tbl_setting SET face_recog_file_path = ? WHERE setting_no = 1 "
         self.cursor.execute(query, (facerecog_filepath))
         self.connection.commit()
         # save face recog path to database
@@ -821,13 +821,13 @@ class dbQueries:
         # get face recog path from database
 
     def set_fr_path_file_date(self, facerecog_date):
-        query = f"INSERT INTO tbl_setting (face_recog_date) VALUES (?) WHERE setting_no = 1 "
+        query = f"UPDATE tbl_setting SET face_recog_date = ? WHERE setting_no = 1 "
         self.cursor.execute(query, (facerecog_date))
         self.connection.commit()
         # save date
 
     def get_fr_path_file_date(self):
-        query = f"SELECT face_recog_date FROM tbl_setting WHERE setting_no = 1 "
+        query = f"UPDATE tbl_setting FROM tbl_setting WHERE setting_no = 1 "
         self.cursor.execute(query)
         row = self.cursor.fetchone()[0]
         if row:
@@ -837,7 +837,7 @@ class dbQueries:
         # get date
 
     def set_add_visitor_path(self, add_visitor_filepath):
-        query = f"INSERT INTO tbl_setting (av_file_path) VALUES (?) WHERE setting_no = 1 "
+        query = f"UPDATE tbl_setting SET av_file_path = ? WHERE setting_no = 1 "
         self.cursor.execute(query, (add_visitor_filepath))
         self.connection.commit()
         # save face recog path to database
@@ -853,7 +853,7 @@ class dbQueries:
         # get face recog path from database
 
     def set_av_path_file_date(self, add_visitor_file_date):
-        query = f"INSERT INTO tbl_setting (av_date) VALUES (?) WHERE setting_no = 1 "
+        query = f"UPDATE tbl_setting SET av_date = ? WHERE setting_no = 1 "
         self.cursor.execute(query, (add_visitor_file_date))
         self.connection.commit()
         # save date

@@ -256,7 +256,7 @@ class RegisterStudentApp:
         img_name = self.student_num_var
 
 
-        os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/temp.jpg")
+        os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/000000000.jpg")
 
     def register_student(self, event=None):
         self.register_student_function()
@@ -269,4 +269,5 @@ class RegisterStudentApp:
 
     def return_func(self, event=None):
         self.back_cam_app_window()
-
+        if os.path.exists(self.img_path + "/000000000.jpg"):
+            os.remove(self.img_path + "/000000000.jpg")
