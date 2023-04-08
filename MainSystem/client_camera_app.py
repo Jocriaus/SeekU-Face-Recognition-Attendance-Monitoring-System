@@ -3,7 +3,7 @@ from tkinter import filedialog
 import tkinter as tk
 import cv2
 import PIL.Image, PIL.ImageTk
-import client_add_visitor as cAV
+import register_visitor as cAV
 import os
 import sys
 
@@ -189,7 +189,7 @@ class CameraApp:
         if ret:
             cv2.imwrite(os.path.join(self.img_path ,("temp.jpg")), cv2.cvtColor(resized, cv2.COLOR_RGB2BGR))
             # this will open the window that saves the info of the visitor.
-            cAV.AddVisitorApp(self.video_source, self.login_window, self.sel_cam_window, self.home_window, self.snapshot_app, self.img_path)
+            cAV.RegisterVisitorApp(self.home_window, self.snapshot_app, self.img_path)
             self.hide_this_window()
 
     # this command will return to the home window

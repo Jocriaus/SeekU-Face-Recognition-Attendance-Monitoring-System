@@ -793,6 +793,10 @@ class TreeviewGUI:
         self.selected = self.personnel_tree.focus()
         self.personnel_values = self.personnel_tree.item(self.selected, "values")
 
+    def select_visitor_treeview_row(self):
+        self.selected = self.visitor_tree.focus()
+        self.visitor_values = self.visitor_tree.item(self.selected, "values")
+
     def do_search_student(self, search_term, status):
         self.search_term = search_term
         for child in self.student_tree.get_children():

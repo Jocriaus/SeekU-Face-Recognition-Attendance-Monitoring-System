@@ -6,6 +6,7 @@ import sys
 import query as qry
 import edit_info_personnel as eIP
 import edit_info_student as eIS
+import edit_info_visitor as eIV
 import user_create as uC
 import user_edit as uE
 import admin_camera_app as aCA
@@ -1101,19 +1102,6 @@ class AdminHomeApp:
         self.hide_this_window()
         self.select_folder()
         aCA.CameraApp(self.video_source,self.login_window,self.sel_cam_window, self.administrator_app,self.folder_selected, self.clients_man_var.get())
-        """
-            pass
-        if self.clients_man_var.get() == "Manage Personnels":
-            self.hide_this_window()
-            self.select_folder()
-            aCA.CameraApp(self.video_source,self.login_window,self.sel_cam_window, self.administrator_app,self.folder_selected, self.clients_man_var.get())
-            pass
-        if self.clients_man_var.get() == "Manage Visitors":
-            self.hide_this_window()
-            self.select_folder()
-            aCA.CameraApp(self.video_source,self.login_window,self.sel_cam_window, self.administrator_app,self.folder_selected, self.clients_man_var.get())
-            pass
-        """
 
     def edit_clients_logic(self):
         if self.clients_man_var.get() == "Manage Students":
@@ -1127,8 +1115,9 @@ class AdminHomeApp:
             self.edit_personnel_function()
 
         if self.clients_man_var.get() == "Manage Visitors":
+            self.hide_this_window()
             self.select_folder()
-            pass
+            self.edit_visitor_function()
 
     def search_clients_info_logic(self):
         if self.clients_man_var.get() == "Manage Students":
@@ -1197,34 +1186,30 @@ class AdminHomeApp:
             self.folder_selected ,
         )
         
-    """
+    
     def edit_visitor_function(self):
-        self.treeview.select_personnel_treeview_row()
-        print(self.treeview.personnel_values)
+        self.treeview.select_visitor_treeview_row()
+        print(self.treeview.visitor_values)
 
-        visitor_number = self.treeview.personnel_values[0]
-        personnel_firstname = self.treeview.personnel_values[1]
-        personnel_lastname = self.treeview.personnel_values[2]
-        personnel_middlename = self.treeview.personnel_values[3]
-        personnel_contact_num = self.treeview.personnel_values[4]
-        personnel_address = self.treeview.personnel_values[5]
-        personnel_type = self.treeview.personnel_values[6]
-        personnel_status = self.treeview.personnel_values[7]
+        visitor_number = self.treeview.visitor_values[0]
+        visitor_firstname = self.treeview.visitor_values[1]
+        visitor_lastname = self.treeview.visitor_values[2]
+        visitor_contact_num = self.treeview.visitor_values[4]
+        visitor_address = self.treeview.visitor_values[5]
+        visitor_status = self.treeview.visitor_values[7]
 
-        eIP.EditPersonnelApp(
-            personnel_number,
-            personnel_firstname,
-            personnel_lastname,
-            personnel_middlename,
-            personnel_contact_num,
-            personnel_address,
-            personnel_type,
-            personnel_status,
+        eIV.EditVisitorApp(
+            visitor_number,
+            visitor_firstname,
+            visitor_lastname,
+            visitor_contact_num,
+            visitor_address,
+            visitor_status,
             self.video_source,
             self.administrator_app,
             self.folder_selected ,
         )
-    """
+    
     # CLIENT-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
 
     # REPORT-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
@@ -1329,7 +1314,7 @@ class AdminHomeApp:
 
         if self.archived_man_var.get() == "Archived Visitors":
             self.select_folder()
-            pass
+            self.edit_visitor_function()
 
         if self.archived_man_var.get() == "Archived User":
             self.hide_this_window()
@@ -1349,7 +1334,7 @@ class AdminHomeApp:
             data = self.search_a_entry.get()
             self.treeview.do_search_user(data, "IsArchived")
 
-
+    """
     def edit_student_archived_function(self):
         self.treeview.select_student_treeview_row()
         print(self.treeview.student_values)
@@ -1406,29 +1391,24 @@ class AdminHomeApp:
             self.folder_selected ,
         )
         
-    """
     def edit_visitor_archived_function(self):
         self.treeview.select_visitor_treeview_row()
-        print(self.treeview.visitor_archived_values)
+        print(self.treeview.visitor_values)
 
-        visitor_number = self.treeview.personnel_values[0]
-        personnel_firstname = self.treeview.personnel_values[1]
-        personnel_lastname = self.treeview.personnel_values[2]
-        personnel_middlename = self.treeview.personnel_values[3]
-        personnel_contact_num = self.treeview.personnel_values[4]
-        personnel_address = self.treeview.personnel_values[5]
-        personnel_type = self.treeview.personnel_values[6]
-        personnel_status = self.treeview.personnel_values[7]
+        visitor_number = self.treeview.visitor_values[0]
+        visitor_firstname = self.treeview.visitor_values[1]
+        visitor_lastname = self.treeview.visitor_values[2]
+        visitor_contact_num = self.treeview.visitor_values[4]
+        visitor_address = self.treeview.visitor_values[5]
+        visitor_status = self.treeview.visitor_values[7]
 
-        eIP.EditPersonnelApp(
-            personnel_number,
-            personnel_firstname,
-            personnel_lastname,
-            personnel_middlename,
-            personnel_contact_num,
-            personnel_address,
-            personnel_type,
-            personnel_status,
+        eIV.EditVisitorApp(
+            visitor_number,
+            visitor_firstname,
+            visitor_lastname,
+            visitor_contact_num,
+            visitor_address,
+            visitor_status,
             self.video_source,
             self.administrator_app,
             self.folder_selected ,
