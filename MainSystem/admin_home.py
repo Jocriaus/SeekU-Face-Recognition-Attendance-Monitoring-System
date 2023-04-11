@@ -131,7 +131,67 @@ class AdminHomeApp:
             anchor="center", relheight=0.95, relwidth=0.78, relx=0.61, rely=0.525
         )
         # CLIENT-------------------------------------------------------------------------------------------------------
-
+        # ATTENDANCE-------------------------------------------------------------------------------------------------------
+        self.administrator_attendance_frame = tk.Frame(self.administrator_app)
+        self.administrator_attendance_frame.configure(
+            background="#E7E7E7", height=200, width=200
+        )
+        self.time_and_date_label_at = tk.Label(self.administrator_attendance_frame)
+        self.time_and_date_label_at.configure(
+            background="#F7FAE9",
+            compound="top",
+            font="{arial} 30 {bold}",
+            foreground="#0072bc",
+            text=self.current_date_n_time,
+        )
+        self.time_and_date_label_at.place(
+            anchor="center", relwidth=1, relx=0.5, rely=0.975, x=0, y=0
+        )
+        self.admin_at_sec1_frame = tk.Frame(self.administrator_attendance_frame)
+        self.admin_at_sec1_frame.configure(background="#E7E7E7", height=200, width=200)
+        self.search_clients_attendance = tk.Button(self.admin_at_sec1_frame)
+        self.search_clients_attendance.configure(
+            background="#0072bc",
+            font="{arial} 20 {bold}",
+            foreground="#f7fae9",
+            text="Search",
+        )
+        self.search_clients_attendance.place(
+            anchor="center", relheight=0.5, relwidth=0.16, relx=0.9, rely=0.5, x=0, y=0
+        )
+        self.search_clients_attendance.bind("<Button>", self.search_clients_attendance, add="")
+        self.search_at_entry = tk.Entry(self.admin_at_sec1_frame)
+        self.search_at_entry.configure(background="#F7FAE9", font="{arial} 24 {}")
+        self.search_at_entry.place(anchor="center", relx=0.63, rely=0.5, x=0, y=0)
+        self.admin_at_sec1_frame.place(
+            anchor="center", relheight=0.1, relwidth=0.90, relx=0.5, rely=0.09
+        )
+        self.admin_at_sec2_frame = tk.Frame(self.administrator_attendance_frame)
+        self.admin_at_sec2_frame.configure(background="#F7FAE9", height=200, width=200)
+        self.treeview.student_attendance_treeview(self.admin_at_sec2_frame)
+        self.admin_at_sec2_frame.place(
+            anchor="center", relheight=0.65, relwidth=0.9, relx=0.5, rely=0.5, x=0, y=0
+        )
+        self.clients_at_var = tk.StringVar(value="Students Attendance")
+        __values = ["Students Attendance", "Personnels Attendance", "Visitors Attendance"]
+        self.client_attendance_optionmenu = tk.OptionMenu(
+            self.administrator_attendance_frame,
+            self.clients_at_var,
+            *__values,
+            command=self.open_diff_attendance
+        )
+        self.client_attendance_optionmenu.place(
+            anchor="center", relx=0.2, rely=0.09, x=0, y=0
+        )
+        self.client_attendance_optionmenu.configure(font="{arial} 20 {bold}")
+        self.client_attendance_options = self.administrator_app.nametowidget(
+            self.client_attendance_optionmenu.menuname
+        )
+        self.client_attendance_options.config(font="{arial} 16")
+        self.administrator_attendance_frame.place(
+            anchor="center", relheight=0.95, relwidth=0.78, relx=0.61, rely=0.525
+        )
+        # ATTENDANCE-------------------------------------------------------------------------------------------------------
         # USERS-------------------------------------------------------------------------------------------------------
         self.administrator_users_frame = tk.Frame(self.administrator_app)
         self.administrator_users_frame.configure(
@@ -820,6 +880,21 @@ class AdminHomeApp:
         self.client_section_label.bind("<1>", self.client_appear, add="")
         self.client_section_label.bind("<Enter>", self.client_hover, add="")
         self.client_section_label.bind("<Leave>", self.client_hover_out, add="")
+        self.attendance_section_label = tk.Label(self.administrator_frame3)
+        self.attendance_section_label.configure(
+            background="#0072bc",
+            font="{arial } 19 {bold}",
+            foreground="#F7FAE9",
+            justify="center",
+            relief="flat",
+            text="Attendance",
+        )
+        self.attendance_section_label.place(anchor="w", relx=0.1, rely=0.22)
+        self.attendance_section_label.bind("<1>", self.attendance_appear, add="")
+        self.attendance_section_label.bind("<Enter>", self.attendance_hover, add="")
+        self.attendance_section_label.bind("<Leave>", self.attendance_hover_out, add="")
+
+
         self.user_section_label = tk.Label(self.administrator_frame3)
         self.user_section_label.configure(
             background="#0072bc",
@@ -829,7 +904,7 @@ class AdminHomeApp:
             relief="flat",
             text="User",
         )
-        self.user_section_label.place(anchor="w", relx=0.1, rely=0.22)
+        self.user_section_label.place(anchor="w", relx=0.1, rely=0.28)
         self.user_section_label.bind("<1>", self.user_appear, add="")
         self.user_section_label.bind("<Enter>", self.user_hover, add="")
         self.user_section_label.bind("<Leave>", self.user_hover_out, add="")
@@ -842,7 +917,7 @@ class AdminHomeApp:
             relief="flat",
             text="Report",
         )
-        self.report_section_label.place(anchor="w", relx=0.1, rely=0.28)
+        self.report_section_label.place(anchor="w", relx=0.1, rely=0.34)
         self.report_section_label.bind("<1>", self.report_appear, add="")
         self.report_section_label.bind("<Enter>", self.report_hover, add="")
         self.report_section_label.bind("<Leave>", self.report_hover_out, add="")
@@ -855,7 +930,7 @@ class AdminHomeApp:
             relief="flat",
             text="Archived",
         )
-        self.archived_section_label.place(anchor="w", relx=0.1, rely=0.34)
+        self.archived_section_label.place(anchor="w", relx=0.1, rely=0.40)
         self.archived_section_label.bind("<1>", self.archived_appear, add="")
         self.archived_section_label.bind("<Enter>", self.archived_hover, add="")
         self.archived_section_label.bind("<Leave>", self.archived_hover_out, add="")
@@ -869,7 +944,7 @@ class AdminHomeApp:
             relief="flat",
             text="Settings",
         )
-        self.settings_section_label.place(anchor="w", relx=0.1, rely=0.40)
+        self.settings_section_label.place(anchor="w", relx=0.1, rely=0.46)
         self.settings_section_label.bind("<1>", self.settings_appear, add="")
         self.settings_section_label.bind("<Enter>", self.settings_hover, add="")
         self.settings_section_label.bind("<Leave>", self.settings_hover_out, add="")
@@ -980,11 +1055,37 @@ class AdminHomeApp:
         # db_forget----------------------------------------
         self.administrator_db_frame.place_forget()
         # db_forget----------------------------------------
+        # archived_forget------------------------------------
+        self.administrator_archived_frame.place_forget()
+        # archived_forget-----------------------------------
+        # attendance_forget-----------------------------------
+        self.administrator_attendance_frame.place_forget()
+        # attendance_forget-----------------------------------
+        self.administrator_client_frame.place(
+            anchor="center", relheight=0.95, relwidth=0.78, relx=0.61, rely=0.525
+        )
+
+    # this function removes all uncessesary widgets except the reports
+    def attendance_appear_logic(self):
+        # client_forget------------------------------------
+        self.administrator_client_frame.place_forget()
+        # client_forget------------------------------------
+        # users_forget------------------------------------
+        self.administrator_users_frame.place_forget()
+        # users_forget------------------------------------
+        # report_forget------------------------------------
+        self.administrator_report_frame.place_forget()
+        # report_forget------------------------------------
+        # settings_forget-------------------------------------
+        self.administrator_settings_frame.place_forget()
+        # settings_forget-------------------------------------
+        #db_forget------------------------------------
+        self.administrator_db_frame.place_forget()
+        #db_forget------------------------------------
         #archived_forget------------------------------------
         self.administrator_archived_frame.place_forget()
         #archived_forget-----------------------------------
-
-        self.administrator_client_frame.place(
+        self.administrator_attendance_frame.place(
             anchor="center", relheight=0.95, relwidth=0.78, relx=0.61, rely=0.525
         )
 
@@ -992,6 +1093,9 @@ class AdminHomeApp:
         # client_forget------------------------------------
         self.administrator_client_frame.place_forget()
         # client_forget------------------------------------
+        # attendance_forget-----------------------------------
+        self.administrator_attendance_frame.place_forget()
+        # attendance_forget-----------------------------------
         # report_forget------------------------------------
         self.administrator_report_frame.place_forget()
         # report_forget------------------------------------
@@ -1013,12 +1117,12 @@ class AdminHomeApp:
         # client_forget------------------------------------
         self.administrator_client_frame.place_forget()
         # client_forget------------------------------------
+        # attendance_forget-----------------------------------
+        self.administrator_attendance_frame.place_forget()
+        # attendance_forget-----------------------------------
         # users_forget------------------------------------
         self.administrator_users_frame.place_forget()
         # users_forget------------------------------------
-        # report_forget------------------------------------
-        self.administrator_report_frame.place_forget()
-        # report_forget------------------------------------
         # settings_forget-------------------------------------
         self.administrator_settings_frame.place_forget()
         # settings_forget-------------------------------------
@@ -1037,6 +1141,9 @@ class AdminHomeApp:
         # client_forget------------------------------------
         self.administrator_client_frame.place_forget()
         # client_forget------------------------------------
+        # attendance_forget-----------------------------------
+        self.administrator_attendance_frame.place_forget()
+        # attendance_forget-----------------------------------
         # users_forget------------------------------------
         self.administrator_users_frame.place_forget()
         # users_forget------------------------------------
@@ -1057,6 +1164,9 @@ class AdminHomeApp:
         # client_forget------------------------------------
         self.administrator_client_frame.place_forget()
         # client_forget------------------------------------
+        # attendance_forget-----------------------------------
+        self.administrator_attendance_frame.place_forget()
+        # attendance_forget-----------------------------------
         # users_forget------------------------------------
         self.administrator_users_frame.place_forget()
         # users_forget------------------------------------
@@ -1211,7 +1321,32 @@ class AdminHomeApp:
         )
     
     # CLIENT-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
+    # ATTENDANCE-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
 
+    # this function will change the display according to the
+    # selected option on the option menu for the report section
+    def change_layout_attendance(self):
+        if self.clients_at_var.get() == "Students Attendance":
+            self.treeview.student_attendance_treeview(self.admin_at_sec2_frame)
+
+        if self.clients_at_var.get() == "Personnels Attendance":
+            self.treeview.personnel_attendance_treeview(self.admin_at_sec2_frame)
+
+        if self.clients_at_var.get() == "Visitors Attendance":
+            self.treeview.visitor_attendance_treeview(self.admin_at_sec2_frame)
+
+    def search_attendance_info_logic(self):
+        if self.clients_at_var.get() == "Students Attendance":
+            data = self.search_at_entry.get()
+            self.treeview.do_search_student_attendance(data)
+        if self.clients_at_var.get() == "Personnels Attendance":
+            data = self.search_at_entry.get()
+            self.treeview.do_search_personnel_attendance(data)
+        if self.clients_at_var.get() == "Visitors Attendance":
+            data = self.search_at_entry.get()
+            self.treeview.do_search_visitor_attendance(data)
+
+    # ATTENDANCE-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
     # REPORT-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
 
     # this function will change the display according to the
@@ -1471,6 +1606,29 @@ class AdminHomeApp:
         self.search_clients_info_logic()
 
     # CLIENTS-COMMANDS---------------------------------------------------------------------------------------------------------------
+
+
+    # ATTENDANCE-COMMANDS---------------------------------------------------------------------------------------------------------------
+
+    def attendance_appear(self, event=None):
+        self.attendance_appear_logic()
+
+    def open_diff_attendance(self, event=None):
+        self.change_layout_attendance()
+
+    def attendance_hover(self, event=None):
+        self.attendance_section_label.configure(foreground="#FFF200")
+
+    def attendance_hover_out(self, event=None):
+        self.attendance_section_label.configure(foreground="#F7FAE9")
+
+    def search_client_attendance(self, event=None):
+        self.search_attendance_info_logic()
+        
+
+    # ATTENDANCE-COMMANDS---------------------------------------------------------------------------------------------------------------
+
+
     # USER-COMMANDS---------------------------------------------------------------------------------------------------------------
 
     def user_appear(self, event=None):

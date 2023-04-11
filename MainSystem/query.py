@@ -7,7 +7,7 @@ class dbQueries:
         # "STAR-PLATINUM\SQLEXPRESS01"
         # "LAB-A-PC16\SQLEXPRESS"
         self.server = "STAR-PLATINUM\SQLEXPRESS01"
-        self.database = "seeku_database"
+        self.database = "seeku_database1"
         self.username = ""
         self.password = ""
 
@@ -375,7 +375,7 @@ class dbQueries:
         row = self.cursor.fetchone()
 
         if row:
-            insert_query_attendance = f"INSERT INTO tbl_visitor_attendance (visitor_no, visitor_attendance_date, visitor_time_in) VALUES (?, ?, ?)"
+            insert_query_attendance = f"INSERT INTO tbl_visitor_report (visitor_no, visitor_attendance_date, visitor_time_in) VALUES (?, ?, ?)"
             self.cursor.execute(
                 insert_query_attendance,
                 (visitor_number, visitor_attendance_date, visitor_time_in),
@@ -394,7 +394,7 @@ class dbQueries:
         row = self.cursor.fetchone()
 
         if row:
-            insert_query_attendance = f"INSERT INTO tbl_visitor_attendance (visitor_no, visitor_attendance_date, visitor_time_out) VALUES (?, ?, ?)"
+            insert_query_attendance = f"INSERT INTO tbl_visitor_report (visitor_no, visitor_attendance_date, visitor_time_out) VALUES (?, ?, ?)"
             self.cursor.execute(
                 insert_query_attendance,
                 (visitor_number, visitor_attendance_date, visitor_time_out),
@@ -431,8 +431,34 @@ class dbQueries:
     def search_student_report(self, search_term):
         query = (
             f"SELECT tbl_student.student_no, tbl_student.student_firstname, tbl_student.student_lastname, tbl_student.student_program,"
+            + " tbl_student.student_section, tbl_student_report.student_attendance_date, tbl_student_report.student_time_in, tbl_student_report.student_time_out "
+            + "FROM tbl_student RIGHT JOIN tbl_student_report ON tbl_student.student_no = tbl_student_report.student_no WHERE  tbl_student.student_no LIKE ? "
+            + "OR tbl_student.student_firstname LIKE ? OR tbl_student.student_lastname LIKE ? OR tbl_student.student_program LIKE ? "
+            + "OR tbl_student.student_section LIKE ? OR tbl_student_report.student_attendance_date LIKE ? OR tbl_student_report.student_time_in LIKE ?"
+            + " OR tbl_student_report.student_time_out LIKE ? "
+        )
+        self.cursor.execute(
+            query,
+            (
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+            ),
+        )
+
+        results = self.cursor.fetchall()
+        return results
+
+    def search_student_attendance(self, search_term):
+        query = (
+            f"SELECT tbl_student.student_no, tbl_student.student_firstname, tbl_student.student_lastname, tbl_student.student_program,"
             + " tbl_student.student_section, tbl_student_attendance.student_attendance_date, tbl_student_attendance.student_time_in, tbl_student_attendance.student_time_out "
-            + "FROM tbl_student FULL JOIN tbl_student_attendance ON tbl_student.student_no = tbl_student_attendance.student_no WHERE  tbl_student.student_no LIKE ? "
+            + "FROM tbl_student RIGHT JOIN tbl_student_attendance ON tbl_student.student_no = tbl_student_attendance.student_no WHERE  tbl_student.student_no LIKE ? "
             + "OR tbl_student.student_firstname LIKE ? OR tbl_student.student_lastname LIKE ? OR tbl_student.student_program LIKE ? "
             + "OR tbl_student.student_section LIKE ? OR tbl_student_attendance.student_attendance_date LIKE ? OR tbl_student_attendance.student_time_in LIKE ?"
             + " OR tbl_student_attendance.student_time_out LIKE ? "
@@ -453,6 +479,7 @@ class dbQueries:
 
         results = self.cursor.fetchall()
         return results
+
 
     def search_personnel(self, search_term, status):
         query = (
@@ -479,10 +506,10 @@ class dbQueries:
     def search_personnel_report(self, search_term):
         query = (
             f"SELECT tbl_personnel.personnel_no, tbl_personnel.personnel_firstname, tbl_personnel.personnel_lastname, tbl_personnel.personnel_type,"
-            + " tbl_personnel_attendance.personnel_attendance_date, tbl_personnel_attendance.personnel_time_in, tbl_personnel_attendance.personnel_time_out"
-            + " FROM tbl_personnel FULL JOIN tbl_personnel_attendance ON tbl_personnel.personnel_no = tbl_personnel_attendance.personnel_no"
+            + " tbl_personnel_report.personnel_attendance_date, tbl_personnel_report.personnel_time_in, tbl_personnel_report.personnel_time_out"
+            + " FROM tbl_personnel RIGHT JOIN tbl_personnel_report ON tbl_personnel.personnel_no = tbl_personnel_report.personnel_no"
             + " WHERE tbl_personnel.personnel_no LIKE ? OR tbl_personnel.personnel_firstname LIKE ? OR tbl_personnel.personnel_lastname LIKE ? OR tbl_personnel.personnel_type LIKE ? OR"
-            + " tbl_personnel_attendance.personnel_attendance_date LIKE ? OR tbl_personnel_attendance.personnel_time_in LIKE ? OR tbl_personnel_attendance.personnel_time_out LIKE ?"
+            + " tbl_personnel_report.personnel_attendance_date LIKE ? OR tbl_personnel_report.personnel_time_in LIKE ? OR tbl_personnel_report.personnel_time_out LIKE ?"
         )
 
         self.cursor.execute(
@@ -499,6 +526,32 @@ class dbQueries:
         )
         results = self.cursor.fetchall()
         return results
+
+    def search_personnel_attendance(self, search_term):
+        query = (
+            f"SELECT tbl_personnel.personnel_no, tbl_personnel.personnel_firstname, tbl_personnel.personnel_lastname, tbl_personnel.personnel_type,"
+            + " tbl_student_attendance.personnel_attendance_date, tbl_student_attendance.personnel_time_in, tbl_student_attendance.personnel_time_out"
+            + " FROM tbl_personnel RIGHT JOIN tbl_student_attendance ON tbl_personnel.personnel_no = tbl_student_attendance.personnel_no"
+            + " WHERE tbl_personnel.personnel_no LIKE ? OR tbl_personnel.personnel_firstname LIKE ? OR tbl_personnel.personnel_lastname LIKE ? OR tbl_personnel.personnel_type LIKE ? OR"
+            + " tbl_student_attendance.personnel_attendance_date LIKE ? OR tbl_student_attendance.personnel_time_in LIKE ? OR tbl_student_attendance.personnel_time_out LIKE ?"
+        )
+
+        self.cursor.execute(
+            query,
+            (
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+            ),
+        )
+        results = self.cursor.fetchall()
+        return results
+
+
 
     def search_visitor(self, search_term, status):
         query = (
@@ -520,12 +573,12 @@ class dbQueries:
 
     def search_visitor_report(self, search_term):
         query = (
-            f"SELECT tbl_visitor.visitor_no, tbl_visitor.visitor_firstname, tbl_visitor.visitor_lastname, tbl_visitor_attendance.visitor_attendance_date,"
-            + " tbl_visitor_attendance.visitor_time_in, tbl_visitor_attendance.visitor_time_out"
-            + " FROM  tbl_visitor FULL JOIN tbl_visitor_attendance ON tbl_visitor.visitor_no = tbl_visitor_attendance.visitor_no"
+            f"SELECT tbl_visitor.visitor_no, tbl_visitor.visitor_firstname, tbl_visitor.visitor_lastname, tbl_visitor_report.visitor_attendance_date,"
+            + " tbl_visitor_report.visitor_time_in, tbl_visitor_report.visitor_time_out"
+            + " FROM  tbl_visitor RIGHT JOIN tbl_visitor_report ON tbl_visitor.visitor_no = tbl_visitor_report.visitor_no"
             + " WHERE tbl_visitor.visitor_no LIKE ? OR tbl_visitor.visitor_firstname LIKE ? OR tbl_visitor.visitor_lastname LIKE ? OR"
-            + " tbl_visitor_attendance.visitor_attendance_date LIKE ? OR tbl_visitor_attendance.visitor_time_in LIKE ? OR"
-            + " tbl_visitor_attendance.visitor_time_out LIKE ?"
+            + " tbl_visitor_report.visitor_attendance_date LIKE ? OR tbl_visitor_report.visitor_time_in LIKE ? OR"
+            + " tbl_visitor_report.visitor_time_out LIKE ?"
         )
 
         self.cursor.execute(
@@ -541,6 +594,31 @@ class dbQueries:
         )
         results = self.cursor.fetchall()
         return results
+
+    def search_visitor_attendance(self, search_term):
+        query = (
+            f"SELECT tbl_visitor.visitor_no, tbl_visitor.visitor_firstname, tbl_visitor.visitor_lastname, tbl_student_attendance.visitor_attendance_date,"
+            + " tbl_student_attendance.visitor_time_in, tbl_student_attendance.visitor_time_out"
+            + " FROM  tbl_visitor RIGHT JOIN tbl_student_attendance ON tbl_visitor.visitor_no = tbl_student_attendance.visitor_no"
+            + " WHERE tbl_visitor.visitor_no LIKE ? OR tbl_visitor.visitor_firstname LIKE ? OR tbl_visitor.visitor_lastname LIKE ? OR"
+            + " tbl_student_attendance.visitor_attendance_date LIKE ? OR tbl_student_attendance.visitor_time_in LIKE ? OR"
+            + " tbl_student_attendance.visitor_time_out LIKE ?"
+        )
+
+        self.cursor.execute(
+            query,
+            (
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+                "%" + search_term + "%",
+            ),
+        )
+        results = self.cursor.fetchall()
+        return results
+
 
     def search_user(self, search_term, status):
         query = (
@@ -702,8 +780,8 @@ class dbQueries:
 
     def get_visitor_attendance_count(self):
         query = (
-            f"SELECT COUNT(*) FROM tbl_visitor INNER JOIN tbl_visitor_attendance"
-            + " ON tbl_visitor.visitor_no = tbl_visitor_attendance.visitor_no"
+            f"SELECT COUNT(*) FROM tbl_visitor INNER JOIN tbl_visitor_report"
+            + " ON tbl_visitor.visitor_no = tbl_visitor_report.visitor_no"
         )
 
         self.cursor.execute(query)
