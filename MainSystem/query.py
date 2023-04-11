@@ -287,14 +287,26 @@ class dbQueries:
         self.connection.commit()
         print(f"Student {student_number} has been updated successfully!")
 
-    def student_attendance_entry(
+    def student_attendance_record(
         self, student_number, student_attendance_date, student_time_in
     ):
+        
         query = f"SELECT * FROM tbl_student WHERE student_no = ?"
         self.cursor.execute(query, (student_number))
         row = self.cursor.fetchone()
 
+        # query2 =
+
+        # query3 = 
         if row:
+            
+            # query 2 if student attendance table is empty
+            #  same ng insert_query_attendance pero mag iinsert din ng attendance no.
+
+            # query3 elif student no. on student attendance table exist
+            #  exit query
+
+            # else
             insert_query_attendance = f"INSERT INTO tbl_student_attendance (student_no, student_attendance_date, student_time_in) VALUES (?, ?, ?)"
             self.cursor.execute(
                 insert_query_attendance,
@@ -307,6 +319,7 @@ class dbQueries:
         else:
             print("Student not found.")
 
+    """
     def student_attendance_exit(
         self, student_number, student_attendance_date, student_time_out
     ):
@@ -328,8 +341,9 @@ class dbQueries:
             print("Student not found.")
 
     # add exit time for every null entries on time out
+    """
 
-    def personnel_attendance_entry(
+    def personnel_attendance_record(
         self, personnel_number, personnel_attendance_date, personnel_time_in
     ):
         query = f"SELECT * FROM tbl_personnel WHERE personnel_no = ?"
@@ -348,6 +362,7 @@ class dbQueries:
         else:
             print("Student not found.")
 
+    """
     def personnel_attendance_exit(
         self, personnel_number, personnel_attendance_date, personnel_time_out
     ):
@@ -366,8 +381,9 @@ class dbQueries:
             print("Attendance added successfully!")
         else:
             print("Student not found.")
+    """
 
-    def visitor_attendance_entry(
+    def visitor_attendance_record(
         self, visitor_number, visitor_attendance_date, visitor_time_in
     ):
         query = f"SELECT * FROM tbl_visitor WHERE visitor_no = ?"
@@ -386,6 +402,7 @@ class dbQueries:
         else:
             print("Student not found.")
 
+    """
     def visitor_attendance_exit(
         self, visitor_number, visitor_attendance_date, visitor_time_out
     ):
@@ -404,7 +421,8 @@ class dbQueries:
             print("Attendance added successfully!")
         else:
             print("Student not found.")
-
+    """
+            
     def search_student(self, search_term, status):
         query = (
             f"SELECT * FROM tbl_student WHERE (student_no LIKE ? OR student_firstname LIKE ? OR student_lastname LIKE ? "
