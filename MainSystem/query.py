@@ -288,18 +288,44 @@ class dbQueries:
         print(f"Student {student_number} has been updated successfully!")
 
     def student_attendance_record(
-        self, student_number, student_attendance_date, student_time_in
+        self, student_number, student_attendance_date, student_time_in, student_time_out
     ):
-        
+
         query = f"SELECT * FROM tbl_student WHERE student_no = ?"
         self.cursor.execute(query, (student_number))
         row = self.cursor.fetchone()
 
-        # query2 =
-
-        # query3 = 
         if row:
-            
+            query2 = f"SELECT * FROM tbl_student_attendance"
+            self.cursor.execute(query2)
+            student_att_row = self.cursor.fetchone()
+            if student_att_row is None:
+                insert_query_attendance = f"INSERT INTO tbl_student_attendance (student_no, student_attendance_date, student_time_in) VALUES (?, ?, ?)"
+                self.cursor.execute(
+                    insert_query_attendance,
+                    (student_number, student_attendance_date, student_time_in),
+                )
+                self.connection.commit()
+
+                print("Attendance added successfully!")
+            else:
+                query3 = f"SELECT * FROM tbl_student_attendance WHERE student_no = ?"
+                self.cursor.execute(query3(student_number))
+                student_no_att_row = self.cursor.fetchone()
+
+                if student_no_att_row:
+                    query4 = f"SELECT * FROM tbl_student WHERE student_no = ?"
+                    self.cursor.execute(query4, (student_number))
+                    update_student_row = self.cursor.fetchone()
+                    if update_student_row:
+                        insert_query_att_exit = f"INSERT INTO tbl_student_attendance(student_time_out) VALUES (?, ?, ?)"
+                        self.cursor.execute(
+                            insert_query_att_exit,
+                            (student_number, student_time_out),
+                        )
+            self.connection.commit()
+
+            print("Attendance added successfully!")
             # query 2 if student attendance table is empty
             #  same ng insert_query_attendance pero mag iinsert din ng attendance no.
 
@@ -307,15 +333,6 @@ class dbQueries:
             #  exit query
 
             # else
-            insert_query_attendance = f"INSERT INTO tbl_student_attendance (student_no, student_attendance_date, student_time_in) VALUES (?, ?, ?)"
-            self.cursor.execute(
-                insert_query_attendance,
-                (student_number, student_attendance_date, student_time_in),
-            )
-            self.connection.commit()
-
-            print("Attendance added successfully!")
-
         else:
             print("Student not found.")
 
@@ -422,7 +439,7 @@ class dbQueries:
         else:
             print("Student not found.")
     """
-            
+
     def search_student(self, search_term, status):
         query = (
             f"SELECT * FROM tbl_student WHERE (student_no LIKE ? OR student_firstname LIKE ? OR student_lastname LIKE ? "
@@ -498,7 +515,6 @@ class dbQueries:
         results = self.cursor.fetchall()
         return results
 
-
     def search_personnel(self, search_term, status):
         query = (
             f"SELECT * FROM tbl_personnel WHERE (personnel_no LIKE ? OR personnel_firstname LIKE ? OR personnel_lastname LIKE ? "
@@ -569,8 +585,6 @@ class dbQueries:
         results = self.cursor.fetchall()
         return results
 
-
-
     def search_visitor(self, search_term, status):
         query = (
             f"SELECT * FROM tbl_visitor WHERE (visitor_firstname LIKE ? OR visitor_lastname LIKE ? OR visitor_contact_no LIKE ?"
@@ -637,7 +651,6 @@ class dbQueries:
         results = self.cursor.fetchall()
         return results
 
-
     def search_user(self, search_term, status):
         query = (
             f"SELECT * FROM tbl_user WHERE (username LIKE ? OR password LIKE ? OR user_firstname LIKE ? "
@@ -681,7 +694,7 @@ class dbQueries:
 
     def check_student_no(self, student_number):
         query = f"SELECT * FROM tbl_student WHERE student_no = ?"
-        self.cursor.execute(query,(student_number))
+        self.cursor.execute(query, (student_number))
         row = self.cursor.fetchone()
 
         if row:
@@ -699,7 +712,9 @@ class dbQueries:
             student_firstname = row[0]
             student_lastname = row[1]
             student_middlename = row[2]
-            full_name = student_firstname +" "+ student_middlename +" "+ student_lastname
+            full_name = (
+                student_firstname + " " + student_middlename + " " + student_lastname
+            )
             return full_name
 
     def get_student_count(self):
@@ -722,7 +737,7 @@ class dbQueries:
 
     def check_personnel_no(self, personnel_number):
         query = f"SELECT * FROM tbl_personnel WHERE personnel_no = ?"
-        self.cursor.execute(query,(personnel_number))
+        self.cursor.execute(query, (personnel_number))
         row = self.cursor.fetchone()
 
         if row:
@@ -740,7 +755,13 @@ class dbQueries:
             personnel_firstname = row[0]
             personnel_lastname = row[1]
             personnel_middlename = row[2]
-            full_name = personnel_firstname +" "+ personnel_middlename+" " + personnel_lastname 
+            full_name = (
+                personnel_firstname
+                + " "
+                + personnel_middlename
+                + " "
+                + personnel_lastname
+            )
 
             return full_name
 
@@ -767,7 +788,7 @@ class dbQueries:
 
     def check_visitor_no(self, visitor_number):
         query = f"SELECT * FROM tbl_visitor WHERE visitor_no = ?"
-        self.cursor.execute(query,(visitor_number))
+        self.cursor.execute(query, (visitor_number))
         row = self.cursor.fetchone()
 
         if row:
@@ -784,9 +805,8 @@ class dbQueries:
         if row:
             visitor_firstname = row[0]
             visitor_lastname = row[1]
-            full_name = visitor_firstname +" "+ visitor_lastname
+            full_name = visitor_firstname + " " + visitor_lastname
             return full_name
-        
 
     def get_visitor_count(self):
         query = f"SELECT COUNT(*) FROM tbl_visitor WHERE visitor_status = 'IsActive'"
@@ -807,7 +827,7 @@ class dbQueries:
 
         return count
 
-    #SETTINGS-TABLE-QUERY--------------------------------------------------------------------------------------------------------------
+    # SETTINGS-TABLE-QUERY--------------------------------------------------------------------------------------------------------------
 
     def default_settings_if_not_exist(self):
         query = f"SELECT * FROM tbl_setting"
@@ -815,12 +835,12 @@ class dbQueries:
         row = self.cursor.fetchone()
         condition = False
         if row:
-            condition =  True
+            condition = True
             print(condition)
         else:
             condition = False
             print(condition)
-            
+
         if not condition:
 
             pass_length = 6
@@ -829,22 +849,26 @@ class dbQueries:
             sem_end = "2022-12-30"
             facerecog_filepath = "C:\\Users\\JC Austria\\Documents\\GitHub\\Face-Recognition-Attendance-Monitoring-System\\MainSystem\\DataSet"
             facerecog_date = "2022-12-30"
-            add_visitor_filepath =  "C:\\Users\\JC Austria\\Documents\\GitHub\\Face-Recognition-Attendance-Monitoring-System\\MainSystem\\DataSet\\Guest"
+            add_visitor_filepath = "C:\\Users\\JC Austria\\Documents\\GitHub\\Face-Recognition-Attendance-Monitoring-System\\MainSystem\\DataSet\\Guest"
             add_visitor_date = "2022-12-30"
-            query2 = (f"INSERT INTO tbl_setting (password_length, login_attempt,sem_start_setting,sem_end_setting,"+
-                     "face_recog_file_path,face_recog_date,av_file_path,av_date) VALUES (?, ?, ?, ? ,? ,? ,? ,?)")
-            self.cursor.execute(query2, 
-                                (pass_length, 
-                                 log_attempt,
-                                 sem_start,
-                                 sem_end,
-                                 facerecog_filepath,
-                                 facerecog_date,
-                                 add_visitor_filepath,
-                                 add_visitor_date)
-                                 )
+            query2 = (
+                f"INSERT INTO tbl_setting (password_length, login_attempt,sem_start_setting,sem_end_setting,"
+                + "face_recog_file_path,face_recog_date,av_file_path,av_date) VALUES (?, ?, ?, ? ,? ,? ,? ,?)"
+            )
+            self.cursor.execute(
+                query2,
+                (
+                    pass_length,
+                    log_attempt,
+                    sem_start,
+                    sem_end,
+                    facerecog_filepath,
+                    facerecog_date,
+                    add_visitor_filepath,
+                    add_visitor_date,
+                ),
+            )
             self.connection.commit()
-
 
     def get_password_length(self):
         query = f"SELECT password_length FROM tbl_setting WHERE setting_no = 1 "
@@ -867,9 +891,7 @@ class dbQueries:
         # Select login attempt and display to entry text
 
     def set_pass_len_log_att(self, pass_length, log_attempt):
-        query = (
-            f"UPDATE tbl_setting SET password_length = ?, login_attempt = ? WHERE setting_no = 1 "
-        )
+        query = f"UPDATE tbl_setting SET password_length = ?, login_attempt = ? WHERE setting_no = 1 "
         self.cursor.execute(query, (pass_length, log_attempt))
         self.connection.commit()
         # Save pass len & log in attempt to the database
@@ -892,7 +914,7 @@ class dbQueries:
             return row
         else:
             return False
-        # select date and insert to entry text 
+        # select date and insert to entry text
 
     def set_sem_settings(self, sem_start, sem_end):
         query = f"UPDATE tbl_setting SET sem_start_setting = ?, sem_end_setting = ? WHERE setting_no = 1 "
@@ -964,8 +986,7 @@ class dbQueries:
             return False
         # get date
 
-    #SETTINGS-TABLE-QUERY--------------------------------------------------------------------------------------------------------------
-
+    # SETTINGS-TABLE-QUERY--------------------------------------------------------------------------------------------------------------
 
 
 # if db.login_entry("systemeror12", "RanOnline124"):
