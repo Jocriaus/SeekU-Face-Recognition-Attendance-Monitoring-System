@@ -308,20 +308,22 @@ class dbQueries:
                 self.connection.commit()
 
                 print("Attendance added successfully!")
-            else:
+            elif student_att_row:
                 query3 = f"SELECT * FROM tbl_student_attendance WHERE student_no = ?"
                 self.cursor.execute(query3(student_number))
                 student_no_att_row = self.cursor.fetchone()
 
                 if student_no_att_row:
-                    query4 = f"SELECT * FROM tbl_student WHERE student_no = ?"
+                    query4 = (
+                        f"SELECT * FROM tbl_student_attendance WHERE student_no = ?"
+                    )
                     self.cursor.execute(query4, (student_number))
                     update_student_row = self.cursor.fetchone()
                     if update_student_row:
-                        insert_query_att_exit = f"INSERT INTO tbl_student_attendance(student_time_out) VALUES (?, ?, ?)"
+                        insert_query_att_exit = f"INSERT INTO tbl_student_attendance(student_time_out) VALUES (?)"
                         self.cursor.execute(
                             insert_query_att_exit,
-                            (student_number, student_time_out),
+                            (student_time_out),
                         )
             self.connection.commit()
 
@@ -361,23 +363,60 @@ class dbQueries:
     """
 
     def personnel_attendance_record(
-        self, personnel_number, personnel_attendance_date, personnel_time_in
+        self,
+        personnel_number,
+        personnel_attendance_date,
+        personnel_time_in,
+        personnel_time_out,
     ):
         query = f"SELECT * FROM tbl_personnel WHERE personnel_no = ?"
         self.cursor.execute(query, (personnel_number))
         row = self.cursor.fetchone()
 
         if row:
-            insert_query_attendance = f"INSERT INTO tbl_personnel_attendance(personnel_no, personnel_attendance_date, personnel_time_in) VALUES (?, ?, ?)"
-            self.cursor.execute(
-                insert_query_attendance,
-                (personnel_number, personnel_attendance_date, personnel_time_in),
-            )
+            query2 = f"SELECT * FROM tbl_personnel_attendance"
+            self.cursor.execute(query2)
+            personnel_att_row = self.cursor.fetchone()
+            if personnel_att_row is None:
+                insert_query_attendance = f"INSERT INTO tbl_personnel_attendance (personnel_no, personnel_attendance_date, personnel_time_in) VALUES (?, ?, ?)"
+                self.cursor.execute(
+                    insert_query_attendance,
+                    (personnel_number, personnel_attendance_date, personnel_time_in),
+                )
+                self.connection.commit()
+
+                print("Attendance added successfully!")
+            elif personnel_att_row:
+                query3 = (
+                    f"SELECT * FROM tbl_personnel_attendance WHERE personnel_no = ?"
+                )
+                self.cursor.execute(query3(personnel_number))
+                personnel_no_att_row = self.cursor.fetchone()
+
+                if personnel_no_att_row:
+                    query4 = (
+                        f"SELECT * FROM tbl_personnel_attendance WHERE personnel_no = ?"
+                    )
+                    self.cursor.execute(query4, (personnel_number))
+                    update_personnel_row = self.cursor.fetchone()
+                    if update_personnel_row:
+                        insert_query_att_exit = f"INSERT INTO tbl_personnel_attendance(personnel_time_out) VALUES (?)"
+                        self.cursor.execute(
+                            insert_query_att_exit,
+                            (personnel_time_out),
+                        )
             self.connection.commit()
 
             print("Attendance added successfully!")
+            # query 2 if student attendance table is empty
+            #  same ng insert_query_attendance pero mag iinsert din ng attendance no.
+
+            # query3 elif student no. on student attendance table exist
+            #  exit query
+
+            # else
         else:
-            print("Student not found.")
+            print("Personnel not found.")
 
     """
     def personnel_attendance_exit(
@@ -401,23 +440,54 @@ class dbQueries:
     """
 
     def visitor_attendance_record(
-        self, visitor_number, visitor_attendance_date, visitor_time_in
+        self, visitor_number, visitor_attendance_date, visitor_time_in, visitor_time_out
     ):
         query = f"SELECT * FROM tbl_visitor WHERE visitor_no = ?"
-        self.cursor.execute(query(visitor_number))
+        self.cursor.execute(query, (visitor_number))
         row = self.cursor.fetchone()
 
         if row:
-            insert_query_attendance = f"INSERT INTO tbl_visitor_report (visitor_no, visitor_attendance_date, visitor_time_in) VALUES (?, ?, ?)"
-            self.cursor.execute(
-                insert_query_attendance,
-                (visitor_number, visitor_attendance_date, visitor_time_in),
-            )
+            query2 = f"SELECT * FROM tbl_visitor_attendance"
+            self.cursor.execute(query2)
+            visitor_att_row = self.cursor.fetchone()
+            if visitor_att_row is None:
+                insert_query_attendance = f"INSERT INTO tbl_visitor_attendance (visitor_no, visitor_attendance_date, visitor_time_in) VALUES (?, ?, ?)"
+                self.cursor.execute(
+                    insert_query_attendance,
+                    (visitor_number, visitor_attendance_date, visitor_time_in),
+                )
+                self.connection.commit()
+
+                print("Attendance added successfully!")
+            elif visitor_att_row:
+                query3 = f"SELECT * FROM tbl_visitor_attendance WHERE visitor_no = ?"
+                self.cursor.execute(query3(visitor_number))
+                visitor_no_att_row = self.cursor.fetchone()
+
+                if visitor_no_att_row:
+                    query4 = (
+                        f"SELECT * FROM tbl_visitor_attendance WHERE visitor_no = ?"
+                    )
+                    self.cursor.execute(query4, (visitor_number))
+                    update_visitor_row = self.cursor.fetchone()
+                    if update_visitor_row:
+                        insert_query_att_exit = f"INSERT INTO tbl_visitor_attendance(visitor_time_out) VALUES (?)"
+                        self.cursor.execute(
+                            insert_query_att_exit,
+                            (visitor_time_out),
+                        )
             self.connection.commit()
 
             print("Attendance added successfully!")
+            # query 2 if student attendance table is empty
+            #  same ng insert_query_attendance pero mag iinsert din ng attendance no.
+
+            # query3 elif student no. on student attendance table exist
+            #  exit query
+
+            # else
         else:
-            print("Student not found.")
+            print("Visitor not found.")
 
     """
     def visitor_attendance_exit(
