@@ -126,6 +126,10 @@ class dbQueries:
         self.connection.commit()
         print(f"Personnel {personnel_number} has been updated successfully!")
 
+    def create_personnel_report(self):
+        query = f"INSERT INTO tbl_personnel_report SELECT * FROM tbl_personnel_attendance"
+        self.cursor.execute(query)
+
     def delete_personnel_status(self, personnel_status, personnel_number):
         query = f"UPDATE tbl_personnel SET personnel_status = IsDeleted WHERE personnel_no = ?"
         self.cursor.execute(query, (personnel_status, personnel_status))
@@ -205,6 +209,10 @@ class dbQueries:
         self.connection.commit()
         print(f"Personnel {visitor_number} has been updated successfully!")
 
+    def create_visitor_report(self):
+        query = f"INSERT INTO tbl_visitor_report SELECT * FROM tbl_visitor_attendance"
+        self.cursor.execute(query)
+
     # ano tong delete visitor status
     def delete_visitor_status(self, visitor_status, visitor_number):
         query = (
@@ -277,6 +285,10 @@ class dbQueries:
         )
         self.connection.commit()
         print(f"Student {student_number} has been updated successfully!")
+
+    def create_student_report(self):
+        query = f"INSERT INTO tbl_student_report SELECT * FROM tbl_student_attendance"
+        self.cursor.execute(query)
 
     def delete_student_status(self, student_status, student_number):
         query = (
