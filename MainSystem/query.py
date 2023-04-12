@@ -127,9 +127,7 @@ class dbQueries:
         print(f"Personnel {personnel_number} has been updated successfully!")
 
     def create_personnel_report(self):
-        query = (
-            f"INSERT INTO tbl_personnel_report SELECT * FROM tbl_personnel_attendance"
-        )
+        query = f"INSERT INTO tbl_personnel_report SELECT * FROM tbl_personnel_attendance"
         self.cursor.execute(query)
 
     def delete_personnel_status(self, personnel_status, personnel_number):
@@ -310,8 +308,8 @@ class dbQueries:
         row = self.cursor.fetchone()
 
         if row:
-            query2 = f"SELECT * FROM tbl_student_attendance WHERE student_no = ?"
-            self.cursor.execute(query2, (student_number))
+            query2 = f"SELECT * FROM tbl_student_attendance"
+            self.cursor.execute(query2)
             student_att_row = self.cursor.fetchone()
             if student_att_row is None:
                 insert_query_attendance = f"INSERT INTO tbl_student_attendance (student_no, student_attendance_date, student_time_in) VALUES (?, ?, ?)"
@@ -388,8 +386,8 @@ class dbQueries:
         row = self.cursor.fetchone()
 
         if row:
-            query2 = f"SELECT * FROM tbl_personnel_attendance WHERE personnel_no = ?"
-            self.cursor.execute(query2, (personnel_number))
+            query2 = f"SELECT * FROM tbl_personnel_attendance"
+            self.cursor.execute(query2)
             personnel_att_row = self.cursor.fetchone()
             if personnel_att_row is None:
                 insert_query_attendance = f"INSERT INTO tbl_personnel_attendance (personnel_no, personnel_attendance_date, personnel_time_in) VALUES (?, ?, ?)"
@@ -461,8 +459,8 @@ class dbQueries:
         row = self.cursor.fetchone()
 
         if row:
-            query2 = f"SELECT * FROM tbl_visitor_attendance WHERE visitor_no = ?"
-            self.cursor.execute(query2, (visitor_number))
+            query2 = f"SELECT * FROM tbl_visitor_attendance"
+            self.cursor.execute(query2)
             visitor_att_row = self.cursor.fetchone()
             if visitor_att_row is None:
                 insert_query_attendance = f"INSERT INTO tbl_visitor_attendance (visitor_no, visitor_attendance_date, visitor_time_in) VALUES (?, ?, ?)"
