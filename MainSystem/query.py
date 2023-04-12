@@ -741,6 +741,18 @@ class dbQueries:
         results = self.cursor.fetchall()
         return results
 
+    def sort_student_att_bydate(self, date):
+        query = f"SELECT * FROM tbl_student_attendance WHERE student_attendance_date BETWEEN ? AND ?"
+        self.cursor.execute(query, (date))
+
+    def sort_personnel_att_bydate(self, date):
+        query = f"SELECT * FROM tbl_personnel_attendance WHERE personnel_attendance_date BETWEEN ? AND ?"
+        self.cursor.execute(query, (date))
+
+    def sort_visitor_att_bydate(self, date):
+        query = f"SELECT * FROM tbl_visitor_attendance WHERE visitor_attendance_date BETWEEN ? AND ?"
+        self.cursor.execute(query, (date))
+
     def check_username(self, username, password):
         query = f"SELECT * FROM tbl_user WHERE username = ? AND password = ?"
         self.cursor.execute(query, (username, password))
