@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 import tkinter as tk
-import Treeview_table as tbl
 import query_mod as qry
 
 
@@ -15,7 +14,6 @@ class EditUserApp:
         self.lastname = uln
         self.user_type = ut
         self.user_status = us
-        self.treeview = tbl.TreeviewGUI()
         self.sql_query = qry.dbQueries()
         self.edit_bool = True
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
