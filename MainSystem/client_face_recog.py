@@ -3,7 +3,7 @@ from PIL import Image, ImageTk
 import datetime
 import time
 import face_recog_mod as mf
-import query as qry
+import query_mod as qry
 import sys
 
 

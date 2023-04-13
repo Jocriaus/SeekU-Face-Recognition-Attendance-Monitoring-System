@@ -1,7 +1,7 @@
 import pyodbc as odbc
 import tkinter as tk
 import tkinter.ttk as ttk
-import query as qry
+import query_mod as qry
 
 
 class TreeviewGUI:

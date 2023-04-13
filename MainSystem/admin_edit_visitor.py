@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog
 import tkinter as tk
-import query as qry
+import query_mod as qry
 import PIL.Image, PIL.ImageTk
 import os
 import sys

@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-import query as qry
+import query_mod as qry
 import client_cam as cC
 import sys
 

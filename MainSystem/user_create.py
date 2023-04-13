@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 import tkinter as tk
-import query as qry
+import query_mod as qry
 
 
 class CreateUserApp:

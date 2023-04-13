@@ -3,14 +3,14 @@ import tkinter as tk
 from datetime import datetime
 from tkinter import filedialog
 import sys
-import query as qry
+import query_mod as qry
 import edit_info_personnel as eIP
 import edit_info_student as eIS
 import edit_info_visitor as eIV
 import user_create as uC
 import user_edit as uE
 import admin_camera_app as aCA
-import Treeview_table as tbl
+import Treeview_table_mod as tbl
 
 
 class AdminHomeApp:

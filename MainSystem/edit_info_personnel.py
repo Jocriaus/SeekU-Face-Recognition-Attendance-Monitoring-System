@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import tkinter as tk
-import Treeview_table as tbl
-import query as qry
+import Treeview_table_mod as tbl
+import query_mod as qry
 import admin_camera_app as aCA
 import PIL.Image, PIL.ImageTk
 import sys
