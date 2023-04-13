@@ -3,7 +3,7 @@ from tkinter import filedialog
 import client_face_recog as cFG
 import client_camera_app as cCA
 import datetime
-import query as qry
+import query_mod as qry
 import sys
 class HomeApp:
     def __init__(self,vid_source, login_mod, sel_cam):
