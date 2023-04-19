@@ -29,6 +29,8 @@ install dlib
 install database library
 -pip install pyodbc
 
+calendar date picker
+-pip install tkcalendar
 
 install pyinstaller for compiling the program 
 -pip install pyinstaller
