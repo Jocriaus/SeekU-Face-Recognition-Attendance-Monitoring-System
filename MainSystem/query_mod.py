@@ -711,17 +711,44 @@ class dbQueries:
         results = self.cursor.fetchall()
         return results
 
-    def sort_student_att_bydate(self, date):
-        query = f"SELECT * FROM tbl_student_attendance WHERE student_attendance_date BETWEEN ? AND ?"
-        self.cursor.execute(query, (date))
+    def sort_student_report_bydate_excel(self, date1, date2):
+        query = (f"SELECT tbl_student.student_no, tbl_student.student_firstname, tbl_student.student_lastname, "+
+                 "tbl_student.student_program, tbl_student.student_section, tbl_student_report.student_attendance_date, "+
+                 "tbl_student_report.student_time_in, tbl_student_report.student_time_out FROM tbl_student "+
+                 "RIGHT JOIN tbl_student_report ON tbl_student.student_no = tbl_student_report.student_no "+
+                 "WHERE personnel_attendance_date BETWEEN ? AND ?")
+        self.cursor.execute(query, (date1,date2))
+        column = [desc[0] for desc in self.cursor.description]
+        rows = self.cursor.fetchall()
+        if rows:
+            return rows, column
+        else:
+            return False
 
-    def sort_personnel_att_bydate(self, date):
-        query = f"SELECT * FROM tbl_personnel_attendance WHERE personnel_attendance_date BETWEEN ? AND ?"
-        self.cursor.execute(query, (date))
-
-    def sort_visitor_att_bydate(self, date):
-        query = f"SELECT * FROM tbl_visitor_attendance WHERE visitor_attendance_date BETWEEN ? AND ?"
-        self.cursor.execute(query, (date))
+    def sort_personnel_report_bydate_excel(self, date1,date2):
+        query = (f"SELECT tbl_personnel.personnel_no, tbl_personnel.personnel_firstname, tbl_personnel.personnel_lastname,"+
+                 "tbl_personnel.personnel_type, tbl_personnel_report.personnel_attendance_date, tbl_personnel_report.personnel_time_in, "+
+                 "tbl_personnel_report.personnel_time_out FROM tbl_personnel RIGHT JOIN tbl_personnel_report "+
+                 "ON tbl_personnel.personnel_no = tbl_personnel_report.personnel_no")
+        self.cursor.execute(query, (date1,date2))
+        column = [desc[0] for desc in self.cursor.description]
+        rows = self.cursor.fetchall()
+        if rows:
+            return rows, column
+        else:
+            return False
+        
+    def sort_visitor_report_bydate_excel(self, date1,date2):
+        query = (f"SELECT tbl_visitor.visitor_no, tbl_visitor.visitor_firstname, tbl_visitor.visitor_lastname, "+
+        "tbl_visitor_report.visitor_attendance_date, tbl_visitor_report.visitor_time_in, tbl_visitor_report.visitor_time_out "+
+        "FROM  tbl_visitor RIGHT JOIN tbl_visitor_report ON tbl_visitor.visitor_no = tbl_visitor_report.visitor_no")
+        self.cursor.execute(query, (date1,date2))
+        column = [desc[0] for desc in self.cursor.description]
+        rows = self.cursor.fetchall()
+        if rows:
+            return rows, column
+        else:
+            return False
 
     def check_username(self, username, password):
         query = f"SELECT * FROM tbl_user WHERE username = ? AND password = ?"

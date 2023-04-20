@@ -339,40 +339,23 @@ class AdminHomeApp:
             self.client_report_optionmenu.menuname
         )
         self.client_report_options.config(font="{arial} 16")
-        self.print_report = tk.Button(self.administrator_report_frame)
-        self.print_report.configure(
+        self.generate_report = tk.Button(self.administrator_report_frame)
+        self.generate_report.configure(
             background="#0072bc",
             font="{arial} 20 {bold}",
             foreground="#f7fae9",
-            text="Print",
+            text="Generate Report",
         )
-        self.print_report.place(
+        self.generate_report.place(
             anchor="center",
-            relheight=0.05,
-            relwidth=0.12,
-            relx=0.87,
+            relheight=0.08,
+            relwidth=0.20,
+            relx=0.85,
             rely=0.875,
             x=0,
             y=0,
         )
-        self.print_report.bind("<Button>", self.print_clients_reports, add="")
-        self.save_button = tk.Button(self.administrator_report_frame)
-        self.save_button.configure(
-            background="#0072bc",
-            font="{arial} 20 {bold}",
-            foreground="#f7fae9",
-            text="Save",
-        )
-        self.save_button.place(
-            anchor="center",
-            relheight=0.05,
-            relwidth=0.12,
-            relx=0.7,
-            rely=0.875,
-            x=0,
-            y=0,
-        )
-        self.save_button.bind("<Button>", self.save_clients_reports, add="")
+        self.generate_report.bind("<Button>", self.generate_clients_reports, add="")
         self.administrator_report_frame.place(
             anchor="center", relheight=0.95, relwidth=0.78, relx=0.61, rely=0.525
         )
@@ -1671,11 +1654,10 @@ class AdminHomeApp:
     def search_clients_reports(self, event=None):
         self.search_report_info_logic()
 
-    def print_clients_reports(self, event=None):
-        pass
+    def generate_clients_reports(self, event=None):
+        self.select_folder()
+        
 
-    def save_clients_reports(self, event=None):
-        pass
 
     # REPORTS-COMMANDS---------------------------------------------------------------------------------------------------------------
     # ARCHIVED-COMMANDS---------------------------------------------------------------------------------------------------------------

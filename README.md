@@ -29,6 +29,11 @@ install dlib
 install database library
 -pip install pyodbc
 
+install docx, pdf, & excel library respectively
+-pip install docx
+
+-pip install pandas  -pip install openpyxl
+
 calendar date picker
 -pip install tkcalendar
 

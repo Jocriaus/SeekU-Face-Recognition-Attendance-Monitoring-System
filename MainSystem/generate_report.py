@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import tkinter as tk
 import tkcalendar as tkc
+import query_mod as qry
 import datetime
 
 class SavePrintReportApp:
@@ -12,10 +13,11 @@ class SavePrintReportApp:
         self.today_year = self.today.year
         # self.mindate =  min date is set as when the first attendance
         self.maxdate = datetime.datetime.now() # max date is today
+        self.sql_query = qry.dbQueries()
     #PRE-LOAD-ASSIGNMENT------------------------------------------------------------------------------------------- 
         self.generate_report_app = tk.Tk() if master is None else tk.Toplevel(master)
         self.generate_report_app.configure(background="#0072bc", height=200, width=200)
-        self.generate_report_app.geometry("640x600")
+        self.generate_report_app.geometry("640x700")
         self.generate_report_app.resizable(False, False)
         self.generate_report_app.title("SeekU-Save & Print-Report")
         self.generate_report_app.iconbitmap(".\SeekU\SeekU.ico")
@@ -28,17 +30,17 @@ class SavePrintReportApp:
             font="{arial} 20 {}",
             foreground="#F7FAE9",
             text='From')
-        self.from_label.place(anchor="center", relx=0.20, rely=0.25)
+        self.from_label.place(anchor="center", relx=0.20, rely=0.23)
 
         self.calendar1 = tkc.Calendar(self.gen_report_frame2, selectmode = 'day', maxdate= self.maxdate,
                year = self.today_year, month = self.today_month,
                day = self.today_day, )
-        self.calendar1.place(anchor="center", relx=0.25, rely=0.45)
+        self.calendar1.place(anchor="center", relx=0.25, rely=0.4)
 
         self.calendar2 = tkc.Calendar(self.gen_report_frame2, selectmode = 'day', maxdate= self.maxdate,
                year = self.today_year, month = self.today_month,
                day = self.today_day)
-        self.calendar2.place(anchor="center", relx=0.75, rely=0.45)
+        self.calendar2.place(anchor="center", relx=0.75, rely=0.4)
 
         self.to_label = tk.Label(self.gen_report_frame2)
         self.to_label.configure(
@@ -47,7 +49,7 @@ class SavePrintReportApp:
             foreground="#F7FAE9",
             justify="left",
             text='To')
-        self.to_label.place(anchor="center", relx=0.65, rely=0.25)
+        self.to_label.place(anchor="center", relx=0.65, rely=0.23)
         self.save_button = tk.Button(self.gen_report_frame2)
         self.save_button.configure(
             background="#F7FAE9",
@@ -60,10 +62,10 @@ class SavePrintReportApp:
             width=10)
         self.save_button.place(
             anchor="center",
-            relheight=0.1,
+            relheight=0.08,
             relwidth=0.3,
             relx=0.30,
-            rely=0.9)
+            rely=0.92)
         self.save_button.bind("<ButtonPress>", self.save_press, add="")
         self.print_button = tk.Button(self.gen_report_frame2)
         self.print_button.configure(
@@ -77,10 +79,10 @@ class SavePrintReportApp:
             width=10)
         self.print_button.place(
             anchor="center",
-            relheight=0.1,
+            relheight=0.08,
             relwidth=0.3,
             relx=0.70,
-            rely=0.9)
+            rely=0.92)
         self.print_button.bind("<ButtonPress>", self.print_press, add="")
         self.pdf_radiobutton = tk.Radiobutton(self.gen_report_frame2)
         self.file_type_var = tk.StringVar(value='Pdf')
@@ -91,7 +93,7 @@ class SavePrintReportApp:
             text='Pdf',
             selectcolor='black',
             value="Pdf", variable=self.file_type_var)
-        self.pdf_radiobutton.place(anchor="center", relx=0.485, rely=0.64, relheight=0.05)
+        self.pdf_radiobutton.place(anchor="center", relx=0.485, rely=0.575, relheight=0.05)
         self.docx_radiobutton = tk.Radiobutton(self.gen_report_frame2)
         self.docx_radiobutton.configure(
             background="#0072bc",
@@ -99,7 +101,7 @@ class SavePrintReportApp:
             foreground="#F7FAE9",
             selectcolor='black',
             text='Docx', value="Docx", variable=self.file_type_var)
-        self.docx_radiobutton.place(anchor="center", relx=0.5, rely=0.72, relheight=0.05)
+        self.docx_radiobutton.place(anchor="center", relx=0.5, rely=0.64, relheight=0.05)
         self.excel_radiobutton = tk.Radiobutton(self.gen_report_frame2)
         self.excel_radiobutton.configure(
             background="#0072bc",
@@ -107,7 +109,19 @@ class SavePrintReportApp:
             foreground="#F7FAE9",
             selectcolor='black',
             text='Excel', value="Excel", variable=self.file_type_var)
-        self.excel_radiobutton.place(anchor="center", relx=0.505, rely=0.80, relheight=0.05)
+        self.excel_radiobutton.place(anchor="center", relx=0.505, rely=0.715, relheight=0.05)
+        self.file_name_label = tk.Label(self.gen_report_frame2)
+        self.file_name_label.configure(
+            background="#0072bc",
+            font="{arial} 20 {}",
+            foreground="#F7FAE9",
+            text='File Name')
+        self.file_name_label.place(anchor="center", relx=0.28, rely=0.8)
+        self.file_name = tk.Entry(self.gen_report_frame2)
+        self.file_name.configure(font="{arial} 20 {}")
+        self.file_name.place(
+            anchor="center", relwidth=0.4, relx=0.63, rely=0.8, x=0, y=0
+        )
         self.gen_report_frame2.place(
             anchor="center",
             relheight=1.0,
@@ -146,6 +160,10 @@ class SavePrintReportApp:
 
     def run(self):
         self.mainwindow.mainloop()
+
+    def excel_save (self):
+        pass
+
 
     def save_press (self, event=None):
         pass
