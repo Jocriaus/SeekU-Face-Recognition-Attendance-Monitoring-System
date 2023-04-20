@@ -1391,7 +1391,7 @@ class TreeviewGUI:
 
     def print_word_student_doc(self):
         # open an existing Word document
-        self.doc = docx.Document("INSERT TEMPLATED DOC PATH")
+        self.doc = docx.Document("../Documents/Document_temp/Report Template.docx")
 
         # get the first paragraph in the document
         self.p1 = self.doc.paragraphs[8]
@@ -1410,11 +1410,11 @@ class TreeviewGUI:
             self.row_cells[0].text = row[0]
             self.row_cells[1].text = row[1]
         # saves the doc to a new file path
-        self.doc.save("SAVE THE NEW DOC RECORD OF STUDENT PATH")
+        self.doc.save("../Documents/Student_Report.docx")
 
     def print_word_personnel_doc(self):
         # open an existing Word document
-        self.doc = docx.Document("INSERT TEMPLATED DOC PATH")
+        self.doc = docx.Document("../Documents/Document_temp/Report Template.docx")
 
         # get the first paragraph in the document
         self.p1 = self.doc.paragraphs[8]
@@ -1433,11 +1433,11 @@ class TreeviewGUI:
             self.row_cells[0].text = row[0]
             self.row_cells[1].text = row[1]
         # saves the doc to a new file path
-        self.doc.save("SAVE THE NEW DOC RECORD OF STUDENT PATH")
+        self.doc.save("../Documents/Personnel_Report.docx")
 
     def print_word_personnel_doc(self):
         # open an existing Word document
-        self.doc = docx.Document("INSERT TEMPLATED DOC PATH")
+        self.doc = docx.Document("../Documents/Document_temp/Report Template.docx")
 
         # get the first paragraph in the document
         self.p1 = self.doc.paragraphs[8]
@@ -1456,4 +1456,4 @@ class TreeviewGUI:
             self.row_cells[0].text = row[0]
             self.row_cells[1].text = row[1]
         # saves the doc to a new file path
-        self.doc.save("SAVE THE NEW DOC RECORD OF STUDENT PATH")
+        self.doc.save("../Documents/Visitor_Report.docx")
