@@ -1,5 +1,6 @@
 import pyodbc as odbc
 import docx
+import os
 import tkinter as tk
 import tkinter.ttk as ttk
 import query_mod as qry
@@ -1417,6 +1418,7 @@ class TreeviewGUI:
             self.row_cells[7].text = row[7]
         # saves the doc to a new file path
         self.doc.save("../Documents/Student_Report.docx")
+        os.startfile("../Documents/Student_Report.docx")
 
     def print_word_personnel_doc(self):
         # open an existing Word document
@@ -1445,6 +1447,7 @@ class TreeviewGUI:
             self.row_cells[1].text = row[6]
         # saves the doc to a new file path
         self.doc.save("../Documents/Personnel_Report.docx")
+        os.startfile("../Documents/Personnel_Report.docx")
 
     def print_word_personnel_doc(self):
         # open an existing Word document
@@ -1472,3 +1475,4 @@ class TreeviewGUI:
             self.row_cells[1].text = row[5]
         # saves the doc to a new file path
         self.doc.save("../Documents/Visitor_Report.docx")
+        os.startfile("../Documents/Visitor_Report.docx")
