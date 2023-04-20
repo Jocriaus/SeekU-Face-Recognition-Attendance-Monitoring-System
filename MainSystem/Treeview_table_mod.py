@@ -1396,7 +1396,7 @@ class TreeviewGUI:
         # get the first paragraph in the document
         self.p1 = self.doc.paragraphs[8]
 
-        self.table = self.doc.add_table(rows=1, cols=2)
+        self.table = self.doc.add_table(rows=1, cols=8)
         self.table.style = "Table Grid"
 
         self.treeview_data = []
@@ -1405,10 +1405,16 @@ class TreeviewGUI:
             self.values = self.student_tree.item(child)["values"]
             self.treeview_data.append(self.values)
         # Inserts the table data of student
-        for row in self.student_tree:
+        for row in self.treeview_data:
             self.row_cells = self.table.add_row().cells
             self.row_cells[0].text = row[0]
             self.row_cells[1].text = row[1]
+            self.row_cells[2].text = row[2]
+            self.row_cells[3].text = row[3]
+            self.row_cells[4].text = row[4]
+            self.row_cells[5].text = row[5]
+            self.row_cells[6].text = row[6]
+            self.row_cells[7].text = row[7]
         # saves the doc to a new file path
         self.doc.save("../Documents/Student_Report.docx")
 
@@ -1428,10 +1434,15 @@ class TreeviewGUI:
             self.values = self.personnel_tree.item(child)["values"]
             self.treeview_data.append(self.values)
         # Inserts the table data of student
-        for row in self.personnel_tree:
+        for row in self.treeview_data:
             self.row_cells = self.table.add_row().cells
             self.row_cells[0].text = row[0]
             self.row_cells[1].text = row[1]
+            self.row_cells[1].text = row[2]
+            self.row_cells[1].text = row[3]
+            self.row_cells[1].text = row[4]
+            self.row_cells[1].text = row[5]
+            self.row_cells[1].text = row[6]
         # saves the doc to a new file path
         self.doc.save("../Documents/Personnel_Report.docx")
 
@@ -1451,9 +1462,13 @@ class TreeviewGUI:
             self.values = self.visitor_tree.item(child)["values"]
             self.treeview_data.append(self.values)
         # Inserts the table data of student
-        for row in self.visitor_tree:
+        for row in self.treeview_data:
             self.row_cells = self.table.add_row().cells
             self.row_cells[0].text = row[0]
             self.row_cells[1].text = row[1]
+            self.row_cells[1].text = row[2]
+            self.row_cells[1].text = row[3]
+            self.row_cells[1].text = row[4]
+            self.row_cells[1].text = row[5]
         # saves the doc to a new file path
         self.doc.save("../Documents/Visitor_Report.docx")
