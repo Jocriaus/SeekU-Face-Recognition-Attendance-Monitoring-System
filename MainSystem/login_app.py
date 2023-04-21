@@ -10,6 +10,7 @@ class LoginApp:
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.sql_query = qry.dbQueries()
         self.sql_query.default_settings_if_not_exist()
+        self.sql_query.default_user_if_not_exist()
         self.user = "None"
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         # build ui
@@ -146,20 +147,13 @@ class LoginApp:
                     self.clear_entry()
                     self.user = "Security Guard"
                     cC.ClientCameraSelectApp(self.user, self.log_in_app)
-                elif self.sql_query.check_user_type(self.username_var, self.password_var) == "High Admin":
+                elif (self.sql_query.check_user_type(self.username_var, self.password_var) == "High Admin" or 
+                self.sql_query.check_user_type(self.username_var, self.password_var) == "Low Admin"):
                     print("login")
                     # add message box
                     self.hide_this_window()
                     self.clear_entry()
-                    self.user = "High Admin"
-                    cC.ClientCameraSelectApp(self.user, self.log_in_app)
-
-                elif self.sql_query.check_user_type(self.username_var, self.password_var) == "Low Admin":
-                    print("login")
-                    # add message box
-                    self.hide_this_window()
-                    self.clear_entry()
-                    self.user = "Low Admin"
+                    self.user = self.sql_query.check_user_type(self.username_var, self.password_var)
                     cC.ClientCameraSelectApp(self.user, self.log_in_app)
                     
             elif (self.sql_query.login_entry(self.username_var, self.password_var) == False):

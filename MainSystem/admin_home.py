@@ -969,6 +969,7 @@ class AdminHomeApp:
         )
 
         self.update_time()
+        self.set_user()
 
         # Main widget
         self.mainwindow = self.administrator_app
@@ -984,11 +985,30 @@ class AdminHomeApp:
         self.administrator_app.withdraw()
 
     def select_folder(self):
-        self.administrator_app.attributes('-topmost', False)
-        self.folder_selected = filedialog.askdirectory()
-        print(self.folder_selected)
-        self.administrator_app.attributes('-topmost', True)
+        folder_empty = True
+        while (folder_empty):
+            self.administrator_app.attributes('-topmost', False)
+            folder_select = filedialog.askdirectory()
+            if folder_select == "":
+                folder_empty = True
+            else:
+                self.folder_selected = folder_select
+                folder_empty = False
+            print(self.folder_selected)
+            self.administrator_app.attributes('-topmost', True)
 
+    def set_user(self):
+        if self.user == "Low Admin":
+            self.add_user_button.configure(state="disabled")
+            self.edit_user_button.configure(state="disabled")
+            self.export_db_button.configure(state="disabled")
+            self.import_db_button.configure(state="disabled")
+            self.activation_date_entry.configure(state="disabled")
+            self.deactivation_date_entry.configure(state="disabled")
+            self.login_attempt_entry.configure(state="disabled")
+            self.pass_len_entry.configure(state="disabled")
+            self.save_dates_button.configure(state="disabled")
+            self.save_settings_button.configure(state="disabled")
 
     # this function updates the time below the window
     def update_time(self):
@@ -1398,14 +1418,14 @@ class AdminHomeApp:
             self.edit_a_button.configure(text="Edit User")
             self.archived_list.configure(text="User List")
             self.treeview.user_treeview(self.admin_a_sec3_frame, "IsArchived")
-
+    """
     def add_archived_logic(self):
         # if self.clients_man_var.get() == "Manage Students":
         self.hide_this_window()
         self.select_folder()
         
         aCA.CameraApp(self.video_source,self.login_window,self.sel_cam_window, self.administrator_app,self.folder_selected, self.archived_man_var.get())
-        """
+        
             pass
         if self.clients_man_var.get() == "Manage Personnels":
             self.hide_this_window()
@@ -1417,7 +1437,7 @@ class AdminHomeApp:
             self.select_folder()
             aCA.CameraApp(self.video_source,self.login_window,self.sel_cam_window, self.administrator_app,self.folder_selected, self.clients_man_var.get())
             pass
-        """
+    """
 
     def edit_archived_logic(self):
         if self.archived_man_var.get() == "Archived Students":

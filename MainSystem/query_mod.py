@@ -905,7 +905,35 @@ class dbQueries:
         count = self.cursor.fetchone()[0]
 
         return count
+    # USER-TABLE-QUERY--------------------------------------------------------------------------------------------------------------
+    def default_user_if_not_exist(self):
+        query = f"SELECT * FROM tbl_user"
+        self.cursor.execute(query)
+        row = self.cursor.fetchone()
+        condition = False
+        if row:
+            condition = True
+            print(condition)
+        else:
+            condition = False
+            print(condition)
 
+        if not condition:
+            query2 = (
+                f"INSERT INTO tbl_user (username, password, user_firstname, user_lastname, user_type) VALUES (?, ?, ?, ?, ?)"
+            )
+            self.cursor.execute(
+                query2,
+                (
+                    "user",
+                    "admin",
+                    "default",
+                    "user",
+                    "High Admin",
+                ),
+            )
+            self.connection.commit()
+            
     # SETTINGS-TABLE-QUERY--------------------------------------------------------------------------------------------------------------
 
     def default_settings_if_not_exist(self):
@@ -1000,7 +1028,7 @@ class dbQueries:
         self.cursor.execute(query, (sem_start, sem_end))
         self.connection.commit()
         # save date to the database
-
+    #FR-----------------------------------------
     def set_face_recog_path(self, facerecog_filepath):
         query = f"UPDATE tbl_setting SET face_recog_file_path = ? WHERE setting_no = 1 "
         self.cursor.execute(query, (facerecog_filepath))
@@ -1024,7 +1052,7 @@ class dbQueries:
         # save date
 
     def get_fr_path_file_date(self):
-        query = f"UPDATE tbl_setting FROM tbl_setting WHERE setting_no = 1 "
+        query = f"SELECT face_recog_date FROM tbl_setting WHERE setting_no = 1 "
         self.cursor.execute(query)
         row = self.cursor.fetchone()[0]
         if row:
@@ -1032,7 +1060,8 @@ class dbQueries:
         else:
             return False
         # get date
-
+    #FR-----------------------------------------
+    #AV-----------------------------------------
     def set_add_visitor_path(self, add_visitor_filepath):
         query = f"UPDATE tbl_setting SET av_file_path = ? WHERE setting_no = 1 "
         self.cursor.execute(query, (add_visitor_filepath))
@@ -1064,6 +1093,7 @@ class dbQueries:
         else:
             return False
         # get date
+    #AV-----------------------------------------
 
     # SETTINGS-TABLE-QUERY--------------------------------------------------------------------------------------------------------------
 
