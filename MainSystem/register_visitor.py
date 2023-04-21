@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import tkinter as tk
 import query_mod as qry
+import tkinter.messagebox as messbx
 import PIL.Image, PIL.ImageTk
 import os
 import sys
@@ -194,22 +195,27 @@ class RegisterVisitorApp:
         """
         Database Connection
         """
-        self.last_name_var = self.last_name_entry.get()
-        self.first_name_var = self.first_name_entry.get()
-        self.contact_num_var = self.contact_num_entry.get()
-        self.address_var = self.address_entry.get()
-
-        self.sql_query.register_visitor(
-            self.first_name_var,
-            self.last_name_var,
-            self.contact_num_var,
-            self.address_var,
-        )
-
-        img_name = self.sql_query.capture_visitor_image(self.first_name_var, self.last_name_var, self.contact_num_var, self.address_var)
-
-
-        os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/000000000.jpg")
+        
+        last_name_var = self.last_name_entry.get()
+        first_name_var = self.first_name_entry.get()
+        contact_num_var = self.contact_num_entry.get()
+        address_var = self.address_entry.get()
+        if ( len(last_name_var) != 0 or
+            len(first_name_var) != 0 or
+            len(contact_num_var) != 0 or
+            len(address_var) != 0
+            ) :
+            self.sql_query.register_visitor(
+                first_name_var,
+                last_name_var,
+                contact_num_var,
+                address_var,
+            )
+            img_name = self.sql_query.capture_visitor_image(first_name_var, last_name_var, contact_num_var, address_var)
+            os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/000000000.jpg")
+        else:
+            messbx.showwarning("Error", "Please enter a value in all fields.")
+            
         """
         Save to database
         Get the primary key

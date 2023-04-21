@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import tkinter as tk
+import tkinter.messagebox as messbx
 import query_mod as qry
 
 
@@ -126,19 +127,46 @@ class CreateUserApp:
         self.register_user_app.destroy() 
 
     def register_user_function(self):
-        self.username_var = self.username_entry.get()
-        self.password_var = self.password_entry.get()
-        self.first_name_var = self.first_name_entry.get()
-        self.last_name_var = self.last_name_entry.get()
-        self.user_role_var = self.user_role_entry.get()
+        self.register = True
+        username_var = self.username_entry.get()
+        self.username_check(username_var)
+        password_var = self.password_entry.get()
+        self.password_check(password_var)
+        first_name_var = self.first_name_entry.get()
+        last_name_var = self.last_name_entry.get()
+        user_role_var = self.user_role_entry.get()
 
-        self.sql_query.register_user(
-            self.username_var,
-            self.password_var,
-            self.first_name_var,
-            self.last_name_var,
-            self.user_role_var,
-        )
+        if ( len(username_var) != 0 or
+            len(password_var) != 0 or
+            len(first_name_var) != 0 or
+            len(last_name_var) != 0 or
+            len(user_role_var) != 0
+            ) :
+            if self.register == True:
+                self.sql_query.register_user(
+                    username_var,
+                    password_var,
+                    first_name_var,
+                    last_name_var,
+                    user_role_var,
+                )
+        else:
+            messbx.showwarning("Error", "Please enter a value in all fields.")
+
+    def password_check(self,password):
+        limit = self.sql_query.get_password_length()
+        if len(password) > limit :
+            messbx.showwarning("Error", "The password length limit is " + limit + "." )
+            self.register = False
+        else:
+            self.register = True
+
+    def username_check(self,username):
+        if (self.sql_query.check_username(username)):
+            messbx.showwarning("Error", "The username <" + username + "> is already taken." )
+            self.register = False
+        else:
+            self.register = True
 
     def register_user(self, event=None):
         self.register_user_function()

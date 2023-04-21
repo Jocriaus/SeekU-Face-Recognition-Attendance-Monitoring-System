@@ -1021,6 +1021,11 @@ class AdminHomeApp:
         self.time_and_date_label_s.configure(text=self.current_date_n_time)
         self.administrator_app.after(15, self.update_time)
 
+    def starting_layout(self):
+        self.treeview.student_treeview(self.admin_c_sec3_frame, "IsActive")
+        self.treeview.student_treeview(self.admin_a_sec3_frame, "IsArchived")  
+
+
     # APPEAR-LOGIC-------------------------------------------------------------------------------------------------------
     # this function removes all uncessesary widgets except the dasboard
     def db_appear_logic(self):
@@ -1082,12 +1087,12 @@ class AdminHomeApp:
         # settings_forget-------------------------------------
         self.administrator_settings_frame.place_forget()
         # settings_forget-------------------------------------
-        #db_forget------------------------------------
+        # db_forget------------------------------------
         self.administrator_db_frame.place_forget()
-        #db_forget------------------------------------
-        #archived_forget------------------------------------
+        # db_forget------------------------------------
+        # archived_forget------------------------------------
         self.administrator_archived_frame.place_forget()
-        #archived_forget-----------------------------------
+        # archived_forget-----------------------------------
         self.administrator_attendance_frame.place(
             anchor="center", relheight=0.95, relwidth=0.78, relx=0.61, rely=0.525
         )
@@ -1108,9 +1113,9 @@ class AdminHomeApp:
         # db_forget----------------------------------------
         self.administrator_db_frame.place_forget()
         # db_forget----------------------------------------
-        #archived_forget------------------------------------
+        # archived_forget------------------------------------
         self.administrator_archived_frame.place_forget()
-        #archived_forget-----------------------------------
+        # archived_forget-----------------------------------
         self.administrator_users_frame.place(
             anchor="center", relheight=0.95, relwidth=0.78, relx=0.61, rely=0.525
         )
@@ -1129,12 +1134,12 @@ class AdminHomeApp:
         # settings_forget-------------------------------------
         self.administrator_settings_frame.place_forget()
         # settings_forget-------------------------------------
-        #db_forget------------------------------------
+        # db_forget------------------------------------
         self.administrator_db_frame.place_forget()
-        #db_forget------------------------------------
-        #archived_forget------------------------------------
+        # db_forget------------------------------------
+        # archived_forget------------------------------------
         self.administrator_archived_frame.place_forget()
-        #archived_forget-----------------------------------
+        # archived_forget-----------------------------------
 
         self.administrator_report_frame.place(
             anchor="center", relheight=0.95, relwidth=0.78, relx=0.61, rely=0.525
@@ -1153,9 +1158,9 @@ class AdminHomeApp:
         # report_forget------------------------------------
         self.administrator_report_frame.place_forget()
         # report_forget------------------------------------
-        #db_forget------------------------------------
+        # db_forget------------------------------------
         self.administrator_db_frame.place_forget()
-        #db_forget------------------------------------
+        # db_forget------------------------------------
         # settings_forget-------------------------------------
         self.administrator_settings_frame.place_forget()
         # settings_forget-------------------------------------
@@ -1176,12 +1181,12 @@ class AdminHomeApp:
         # report_forget------------------------------------
         self.administrator_report_frame.place_forget()
         # report_forget------------------------------------
-        #db_forget------------------------------------
+        # db_forget------------------------------------
         self.administrator_db_frame.place_forget()
-        #db_forget------------------------------------
-        #archived_forget------------------------------------
+        # db_forget------------------------------------
+        # archived_forget------------------------------------
         self.administrator_archived_frame.place_forget()
-        #archived_forget-----------------------------------
+        # archived_forget-----------------------------------
         self.administrator_settings_frame.place(
             anchor="center", relheight=0.95, relwidth=0.78, relx=0.61, rely=0.525
         )
@@ -1418,26 +1423,6 @@ class AdminHomeApp:
             self.edit_a_button.configure(text="Edit User")
             self.archived_list.configure(text="User List")
             self.treeview.user_treeview(self.admin_a_sec3_frame, "IsArchived")
-    """
-    def add_archived_logic(self):
-        # if self.clients_man_var.get() == "Manage Students":
-        self.hide_this_window()
-        self.select_folder()
-        
-        aCA.CameraApp(self.video_source,self.login_window,self.sel_cam_window, self.administrator_app,self.folder_selected, self.archived_man_var.get())
-        
-            pass
-        if self.clients_man_var.get() == "Manage Personnels":
-            self.hide_this_window()
-            self.select_folder()
-            aCA.CameraApp(self.video_source,self.login_window,self.sel_cam_window, self.administrator_app,self.folder_selected, self.clients_man_var.get())
-            pass
-        if self.clients_man_var.get() == "Manage Visitors":
-            self.hide_this_window()
-            self.select_folder()
-            aCA.CameraApp(self.video_source,self.login_window,self.sel_cam_window, self.administrator_app,self.folder_selected, self.clients_man_var.get())
-            pass
-    """
 
     def edit_archived_logic(self):
         if self.archived_man_var.get() == "Archived Students":
@@ -1451,6 +1436,7 @@ class AdminHomeApp:
             self.edit_personnel_function()
 
         if self.archived_man_var.get() == "Archived Visitors":
+            self.hide_this_window()
             self.select_folder()
             self.edit_visitor_function()
 
@@ -1471,87 +1457,6 @@ class AdminHomeApp:
         if self.archived_man_var.get() == "Archived User":
             data = self.search_a_entry.get()
             self.treeview.do_search_user(data, "IsArchived")
-
-    """
-    def edit_student_archived_function(self):
-        self.treeview.select_student_treeview_row()
-        print(self.treeview.student_values)
-
-        student_num = self.treeview.student_values[0]
-        student_firstname = self.treeview.student_values[1]
-        student_lastname = self.treeview.student_values[2]
-        student_middlename = self.treeview.student_values[3]
-        student_program = self.treeview.student_values[4]
-        student_section = self.treeview.student_values[5]
-        student_contact_num = self.treeview.student_values[6]
-        student_address = self.treeview.student_values[7]
-        student_status = self.treeview.student_values[8]
-
-        eIS.EditStudentApp(
-            student_num,
-            student_firstname,
-            student_lastname,
-            student_middlename,
-            student_program,
-            student_section,
-            student_contact_num,
-            student_address,
-            student_status,
-            self.video_source,
-            self.administrator_app,
-            self.folder_selected ,
-        )
-
-    def edit_personnel_archived_function(self):
-        self.treeview.select_personnel_treeview_row()
-        print(self.treeview.personnel_values)
-
-        personnel_number = self.treeview.personnel_values[0]
-        personnel_firstname = self.treeview.personnel_values[1]
-        personnel_lastname = self.treeview.personnel_values[2]
-        personnel_middlename = self.treeview.personnel_values[3]
-        personnel_contact_num = self.treeview.personnel_values[4]
-        personnel_address = self.treeview.personnel_values[5]
-        personnel_type = self.treeview.personnel_values[6]
-        personnel_status = self.treeview.personnel_values[7]
-
-        eIP.EditPersonnelApp(
-            personnel_number,
-            personnel_firstname,
-            personnel_lastname,
-            personnel_middlename,
-            personnel_contact_num,
-            personnel_address,
-            personnel_type,
-            personnel_status,
-            self.video_source,
-            self.administrator_app,
-            self.folder_selected ,
-        )
-        
-    def edit_visitor_archived_function(self):
-        self.treeview.select_visitor_treeview_row()
-        print(self.treeview.visitor_values)
-
-        visitor_number = self.treeview.visitor_values[0]
-        visitor_firstname = self.treeview.visitor_values[1]
-        visitor_lastname = self.treeview.visitor_values[2]
-        visitor_contact_num = self.treeview.visitor_values[4]
-        visitor_address = self.treeview.visitor_values[5]
-        visitor_status = self.treeview.visitor_values[7]
-
-        eIV.EditVisitorApp(
-            visitor_number,
-            visitor_firstname,
-            visitor_lastname,
-            visitor_contact_num,
-            visitor_address,
-            visitor_status,
-            self.video_source,
-            self.administrator_app,
-            self.folder_selected ,
-        )
-    """
     # ARCHIVED-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
 
     # SETTINGS-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
@@ -1589,6 +1494,7 @@ class AdminHomeApp:
     # CLIENTS-COMMANDS---------------------------------------------------------------------------------------------------------------
     def client_appear(self, event=None):
         self.client_appear_logic()
+        self.change_layout_client()
 
     def client_hover(self, event=None):
         self.client_section_label.configure(foreground="#FFF200")
@@ -1683,6 +1589,7 @@ class AdminHomeApp:
     # ARCHIVED-COMMANDS---------------------------------------------------------------------------------------------------------------
     def archived_appear(self, event=None):
         self.archived_appear_logic()
+        self.change_layout_archived()
 
     def archived_hover(self, event=None):
         self.archived_section_label.configure(foreground="#FFF200")

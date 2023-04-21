@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import tkinter as tk
+import tkinter.messagebox as messbx
 import query_mod as qry
 
 
@@ -196,18 +197,6 @@ class EditUserApp:
         self.active_radiobutton.configure(state="normal")
         self.inactive_radiobutton.configure(state="normal")
 
-    # enables and disables entry
-    def edit_user(self, event=None):
-        if self.edit_bool == True:
-            self.enable_entry()
-            self.edit_bool = False
-        elif self.edit_bool == False:
-            self.disable_entry()
-            self.edit_bool = True
-
-    def save_user(self, event=None):
-        self.update_user()
-
     def selected_user(self):
 
         self.username_entry.insert(0, self.username)
@@ -220,18 +209,53 @@ class EditUserApp:
         # if status is = IsActive then stat var set to Active else Inactive
 
     def update_user(self):
+        self.update = True
         self.username_var = self.username_entry.get()
         self.password_var = self.password_entry.get()
+        self.password_check(self.password_var)
         self.firstname_var = self.first_name_entry.get()
         self.lastname_var = self.last_name_entry.get()
         self.user_role_variable = self.user_role_var.get()
         self.user_status_var = self.stat_var.get()
 
-        self.sql_query.update_user(
-            self.username_var,
-            self.password_var,
-            self.firstname_var,
-            self.lastname_var,
-            self.user_role_variable,
-            self.user_status_var,
-        )
+        if ( len(self.username_var) != 0 or
+            len(self.password_var) != 0 or
+            len(self.firstname_var) != 0 or
+            len(self.lastname_var) != 0 or
+            len(self.user_role_variable) != 0 or
+            len(self.user_status_var) != 0
+            ) :
+            if self.update == True:
+                self.sql_query.update_user(
+                    self.username_var,
+                    self.password_var,
+                    self.firstname_var,
+                    self.lastname_var,
+                    self.user_role_variable,
+                    self.user_status_var,
+                )
+
+        else:
+            messbx.showwarning("Error", "Please enter a value in all fields.")
+
+    def password_check(self,password):
+        limit = self.sql_query.get_password_length()
+        if len(password) > limit :
+            messbx.showwarning("Error", "The password length limit is " + limit + "." )
+            self.update = False
+        else:
+            self.update = True
+
+    # enables and disables entry
+    def edit_user(self, event=None):
+        if self.edit_bool == True:
+            self.enable_entry()
+            self.edit_bool = False
+        elif self.edit_bool == False:
+            self.disable_entry()
+            self.edit_bool = True
+
+    def save_user(self, event=None):
+        self.update_user()
+
+

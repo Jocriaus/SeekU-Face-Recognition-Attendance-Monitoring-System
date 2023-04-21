@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import tkinter as tk
 import Treeview_table_mod as tbl
+import tkinter.messagebox as messbx
 import query_mod as qry
 import PIL.Image, PIL.ImageTk
 import admin_camera_app as aCA
@@ -83,6 +84,18 @@ class EditStudentApp:
         )
         self.return_button.place(anchor="center", relx=0.935, rely=0.85, x=0, y=0)
         self.return_button.bind("<1>", self.return_func, add="")
+
+        self.revert_button = tk.Button(self.edit_stud_frame3)
+        self.revert_button.configure(
+            background="#0072bc",
+            font="{arial} 20 {bold}",
+            foreground="#ffffff",
+            text="Revert Pic",
+
+        )
+        self.revert_button.place(anchor="center", relx=0.935, rely=0.8, x=0, y=0)
+        self.revert_button.bind("<1>", self.revert_pic_func, add="")
+
         self.edit_stud_frame3.place(
             anchor="center", relheight=0.25, relwidth=0.61, relx=0.65, rely=0.85
         )
@@ -268,6 +281,7 @@ class EditStudentApp:
         self.disp_pic()
         self.put_info()
         self.disable_entry()
+        self.hide_revert_button()
         # Main widget
         self.mainwindow = self.edit_student_app
         # will set the window to fullscreen
@@ -280,6 +294,11 @@ class EditStudentApp:
     # this function will destroy the window and closes the system/program.
     def exit_program(self):
         sys.exit() 
+
+    def hide_revert_button(self):
+        self.revert_button.place_forget()
+    def show_revert_button(self):
+        self.revert_button.place(anchor="center", relx=0.935, rely=0.8, x=0, y=0)
 
     # this will return to the camera app
     def show_home_win(self):
@@ -331,29 +350,40 @@ class EditStudentApp:
         self.address_entry.insert(0, self.student_address)
 
     def save_student_function(self):
-        self.student_num_var = self.student_num_entry.get()
-        self.student_firstname_var = self.first_name_entry.get()
-        self.student_lastname_var = self.last_name_entry.get()
-        self.student_middlename_var = self.mid_name_entry.get()
-        self.student_program_var = self.program_entry.get()
-        self.student_section_var = self.section_entry.get()
-        self.student_contact_num_var = self.contact_num_entry.get()
-        self.student_address_var = self.address_entry.get()
+        student_num_var = self.student_num_entry.get()
+        student_firstname_var = self.first_name_entry.get()
+        student_lastname_var = self.last_name_entry.get()
+        student_middlename_var = self.mid_name_entry.get()
+        student_program_var = self.program_entry.get()
+        student_section_var = self.section_entry.get()
+        student_contact_num_var = self.contact_num_entry.get()
+        student_address_var = self.address_entry.get()
 
-        self.sql_query.update_student(
-            self.student_num_var,
-            self.student_firstname_var,
-            self.student_lastname_var,
-            self.student_middlename_var,
-            self.student_program_var,
-            self.student_section_var,
-            self.student_contact_num_var,
-            self.student_address_var,
-        )
+        if ( len(student_num_var) != 0 or
+            len(student_firstname_var) != 0 or
+            len(student_middlename_var) != 0 or
+            len(student_lastname_var) != 0 or
+            len(student_contact_num_var) != 0 or
+            len(student_program_var) != 0 or
+            len(student_section_var) != 0 or
+            len(student_address_var) != 0
+            ) :
 
-        if os.path.exists(self.img_path + "/000000000.jpg"):
-            img_name = self.student_number
-            os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/000000000.jpg")
+            self.sql_query.update_student(
+                student_num_var,
+                student_firstname_var,
+                student_lastname_var,
+                student_middlename_var,
+                student_program_var,
+                student_section_var,
+                student_contact_num_var,
+                student_address_var,
+            )
+            if os.path.exists(self.img_path + "/000000000.jpg"):
+                img_name = self.student_number
+                os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/000000000.jpg")
+        else:
+            messbx.showwarning("Error", "Please enter a value in all fields.")
         
     # this function will display the image into the canvas
     def disp_pic(self):
@@ -390,6 +420,11 @@ class EditStudentApp:
     # this command will open the camera app
     def change_pic(self, event=None):
         self.show_cam_app_window()
+
+    def revert_pic_func(self, event=None):
+        self.disp_pic()
+        if os.path.exists(self.img_path + "/000000000.jpg"):
+            os.remove(self.img_path + "/000000000.jpg")
 
     def return_func(self, event=None):
         self.show_home_win()

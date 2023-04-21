@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import messagebox
+import tkinter.messagebox as messbx
 import query_mod as qry
 import client_cam as cC
 import sys
@@ -157,7 +157,7 @@ class LoginApp:
                     cC.ClientCameraSelectApp(self.user, self.log_in_app)
                     
             elif (self.sql_query.login_entry(self.username_var, self.password_var) == False):
-                print("Username or password is not match")
+                messbx.showwarning("Error", "Username and Password does not match")
             # add if else where it checks the un and pw to match
             # go to the home section
             # add check if the usertype
@@ -165,7 +165,7 @@ class LoginApp:
             # else:
             # messagebox.showwarning("Error", "No Account avilable with this username and password." )
         else:
-            messagebox.showwarning("Error", "Please enter value in all field.")
+            messbx.showwarning("Error", "Please enter a value in all fields.")
 
     # this function will center the window
     def center(self, win):

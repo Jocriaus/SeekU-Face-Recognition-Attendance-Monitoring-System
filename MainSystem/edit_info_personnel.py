@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import tkinter as tk
 import Treeview_table_mod as tbl
+import tkinter.messagebox as messbx
 import query_mod as qry
 import admin_camera_app as aCA
 import PIL.Image, PIL.ImageTk
@@ -337,27 +338,39 @@ class EditPersonnelApp:
         self.personnel_type_var.set(value=self.personnel_type)
 
     def save_personnel_function(self):
-        self.personnel_num_var = self.personnel_num_entry.get()
-        self.personnel_firstname_var = self.first_name_entry.get()
-        self.personnel_lastname_var = self.last_name_entry.get()
-        self.personnel_middlename_var = self.mid_name_entry.get()
-        self.personnel_contact_num_var = self.contact_num_entry.get()
-        self.personnel_address_var = self.address_entry.get()
-        self.personnel_type_variable = self.personnel_type_var.get()
+        personnel_num_var = self.personnel_num_entry.get()
+        personnel_firstname_var = self.first_name_entry.get()
+        personnel_lastname_var = self.last_name_entry.get()
+        personnel_middlename_var = self.mid_name_entry.get()
+        personnel_contact_num_var = self.contact_num_entry.get()
+        personnel_address_var = self.address_entry.get()
+        personnel_type_variable = self.personnel_type_var.get()
+        if ( len(personnel_num_var) != 0 or
+            len(personnel_firstname_var) != 0 or
+            len(personnel_middlename_var) != 0 or
+            len(personnel_lastname_var) != 0 or
+            len(personnel_contact_num_var) != 0 or
+            len(personnel_type_variable) != 0 or
+            len(personnel_address_var) != 0
+            ) :
+            self.sql_query.update_personnel(
+                personnel_num_var,
+                personnel_firstname_var,
+                personnel_lastname_var,
+                personnel_middlename_var,
+                personnel_contact_num_var,
+                personnel_address_var,
+                personnel_type_variable,
+            )
+            if os.path.exists(self.img_path + "/000000000.jpg"):
+                img_name = self.personnel_num
+                os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/000000000.jpg")
+        else:
+            messbx.showwarning("Error", "Please enter a value in all fields.")
 
-        self.sql_query.update_personnel(
-            self.personnel_num_var,
-            self.personnel_firstname_var,
-            self.personnel_lastname_var,
-            self.personnel_middlename_var,
-            self.personnel_contact_num_var,
-            self.personnel_address_var,
-            self.personnel_type_variable,
-        )
 
-        if os.path.exists(self.img_path + "/000000000.jpg"):
-            img_name = self.personnel_num
-            os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/000000000.jpg")
+
+
 
     # this function will display the image into the canvas
     def disp_pic(self):
@@ -394,6 +407,11 @@ class EditPersonnelApp:
     # this command will open the camera app
     def change_pic(self, event=None):
         self.show_cam_app_window()
+
+    def revert_pic_func(self, event=None):
+        self.disp_pic()
+        if os.path.exists(self.img_path + "/000000000.jpg"):
+            os.remove(self.img_path + "/000000000.jpg")
 
     def return_func(self, event=None):
         self.show_home_win()

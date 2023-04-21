@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import tkinter as tk
 import query_mod as qry
+import tkinter.messagebox as messbx
 import os
 import sys
 
@@ -233,30 +234,56 @@ class RegisterStudentApp:
 
 
     def register_student_function(self):
-        self.student_num_var = self.student_num_entry.get()
-        self.first_name_var = self.first_name_entry.get()
-        self.last_name_var = self.last_name_entry.get()
-        self.mid_name_var = self.mid_name_entry.get()
-        self.program_var = self.program_entry.get()
-        self.section_var = self.section_entry.get()
-        self.contact_num_var = self.contact_num_entry.get()
-        self.address_var = self.address_entry.get()
+        self.register = True
+        student_num_var = self.student_num_entry.get()
+        self.client_no_check(student_num_var)
+        first_name_var = self.first_name_entry.get()
+        last_name_var = self.last_name_entry.get()
+        mid_name_var = self.mid_name_entry.get()
+        program_var = self.program_entry.get()
+        section_var = self.section_entry.get()
+        contact_num_var = self.contact_num_entry.get()
+        address_var = self.address_entry.get()
 
-        self.sql_query.register_student(
-            self.student_num_var,
-            self.first_name_var,
-            self.last_name_var,
-            self.mid_name_var,
-            self.program_var,
-            self.section_var,
-            self.contact_num_var,
-            self.address_var,
-        )
+        if ( len(student_num_var) != 0 or
+            len(first_name_var) != 0 or
+            len(mid_name_var) != 0 or
+            len(last_name_var) != 0 or
+            len(contact_num_var) != 0 or
+            len(program_var) != 0 or
+            len(section_var) != 0 or
+            len(address_var) != 0
+            ) :
 
-        img_name = self.student_num_var
+            if self.register == True :
+                self.sql_query.register_student(
+                    student_num_var,
+                    first_name_var,
+                    last_name_var,
+                    mid_name_var,
+                    program_var,
+                    section_var,
+                    contact_num_var,
+                    address_var,
+                )
+                img_name = student_num_var
+                os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/000000000.jpg")
+        else:
+            messbx.showwarning("Error", "Please enter a value in all fields.")
 
 
-        os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/000000000.jpg")
+
+
+
+    def client_no_check(self,client_no):
+        if (self.sql_query.check_username(client_no)):
+            messbx.showwarning("Error", " The student no. " + client_no + " is already taken." )
+            self.register = False
+        else:
+            self.register = True
+
+
+
 
     def register_student(self, event=None):
         self.register_student_function()
