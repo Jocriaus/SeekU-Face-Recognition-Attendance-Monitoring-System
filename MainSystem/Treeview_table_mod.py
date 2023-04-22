@@ -1,4 +1,7 @@
 import pyodbc as odbc
+import docx
+import docx2pdf
+import os
 import tkinter as tk
 import tkinter.ttk as ttk
 import query_mod as qry
@@ -92,7 +95,7 @@ class TreeviewGUI:
         self.student_tree.column("Address", anchor=tk.CENTER, width=240)
         self.student_tree.column("Student Status", anchor=tk.CENTER, width=140)
         # Hide status, show only on edit
-            # di daw pede sabi ni vrix
+        # di daw pede sabi ni vrix
 
         # Create Headings
         self.student_tree.heading("#0", text="", anchor=tk.CENTER)
@@ -136,7 +139,9 @@ class TreeviewGUI:
         )
 
         # Create Treeview Frame
-        self.student_attendance_treeview_frame = tk.Frame(self.student_attendance_treeview_root)
+        self.student_attendance_treeview_frame = tk.Frame(
+            self.student_attendance_treeview_root
+        )
         self.student_attendance_treeview_frame.configure(background="#F7FAE9")
         self.student_attendance_treeview_frame.pack(pady=20)
 
@@ -178,7 +183,9 @@ class TreeviewGUI:
 
         # Format the columns
         self.student_attendance_tree.column("#0", width=0, stretch=tk.NO)
-        self.student_attendance_tree.column("Student Number", anchor=tk.CENTER, width=140)
+        self.student_attendance_tree.column(
+            "Student Number", anchor=tk.CENTER, width=140
+        )
         self.student_attendance_tree.column("First Name", anchor=tk.CENTER, width=180)
         self.student_attendance_tree.column("Last Name", anchor=tk.CENTER, width=180)
         self.student_attendance_tree.column("Program", anchor=tk.CENTER, width=140)
@@ -198,16 +205,23 @@ class TreeviewGUI:
         self.student_attendance_tree.heading(
             "Last Name", text="Last Name", anchor=tk.CENTER
         )
-        self.student_attendance_tree.heading("Program", text="Program", anchor=tk.CENTER)
-        self.student_attendance_tree.heading("Section", text="Section", anchor=tk.CENTER)
+        self.student_attendance_tree.heading(
+            "Program", text="Program", anchor=tk.CENTER
+        )
+        self.student_attendance_tree.heading(
+            "Section", text="Section", anchor=tk.CENTER
+        )
         self.student_attendance_tree.heading("Date", text="Date", anchor=tk.CENTER)
-        self.student_attendance_tree.heading("Time In", text="Time In", anchor=tk.CENTER)
-        self.student_attendance_tree.heading("Time Out", text="Time Out", anchor=tk.CENTER)
+        self.student_attendance_tree.heading(
+            "Time In", text="Time In", anchor=tk.CENTER
+        )
+        self.student_attendance_tree.heading(
+            "Time Out", text="Time Out", anchor=tk.CENTER
+        )
 
         self.populate_student_attendance_treeview()
 
         return self.student_attendance_treeview_frame
-
 
     def student_report_treeview(self, root):
         self.student_report_treeview_root = root
@@ -301,7 +315,7 @@ class TreeviewGUI:
 
         return self.student_report_treeview_frame
 
-    def personnel_treeview(self, root,status):
+    def personnel_treeview(self, root, status):
         self.personnel_treeview_root = root
 
         # Configure Style of Treeview
@@ -458,7 +472,9 @@ class TreeviewGUI:
         )
         self.personnel_attendance_tree.column("First Name", anchor=tk.CENTER, width=200)
         self.personnel_attendance_tree.column("Last Name", anchor=tk.CENTER, width=190)
-        self.personnel_attendance_tree.column("Personnel Type", anchor=tk.CENTER, width=160)
+        self.personnel_attendance_tree.column(
+            "Personnel Type", anchor=tk.CENTER, width=160
+        )
         self.personnel_attendance_tree.column("Date", anchor=tk.CENTER, width=190)
         self.personnel_attendance_tree.column("Time In", anchor=tk.CENTER, width=210)
         self.personnel_attendance_tree.column("Time Out", anchor=tk.CENTER, width=210)
@@ -478,14 +494,15 @@ class TreeviewGUI:
             "Personnel Type", text="Personnel Type", anchor=tk.CENTER
         )
         self.personnel_attendance_tree.heading("Date", text="Date", anchor=tk.CENTER)
-        self.personnel_attendance_tree.heading("Time In", text="Time In", anchor=tk.CENTER)
+        self.personnel_attendance_tree.heading(
+            "Time In", text="Time In", anchor=tk.CENTER
+        )
         self.personnel_attendance_tree.heading(
             "Time Out", text="Time Out", anchor=tk.CENTER
         )
 
         self.populate_personnel_attendance_treeview()
         return self.personnel_attendance_treeview_frame
-
 
     def personnel_report_treeview(self, root):
         self.personnel_report_treeview_root = root
@@ -581,9 +598,6 @@ class TreeviewGUI:
 
         self.populate_personnel_report_treeview()
         return self.personnel_report_treeview_frame
-
-
-
 
     def visitor_treeview(self, root, status):
         self.visitor_treeview_root = root
@@ -684,7 +698,9 @@ class TreeviewGUI:
             font="{arial} 11 {bold}",
         )
         # Create Treeview Frame
-        self.visitor_attendance_treeview_frame = tk.Frame(self.visitor_attendance_treeview_root)
+        self.visitor_attendance_treeview_frame = tk.Frame(
+            self.visitor_attendance_treeview_root
+        )
         self.visitor_attendance_treeview_frame.configure(background="#F7FAE9")
         self.visitor_attendance_treeview_frame.pack(pady=20)
 
@@ -724,7 +740,9 @@ class TreeviewGUI:
 
         # Format the columns
         self.visitor_attendance_tree.column("#0", width=0, stretch=tk.NO)
-        self.visitor_attendance_tree.column("Visitor Number", anchor=tk.CENTER, width=200)
+        self.visitor_attendance_tree.column(
+            "Visitor Number", anchor=tk.CENTER, width=200
+        )
         self.visitor_attendance_tree.column("First Name", anchor=tk.CENTER, width=240)
         self.visitor_attendance_tree.column("Last Name", anchor=tk.CENTER, width=230)
         self.visitor_attendance_tree.column("Date", anchor=tk.CENTER, width=220)
@@ -743,12 +761,15 @@ class TreeviewGUI:
             "Last Name", text="Last Name", anchor=tk.CENTER
         )
         self.visitor_attendance_tree.heading("Date", text="Date", anchor=tk.CENTER)
-        self.visitor_attendance_tree.heading("Time In", text="Time In", anchor=tk.CENTER)
-        self.visitor_attendance_tree.heading("Time Out", text="Time Out", anchor=tk.CENTER)
+        self.visitor_attendance_tree.heading(
+            "Time In", text="Time In", anchor=tk.CENTER
+        )
+        self.visitor_attendance_tree.heading(
+            "Time Out", text="Time Out", anchor=tk.CENTER
+        )
 
         self.populate_visitor_attendance_treeview()
         return self.visitor_attendance_treeview_frame
-
 
     def visitor_report_treeview(self, root):
         self.visitor_report_treeview_root = root
@@ -910,9 +931,9 @@ class TreeviewGUI:
         self.populate_user_treeview(status)
         return self.user_treeview_frame
 
-    def populate_student_treeview(self,status):
+    def populate_student_treeview(self, status):
         self.cursor.execute(
-            "SELECT * FROM tbl_student WHERE student_status = '"+ status +"'"
+            "SELECT * FROM tbl_student WHERE student_status = '" + status + "'"
         )  # add where status is isActive
 
         for row in self.cursor.fetchall():
@@ -955,7 +976,6 @@ class TreeviewGUI:
                 ),
             )
 
-
     def populate_student_report_treeview(self):
         self.cursor.execute(
             "SELECT tbl_student.student_no, tbl_student.student_firstname, tbl_student.student_lastname, tbl_student.student_program, tbl_student.student_section, tbl_student_report.student_attendance_date, tbl_student_report.student_time_in, tbl_student_report.student_time_out FROM tbl_student RIGHT JOIN tbl_student_report ON tbl_student.student_no = tbl_student_report.student_no"
@@ -980,7 +1000,7 @@ class TreeviewGUI:
 
     def populate_personnel_treeview(self, status):
         self.cursor.execute(
-            "SELECT * FROM tbl_personnel WHERE personnel_status = '"+ status +"'"
+            "SELECT * FROM tbl_personnel WHERE personnel_status = '" + status + "'"
         )  # add where status is isActive
 
         for row in self.cursor.fetchall():
@@ -1020,7 +1040,6 @@ class TreeviewGUI:
                 ),
             )
 
-
     def populate_personnel_report_treeview(self):
         self.cursor.execute(
             "SELECT tbl_personnel.personnel_no, tbl_personnel.personnel_firstname, tbl_personnel.personnel_lastname, tbl_personnel.personnel_type, tbl_personnel_report.personnel_attendance_date, tbl_personnel_report.personnel_time_in, tbl_personnel_report.personnel_time_out FROM tbl_personnel RIGHT JOIN tbl_personnel_report ON tbl_personnel.personnel_no = tbl_personnel_report.personnel_no"
@@ -1041,9 +1060,9 @@ class TreeviewGUI:
                 ),
             )
 
-    def populate_visitor_treeview(self,status):
+    def populate_visitor_treeview(self, status):
         self.cursor.execute(
-            "SELECT * FROM tbl_visitor WHERE visitor_status = '"+ status +"'"
+            "SELECT * FROM tbl_visitor WHERE visitor_status = '" + status + "'"
         )  # add where status is isActive
 
         for row in self.cursor.fetchall():
@@ -1081,7 +1100,6 @@ class TreeviewGUI:
                 ),
             )
 
-
     def populate_visitor_report_treeview(self):
         self.cursor.execute(
             "SELECT tbl_visitor.visitor_no, tbl_visitor.visitor_firstname, tbl_visitor.visitor_lastname, tbl_visitor_report.visitor_attendance_date, tbl_visitor_report.visitor_time_in, tbl_visitor_report.visitor_time_out FROM  tbl_visitor RIGHT JOIN tbl_visitor_report ON tbl_visitor.visitor_no = tbl_visitor_report.visitor_no"
@@ -1102,9 +1120,9 @@ class TreeviewGUI:
                 ),
             )
 
-    def populate_user_treeview(self,status):
+    def populate_user_treeview(self, status):
         self.cursor.execute(
-            "SELECT * FROM tbl_user WHERE user_status = '"+ status +"'"
+            "SELECT * FROM tbl_user WHERE user_status = '" + status + "'"
         )  # add where status is isActive
 
         for row in self.cursor.fetchall():
@@ -1148,7 +1166,11 @@ class TreeviewGUI:
         result = self.sql_query.search_student(search_term, status)
 
         for row in result:
-            self.student_tree.insert("", "end", text=row[0], values=(
+            self.student_tree.insert(
+                "",
+                "end",
+                text=row[0],
+                values=(
                     row[0],
                     row[1],
                     row[2],
@@ -1157,7 +1179,9 @@ class TreeviewGUI:
                     row[5],
                     row[6],
                     row[7],
-                    row[8],))
+                    row[8],
+                ),
+            )
 
     def do_search_student_report(self, search_term):
         self.search_term = search_term
@@ -1168,7 +1192,11 @@ class TreeviewGUI:
         result = self.sql_query.search_student_report(search_term)
 
         for row in result:
-            self.student_report_tree.insert("", "end", text=row[0], values=(
+            self.student_report_tree.insert(
+                "",
+                "end",
+                text=row[0],
+                values=(
                     row[0],
                     row[1],
                     row[2],
@@ -1176,8 +1204,10 @@ class TreeviewGUI:
                     row[4],
                     row[5],
                     row[6],
-                    row[7],))
-            
+                    row[7],
+                ),
+            )
+
     def do_search_student_attendance(self, search_term):
         self.search_term = search_term
         for child in self.student_attendance_tree.get_children():
@@ -1187,7 +1217,11 @@ class TreeviewGUI:
         result = self.sql_query.search_student_attendance(search_term)
 
         for row in result:
-            self.student_report_tree.insert("", "end", text=row[0], values=(
+            self.student_report_tree.insert(
+                "",
+                "end",
+                text=row[0],
+                values=(
                     row[0],
                     row[1],
                     row[2],
@@ -1195,7 +1229,9 @@ class TreeviewGUI:
                     row[4],
                     row[5],
                     row[6],
-                    row[7],))
+                    row[7],
+                ),
+            )
 
     def do_search_personnel(self, search_term, status):
         self.search_term = search_term
@@ -1264,7 +1300,7 @@ class TreeviewGUI:
                     row[5],
                     row[6],
                 ),
-            )        
+            )
 
     def do_search_visitor(self, search_term, status):
         self.search_term = search_term
@@ -1308,7 +1344,7 @@ class TreeviewGUI:
                     row[4],
                     row[5],
                 ),
-            )  
+            )
 
     def do_search_visitor_attendance(self, search_term):
         self.search_term = search_term
@@ -1330,7 +1366,7 @@ class TreeviewGUI:
                     row[4],
                     row[5],
                 ),
-            )  
+            )
 
     def do_search_user(self, search_term, status):
         self.search_term = search_term
@@ -1340,7 +1376,10 @@ class TreeviewGUI:
         result = self.sql_query.search_user(self.search_term, status)
 
         for row in result:
-            self.user_tree.insert("", "end", text=row[0], 
+            self.user_tree.insert(
+                "",
+                "end",
+                text=row[0],
                 values=(
                     row[0],
                     row[1],
@@ -1349,4 +1388,194 @@ class TreeviewGUI:
                     row[4],
                     row[5],
                     row[6],
-                ),)
+                ),
+            )
+
+    def print_word_student_doc(self):
+        # open an existing Word document
+        self.doc = docx.Document("../Documents/Document_temp/Report Template.docx")
+
+        # get the first paragraph in the document
+        self.p1 = self.doc.paragraphs[8]
+
+        self.table = self.doc.add_table(rows=1, cols=8)
+        self.table.style = "Table Grid"
+
+        self.treeview_data = []
+        # get the table data of student
+        for child in self.student_tree.get_children():
+            self.values = self.student_tree.item(child)["values"]
+            self.treeview_data.append(self.values)
+        # Inserts the table data of student
+        for row in self.treeview_data:
+            self.row_cells = self.table.add_row().cells
+            self.row_cells[0].text = row[0]
+            self.row_cells[1].text = row[1]
+            self.row_cells[2].text = row[2]
+            self.row_cells[3].text = row[3]
+            self.row_cells[4].text = row[4]
+            self.row_cells[5].text = row[5]
+            self.row_cells[6].text = row[6]
+            self.row_cells[7].text = row[7]
+        # saves the doc to a new file path
+        self.doc.save("../Documents/Student_Report.docx")
+        os.startfile("../Documents/Student_Report.docx")
+
+    def print_word_personnel_doc(self):
+        # open an existing Word document
+        self.doc = docx.Document("../Documents/Document_temp/Report Template.docx")
+
+        # get the first paragraph in the document
+        self.p1 = self.doc.paragraphs[8]
+
+        self.table = self.doc.add_table(rows=1, cols=2)
+        self.table.style = "Table Grid"
+
+        self.treeview_data = []
+        # get the table data of student
+        for child in self.personnel_tree.get_children():
+            self.values = self.personnel_tree.item(child)["values"]
+            self.treeview_data.append(self.values)
+        # Inserts the table data of student
+        for row in self.treeview_data:
+            self.row_cells = self.table.add_row().cells
+            self.row_cells[0].text = row[0]
+            self.row_cells[1].text = row[1]
+            self.row_cells[1].text = row[2]
+            self.row_cells[1].text = row[3]
+            self.row_cells[1].text = row[4]
+            self.row_cells[1].text = row[5]
+            self.row_cells[1].text = row[6]
+        # saves the doc to a new file path
+        self.doc.save("../Documents/Personnel_Report.docx")
+        os.startfile("../Documents/Personnel_Report.docx")
+
+    def print_word_visitor_doc(self):
+        # open an existing Word document
+        self.doc = docx.Document("../Documents/Document_temp/Report Template.docx")
+
+        # get the first paragraph in the document
+        self.p1 = self.doc.paragraphs[8]
+
+        self.table = self.doc.add_table(rows=1, cols=2)
+        self.table.style = "Table Grid"
+
+        self.treeview_data = []
+        # get the table data of student
+        for child in self.visitor_tree.get_children():
+            self.values = self.visitor_tree.item(child)["values"]
+            self.treeview_data.append(self.values)
+        # Inserts the table data of student
+        for row in self.treeview_data:
+            self.row_cells = self.table.add_row().cells
+            self.row_cells[0].text = row[0]
+            self.row_cells[1].text = row[1]
+            self.row_cells[1].text = row[2]
+            self.row_cells[1].text = row[3]
+            self.row_cells[1].text = row[4]
+            self.row_cells[1].text = row[5]
+        # saves the doc to a new file path
+        self.doc.save("../Documents/Visitor_Report.docx")
+        os.startfile("../Documents/Visitor_Report.docx")
+
+    def print_pdf_student(self):
+        # open an existing Word document
+        self.doc = docx.Document("../Documents/Document_temp/Report Template.docx")
+
+        # get the first paragraph in the document
+        self.p1 = self.doc.paragraphs[8]
+
+        self.table = self.doc.add_table(rows=1, cols=8)
+        self.table.style = "Table Grid"
+
+        self.treeview_data = []
+        # get the table data of student
+        for child in self.student_tree.get_children():
+            self.values = self.student_tree.item(child)["values"]
+            self.treeview_data.append(self.values)
+        # Inserts the table data of student
+        for row in self.treeview_data:
+            self.row_cells = self.table.add_row().cells
+            self.row_cells[0].text = row[0]
+            self.row_cells[1].text = row[1]
+            self.row_cells[2].text = row[2]
+            self.row_cells[3].text = row[3]
+            self.row_cells[4].text = row[4]
+            self.row_cells[5].text = row[5]
+            self.row_cells[6].text = row[6]
+            self.row_cells[7].text = row[7]
+        # saves the doc to a new file path
+        self.doc.save("../Documents/Student_Report.docx")
+
+        self.docx_file = "../Documents/Student_Report.docx"
+        self.pdf_file = "../Documents/Student_Report.pdf"
+
+        docx2pdf.convert(self.docx_file, self.pdf_file)
+        os.startfile("../Documents/Student_Report.pdf")
+
+    def print_pdf_personnel(self):
+        # open an existing Word document
+        self.doc = docx.Document("../Documents/Document_temp/Report Template.docx")
+
+        # get the first paragraph in the document
+        self.p1 = self.doc.paragraphs[8]
+
+        self.table = self.doc.add_table(rows=1, cols=2)
+        self.table.style = "Table Grid"
+
+        self.treeview_data = []
+        # get the table data of student
+        for child in self.personnel_tree.get_children():
+            self.values = self.personnel_tree.item(child)["values"]
+            self.treeview_data.append(self.values)
+        # Inserts the table data of student
+        for row in self.treeview_data:
+            self.row_cells = self.table.add_row().cells
+            self.row_cells[0].text = row[0]
+            self.row_cells[1].text = row[1]
+            self.row_cells[1].text = row[2]
+            self.row_cells[1].text = row[3]
+            self.row_cells[1].text = row[4]
+            self.row_cells[1].text = row[5]
+            self.row_cells[1].text = row[6]
+        # saves the doc to a new file path
+        self.doc.save("../Documents/Personnel_Report.docx")
+
+        self.docx_file = "../Documents/Personnel_Report.docx"
+        self.pdf_file = "../Documents/Personnel_Report.pdf"
+
+        docx2pdf.convert(self.docx_file, self.pdf_file)
+        os.startfile("../Documents/Personnel_Report.pdf")
+
+    def print_pdf_visitor(self):
+        # open an existing Word document
+        self.doc = docx.Document("../Documents/Document_temp/Report Template.docx")
+
+        # get the first paragraph in the document
+        self.p1 = self.doc.paragraphs[8]
+
+        self.table = self.doc.add_table(rows=1, cols=2)
+        self.table.style = "Table Grid"
+
+        self.treeview_data = []
+        # get the table data of student
+        for child in self.visitor_tree.get_children():
+            self.values = self.visitor_tree.item(child)["values"]
+            self.treeview_data.append(self.values)
+        # Inserts the table data of student
+        for row in self.treeview_data:
+            self.row_cells = self.table.add_row().cells
+            self.row_cells[0].text = row[0]
+            self.row_cells[1].text = row[1]
+            self.row_cells[1].text = row[2]
+            self.row_cells[1].text = row[3]
+            self.row_cells[1].text = row[4]
+            self.row_cells[1].text = row[5]
+        # saves the doc to a new file path
+        self.doc.save("../Documents/Visitor_Report.docx")
+
+        self.docx_file = "../Documents/Visitor_Report.docx"
+        self.pdf_file = "../Documents/Visitor_Report.pdf"
+
+        docx2pdf.convert(self.docx_file, self.pdf_file)
+        os.startfile("../Documents/Visitor_Report.pdf")
