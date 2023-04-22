@@ -361,6 +361,7 @@ class docxClass:
         pdf_file = filepath + "/" + filename + ".pdf"
 
         docx2pdf.convert(docx_file, pdf_file)
+        os.remove(docx_file)
         os.startfile(filepath + "/" + filename + ".pdf")
 
     def save_pdf_student(self, filepath, filename, date1, date2):
@@ -398,6 +399,7 @@ class docxClass:
         pdf_file = filepath + "/" + filename + ".pdf"
 
         docx2pdf.convert(docx_file, pdf_file)
+        os.remove(docx_file)
 
     def print_pdf_personnel(self, filepath, filename, date1, date2):
         # populate the report tree
@@ -433,6 +435,7 @@ class docxClass:
         pdf_file = filepath + "/" + filename + ".pdf"
 
         docx2pdf.convert(docx_file, pdf_file)
+        os.remove(docx_file)
         os.startfile(filepath + "/" + filename + ".pdf")
 
     def save_pdf_personnel(self, filepath, filename, date1, date2):
@@ -469,6 +472,7 @@ class docxClass:
         pdf_file = filepath + "/" + filename + ".pdf"
 
         docx2pdf.convert(docx_file, pdf_file)
+        os.remove(docx_file)
 
     def print_pdf_visitor(self, filepath, filename, date1, date2):
         # populate the report tree
@@ -503,6 +507,7 @@ class docxClass:
         pdf_file = filepath + "/" + filename + ".pdf"
 
         docx2pdf.convert(docx_file, pdf_file)
+        os.remove(docx_file)
         os.startfile(filepath + "/" + filename + ".pdf")
 
     def save_pdf_visitor(self, filepath, filename, date1, date2):
@@ -538,3 +543,4 @@ class docxClass:
         pdf_file = filepath + "/" + filename + ".pdf"
 
         docx2pdf.convert(docx_file, pdf_file)
+        os.remove(docx_file)
