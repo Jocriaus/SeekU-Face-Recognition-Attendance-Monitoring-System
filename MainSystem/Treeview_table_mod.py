@@ -1235,7 +1235,7 @@ class TreeviewGUI:
             self.personnel_report_tree.delete(child)
 
         # search_term = search_entry.get()
-        result = self.sql_query.sort_personnel_report_bydate_docx()(date1, date2)
+        result = self.sql_query.sort_personnel_report_bydate_docx(date1, date2)
 
         for row in result:
             self.personnel_report_tree.insert(
