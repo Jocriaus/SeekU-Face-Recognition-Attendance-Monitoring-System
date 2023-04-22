@@ -76,7 +76,7 @@ class EditPersonnelApp:
             background="#F7FAE9", image=self.img_SeekUlarge, text="label1"
         )
         self.app_logo_label.place(anchor="center", relx=0.32, rely=0.5)
-        self.return_button = tk.Button(self.edit_pers_frame3)
+        self.return_button = tk.Button(self.edit_stud_frame3)
         self.return_button.configure(
             background="#0072bc",
             font="{arial} 20 {bold}",
@@ -85,6 +85,18 @@ class EditPersonnelApp:
         )
         self.return_button.place(anchor="center", relx=0.935, rely=0.85, x=0, y=0)
         self.return_button.bind("<1>", self.return_func, add="")
+
+        self.revert_button = tk.Button(self.edit_stud_frame3)
+        self.revert_button.configure(
+            background="#0072bc",
+            font="{arial} 20 {bold}",
+            foreground="#ffffff",
+            text="Revert Pic",
+
+        )
+        self.revert_button.place(anchor="center",relx=0.914, rely=0.5)
+        self.revert_button.bind("<1>", self.revert_pic_func, add="")
+
         self.edit_pers_frame3.place(
             anchor="center", relheight=0.25, relwidth=0.61, relx=0.65, rely=0.85
         )
@@ -271,6 +283,7 @@ class EditPersonnelApp:
         self.disp_pic()
         self.put_info()
         self.disable_entry()
+        self.hide_revert_button()
         # Main widget
         self.mainwindow = self.edit_personnel_app
         # will set the window to fullscreen
@@ -296,6 +309,11 @@ class EditPersonnelApp:
         self.hide_this_window()
         aCA.CameraEditApp(self.disp_temp_pic,self.video_source,self.edit_personnel_app, self.img_path)
 
+    def hide_revert_button(self):
+        self.revert_button.place_forget()
+
+    def show_revert_button(self):
+        self.revert_button.place(anchor="center",relx=0.914, rely=0.5)
 
     # enables entry widgets
     def disable_entry(self):
@@ -381,6 +399,7 @@ class EditPersonnelApp:
         self.camera_canvas.create_image(0, 0, image=self.student_image, anchor=tk.NW)
     
     def disp_temp_pic(self):
+        self.show_revert_button()
         self.load_image = PIL.Image.open(self.img_path +"/000000000.jpg")
         # will use the ImageTK.PhotoImage() function to set the image
         # as a readable image.

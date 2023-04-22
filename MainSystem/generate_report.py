@@ -2,7 +2,7 @@
 import tkinter as tk
 import tkcalendar as tkc
 import query_mod as qry
-import excel_report_mod as eXM
+import report_mod as rM
 import Treeview_table_mod as tbl
 import datetime
 
@@ -19,7 +19,8 @@ class SavePrintReportApp:
         self.maxdate = datetime.datetime.now() # max date is today
         self.sql_query = qry.dbQueries()
         self.treeview = tbl.TreeviewGUI()
-        self.excel_func = eXM.excelClass()
+        self.excel_class = rM.excelClass()
+        self.docx_class = rM.docxClass()
     #PRE-LOAD-ASSIGNMENT------------------------------------------------------------------------------------------- 
         self.generate_report_app = tk.Toplevel()
         self.generate_report_app.configure(background="#0072bc", height=200, width=200)
@@ -176,7 +177,7 @@ class SavePrintReportApp:
         if self.client_type == "Students Report":
 
             if self.file_type_var.get() =="Excel": 
-                self.excel_func.save_student(filename, self.file_path, datefrom, dateto)
+                self.excel_class.save_student(filename, self.file_path, datefrom, dateto)
 
             if self.file_type_var.get() =="Docx":
                 pass
@@ -187,7 +188,7 @@ class SavePrintReportApp:
         if self.client_type == "Personnels Report":
 
             if self.file_type_var.get() =="Excel": 
-                self.excel_func.save_personnel(filename, self.file_path, datefrom, dateto)
+                self.excel_class.save_personnel(filename, self.file_path, datefrom, dateto)
 
             if self.file_type_var.get() =="Docx":
                 pass
@@ -198,7 +199,7 @@ class SavePrintReportApp:
         if self.client_type == "Visitors Report":
 
             if self.file_type_var.get() =="Excel": 
-                self.excel_func.save_visitor(filename, self.file_path, datefrom, dateto)
+                self.excel_class.save_visitor(filename, self.file_path, datefrom, dateto)
 
             if self.file_type_var.get() =="Docx":
                 pass
@@ -215,7 +216,7 @@ class SavePrintReportApp:
         if self.client_type == "Students Report":
 
             if self.file_type_var.get() =="Excel": 
-                self.excel_func.print_student(filename, self.file_path, datefrom, dateto)
+                self.excel_class.print_student(filename, self.file_path, datefrom, dateto)
 
             if self.file_type_var.get() =="Docx":
                 pass
@@ -226,7 +227,7 @@ class SavePrintReportApp:
         if self.client_type == "Personnels Report":
 
             if self.file_type_var.get() =="Excel": 
-                self.excel_func.print_personnel(filename, self.file_path, datefrom, dateto)
+                self.excel_class.print_personnel(filename, self.file_path, datefrom, dateto)
 
             if self.file_type_var.get() =="Docx":
                 pass
@@ -237,7 +238,7 @@ class SavePrintReportApp:
         if self.client_type == "Visitors Report":
 
             if self.file_type_var.get() =="Excel": 
-                self.excel_func.print_visitor(filename, self.file_path, datefrom, dateto)
+                self.excel_class.print_visitor(filename, self.file_path, datefrom, dateto)
 
             if self.file_type_var.get() =="Docx":
                 pass

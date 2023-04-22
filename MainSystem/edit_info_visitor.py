@@ -70,7 +70,7 @@ class EditVisitorApp:
             background="#F7FAE9", image=self.img_SeekUlarge, text="label1"
         )
         self.app_logo_label.place(anchor="center", relx=0.32, rely=0.5)
-        self.return_button = tk.Button(self.edit_visitor_frame3)
+        self.return_button = tk.Button(self.edit_stud_frame3)
         self.return_button.configure(
             background="#0072bc",
             font="{arial} 20 {bold}",
@@ -79,6 +79,18 @@ class EditVisitorApp:
         )
         self.return_button.place(anchor="center", relx=0.935, rely=0.85, x=0, y=0)
         self.return_button.bind("<1>", self.return_func, add="")
+
+        self.revert_button = tk.Button(self.edit_stud_frame3)
+        self.revert_button.configure(
+            background="#0072bc",
+            font="{arial} 20 {bold}",
+            foreground="#ffffff",
+            text="Revert Pic",
+
+        )
+        self.revert_button.place(anchor="center",relx=0.914, rely=0.5)
+        self.revert_button.bind("<1>", self.revert_pic_func, add="")
+
         self.edit_visitor_frame3.place(
             anchor="center", relheight=0.25, relwidth=0.61, relx=0.65, rely=0.85
         )
@@ -213,6 +225,7 @@ class EditVisitorApp:
         self.disp_pic()
         self.select_visitor()
         self.disable_entry()
+        self.hide_revert_button()
         # Main widget
         self.mainwindow = self.edit_visitor_app
         self.mainwindow.wm_attributes("-fullscreen", "True")
@@ -241,6 +254,12 @@ class EditVisitorApp:
     def back_cam_app_window(self):
         self.admin_home_window.deiconify()
         self.edit_visitor_app.destroy()
+
+    def hide_revert_button(self):
+        self.revert_button.place_forget()
+
+    def show_revert_button(self):
+        self.revert_button.place(anchor="center",relx=0.914, rely=0.5)
 
     # enables entry widgets
     def disable_entry(self):
@@ -306,6 +325,7 @@ class EditVisitorApp:
         self.camera_canvas.create_image(0, 0, image=self.student_image, anchor=tk.NW)
 
     def disp_temp_pic(self):
+        self.show_revert_button()
         self.load_image = PIL.Image.open(self.img_path +"/000000000.jpg")
         # will use the ImageTK.PhotoImage() function to set the image
         # as a readable image.
@@ -333,6 +353,12 @@ class EditVisitorApp:
     # this command will open the camera app
     def change_pic(self, event=None):
         self.show_cam_app_window()
+
+    def revert_pic_func(self, event=None):
+        self.disp_pic()
+        self.hide_revert_button()
+        if os.path.exists(self.img_path + "/000000000.jpg"):
+            os.remove(self.img_path + "/000000000.jpg")
 
     def return_func(self, event=None):
         self.show_home_win()

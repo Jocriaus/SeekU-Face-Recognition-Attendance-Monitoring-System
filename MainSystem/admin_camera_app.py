@@ -392,6 +392,7 @@ class CameraEditApp:
             self.display_temp_pic()
             self.show_edit_window()
 
+
     # this command will return to the home window
     def log_out_func(self, event=None):
         self.show_edit_window()

@@ -93,7 +93,7 @@ class EditStudentApp:
             text="Revert Pic",
 
         )
-        self.revert_button.place(anchor="center", relx=0.935, rely=0.8, x=0, y=0)
+        self.revert_button.place(anchor="center",relx=0.914, rely=0.5)
         self.revert_button.bind("<1>", self.revert_pic_func, add="")
 
         self.edit_stud_frame3.place(
@@ -296,7 +296,7 @@ class EditStudentApp:
     def hide_revert_button(self):
         self.revert_button.place_forget()
     def show_revert_button(self):
-        self.revert_button.place(anchor="center", relx=0.935, rely=0.8, x=0, y=0)
+        self.revert_button.place(anchor="center",relx=0.914, rely=0.5)
 
     # this will return to the camera app
     def show_home_win(self):
@@ -394,6 +394,7 @@ class EditStudentApp:
         self.camera_canvas.create_image(0, 0, image=self.student_image, anchor=tk.NW)
     
     def disp_temp_pic(self):
+        self.show_revert_button()
         self.load_image = PIL.Image.open(self.img_path +"/000000000.jpg")
         # will use the ImageTK.PhotoImage() function to set the image
         # as a readable image.
@@ -421,6 +422,7 @@ class EditStudentApp:
 
     def revert_pic_func(self, event=None):
         self.disp_pic()
+        self.hide_revert_button()
         if os.path.exists(self.img_path + "/000000000.jpg"):
             os.remove(self.img_path + "/000000000.jpg")
 
