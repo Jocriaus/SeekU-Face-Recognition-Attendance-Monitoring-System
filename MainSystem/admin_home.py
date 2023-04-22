@@ -521,31 +521,6 @@ class AdminHomeApp:
             text="Student Informations will be activated\nand deactivated on selected dates\nFormat = YYYY-MM-DD",
         )
         self.stud_stat_rem_label.place(anchor="center", relx=0.325, rely=0.63, x=0, y=0)
-        self.activation_date_entry = tk.Entry(self.admin_s_sec1_frame)
-        self.activation_date_entry.configure(
-            borderwidth=2,
-            font="{arial} 12 {}",
-            highlightbackground="#000000",
-            highlightthickness=2,
-        )
-        self.activation_date_entry.place(
-            anchor="center",
-            relheight=0.05,
-            relwidth=0.3,
-            relx=0.25,
-            rely=0.79,
-            x=0,
-            y=0,
-        )
-        self.activation_date_label = tk.Label(self.admin_s_sec1_frame)
-        self.activation_date_label.configure(
-            background="#F7FAE9",
-            font="{arial} 11 {bold}",
-            text="Account Activation Date",
-        )
-        self.activation_date_label.place(
-            anchor="center", relx=0.23, rely=0.73, x=0, y=0
-        )
         self.deactivation_date_entry = tk.Entry(self.admin_s_sec1_frame)
         self.deactivation_date_entry.configure(
             borderwidth=2,
@@ -558,7 +533,7 @@ class AdminHomeApp:
             relheight=0.05,
             relwidth=0.3,
             relx=0.25,
-            rely=0.92,
+            rely=0.86,
             x=0,
             y=0,
         )
@@ -569,7 +544,7 @@ class AdminHomeApp:
             text="Account Deactivation Date",
         )
         self.deactivation_date_label.place(
-            anchor="center", relx=0.23, rely=0.86, x=0, y=0
+            anchor="center", relx=0.23, rely=0.80, x=0, y=0
         )
         self.save_dates_button = tk.Button(self.admin_s_sec1_frame)
         self.save_dates_button.configure(
@@ -1003,7 +978,6 @@ class AdminHomeApp:
             self.edit_user_button.configure(state="disabled")
             self.export_db_button.configure(state="disabled")
             self.import_db_button.configure(state="disabled")
-            self.activation_date_entry.configure(state="disabled")
             self.deactivation_date_entry.configure(state="disabled")
             self.login_attempt_entry.configure(state="disabled")
             self.pass_len_entry.configure(state="disabled")
@@ -1463,17 +1437,15 @@ class AdminHomeApp:
     def display_settings(self):
         log_in_attempt = self.sql_query.get_login_attempts()
         password_len = self.sql_query.get_password_length()
-        sem_start = self.sql_query.get_start_settings()
         sem_end = self.sql_query.get_end_settings()
         
         self.login_attempt_entry.insert(0, log_in_attempt)
         self.pass_len_entry.insert(0, password_len)
-        self.activation_date_entry.insert(0, sem_start)
         self.deactivation_date_entry.insert(0,sem_end)
 
 
     def activation_settings_save(self):
-        self.sql_query.set_sem_settings(self.activation_date_entry.get(), self.deactivation_date_entry.get())
+        self.sql_query.set_sem_settings(self.deactivation_date_entry.get())
 
     def security_settings_save(self):
         self.sql_query.set_pass_len_log_att(self.pass_len_entry.get(), self.login_attempt_entry.get())

@@ -3,11 +3,11 @@ import pyodbc as odbc
 
 class dbQueries:
     def __init__(self, master=None):
-        # "DESKTOP-DG7AK17\SQLEXPRESS"
+        # "DESKTOP-3MNAAKG\SQLEXPRESS"
         # "STAR-PLATINUM\SQLEXPRESS01"
         # "LAB-A-PC16\SQLEXPRESS"
-        self.server = "STAR-PLATINUM\SQLEXPRESS01"
-        self.database = "seeku_database1"
+        self.server = "DESKTOP-3MNAAKG\SQLEXPRESS"
+        self.database = "seeku_database"
         self.username = ""
         self.password = ""
 
@@ -22,7 +22,7 @@ class dbQueries:
         print("Connection closed")
 
     def login_entry(self, username, password):
-        query = f"SELECT * FROM tbl_user WHERE username = ? AND password = ?"
+        query = f"SELECT * FROM tbl_user WHERE username COLLATE Latin1_General_CS_AS = ? AND password COLLATE Latin1_General_CS_AS = ?"
         self.cursor.execute(query, (username, password))
         row = self.cursor.fetchone()
         if row:
@@ -951,22 +951,20 @@ class dbQueries:
 
             pass_length = 6
             log_attempt = 5
-            sem_start = "2022-12-30"
             sem_end = "2022-12-30"
             facerecog_filepath = "C:\\Users\\JC Austria\\Documents\\GitHub\\Face-Recognition-Attendance-Monitoring-System\\MainSystem\\DataSet"
             facerecog_date = "2022-12-30"
             add_visitor_filepath = "C:\\Users\\JC Austria\\Documents\\GitHub\\Face-Recognition-Attendance-Monitoring-System\\MainSystem\\DataSet\\Guest"
             add_visitor_date = "2022-12-30"
             query2 = (
-                f"INSERT INTO tbl_setting (password_length, login_attempt,sem_start_setting,sem_end_setting,"
-                + "face_recog_file_path,face_recog_date,av_file_path,av_date) VALUES (?, ?, ?, ? ,? ,? ,? ,?)"
+                f"INSERT INTO tbl_setting (password_length, login_attempt,sem_end_setting,"
+                + "face_recog_file_path,face_recog_date,av_file_path,av_date) VALUES (?, ?, ? ,? ,? ,? ,?)"
             )
             self.cursor.execute(
                 query2,
                 (
                     pass_length,
                     log_attempt,
-                    sem_start,
                     sem_end,
                     facerecog_filepath,
                     facerecog_date,
@@ -1002,16 +1000,6 @@ class dbQueries:
         self.connection.commit()
         # Save pass len & log in attempt to the database
 
-    def get_start_settings(self):
-        query = f"SELECT sem_start_setting FROM tbl_setting WHERE setting_no = 1 "
-        self.cursor.execute(query)
-        row = self.cursor.fetchone()[0]
-        if row:
-            return row
-        else:
-            return False
-        # select date and insert to entry text
-
     def get_end_settings(self):
         query = f"SELECT sem_end_setting FROM tbl_setting WHERE setting_no = 1 "
         self.cursor.execute(query)
@@ -1022,11 +1010,12 @@ class dbQueries:
             return False
         # select date and insert to entry text
 
-    def set_sem_settings(self, sem_start, sem_end):
-        query = f"UPDATE tbl_setting SET sem_start_setting = ?, sem_end_setting = ? WHERE setting_no = 1 "
-        self.cursor.execute(query, (sem_start, sem_end))
+    def set_sem_settings(self,sem_end):
+        query = f"UPDATE tbl_setting SET sem_end_setting = ? WHERE setting_no = 1 "
+        self.cursor.execute(query, (sem_end))
         self.connection.commit()
         # save date to the database
+        
     #FR-----------------------------------------
     def set_face_recog_path(self, facerecog_filepath):
         query = f"UPDATE tbl_setting SET face_recog_file_path = ? WHERE setting_no = 1 "
