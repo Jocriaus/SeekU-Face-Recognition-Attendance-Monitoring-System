@@ -382,7 +382,7 @@ class EditPersonnelApp:
                 img_name = self.personnel_num
                 os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/000000000.jpg")
         else:
-            messbx.showwarning("Error", "Please enter a value in all fields.")
+            messbx.showwarning("Error", "Kindly ensure all fields are filled by entering a value.")
 
 
 

@@ -218,11 +218,11 @@ class EditUserApp:
         self.user_role_variable = self.user_role_var.get()
         self.user_status_var = self.stat_var.get()
 
-        if ( len(self.username_var) != 0 or
-            len(self.password_var) != 0 or
-            len(self.firstname_var) != 0 or
-            len(self.lastname_var) != 0 or
-            len(self.user_role_variable) != 0 or
+        if ( len(self.username_var) != 0 and
+            len(self.password_var) != 0 and
+            len(self.firstname_var) != 0 and
+            len(self.lastname_var) != 0 and
+            len(self.user_role_variable) != 0 and
             len(self.user_status_var) != 0
             ) :
             if self.update == True:
@@ -236,7 +236,7 @@ class EditUserApp:
                 )
 
         else:
-            messbx.showwarning("Error", "Please enter a value in all fields.")
+            messbx.showwarning("Error", "Kindly ensure all fields are filled by entering a value.")
 
     def password_check(self,password):
         limit = self.sql_query.get_password_length()

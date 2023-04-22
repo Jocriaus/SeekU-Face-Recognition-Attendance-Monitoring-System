@@ -381,7 +381,7 @@ class EditStudentApp:
                 img_name = self.student_number
                 os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/000000000.jpg")
         else:
-            messbx.showwarning("Error", "Please enter a value in all fields.")
+            messbx.showwarning("Error", "Kindly ensure all fields are filled by entering a value.")
         
     # this function will display the image into the canvas
     def disp_pic(self):

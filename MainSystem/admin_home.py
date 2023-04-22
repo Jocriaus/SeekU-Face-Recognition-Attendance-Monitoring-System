@@ -2,6 +2,7 @@
 import tkinter as tk
 from datetime import datetime
 from tkinter import filedialog
+import tkinter.messagebox as messbx
 import sys
 import query_mod as qry
 import edit_info_personnel as eIP
@@ -1446,10 +1447,21 @@ class AdminHomeApp:
 
 
     def activation_settings_save(self):
-        self.sql_query.set_sem_settings(self.deactivation_date_entry.get())
+        if len(self.deactivation_date_entry.get()) != 0:
+            try:
+                self.sql_query.set_sem_settings(self.deactivation_date_entry.get())
+            except ValueError:
+                messbx.showwarning("Error", "The data format is incorrect. Please use the format YYYY-MM-DD.")
+        else:
+            messbx.showwarning("Error", "Kindly ensure all fields are filled by entering a value.")
 
     def security_settings_save(self):
-        self.sql_query.set_pass_len_log_att(self.pass_len_entry.get(), self.login_attempt_entry.get())
+        pass_len = self.pass_len_entry.get()
+        login_attempt = self.login_attempt_entry.get()
+        if (pass_len.isnumeric() and login_attempt.isnumeric()):
+            self.sql_query.set_pass_len_log_att(pass_len,login_attempt)
+        else:
+            messbx.showwarning("Error", "Please enter numerical values only.")
     # SETTINGS-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
     
     # DASBOARD-COMMANDS---------------------------------------------------------------------------------------------------------------

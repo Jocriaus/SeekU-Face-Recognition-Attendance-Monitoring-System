@@ -3,6 +3,7 @@ import tkinter as tk
 import query_mod as qry
 import admin_camera_app as aCA
 import PIL.Image, PIL.ImageTk
+import tkinter.messagebox as messbx
 import os
 import sys
 
@@ -290,24 +291,31 @@ class EditVisitorApp:
         """
         Database Connection
         """
-        self.last_name_var = self.last_name_entry.get()
-        self.first_name_var = self.first_name_entry.get()
-        self.contact_num_var = self.contact_num_entry.get()
-        self.address_var = self.address_entry.get()
-        self.visitor_status_var = self.stat_var
+        last_name_var = self.last_name_entry.get()
+        first_name_var = self.first_name_entry.get()
+        contact_num_var = self.contact_num_entry.get()
+        address_var = self.address_entry.get()
+        visitor_status_var = self.stat_var
 
-        self.sql_query.update_visitor(
-            self.first_name_var, 
-            self.last_name_var,
-            self.contact_num_var, 
-            self.address_var,
-            self.visitor_status_var,
-            self.visitor_number,
-        )
-
-        if os.path.exists(self.img_path + "/000000000.jpg"):
-            img_name = self.visitor_number
-            os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/000000000.jpg")
+        if ( len(last_name_var) != 0 and
+            len(first_name_var) != 0 and
+            len(contact_num_var) != 0 and
+            len(address_var) != 0 and
+            len(visitor_status_var) != 0 
+            ):
+            self.sql_query.update_visitor(
+                first_name_var, 
+                last_name_var,
+                contact_num_var, 
+                address_var,
+                visitor_status_var,
+                self.visitor_number,
+            )
+            if os.path.exists(self.img_path + "/000000000.jpg"):
+                img_name = self.visitor_number
+                os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/000000000.jpg")
+        else:
+            messbx.showwarning("Error", "Kindly ensure all fields are filled by entering a value.")
         """
         Save to database
         Get the primary key

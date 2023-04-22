@@ -267,7 +267,7 @@ class RegisterStudentApp:
                 img_name = student_num_var
                 os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/000000000.jpg")
         else:
-            messbx.showwarning("Error", "Please enter a value in all fields.")
+            messbx.showwarning("Error", "Kindly ensure all fields are filled by entering a value.")
 
 
 
@@ -275,7 +275,7 @@ class RegisterStudentApp:
 
     def client_no_check(self,client_no):
         if (self.sql_query.check_username(client_no)):
-            messbx.showwarning("Error", " The student no. " + client_no + " is already taken." )
+            messbx.showwarning("Error", "The personnel number " + client_no + " has already been assigned/taken." )
             self.register = False
         else:
             self.register = True

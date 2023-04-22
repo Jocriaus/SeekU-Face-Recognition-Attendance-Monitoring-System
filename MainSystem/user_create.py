@@ -136,10 +136,10 @@ class CreateUserApp:
         last_name_var = self.last_name_entry.get()
         user_role_var = self.user_role_entry.get()
 
-        if ( len(username_var) != 0 or
-            len(password_var) != 0 or
-            len(first_name_var) != 0 or
-            len(last_name_var) != 0 or
+        if ( len(username_var) != 0 and
+            len(password_var) != 0 and
+            len(first_name_var) != 0 and
+            len(last_name_var) != 0 and
             len(user_role_var) != 0
             ) :
             if self.register == True:
@@ -151,7 +151,7 @@ class CreateUserApp:
                     user_role_var,
                 )
         else:
-            messbx.showwarning("Error", "Please enter a value in all fields.")
+            messbx.showwarning("Error", "Kindly ensure all fields are filled by entering a value.")
 
     def password_check(self,password):
         limit = self.sql_query.get_password_length()
@@ -163,7 +163,7 @@ class CreateUserApp:
 
     def username_check(self,username):
         if (self.sql_query.check_username(username)):
-            messbx.showwarning("Error", "The username <" + username + "> is already taken." )
+            messbx.showwarning("Error", "The username \"" +username+"\" is already in use. ")
             self.register = False
         else:
             self.register = True
