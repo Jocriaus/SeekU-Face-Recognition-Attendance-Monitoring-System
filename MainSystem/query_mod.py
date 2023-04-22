@@ -5,7 +5,7 @@ class dbQueries:
     def __init__(self, master=None):
         # "DESKTOP-DG7AK17\SQLEXPRESS"
         # "STAR-PLATINUM\SQLEXPRESS01"
-        
+
         # "DESKTOP-3MNAAKG\SQLEXPRESS"
         self.server = "STAR-PLATINUM\SQLEXPRESS01"
         self.database = "seeku_database1"
@@ -752,12 +752,14 @@ class dbQueries:
         return results
 
     def sort_student_report_bydate_excel(self, date1, date2):
-        query = (f"SELECT tbl_student.student_no, tbl_student.student_firstname, tbl_student.student_lastname, "+
-                 "tbl_student.student_program, tbl_student.student_section, tbl_student_report.student_attendance_date, "+
-                 "tbl_student_report.student_time_in, tbl_student_report.student_time_out FROM tbl_student "+
-                 "RIGHT JOIN tbl_student_report ON tbl_student.student_no = tbl_student_report.student_no "+
-                 "WHERE personnel_attendance_date BETWEEN ? AND ?")
-        self.cursor.execute(query, (date1,date2))
+        query = (
+            f"SELECT tbl_student.student_no, tbl_student.student_firstname, tbl_student.student_lastname, "
+            + "tbl_student.student_program, tbl_student.student_section, tbl_student_report.student_attendance_date, "
+            + "tbl_student_report.student_time_in, tbl_student_report.student_time_out FROM tbl_student "
+            + "RIGHT JOIN tbl_student_report ON tbl_student.student_no = tbl_student_report.student_no "
+            + "WHERE personnel_attendance_date BETWEEN ? AND ?"
+        )
+        self.cursor.execute(query, (date1, date2))
         column = [desc[0] for desc in self.cursor.description]
         rows = self.cursor.fetchall()
         if rows:
@@ -767,37 +769,72 @@ class dbQueries:
 
     # JOCRIAUS--------------------------------------------------------------------------
     def sort_student_report_bydate_docx(self, date1, date2):
-        query = (f"SELECT tbl_student.student_no, tbl_student.student_firstname, tbl_student.student_lastname, "+
-                 "tbl_student.student_program, tbl_student.student_section, tbl_student_report.student_attendance_date, "+
-                 "tbl_student_report.student_time_in, tbl_student_report.student_time_out FROM tbl_student "+
-                 "RIGHT JOIN tbl_student_report ON tbl_student.student_no = tbl_student_report.student_no "+
-                 "WHERE personnel_attendance_date BETWEEN ? AND ?")
-        self.cursor.execute(query, (date1,date2))
+        query = (
+            f"SELECT tbl_student.student_no, tbl_student.student_firstname, tbl_student.student_lastname, "
+            + "tbl_student.student_program, tbl_student.student_section, tbl_student_report.student_attendance_date, "
+            + "tbl_student_report.student_time_in, tbl_student_report.student_time_out FROM tbl_student "
+            + "RIGHT JOIN tbl_student_report ON tbl_student.student_no = tbl_student_report.student_no "
+            + "WHERE student_attendance_date BETWEEN ? AND ?"
+        )
+        self.cursor.execute(query, (date1, date2))
         rows = self.cursor.fetchall()
         if rows:
             return rows
         else:
             return False
+
+    def sort_personnel_report_bydate_docx(self, date1, date2):
+        query = (
+            f"SELECT tbl_personnel.personnel_no, tbl_personnel.personnel_firstname, tbl_personnel.personnel_lastname,"
+            + "tbl_personnel.personnel_type, tbl_personnel_report.personnel_attendance_date, tbl_personnel_report.personnel_time_in, "
+            + "tbl_personnel_report.personnel_time_out FROM tbl_personnel RIGHT JOIN tbl_personnel_report "
+            + "ON tbl_personnel.personnel_no = tbl_personnel_report.personnel_no WHERE personnel_attendance_date BETWEEN ? AND ?"
+        )
+        self.cursor.execute(query, (date1, date2))
+        rows = self.cursor.fetchall()
+        if rows:
+            return rows
+        else:
+            return False
+
+    def sort_visitor_report_bydate_docx(self, date1, date2):
+        query = (
+            f"SELECT tbl_visitor.visitor_no, tbl_visitor.visitor_firstname, tbl_visitor.visitor_lastname, "
+            + "tbl_visitor_report.visitor_attendance_date, tbl_visitor_report.visitor_time_in, tbl_visitor_report.visitor_time_out "
+            + "FROM  tbl_visitor RIGHT JOIN tbl_visitor_report ON tbl_visitor.visitor_no = tbl_visitor_report.visitor_no"
+            + "WHERE visitor_attendance_date BETWEEN ? AND ?"
+        )
+        self.cursor.execute(query, (date1, date2))
+        rows = self.cursor.fetchall()
+        if rows:
+            return rows
+        else:
+            return False
+
     # JOCRIAUS--------------------------------------------------------------------------
 
-    def sort_personnel_report_bydate_excel(self, date1,date2):
-        query = (f"SELECT tbl_personnel.personnel_no, tbl_personnel.personnel_firstname, tbl_personnel.personnel_lastname,"+
-                 "tbl_personnel.personnel_type, tbl_personnel_report.personnel_attendance_date, tbl_personnel_report.personnel_time_in, "+
-                 "tbl_personnel_report.personnel_time_out FROM tbl_personnel RIGHT JOIN tbl_personnel_report "+
-                 "ON tbl_personnel.personnel_no = tbl_personnel_report.personnel_no")
-        self.cursor.execute(query, (date1,date2))
+    def sort_personnel_report_bydate_excel(self, date1, date2):
+        query = (
+            f"SELECT tbl_personnel.personnel_no, tbl_personnel.personnel_firstname, tbl_personnel.personnel_lastname,"
+            + "tbl_personnel.personnel_type, tbl_personnel_report.personnel_attendance_date, tbl_personnel_report.personnel_time_in, "
+            + "tbl_personnel_report.personnel_time_out FROM tbl_personnel RIGHT JOIN tbl_personnel_report "
+            + "ON tbl_personnel.personnel_no = tbl_personnel_report.personnel_no"
+        )
+        self.cursor.execute(query, (date1, date2))
         column = [desc[0] for desc in self.cursor.description]
         rows = self.cursor.fetchall()
         if rows:
             return rows, column
         else:
             return False
-        
-    def sort_visitor_report_bydate_excel(self, date1,date2):
-        query = (f"SELECT tbl_visitor.visitor_no, tbl_visitor.visitor_firstname, tbl_visitor.visitor_lastname, "+
-        "tbl_visitor_report.visitor_attendance_date, tbl_visitor_report.visitor_time_in, tbl_visitor_report.visitor_time_out "+
-        "FROM  tbl_visitor RIGHT JOIN tbl_visitor_report ON tbl_visitor.visitor_no = tbl_visitor_report.visitor_no")
-        self.cursor.execute(query, (date1,date2))
+
+    def sort_visitor_report_bydate_excel(self, date1, date2):
+        query = (
+            f"SELECT tbl_visitor.visitor_no, tbl_visitor.visitor_firstname, tbl_visitor.visitor_lastname, "
+            + "tbl_visitor_report.visitor_attendance_date, tbl_visitor_report.visitor_time_in, tbl_visitor_report.visitor_time_out "
+            + "FROM  tbl_visitor RIGHT JOIN tbl_visitor_report ON tbl_visitor.visitor_no = tbl_visitor_report.visitor_no"
+        )
+        self.cursor.execute(query, (date1, date2))
         column = [desc[0] for desc in self.cursor.description]
         rows = self.cursor.fetchall()
         if rows:
@@ -959,6 +996,7 @@ class dbQueries:
         count = self.cursor.fetchone()[0]
 
         return count
+
     # USER-TABLE-QUERY--------------------------------------------------------------------------------------------------------------
     def default_user_if_not_exist(self):
         query = f"SELECT * FROM tbl_user"
@@ -973,9 +1011,7 @@ class dbQueries:
             print(condition)
 
         if not condition:
-            query2 = (
-                f"INSERT INTO tbl_user (username, password, user_firstname, user_lastname, user_type) VALUES (?, ?, ?, ?, ?)"
-            )
+            query2 = f"INSERT INTO tbl_user (username, password, user_firstname, user_lastname, user_type) VALUES (?, ?, ?, ?, ?)"
             self.cursor.execute(
                 query2,
                 (
@@ -987,7 +1023,7 @@ class dbQueries:
                 ),
             )
             self.connection.commit()
-            
+
     # SETTINGS-TABLE-QUERY--------------------------------------------------------------------------------------------------------------
 
     def default_settings_if_not_exist(self):
@@ -1065,13 +1101,13 @@ class dbQueries:
             return False
         # select date and insert to entry text
 
-    def set_sem_settings(self,sem_end):
+    def set_sem_settings(self, sem_end):
         query = f"UPDATE tbl_setting SET sem_end_setting = ? WHERE setting_no = 1 "
         self.cursor.execute(query, (sem_end))
         self.connection.commit()
         # save date to the database
-        
-    #FR-----------------------------------------
+
+    # FR-----------------------------------------
     def set_face_recog_path(self, facerecog_filepath):
         query = f"UPDATE tbl_setting SET face_recog_file_path = ? WHERE setting_no = 1 "
         self.cursor.execute(query, (facerecog_filepath))
@@ -1103,8 +1139,9 @@ class dbQueries:
         else:
             return False
         # get date
-    #FR-----------------------------------------
-    #AV-----------------------------------------
+
+    # FR-----------------------------------------
+    # AV-----------------------------------------
     def set_add_visitor_path(self, add_visitor_filepath):
         query = f"UPDATE tbl_setting SET av_file_path = ? WHERE setting_no = 1 "
         self.cursor.execute(query, (add_visitor_filepath))
@@ -1136,7 +1173,8 @@ class dbQueries:
         else:
             return False
         # get date
-    #AV-----------------------------------------
+
+    # AV-----------------------------------------
 
     def backup_database(self):
         self.backup_file_path = f"../Database_Schema/this_is_a_backup.bacpac"

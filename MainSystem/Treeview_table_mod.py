@@ -1204,6 +1204,7 @@ class TreeviewGUI:
                     row[7],
                 ),
             )
+
     # JOCRIAUS--------------------------------------------------------------------------
     def populate_student_report_bydate(self, date1, date2):
         for child in self.student_report_tree.get_children():
@@ -1228,6 +1229,52 @@ class TreeviewGUI:
                     row[7],
                 ),
             )
+
+    def populate_personnel_report_bydate(self, date1, date2):
+        for child in self.personnel_report_tree.get_children():
+            self.personnel_report_tree.delete(child)
+
+        # search_term = search_entry.get()
+        result = self.sql_query.sort_personnel_report_bydate_docx()(date1, date2)
+
+        for row in result:
+            self.personnel_report_tree.insert(
+                "",
+                "end",
+                text=[0],
+                values=(
+                    row[0],
+                    row[1],
+                    row[2],
+                    row[3],
+                    row[4],
+                    row[5],
+                    row[6],
+                ),
+            )
+
+    def populate_visitor_report_bydate(self, date1, date2):
+        for child in self.visitor_report_tree.get_children():
+            self.visitor_report_tree.delete(child)
+
+        # search_term = search_entry.get()
+        result = self.sql_query.sort_visitor_report_bydate_docx(date1, date2)
+
+        for row in result:
+            self.visitor_report_tree.insert(
+                "",
+                "end",
+                text=[0],
+                values=(
+                    row[0],
+                    row[1],
+                    row[2],
+                    row[3],
+                    row[4],
+                    row[5],
+                ),
+            )
+
     # JOCRIAUS--------------------------------------------------------------------------
 
     def do_search_student_attendance(self, search_term):
@@ -1412,4 +1459,3 @@ class TreeviewGUI:
                     row[6],
                 ),
             )
-
