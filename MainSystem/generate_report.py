@@ -166,38 +166,82 @@ class SavePrintReportApp:
         # Main widget
         self.mainwindow = self.generate_report_app
 
-    def excel_student_save(self):
+
+    def save_press (self, event=None):
+
         datefrom = self.calendar1.selection_get() 
         dateto = self.calendar2.selection_get() 
         filename = self.file_name.get()
-        self.excel_func.save_student(filename,self.file_path,datefrom,dateto)
 
-
-
-
-    def save_press (self, event=None):
         if self.client_type == "Students Report":
+
             if self.file_type_var.get() =="Excel": 
-                self.excel_student_save()
+                self.excel_func.save_student(filename, self.file_path, datefrom, dateto)
+
             if self.file_type_var.get() =="Docx":
                 pass
+
             if self.file_type_var.get() =="Pdf":  
                 pass 
+
         if self.client_type == "Personnels Report":
+
             if self.file_type_var.get() =="Excel": 
-                pass
+                self.excel_func.save_personnel(filename, self.file_path, datefrom, dateto)
+
             if self.file_type_var.get() =="Docx":
                 pass
+
             if self.file_type_var.get() =="Pdf":  
                 pass 
+
         if self.client_type == "Visitors Report":
+
             if self.file_type_var.get() =="Excel": 
-                pass
+                self.excel_func.save_visitor(filename, self.file_path, datefrom, dateto)
+
             if self.file_type_var.get() =="Docx":
                 pass
+
             if self.file_type_var.get() =="Pdf":  
                 pass 
 
     def print_press (self, event=None):
-        pass
+
+        datefrom = self.calendar1.selection_get() 
+        dateto = self.calendar2.selection_get() 
+        filename = self.file_name.get()
+
+        if self.client_type == "Students Report":
+
+            if self.file_type_var.get() =="Excel": 
+                self.excel_func.print_student(filename, self.file_path, datefrom, dateto)
+
+            if self.file_type_var.get() =="Docx":
+                pass
+
+            if self.file_type_var.get() =="Pdf":  
+                pass 
+
+        if self.client_type == "Personnels Report":
+
+            if self.file_type_var.get() =="Excel": 
+                self.excel_func.print_personnel(filename, self.file_path, datefrom, dateto)
+
+            if self.file_type_var.get() =="Docx":
+                pass
+
+            if self.file_type_var.get() =="Pdf":  
+                pass 
+
+        if self.client_type == "Visitors Report":
+
+            if self.file_type_var.get() =="Excel": 
+                self.excel_func.print_visitor(filename, self.file_path, datefrom, dateto)
+
+            if self.file_type_var.get() =="Docx":
+                pass
+
+            if self.file_type_var.get() =="Pdf":  
+                pass 
 
