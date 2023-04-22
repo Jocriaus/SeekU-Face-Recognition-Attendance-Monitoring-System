@@ -9,6 +9,7 @@ import edit_info_student as eIS
 import edit_info_visitor as eIV
 import user_create as uC
 import user_edit as uE
+import generate_report as gR
 import admin_camera_app as aCA
 import Treeview_table_mod as tbl
 
@@ -1554,7 +1555,7 @@ class AdminHomeApp:
 
     def generate_clients_reports(self, event=None):
         self.select_folder()
-        
+        gR.SavePrintReportApp(self.clients_rep_var.get(),self.folder_selected)
 
 
     # REPORTS-COMMANDS---------------------------------------------------------------------------------------------------------------

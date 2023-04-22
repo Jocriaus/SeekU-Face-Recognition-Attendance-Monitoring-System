@@ -285,8 +285,6 @@ class EditStudentApp:
         # Main widget
         self.mainwindow = self.edit_student_app
         # will set the window to fullscreen
-        self.mainwindow.attributes("-topmost", True)
-        # this protocol will do a function after pressing the close button.
         self.mainwindow.wm_attributes("-fullscreen", "True")
         # this protocol will do a function after pressing the close button.
         self.mainwindow.protocol("WM_DELETE_WINDOW", self.exit_program)
@@ -359,13 +357,13 @@ class EditStudentApp:
         student_contact_num_var = self.contact_num_entry.get()
         student_address_var = self.address_entry.get()
 
-        if ( len(student_num_var) != 0 or
-            len(student_firstname_var) != 0 or
-            len(student_middlename_var) != 0 or
-            len(student_lastname_var) != 0 or
-            len(student_contact_num_var) != 0 or
-            len(student_program_var) != 0 or
-            len(student_section_var) != 0 or
+        if ( len(student_num_var) != 0 and
+            len(student_firstname_var) != 0 and
+            len(student_middlename_var) != 0 and
+            len(student_lastname_var) != 0 and
+            len(student_contact_num_var) != 0 and
+            len(student_program_var) != 0 and
+            len(student_section_var) != 0 and
             len(student_address_var) != 0
             ) :
 

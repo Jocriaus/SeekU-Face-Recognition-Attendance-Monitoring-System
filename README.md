@@ -47,8 +47,8 @@ install database library
 -pip install pyodbc
 
 install docx, pdf, & excel library respectively
--pip install docx
--pip install
+-pip install python-docx
+-pip install docx2pdf
 -pip install pandas  -pip install xlsxwriter
 
 calendar date picker

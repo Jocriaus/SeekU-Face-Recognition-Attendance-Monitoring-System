@@ -222,8 +222,6 @@ class RegisterPersonnelApp:
         self.disp_pic()
         # Main widget
         self.mainwindow = self.register_personnel_app
-        self.mainwindow.attributes("-topmost", True)
-        # this protocol will do a function after pressing the close button.
         self.mainwindow.wm_attributes("-fullscreen", "True")
         # this protocol will do a function after pressing the close button.
         self.mainwindow.protocol("WM_DELETE_WINDOW", self.exit_program)
@@ -250,12 +248,12 @@ class RegisterPersonnelApp:
         personnel_type_var = self.personnel_type_entry.get()
         address_var = self.address_entry.get()
 
-        if ( len(personnel_num_var) != 0 or
-            len(first_name_var) != 0 or
-            len(mid_name_var) != 0 or
-            len(last_name_var) != 0 or
-            len(contact_num_var) != 0 or
-            len(personnel_type_var) != 0 or
+        if ( len(personnel_num_var) != 0 and
+            len(first_name_var) != 0 and
+            len(mid_name_var) != 0 and
+            len(last_name_var) != 0 and
+            len(contact_num_var) != 0 and
+            len(personnel_type_var) != 0 and
             len(address_var) != 0
             ) :
             self.sql_query.register_personnel(

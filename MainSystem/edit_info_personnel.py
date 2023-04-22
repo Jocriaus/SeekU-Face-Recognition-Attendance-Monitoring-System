@@ -274,8 +274,6 @@ class EditPersonnelApp:
         # Main widget
         self.mainwindow = self.edit_personnel_app
         # will set the window to fullscreen
-        self.mainwindow.attributes("-topmost", True)
-        # this protocol will do a function after pressing the close button.
         self.mainwindow.wm_attributes("-fullscreen", "True")
         # this protocol will do a function after pressing the close button.
         self.mainwindow.protocol("WM_DELETE_WINDOW", self.exit_program)
@@ -345,12 +343,12 @@ class EditPersonnelApp:
         personnel_contact_num_var = self.contact_num_entry.get()
         personnel_address_var = self.address_entry.get()
         personnel_type_variable = self.personnel_type_var.get()
-        if ( len(personnel_num_var) != 0 or
-            len(personnel_firstname_var) != 0 or
-            len(personnel_middlename_var) != 0 or
-            len(personnel_lastname_var) != 0 or
-            len(personnel_contact_num_var) != 0 or
-            len(personnel_type_variable) != 0 or
+        if ( len(personnel_num_var) != 0 and
+            len(personnel_firstname_var) != 0 and
+            len(personnel_middlename_var) != 0 and
+            len(personnel_lastname_var) != 0 and
+            len(personnel_contact_num_var) != 0 and
+            len(personnel_type_variable) != 0 and
             len(personnel_address_var) != 0
             ) :
             self.sql_query.update_personnel(

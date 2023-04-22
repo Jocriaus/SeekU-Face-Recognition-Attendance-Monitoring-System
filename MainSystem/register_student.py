@@ -217,8 +217,6 @@ class RegisterStudentApp:
 
         # Main widget
         self.mainwindow = self.register_student_app
-        self.mainwindow.attributes("-topmost", True)
-        # this protocol will do a function after pressing the close button.
         self.mainwindow.wm_attributes("-fullscreen", "True")
         # this protocol will do a function after pressing the close button.
         self.mainwindow.protocol("WM_DELETE_WINDOW", self.exit_program)
@@ -245,13 +243,13 @@ class RegisterStudentApp:
         contact_num_var = self.contact_num_entry.get()
         address_var = self.address_entry.get()
 
-        if ( len(student_num_var) != 0 or
-            len(first_name_var) != 0 or
-            len(mid_name_var) != 0 or
-            len(last_name_var) != 0 or
-            len(contact_num_var) != 0 or
-            len(program_var) != 0 or
-            len(section_var) != 0 or
+        if ( len(student_num_var) != 0 and
+            len(first_name_var) != 0 and
+            len(mid_name_var) != 0 and
+            len(last_name_var) != 0 and
+            len(contact_num_var) != 0 and
+            len(program_var) != 0 and
+            len(section_var) != 0 and
             len(address_var) != 0
             ) :
 

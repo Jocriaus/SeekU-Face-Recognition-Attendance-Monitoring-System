@@ -12,9 +12,10 @@ class TreeviewGUI:
         self.sql_query = qry.dbQueries()
         # "DESKTOP-DG7AK17\SQLEXPRESS"
         # "STAR-PLATINUM\SQLEXPRESS01"
-        # "LAB-A-PC16\SQLEXPRESS"
-        self.server = "STAR-PLATINUM\SQLEXPRESS01"
-        self.database = "seeku_database1"
+        
+        # "DESKTOP-3MNAAKG\SQLEXPRESS"
+        self.server = "DESKTOP-3MNAAKG\SQLEXPRESS"
+        self.database = "seeku_database"
         self.username = ""
         self.password = ""
 
@@ -1207,11 +1208,36 @@ class TreeviewGUI:
                     row[7],
                 ),
             )
+    # JOCRIAUS--------------------------------------------------------------------------
+    def populate_student_report_bydate(self, date1, date2):
+        for child in self.student_report_tree.get_children():
+            self.student_report_tree.delete(child)
+
+        # search_term = search_entry.get()
+        result = self.sql_query.sort_student_report_bydate_docx(date1, date2)
+
+        for row in result:
+            self.student_report_tree.insert(
+                "",
+                "end",
+                text=row[0],
+                values=(
+                    row[0],
+                    row[1],
+                    row[2],
+                    row[3],
+                    row[4],
+                    row[5],
+                    row[6],
+                    row[7],
+                ),
+            )
+    # JOCRIAUS--------------------------------------------------------------------------
 
     def do_search_student_attendance(self, search_term):
         self.search_term = search_term
         for child in self.student_attendance_tree.get_children():
-            self.student_report_tree.delete(child)
+            self.student_attendance_tree.delete(child)
 
         # search_term = search_entry.get()
         result = self.sql_query.search_student_attendance(search_term)
@@ -1281,8 +1307,8 @@ class TreeviewGUI:
 
     def do_search_personnel_attendance(self, search_term):
         self.search_term = search_term
-        for child in self.personnel_report_tree.get_children():
-            self.personnel_report_tree.delete(child)
+        for child in self.personnel_attendance_tree.get_children():
+            self.personnel_attendance_tree.delete(child)
 
         result = self.sql_query.search_personnel_attendance(self.search_term)
 
@@ -1349,9 +1375,9 @@ class TreeviewGUI:
     def do_search_visitor_attendance(self, search_term):
         self.search_term = search_term
         for child in self.visitor_attendance_tree.get_children():
-            self.visitor_report_tree.delete(child)
+            self.visitor_attendance_tree.delete(child)
 
-        result = self.sql_query.search_attendance_report(self.search_term)
+        result = self.sql_query.search_visitor_attendance(self.search_term)
 
         for row in result:
             self.visitor_report_tree.insert(
@@ -1391,7 +1417,12 @@ class TreeviewGUI:
                 ),
             )
 
-    def print_word_student_doc(self):
+# PDF & DOCX ---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    # JOCRIAUS--------------------------------------------------------------------------
+    def print_word_student_doc(self,filepath,filename, date1,date2):
+        # populate the report tree
+        self.populate_student_report_bydate(date1,date2)
         # open an existing Word document
         self.doc = docx.Document("../Documents/Document_temp/Report Template.docx")
 
@@ -1403,8 +1434,8 @@ class TreeviewGUI:
 
         self.treeview_data = []
         # get the table data of student
-        for child in self.student_tree.get_children():
-            self.values = self.student_tree.item(child)["values"]
+        for child in self.student_report_tree.get_children():
+            self.values = self.student_report_tree.item(child)["values"]
             self.treeview_data.append(self.values)
         # Inserts the table data of student
         for row in self.treeview_data:
@@ -1418,8 +1449,10 @@ class TreeviewGUI:
             self.row_cells[6].text = row[6]
             self.row_cells[7].text = row[7]
         # saves the doc to a new file path
-        self.doc.save("../Documents/Student_Report.docx")
-        os.startfile("../Documents/Student_Report.docx")
+        self.doc.save(filepath+"/"+ filename +".docx")
+        os.startfile(filepath+"/"+ filename +".docx")
+    # JOCRIAUS--------------------------------------------------------------------------
+
 
     def print_word_personnel_doc(self):
         # open an existing Word document
@@ -1441,11 +1474,11 @@ class TreeviewGUI:
             self.row_cells = self.table.add_row().cells
             self.row_cells[0].text = row[0]
             self.row_cells[1].text = row[1]
-            self.row_cells[1].text = row[2]
-            self.row_cells[1].text = row[3]
-            self.row_cells[1].text = row[4]
-            self.row_cells[1].text = row[5]
-            self.row_cells[1].text = row[6]
+            self.row_cells[2].text = row[2]
+            self.row_cells[3].text = row[3]
+            self.row_cells[4].text = row[4]
+            self.row_cells[5].text = row[5]
+            self.row_cells[6].text = row[6]
         # saves the doc to a new file path
         self.doc.save("../Documents/Personnel_Report.docx")
         os.startfile("../Documents/Personnel_Report.docx")
@@ -1470,10 +1503,10 @@ class TreeviewGUI:
             self.row_cells = self.table.add_row().cells
             self.row_cells[0].text = row[0]
             self.row_cells[1].text = row[1]
-            self.row_cells[1].text = row[2]
-            self.row_cells[1].text = row[3]
-            self.row_cells[1].text = row[4]
-            self.row_cells[1].text = row[5]
+            self.row_cells[2].text = row[2]
+            self.row_cells[3].text = row[3]
+            self.row_cells[4].text = row[4]
+            self.row_cells[5].text = row[5]
         # saves the doc to a new file path
         self.doc.save("../Documents/Visitor_Report.docx")
         os.startfile("../Documents/Visitor_Report.docx")
@@ -1533,11 +1566,11 @@ class TreeviewGUI:
             self.row_cells = self.table.add_row().cells
             self.row_cells[0].text = row[0]
             self.row_cells[1].text = row[1]
-            self.row_cells[1].text = row[2]
-            self.row_cells[1].text = row[3]
-            self.row_cells[1].text = row[4]
-            self.row_cells[1].text = row[5]
-            self.row_cells[1].text = row[6]
+            self.row_cells[2].text = row[2]
+            self.row_cells[3].text = row[3]
+            self.row_cells[4].text = row[4]
+            self.row_cells[5].text = row[5]
+            self.row_cells[6].text = row[6]
         # saves the doc to a new file path
         self.doc.save("../Documents/Personnel_Report.docx")
 
@@ -1567,10 +1600,10 @@ class TreeviewGUI:
             self.row_cells = self.table.add_row().cells
             self.row_cells[0].text = row[0]
             self.row_cells[1].text = row[1]
-            self.row_cells[1].text = row[2]
-            self.row_cells[1].text = row[3]
-            self.row_cells[1].text = row[4]
-            self.row_cells[1].text = row[5]
+            self.row_cells[2].text = row[2]
+            self.row_cells[3].text = row[3]
+            self.row_cells[4].text = row[4]
+            self.row_cells[5].text = row[5]
         # saves the doc to a new file path
         self.doc.save("../Documents/Visitor_Report.docx")
 

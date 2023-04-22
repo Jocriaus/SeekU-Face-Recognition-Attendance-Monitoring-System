@@ -215,8 +215,6 @@ class EditVisitorApp:
         self.disable_entry()
         # Main widget
         self.mainwindow = self.edit_visitor_app
-        self.mainwindow.attributes("-topmost", True)
-        # this protocol will do a function after pressing the close button.
         self.mainwindow.wm_attributes("-fullscreen", "True")
         # this protocol will do a function after pressing the close button.
         self.mainwindow.protocol("WM_DELETE_WINDOW", self.exit_program)

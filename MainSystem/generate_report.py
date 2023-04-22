@@ -2,11 +2,15 @@
 import tkinter as tk
 import tkcalendar as tkc
 import query_mod as qry
+import excel_report_mod as eXM
+import Treeview_table_mod as tbl
 import datetime
 
 class SavePrintReportApp:
-    def __init__(self, master=None):
+    def __init__(self, optionmenu, path):
     #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
+        self.client_type = optionmenu
+        self.file_path = path
         self.today = datetime.date.today()
         self.today_day = self.today.day
         self.today_month = self.today.month
@@ -14,8 +18,10 @@ class SavePrintReportApp:
         # self.mindate =  min date is set as when the first attendance
         self.maxdate = datetime.datetime.now() # max date is today
         self.sql_query = qry.dbQueries()
+        self.treeview = tbl.TreeviewGUI()
+        self.excel_func = eXM.excelClass()
     #PRE-LOAD-ASSIGNMENT------------------------------------------------------------------------------------------- 
-        self.generate_report_app = tk.Tk() if master is None else tk.Toplevel(master)
+        self.generate_report_app = tk.Toplevel()
         self.generate_report_app.configure(background="#0072bc", height=200, width=200)
         self.generate_report_app.geometry("640x700")
         self.generate_report_app.resizable(False, False)
@@ -36,7 +42,7 @@ class SavePrintReportApp:
                year = self.today_year, month = self.today_month,
                day = self.today_day, )
         self.calendar1.place(anchor="center", relx=0.25, rely=0.4)
-
+        
         self.calendar2 = tkc.Calendar(self.gen_report_frame2, selectmode = 'day', maxdate= self.maxdate,
                year = self.today_year, month = self.today_month,
                day = self.today_day)
@@ -155,22 +161,43 @@ class SavePrintReportApp:
             relx=.5,
             rely=0.1)
 
+        
+
         # Main widget
         self.mainwindow = self.generate_report_app
 
-    def run(self):
-        self.mainwindow.mainloop()
+    def excel_student_save(self):
+        datefrom = self.calendar1.selection_get() 
+        dateto = self.calendar2.selection_get() 
+        filename = self.file_name.get()
+        self.excel_func.save_student(filename,self.file_path,datefrom,dateto)
 
-    def excel_save (self):
-        pass
+
 
 
     def save_press (self, event=None):
-        pass
+        if self.client_type == "Students Report":
+            if self.file_type_var.get() =="Excel": 
+                self.excel_student_save()
+            if self.file_type_var.get() =="Docx":
+                pass
+            if self.file_type_var.get() =="Pdf":  
+                pass 
+        if self.client_type == "Personnels Report":
+            if self.file_type_var.get() =="Excel": 
+                pass
+            if self.file_type_var.get() =="Docx":
+                pass
+            if self.file_type_var.get() =="Pdf":  
+                pass 
+        if self.client_type == "Visitors Report":
+            if self.file_type_var.get() =="Excel": 
+                pass
+            if self.file_type_var.get() =="Docx":
+                pass
+            if self.file_type_var.get() =="Pdf":  
+                pass 
 
     def print_press (self, event=None):
         pass
 
-if __name__ == "__main__":
-    app = SavePrintReportApp()
-    app.run()

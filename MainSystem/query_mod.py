@@ -3,9 +3,10 @@ import pyodbc as odbc
 
 class dbQueries:
     def __init__(self, master=None):
-        # "DESKTOP-3MNAAKG\SQLEXPRESS"
+        # "DESKTOP-DG7AK17\SQLEXPRESS"
         # "STAR-PLATINUM\SQLEXPRESS01"
-        # "LAB-A-PC16\SQLEXPRESS"
+        
+        # "DESKTOP-3MNAAKG\SQLEXPRESS"
         self.server = "DESKTOP-3MNAAKG\SQLEXPRESS"
         self.database = "seeku_database"
         self.username = ""
@@ -763,6 +764,21 @@ class dbQueries:
             return rows, column
         else:
             return False
+
+    # JOCRIAUS--------------------------------------------------------------------------
+    def sort_student_report_bydate_docx(self, date1, date2):
+        query = (f"SELECT tbl_student.student_no, tbl_student.student_firstname, tbl_student.student_lastname, "+
+                 "tbl_student.student_program, tbl_student.student_section, tbl_student_report.student_attendance_date, "+
+                 "tbl_student_report.student_time_in, tbl_student_report.student_time_out FROM tbl_student "+
+                 "RIGHT JOIN tbl_student_report ON tbl_student.student_no = tbl_student_report.student_no "+
+                 "WHERE personnel_attendance_date BETWEEN ? AND ?")
+        self.cursor.execute(query, (date1,date2))
+        rows = self.cursor.fetchall()
+        if rows:
+            return rows
+        else:
+            return False
+    # JOCRIAUS--------------------------------------------------------------------------
 
     def sort_personnel_report_bydate_excel(self, date1,date2):
         query = (f"SELECT tbl_personnel.personnel_no, tbl_personnel.personnel_firstname, tbl_personnel.personnel_lastname,"+
