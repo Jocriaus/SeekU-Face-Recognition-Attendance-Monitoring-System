@@ -1182,6 +1182,12 @@ class dbQueries:
         self.cursor.execute(query)
         self.cursor.commit()
 
+    def restore_database(self):
+        bacpac_file = "C:/path/to/database.bacpac"
+        query = f"RESTORE DATABASE [{self.database}] FROM DISK = '{bacpac_file}' WITH FILE  = 1, NUONLOAD, REPLACE, STATS = 10"
+        self.cursor.execute(query)
+        print(f"The database {self.database} has been restored from {bacpac_file}.")
+
     # SETTINGS-TABLE-QUERY--------------------------------------------------------------------------------------------------------------
 
 
