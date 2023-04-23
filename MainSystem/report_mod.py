@@ -1,4 +1,4 @@
-import tkinter as Tk 
+import tkinter as Tk
 import pandas as pd
 import query_mod as qry
 import os
@@ -12,11 +12,11 @@ class excelClass:
         self.sql_query = qry.dbQueries()
         self.treeview = tbl.TreeviewGUI()
 
-    def save_student(self, filepath, filename , date1, date2):
+    def save_student(self, filepath, filename, date1, date2):
         data, columns = self.sql_query.sort_student_report_bydate_excel(date1, date2)
-        df = pd.DataFrame(data = data , columns= columns)
+        df = pd.DataFrame(data=data, columns=columns)
         writer = pd.ExcelWriter(
-            filepath + "/" + filename + ".xlsx", engine="xlsxwriter" 
+            filepath + "/" + filename + ".xlsx", engine="xlsxwriter"
         )
         start_column = 2
         df.to_excel(
@@ -26,7 +26,7 @@ class excelClass:
             startcol=start_column,
             header=True,
             index=False,
-            na_rep='NaN'
+            na_rep="NaN",
         )
         worksheet = writer.sheets["Sheet1"]
         worksheet.insert_image("A1", ".\SeekU\STI College Balagtas Logo medium.png")
@@ -35,16 +35,16 @@ class excelClass:
         for column in df:
             column_length = max(df[column].astype(str).map(len).max(), len(column))
             col_idx = df.columns.get_loc(column)
-            col_idx = col_idx+start_column
+            col_idx = col_idx + start_column
             worksheet.set_column(col_idx, col_idx, column_length)
 
         writer.close()
 
-    def save_personnel(self, filepath, filename , date1, date2):
+    def save_personnel(self, filepath, filename, date1, date2):
         data, columns = self.sql_query.sort_personnel_report_bydate_excel(date1, date2)
-        df = pd.DataFrame(data = data , columns= columns)
+        df = pd.DataFrame(data=data, columns=columns)
         writer = pd.ExcelWriter(
-            filepath + "/" + filename + ".xlsx", engine="xlsxwriter" 
+            filepath + "/" + filename + ".xlsx", engine="xlsxwriter"
         )
         start_column = 3
         df.to_excel(
@@ -54,7 +54,7 @@ class excelClass:
             startcol=start_column,
             header=True,
             index=False,
-            na_rep='NaN'
+            na_rep="NaN",
         )
         worksheet = writer.sheets["Sheet1"]
         worksheet.insert_image("A1", ".\SeekU\STI College Balagtas Logo medium.png")
@@ -63,15 +63,15 @@ class excelClass:
         for column in df:
             column_length = max(df[column].astype(str).map(len).max(), len(column))
             col_idx = df.columns.get_loc(column)
-            col_idx = col_idx+start_column
+            col_idx = col_idx + start_column
             worksheet.set_column(col_idx, col_idx, column_length)
         writer.close()
 
-    def save_visitor(self, filepath, filename , date1, date2):
+    def save_visitor(self, filepath, filename, date1, date2):
         data, columns = self.sql_query.sort_visitor_report_bydate_excel(date1, date2)
-        df = pd.DataFrame(data = data , columns= columns)
+        df = pd.DataFrame(data=data, columns=columns)
         writer = pd.ExcelWriter(
-            filepath + "/" + filename + ".xlsx", engine="xlsxwriter" 
+            filepath + "/" + filename + ".xlsx", engine="xlsxwriter"
         )
         start_column = 4
         df.to_excel(
@@ -81,7 +81,7 @@ class excelClass:
             startcol=start_column,
             header=True,
             index=False,
-            na_rep='NaN'
+            na_rep="NaN",
         )
         worksheet = writer.sheets["Sheet1"]
         worksheet.insert_image("A1", ".\SeekU\STI College Balagtas Logo medium.png")
@@ -90,15 +90,15 @@ class excelClass:
         for column in df:
             column_length = max(df[column].astype(str).map(len).max(), len(column))
             col_idx = df.columns.get_loc(column)
-            col_idx = col_idx+start_column
+            col_idx = col_idx + start_column
             worksheet.set_column(col_idx, col_idx, column_length)
         writer.close()
 
-    def print_student(self, filepath, filename , date1, date2):
+    def print_student(self, filepath, filename, date1, date2):
         data, columns = self.sql_query.sort_student_report_bydate_excel(date1, date2)
-        df = pd.DataFrame(data = data , columns= columns)
+        df = pd.DataFrame(data=data, columns=columns)
         writer = pd.ExcelWriter(
-            filepath + "/" + filename + ".xlsx", engine="xlsxwriter" 
+            filepath + "/" + filename + ".xlsx", engine="xlsxwriter"
         )
         start_column = 2
         df.to_excel(
@@ -108,7 +108,7 @@ class excelClass:
             startcol=start_column,
             header=True,
             index=False,
-            na_rep='NaN'
+            na_rep="NaN",
         )
         worksheet = writer.sheets["Sheet1"]
         worksheet.insert_image("A1", ".\SeekU\STI College Balagtas Logo medium.png")
@@ -117,17 +117,17 @@ class excelClass:
         for column in df:
             column_length = max(df[column].astype(str).map(len).max(), len(column))
             col_idx = df.columns.get_loc(column)
-            col_idx = col_idx+start_column
+            col_idx = col_idx + start_column
             worksheet.set_column(col_idx, col_idx, column_length)
 
         writer.close()
         os.startfile(filepath + "/" + filename + ".xlsx")
 
-    def print_personnel(self, filepath, filename , date1, date2):
+    def print_personnel(self, filepath, filename, date1, date2):
         data, columns = self.sql_query.sort_personnel_report_bydate_excel(date1, date2)
-        df = pd.DataFrame(data = data , columns= columns)
+        df = pd.DataFrame(data=data, columns=columns)
         writer = pd.ExcelWriter(
-            filepath + "/" + filename + ".xlsx", engine="xlsxwriter" 
+            filepath + "/" + filename + ".xlsx", engine="xlsxwriter"
         )
         start_column = 3
         df.to_excel(
@@ -137,7 +137,7 @@ class excelClass:
             startcol=start_column,
             header=True,
             index=False,
-            na_rep='NaN'
+            na_rep="NaN",
         )
         worksheet = writer.sheets["Sheet1"]
         worksheet.insert_image("A1", ".\SeekU\STI College Balagtas Logo medium.png")
@@ -146,15 +146,15 @@ class excelClass:
         for column in df:
             column_length = max(df[column].astype(str).map(len).max(), len(column))
             col_idx = df.columns.get_loc(column)
-            col_idx = col_idx+start_column
+            col_idx = col_idx + start_column
             worksheet.set_column(col_idx, col_idx, column_length)
         os.startfile(filepath + "/" + filename + ".xlsx")
 
-    def print_visitor(self, filepath, filename , date1, date2):
+    def print_visitor(self, filepath, filename, date1, date2):
         data, columns = self.sql_query.sort_visitor_report_bydate_excel(date1, date2)
-        df = pd.DataFrame(data = data , columns= columns)
+        df = pd.DataFrame(data=data, columns=columns)
         writer = pd.ExcelWriter(
-            filepath + "/" + filename + ".xlsx", engine="xlsxwriter" 
+            filepath + "/" + filename + ".xlsx", engine="xlsxwriter"
         )
         start_column = 4
         df.to_excel(
@@ -164,7 +164,7 @@ class excelClass:
             startcol=start_column,
             header=True,
             index=False,
-            na_rep='NaN'
+            na_rep="NaN",
         )
         worksheet = writer.sheets["Sheet1"]
         worksheet.insert_image("A1", ".\SeekU\STI College Balagtas Logo medium.png")
@@ -173,7 +173,7 @@ class excelClass:
         for column in df:
             column_length = max(df[column].astype(str).map(len).max(), len(column))
             col_idx = df.columns.get_loc(column)
-            col_idx = col_idx+start_column
+            col_idx = col_idx + start_column
             worksheet.set_column(col_idx, col_idx, column_length)
         os.startfile(filepath + "/" + filename + ".xlsx")
 
@@ -193,30 +193,39 @@ class docxClass:
         # populate the report tree
         self.treeview.populate_student_report_bydate(date1, date2)
         # open an existing Word document
-        doc = docx.Document("../Documents/Document_temp/Report Template.docx")
+        doc = docx.Document(".\Documents\Document_temp\Report Template.docx")
 
-        # get the first paragraph in the document
-        p1 = doc.paragraphs[8]
+        column_names = [
+            "Student_No",
+            "Firstname",
+            "Lastname",
+            "Program",
+            "Section",
+            "Date",
+            "Time In",
+            "Time Out",
+        ]
 
-        table = doc.add_table(rows=1, cols=8)
+        table = doc.add_table(rows=1, cols=len(column_names))
         table.style = "Table Grid"
+        hdr_cells = table.rows[0].cells
+
+        for i in range(len(column_names)):
+            hdr_cells[i].text = column_names[i]
 
         treeview_data = []
         # get the table data of student
         for child in self.treeview.student_report_tree.get_children():
             values = self.treeview.student_report_tree.item(child)["values"]
-            treeview_data.append(values)
+            if values not in treeview_data:
+                treeview_data.append(values)
+
         # Inserts the table data of student
         for row in treeview_data:
             row_cells = table.add_row().cells
-            row_cells[0].text = row[0]
-            row_cells[1].text = row[1]
-            row_cells[2].text = row[2]
-            row_cells[3].text = row[3]
-            row_cells[4].text = row[4]
-            row_cells[5].text = row[5]
-            row_cells[6].text = row[6]
-            row_cells[7].text = row[7]
+            for i in range(len(column_names)):
+                row_cells[i].text = str(row[i])
+
         # saves the doc to a new file path
         doc.save(filepath + "/" + filename + ".docx")
         os.startfile(filepath + "/" + filename + ".docx")
@@ -413,17 +422,17 @@ class docxClass:
         os.startfile(filepath + "/" + filename + ".pdf")
 
     # JOCRIAUS-23/04/2023-------------------------------------------------------------------------------------
-        # yung 12 na other functions gawin mong parepareho, eto yung gawin mong basis
+    # yung 12 na other functions gawin mong parepareho, eto yung gawin mong basis
     def save_pdf_student(self, filepath, filename, date1, date2):
         # populate the report tree
         self.treeview.populate_student_report_bydate(date1, date2)
         # open an existing Word document
         doc = docx.Document(".\Documents\Document_temp\Report Template.docx")
-        
+
         # get the first paragraph in the document
         p1 = doc.paragraphs[8]
 
-        table = doc.add_table(rows=1, cols=8, style = "Table Grid")
+        table = doc.add_table(rows=1, cols=8, style="Table Grid")
 
         treeview_data = []
         # get the table data of student
