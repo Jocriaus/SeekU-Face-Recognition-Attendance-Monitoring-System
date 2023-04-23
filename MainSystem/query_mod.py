@@ -763,11 +763,14 @@ class dbQueries:
         rows = self.cursor.fetchall()
         print (len(column))
         print (len(rows))
+        data = []
         if rows:
-            data = []
+
+            row_values = []
             for row in rows:
-                data.append(list(row))
-                    
+                row_values.append(list(row))
+            data = row_values.append(list(row))
+
             return data, column
         else:
             return False
@@ -799,8 +802,15 @@ class dbQueries:
         self.cursor.execute(query, (date1, date2))
         column = [desc[0] for desc in self.cursor.description]
         rows = self.cursor.fetchall()
+        data = []
         if rows:
-            return rows, column
+
+            row_values = []
+            for row in rows:
+                row_values.append(list(row))
+            data = row_values.append(list(row))
+
+            return data, column
         else:
             return False
 
@@ -827,8 +837,15 @@ class dbQueries:
         self.cursor.execute(query, (date1, date2))
         column = [desc[0] for desc in self.cursor.description]
         rows = self.cursor.fetchall()
+        data = []
         if rows:
-            return rows, column
+
+            row_values = []
+            for row in rows:
+                row_values.append(list(row))
+            data = row_values.append(list(row))
+
+            return data, column
         else:
             return False
         
