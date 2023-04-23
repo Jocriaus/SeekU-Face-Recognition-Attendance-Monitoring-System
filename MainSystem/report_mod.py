@@ -14,8 +14,6 @@ class excelClass:
 
     def save_student(self, filepath, filename , date1, date2):
         data, columns = self.sql_query.sort_student_report_bydate_excel(date1, date2)
-        print(data[0])
-
         df = pd.DataFrame(data = data , columns= columns)
         writer = pd.ExcelWriter(
             filepath + "/" + filename + ".xlsx", engine="xlsxwriter"

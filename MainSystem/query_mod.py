@@ -769,7 +769,8 @@ class dbQueries:
             row_values = []
             for row in rows:
                 row_values.append(list(row))
-            data = row_values.append(list(row))
+                
+            data.append(list(row_values))
 
             return data, column
         else:
@@ -808,7 +809,8 @@ class dbQueries:
             row_values = []
             for row in rows:
                 row_values.append(list(row))
-            data = row_values.append(list(row))
+                
+            data.append(list(row_values))
 
             return data, column
         else:
@@ -843,7 +845,8 @@ class dbQueries:
             row_values = []
             for row in rows:
                 row_values.append(list(row))
-            data = row_values.append(list(row))
+
+            data.append(list(row_values))
 
             return data, column
         else:
