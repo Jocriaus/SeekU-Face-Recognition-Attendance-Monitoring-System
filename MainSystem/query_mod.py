@@ -764,7 +764,11 @@ class dbQueries:
         print (len(column))
         print (len(rows))
         if rows:
-            return rows, column
+            data = []
+            for row in rows:
+                data.append(list(row))
+                    
+            return data, column
         else:
             return False
 
