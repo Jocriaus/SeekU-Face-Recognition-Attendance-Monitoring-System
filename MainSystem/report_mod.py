@@ -16,123 +16,165 @@ class excelClass:
         data, columns = self.sql_query.sort_student_report_bydate_excel(date1, date2)
         df = pd.DataFrame(data = data , columns= columns)
         writer = pd.ExcelWriter(
-            filepath + "/" + filename + ".xlsx", engine="xlsxwriter"
+            filepath + "/" + filename + ".xlsx", engine="xlsxwriter" 
         )
+        start_column = 2
         df.to_excel(
             writer,
             sheet_name="Sheet1",
             startrow=12,
-            startcol=4,
+            startcol=start_column,
             header=True,
             index=False,
+            na_rep='NaN'
         )
         worksheet = writer.sheets["Sheet1"]
         worksheet.insert_image("A1", ".\SeekU\STI College Balagtas Logo medium.png")
         worksheet.insert_image("F1", ".\SeekU\SeekU Logotype micro.png")
         worksheet.insert_image("L1", ".\SeekU\SeekU small.png")
+        for column in df:
+            column_length = max(df[column].astype(str).map(len).max(), len(column))
+            col_idx = df.columns.get_loc(column)
+            col_idx = col_idx+start_column
+            worksheet.set_column(col_idx, col_idx, column_length)
+
         writer.close()
 
     def save_personnel(self, filepath, filename , date1, date2):
         data, columns = self.sql_query.sort_personnel_report_bydate_excel(date1, date2)
-        df = pd.DataFrame(list(data), columns=columns)
+        df = pd.DataFrame(data = data , columns= columns)
         writer = pd.ExcelWriter(
-            filepath + "/" + filename + ".xlsx", engine="xlsxwriter"
+            filepath + "/" + filename + ".xlsx", engine="xlsxwriter" 
         )
+        start_column = 3
         df.to_excel(
             writer,
             sheet_name="Sheet1",
             startrow=12,
-            startcol=4,
+            startcol=start_column,
             header=True,
             index=False,
+            na_rep='NaN'
         )
         worksheet = writer.sheets["Sheet1"]
         worksheet.insert_image("A1", ".\SeekU\STI College Balagtas Logo medium.png")
         worksheet.insert_image("F1", ".\SeekU\SeekU Logotype micro.png")
         worksheet.insert_image("L1", ".\SeekU\SeekU small.png")
-        writer.save()
+        for column in df:
+            column_length = max(df[column].astype(str).map(len).max(), len(column))
+            col_idx = df.columns.get_loc(column)
+            col_idx = col_idx+start_column
+            worksheet.set_column(col_idx, col_idx, column_length)
+        writer.close()
 
     def save_visitor(self, filepath, filename , date1, date2):
         data, columns = self.sql_query.sort_visitor_report_bydate_excel(date1, date2)
-        df = pd.DataFrame(list(data), columns=columns)
+        df = pd.DataFrame(data = data , columns= columns)
         writer = pd.ExcelWriter(
-            filepath + "/" + filename + ".xlsx", engine="xlsxwriter"
+            filepath + "/" + filename + ".xlsx", engine="xlsxwriter" 
         )
+        start_column = 4
         df.to_excel(
             writer,
             sheet_name="Sheet1",
             startrow=12,
-            startcol=4,
+            startcol=start_column,
             header=True,
             index=False,
+            na_rep='NaN'
         )
         worksheet = writer.sheets["Sheet1"]
         worksheet.insert_image("A1", ".\SeekU\STI College Balagtas Logo medium.png")
         worksheet.insert_image("F1", ".\SeekU\SeekU Logotype micro.png")
         worksheet.insert_image("L1", ".\SeekU\SeekU small.png")
-        writer.save()
+        for column in df:
+            column_length = max(df[column].astype(str).map(len).max(), len(column))
+            col_idx = df.columns.get_loc(column)
+            col_idx = col_idx+start_column
+            worksheet.set_column(col_idx, col_idx, column_length)
+        writer.close()
 
     def print_student(self, filepath, filename , date1, date2):
         data, columns = self.sql_query.sort_student_report_bydate_excel(date1, date2)
-        df = pd.DataFrame(list(data), columns=columns)
+        df = pd.DataFrame(data = data , columns= columns)
         writer = pd.ExcelWriter(
-            filepath + "/" + filename + ".xlsx", engine="xlsxwriter"
+            filepath + "/" + filename + ".xlsx", engine="xlsxwriter" 
         )
+        start_column = 2
         df.to_excel(
             writer,
             sheet_name="Sheet1",
             startrow=12,
-            startcol=4,
+            startcol=start_column,
             header=True,
             index=False,
+            na_rep='NaN'
         )
         worksheet = writer.sheets["Sheet1"]
         worksheet.insert_image("A1", ".\SeekU\STI College Balagtas Logo medium.png")
         worksheet.insert_image("F1", ".\SeekU\SeekU Logotype micro.png")
         worksheet.insert_image("L1", ".\SeekU\SeekU small.png")
-        writer.save()
+        for column in df:
+            column_length = max(df[column].astype(str).map(len).max(), len(column))
+            col_idx = df.columns.get_loc(column)
+            col_idx = col_idx+start_column
+            worksheet.set_column(col_idx, col_idx, column_length)
+
+        writer.close()
         os.startfile(filepath + "/" + filename + ".xlsx")
 
     def print_personnel(self, filepath, filename , date1, date2):
         data, columns = self.sql_query.sort_personnel_report_bydate_excel(date1, date2)
-        df = pd.DataFrame(list(data), columns=columns)
+        df = pd.DataFrame(data = data , columns= columns)
         writer = pd.ExcelWriter(
-            filepath + "/" + filename + ".xlsx", engine="xlsxwriter"
+            filepath + "/" + filename + ".xlsx", engine="xlsxwriter" 
         )
+        start_column = 3
         df.to_excel(
             writer,
             sheet_name="Sheet1",
             startrow=12,
-            startcol=4,
+            startcol=start_column,
             header=True,
             index=False,
+            na_rep='NaN'
         )
         worksheet = writer.sheets["Sheet1"]
         worksheet.insert_image("A1", ".\SeekU\STI College Balagtas Logo medium.png")
         worksheet.insert_image("F1", ".\SeekU\SeekU Logotype micro.png")
         worksheet.insert_image("L1", ".\SeekU\SeekU small.png")
-        writer.save()
+        for column in df:
+            column_length = max(df[column].astype(str).map(len).max(), len(column))
+            col_idx = df.columns.get_loc(column)
+            col_idx = col_idx+start_column
+            worksheet.set_column(col_idx, col_idx, column_length)
         os.startfile(filepath + "/" + filename + ".xlsx")
 
     def print_visitor(self, filepath, filename , date1, date2):
         data, columns = self.sql_query.sort_visitor_report_bydate_excel(date1, date2)
-        df = pd.DataFrame(list(data), columns=columns)
+        df = pd.DataFrame(data = data , columns= columns)
         writer = pd.ExcelWriter(
-            filepath + "/" + filename + ".xlsx", engine="xlsxwriter"
+            filepath + "/" + filename + ".xlsx", engine="xlsxwriter" 
         )
+        start_column = 4
         df.to_excel(
             writer,
             sheet_name="Sheet1",
             startrow=12,
-            startcol=4,
+            startcol=start_column,
             header=True,
             index=False,
+            na_rep='NaN'
         )
         worksheet = writer.sheets["Sheet1"]
         worksheet.insert_image("A1", ".\SeekU\STI College Balagtas Logo medium.png")
         worksheet.insert_image("F1", ".\SeekU\SeekU Logotype micro.png")
         worksheet.insert_image("L1", ".\SeekU\SeekU small.png")
-        writer.save()
+        for column in df:
+            column_length = max(df[column].astype(str).map(len).max(), len(column))
+            col_idx = df.columns.get_loc(column)
+            col_idx = col_idx+start_column
+            worksheet.set_column(col_idx, col_idx, column_length)
         os.startfile(filepath + "/" + filename + ".xlsx")
 
 

@@ -762,17 +762,22 @@ class dbQueries:
         column = [desc[0] for desc in self.cursor.description]
         rows = self.cursor.fetchall()
         print (len(column))
-        print (len(rows))
-        data = []
+        
         if rows:
+            selected_values = []
 
-            row_values = []
+            # iterate through the rows of the result set
             for row in rows:
-                row_values.append(list(row))
-                
-            data.append(list(row_values))
-
-            return data, column
+                # create a list to store the values for this row
+                row_values = []
+                # iterate through the columns of the row
+                for col in row:
+                    # append the value to the row values list
+                    row_values.append(col)
+                # append the row values list to the selected values list
+                selected_values.append(row_values)
+            print (len(selected_values))
+            return selected_values, column
         else:
             return False
 
@@ -803,16 +808,23 @@ class dbQueries:
         self.cursor.execute(query, (date1, date2))
         column = [desc[0] for desc in self.cursor.description]
         rows = self.cursor.fetchall()
-        data = []
+        print (len(column))
+        
         if rows:
+            selected_values = []
 
-            row_values = []
+            # iterate through the rows of the result set
             for row in rows:
-                row_values.append(list(row))
-                
-            data.append(list(row_values))
-
-            return data, column
+                # create a list to store the values for this row
+                row_values = []
+                # iterate through the columns of the row
+                for col in row:
+                    # append the value to the row values list
+                    row_values.append(col)
+                # append the row values list to the selected values list
+                selected_values.append(row_values)
+            print (len(selected_values))
+            return selected_values, column
         else:
             return False
 
@@ -839,16 +851,23 @@ class dbQueries:
         self.cursor.execute(query, (date1, date2))
         column = [desc[0] for desc in self.cursor.description]
         rows = self.cursor.fetchall()
-        data = []
+        print (len(column))
+        
         if rows:
+            selected_values = []
 
-            row_values = []
+            # iterate through the rows of the result set
             for row in rows:
-                row_values.append(list(row))
-
-            data.append(list(row_values))
-
-            return data, column
+                # create a list to store the values for this row
+                row_values = []
+                # iterate through the columns of the row
+                for col in row:
+                    # append the value to the row values list
+                    row_values.append(col)
+                # append the row values list to the selected values list
+                selected_values.append(row_values)
+            print (len(selected_values))
+            return selected_values, column
         else:
             return False
         

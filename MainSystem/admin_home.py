@@ -950,7 +950,9 @@ class AdminHomeApp:
 
         # Main widget
         self.mainwindow = self.administrator_app
+        self.mainwindow.protocol("WM_DELETE_WINDOW", self.exit_program)
         self.mainwindow.wm_attributes("-fullscreen", "True")
+        
 
     # -------------------------------------------------------------------------------------------
 
