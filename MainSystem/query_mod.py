@@ -5,7 +5,6 @@ class dbQueries:
     def __init__(self, master=None):
         # "DESKTOP-DG7AK17\SQLEXPRESS"
         # "STAR-PLATINUM\SQLEXPRESS01"
-
         # "DESKTOP-3MNAAKG\SQLEXPRESS"
         self.server = "STAR-PLATINUM\SQLEXPRESS01"
         self.database = "seeku_database1"
@@ -757,17 +756,19 @@ class dbQueries:
             + "tbl_student.student_program, tbl_student.student_section, tbl_student_report.student_attendance_date, "
             + "tbl_student_report.student_time_in, tbl_student_report.student_time_out FROM tbl_student "
             + "RIGHT JOIN tbl_student_report ON tbl_student.student_no = tbl_student_report.student_no "
-            + "WHERE personnel_attendance_date BETWEEN ? AND ?"
+            + "WHERE student_attendance_date BETWEEN ? AND ?"
         )
         self.cursor.execute(query, (date1, date2))
         column = [desc[0] for desc in self.cursor.description]
         rows = self.cursor.fetchall()
+        print (len(column))
+        print (len(rows))
         if rows:
             return rows, column
         else:
             return False
 
-    # JOCRIAUS--------------------------------------------------------------------------
+
     def sort_student_report_bydate_docx(self, date1, date2):
         query = (
             f"SELECT tbl_student.student_no, tbl_student.student_firstname, tbl_student.student_lastname, "
@@ -778,8 +779,24 @@ class dbQueries:
         )
         self.cursor.execute(query, (date1, date2))
         rows = self.cursor.fetchall()
+        print(rows)
         if rows:
             return rows
+        else:
+            return False
+
+    def sort_personnel_report_bydate_excel(self, date1, date2):
+        query = (
+            f"SELECT tbl_personnel.personnel_no, tbl_personnel.personnel_firstname, tbl_personnel.personnel_lastname,"
+            + "tbl_personnel.personnel_type, tbl_personnel_report.personnel_attendance_date, tbl_personnel_report.personnel_time_in, "
+            + "tbl_personnel_report.personnel_time_out FROM tbl_personnel RIGHT JOIN tbl_personnel_report "
+            + "ON tbl_personnel.personnel_no = tbl_personnel_report.personnel_no"
+        )
+        self.cursor.execute(query, (date1, date2))
+        column = [desc[0] for desc in self.cursor.description]
+        rows = self.cursor.fetchall()
+        if rows:
+            return rows, column
         else:
             return False
 
@@ -797,6 +814,20 @@ class dbQueries:
         else:
             return False
 
+    def sort_visitor_report_bydate_excel(self, date1, date2):
+        query = (
+            f"SELECT tbl_visitor.visitor_no, tbl_visitor.visitor_firstname, tbl_visitor.visitor_lastname, "
+            + "tbl_visitor_report.visitor_attendance_date, tbl_visitor_report.visitor_time_in, tbl_visitor_report.visitor_time_out "
+            + "FROM  tbl_visitor RIGHT JOIN tbl_visitor_report ON tbl_visitor.visitor_no = tbl_visitor_report.visitor_no"
+        )
+        self.cursor.execute(query, (date1, date2))
+        column = [desc[0] for desc in self.cursor.description]
+        rows = self.cursor.fetchall()
+        if rows:
+            return rows, column
+        else:
+            return False
+        
     def sort_visitor_report_bydate_docx(self, date1, date2):
         query = (
             f"SELECT tbl_visitor.visitor_no, tbl_visitor.visitor_firstname, tbl_visitor.visitor_lastname, "
@@ -811,36 +842,6 @@ class dbQueries:
         else:
             return False
 
-    # JOCRIAUS--------------------------------------------------------------------------
-
-    def sort_personnel_report_bydate_excel(self, date1, date2):
-        query = (
-            f"SELECT tbl_personnel.personnel_no, tbl_personnel.personnel_firstname, tbl_personnel.personnel_lastname,"
-            + "tbl_personnel.personnel_type, tbl_personnel_report.personnel_attendance_date, tbl_personnel_report.personnel_time_in, "
-            + "tbl_personnel_report.personnel_time_out FROM tbl_personnel RIGHT JOIN tbl_personnel_report "
-            + "ON tbl_personnel.personnel_no = tbl_personnel_report.personnel_no"
-        )
-        self.cursor.execute(query, (date1, date2))
-        column = [desc[0] for desc in self.cursor.description]
-        rows = self.cursor.fetchall()
-        if rows:
-            return rows, column
-        else:
-            return False
-
-    def sort_visitor_report_bydate_excel(self, date1, date2):
-        query = (
-            f"SELECT tbl_visitor.visitor_no, tbl_visitor.visitor_firstname, tbl_visitor.visitor_lastname, "
-            + "tbl_visitor_report.visitor_attendance_date, tbl_visitor_report.visitor_time_in, tbl_visitor_report.visitor_time_out "
-            + "FROM  tbl_visitor RIGHT JOIN tbl_visitor_report ON tbl_visitor.visitor_no = tbl_visitor_report.visitor_no"
-        )
-        self.cursor.execute(query, (date1, date2))
-        column = [desc[0] for desc in self.cursor.description]
-        rows = self.cursor.fetchall()
-        if rows:
-            return rows, column
-        else:
-            return False
 
     def check_username(self, username):
         query = f"SELECT * FROM tbl_user WHERE username = ?"
@@ -1176,14 +1177,14 @@ class dbQueries:
 
     # AV-----------------------------------------
 
-    def backup_database(self):
-        self.backup_file_path = f"../Database_Schema/this_is_a_backup.bacpac"
+    def backup_database(self,path,date_time):
+        self.backup_file_path = path + "/"+ date_time +"_database_backup.bacpac"
         query = f"BACKUP DATABASE {self.database} TO DISK = '{self.backup_file_path}'"
         self.cursor.execute(query)
         self.cursor.commit()
 
-    def restore_database(self):
-        bacpac_file = "C:/path/to/database.bacpac"
+    def restore_database(self, file):
+        bacpac_file = file
         query = f"RESTORE DATABASE [{self.database}] FROM DISK = '{bacpac_file}' WITH FILE  = 1, NUONLOAD, REPLACE, STATS = 10"
         self.cursor.execute(query)
         print(f"The database {self.database} has been restored from {bacpac_file}.")

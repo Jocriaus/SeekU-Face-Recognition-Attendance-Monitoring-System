@@ -973,6 +973,21 @@ class AdminHomeApp:
                 folder_empty = False
             print(self.folder_selected)
             self.administrator_app.attributes('-topmost', True)
+            self.administrator_app.attributes('-topmost', False)
+
+    def select_file(self):
+        file_empty = True
+        while (file_empty):
+            self.administrator_app.attributes('-topmost', False)
+            file_select = filedialog.askopenfilename()
+            if file_select == "":
+                file_empty = True
+            else:
+                self.file_selected = file_select
+                file_empty = False
+            print(self.file_selected)
+            self.administrator_app.attributes('-topmost', True)
+            self.administrator_app.attributes('-topmost', False)
 
     def set_user(self):
         if self.user == "Low Admin":
@@ -1566,8 +1581,7 @@ class AdminHomeApp:
         self.search_report_info_logic()
 
     def generate_clients_reports(self, event=None):
-        self.select_folder()
-        gR.SavePrintReportApp(self.clients_rep_var.get(),self.folder_selected)
+        gR.SavePrintReportApp(self.clients_rep_var.get())
 
 
     # REPORTS-COMMANDS---------------------------------------------------------------------------------------------------------------
@@ -1605,10 +1619,18 @@ class AdminHomeApp:
         self.settings_section_label.configure(foreground="#F7FAE9")
 
     def export_database(self, event=None):
-        pass
+        self.select_folder()
+        path = self.folder_selected
+        file_name = datetime.now().strftime("%m-%d-%Y-%H-%M-%S")
+        self.sql_query.backup_database(path, file_name)
 
     def import_database(self, event=None):
-        pass
+        self.select_file()
+        file = self.file_selected
+        if file.endswith('.bacpac'):
+            self.sql_query.restore_database(file)
+        else:
+            messbx.showwarning("Error", "Kindly choose the correct file type.")
 
     def save_dates(self, event=None):
         self.activation_settings_save()
