@@ -6,8 +6,8 @@ class dbQueries:
         # "DESKTOP-DG7AK17\SQLEXPRESS"
         # "STAR-PLATINUM\SQLEXPRESS01"
         # "DESKTOP-3MNAAKG\SQLEXPRESS"
-        self.server = "DESKTOP-DG7AK17\SQLEXPRESS"
-        self.database = "seeku_database"
+        self.server = "STAR-PLATINUM\SQLEXPRESS01"
+        self.database = "seeku_database1"
         self.username = ""
         self.password = ""
 

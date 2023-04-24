@@ -1561,7 +1561,7 @@ class AdminHomeApp:
 
     def add_user_infos(self, event=None):
         self.hide_this_window()
-        uC.CreateUserApp()
+        uC.CreateUserApp(self.administrator_app)
         
 
     # USER-COMMANDS---------------------------------------------------------------------------------------------------------------

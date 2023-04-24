@@ -5,6 +5,7 @@ import face_recognition
 import os
 import math
 import time
+import mediapipe as mp
 
 class FaceRecognition:
     def __init__(self, video_source, file_path, xsize,ysize):    
@@ -36,6 +37,11 @@ class FaceRecognition:
         self.haar_face_cascade = cv2.CascadeClassifier(
         "MainSystem\DetectionData\haarcascade_frontalface_alt.xml"
         )
+
+        self.mp_draw = mp.solutions.drawing_utils
+        self.mp_face_mesh = mp.solutions.face_mesh
+        self.face_mesh = self.mp_face_mesh.FaceMesh(max_num_faces = 1)
+        self.draw_spec = self.mp_draw.DrawingSpec(thickness = 1, circle_radius=2)
 
         print(self.myList)
     #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
@@ -146,11 +152,36 @@ class FaceRecognition:
                     print('face detected')
                     break
 
+    def get_mesh_face(self, img, draw=True):    
+        img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)   
+        results = self.face_mesh.process(img_rgb)    # drawing landmarks    
+        faces = []    
+        if results.multi_face_landmarks:        
+            for face_landmarks in results.multi_face_landmarks:            
+                if draw:                
+                    self.mp_draw.draw_landmarks(img, face_landmarks, self.mp_face_mesh.FACEMESH_CONTOURS,self.draw_spec, self.draw_spec)            # getting the pixel coordinates            
+                face = []            
+                for index, landmark in enumerate(face_landmarks.landmark):                
+                    ih, iw, ic = img.shape                
+                    x, y = int(landmark.x * iw), int(landmark.y * ih)                
+                    face.append((x, y))            
+                    faces.append(face)    
+        return img, faces                
+
+
+
+
+
     # this function puts a square shape of a frame and puts a circle
     # on the center of the face
-    def box_and_dot(self, frame):
+    def box_and_dot(self, img):
+        frame, faces = self.get_mesh_face(img, False)
 
-        self.center = (0,0)
+        if faces :
+            face = faces[0]
+            self.center = face[1]
+            cv2.circle(frame,self.center,5, (0, 114, 188),5)
+
         height, width, z = frame.shape
         self.TL = (math.floor(width/3), math.floor(height/4))
         self.TR = (self.TL[0]*2, self.TL[1])
@@ -161,13 +192,15 @@ class FaceRecognition:
         cv2.line(frame, self.TL, self.BL, (0, 114, 188), 5)
         cv2.line(frame, self.TR, self.BR, (0, 114, 188), 5)
         cv2.line(frame, self.BL, self.BR, (0, 114, 188), 5)
-
+    
+        """
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         face = self.haar_face_cascade.detectMultiScale(gray, 1.1, 6)
         for (x, y, w, h) in face:
             self.center = (math.floor(x+ w / 2), math.floor(y+ h / 2))
             cv2.circle(frame,self.center,5, (0, 114, 188),5)
-
+        """
+            
     # this function detects if the face is inside the square within the time set.
     def face_in_box(self, recognize_face):
         recognize_face_func = recognize_face
