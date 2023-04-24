@@ -1,6 +1,7 @@
 import tkinter as tk
-from tkinter import filedialog
+import tkinter.messagebox as messbx
 import tkinter as tk
+import face_recognition
 import cv2
 import PIL.Image, PIL.ImageTk
 import register_visitor as cAV
@@ -134,10 +135,7 @@ class CameraApp:
             relwidth=1.0,
             relx=0.5,
             rely=0.925)
-    #Contains-snapshot-and-logout-button--------------------------------------------------------------------------------------------------------- 
-        # classifier for the face detection
-        self.haar_face_cascade = cv2.CascadeClassifier(
-        "MainSystem\DetectionData\haarcascade_frontalface_alt.xml")
+    #Contains-snapshot-and-logout-button--------------------------------------------------------------------------------------------------------
 
         # see function for description
         self.cam_update()
@@ -171,11 +169,6 @@ class CameraApp:
             resized = cv2.resize(frame, (self.camera_canvas.winfo_width(), self.camera_canvas.winfo_height()), interpolation=cv2.INTER_AREA)
             # turning the image into gray for the haar cascade to be read
             gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
-            # detecting the face
-            faces = self.haar_face_cascade.detectMultiScale(gray, 1.1, 6)
-            # placing a rectangle within the face
-            for (x, y, w, h) in faces:
-                cv2.rectangle(resized, (x, y), (x + w, y + h), (0, 114, 188), 2)
             # pu tthe image/frame into the canvas
             self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(resized))
             self.camera_canvas.create_image(0, 0, image = self.photo, anchor = tk.NW)
@@ -188,9 +181,20 @@ class CameraApp:
         resized = cv2.resize(frame, (1280, 720), interpolation=cv2.INTER_AREA)
         if ret:
             cv2.imwrite(os.path.join(self.img_path ,("000000000.jpg")), cv2.cvtColor(resized, cv2.COLOR_RGB2BGR))
-            # this will open the window that saves the info of the visitor.
-            cAV.RegisterVisitorApp(self.home_window, self.snapshot_app, self.img_path)
-            self.hide_this_window()
+
+            image = image = face_recognition.load_image_file(self.img_path + "/000000000.jpg")
+            face_locations = face_recognition.face_locations(image, number_of_times_to_upsample=0, model="cnn")
+            
+            if face_locations:
+                 # this will open the window that saves the info of the visitor.
+                cAV.RegisterVisitorApp(self.home_window, self.snapshot_app, self.img_path)
+                self.hide_this_window()
+            else:
+                 messbx.showwarning(
+                "Error", "Face detection failed. Please adjust your posture and capture a clear image."
+            )
+           
+
 
     # this command will return to the home window
     def log_out_func(self, event=None):

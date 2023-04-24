@@ -152,6 +152,7 @@ class FaceRecognition:
                     print('face detected')
                     break
 
+
     def get_mesh_face(self, img, draw=True):    
         img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)   
         results = self.face_mesh.process(img_rgb)    # drawing landmarks    
@@ -167,9 +168,6 @@ class FaceRecognition:
                     face.append((x, y))            
                     faces.append(face)    
         return img, faces                
-
-
-
 
 
     # this function puts a square shape of a frame and puts a circle

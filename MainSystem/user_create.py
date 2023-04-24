@@ -12,12 +12,12 @@ class CreateUserApp:
         self.sql_query = qry.dbQueries()
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         # build ui
-        self.register_user_app = tk.Tk()
+        self.register_user_app = tk.Toplevel()
         self.register_user_app.configure(background="#F7FAE9", height=200, width=200)
         self.register_user_app.geometry("600x600")
         self.register_user_app.resizable(False, False)
         self.register_user_app.title("SeekU - Register User")
-        self.register_user_app.iconbitmap(".\SeekU\SeekU.ico")
+        self.register_user_app.iconbitmap("./SeekU/SeekU.ico")
         # Contains-the-edit-label-and-entry-widgets---------------------------------------------------------------------------------------------------------
         self.register_user_frame2 = tk.Frame(self.register_user_app)
         self.register_user_frame2.configure(background="#F7FAE9", height=200, width=200)
@@ -105,7 +105,7 @@ class CreateUserApp:
         self.register_user_frame1.configure(background="#fff000", height=200, width=200)
         self.school_logo_label = tk.Label(self.register_user_frame1)
         self.img_STICollegeBalagtasLogomedium = tk.PhotoImage(
-            file=".\SeekU\STI College Balagtas Logo medium.png"
+            file="./SeekU/STI College Balagtas Logo medium.png"
         )
         self.school_logo_label.configure(
             background="#fff000",
@@ -155,8 +155,8 @@ class CreateUserApp:
 
     def password_check(self,password):
         limit = self.sql_query.get_password_length()
-        if len(password) > limit :
-            messbx.showwarning("Error", "The password length limit is " + limit + "." )
+        if len(password) < limit :
+            messbx.showwarning("Error", "The password should have " + limit + " characters." )
             self.register = False
         else:
             self.register = True

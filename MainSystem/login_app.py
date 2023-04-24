@@ -137,7 +137,7 @@ class LoginApp:
             if self.sql_query.login_entry(self.username_var, self.password_var):
 
                 # test for admin = jus    jus123
-                # test for security guard = Jocriaus   password123
+                # test for security guard = jc   123
 
                 print(
                     self.sql_query.check_user_type(self.username_var, self.password_var)

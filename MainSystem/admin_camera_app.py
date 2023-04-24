@@ -1,7 +1,8 @@
 import tkinter as tk
-from tkinter import filedialog
+import face_recognition
 import tkinter as tk
 import cv2
+import tkinter.messagebox as messbx
 import PIL.Image, PIL.ImageTk
 import register_personnel as rP
 import register_student as rS
@@ -118,19 +119,19 @@ class CameraApp:
             relx=.5,
             rely=0.5)
         self.snapshot_button.bind("<ButtonPress>", self.take_picture, add="")
-        self.log_out_button = tk.Button(self.snapshot_frame1)
-        self.log_out_button.configure(
+        self.return_button = tk.Button(self.snapshot_frame1)
+        self.return_button.configure(
             background="#0072bc",
             font="{arial black} 20 {}",
             foreground="#F7FAE9",
             text='Log out')
-        self.log_out_button.place(
+        self.return_button.place(
             anchor="center",
             relheight=0.25,
             relwidth=0.11,
             relx=0.93,
             rely=0.82)
-        self.log_out_button.bind("<ButtonPress>", self.log_out_func, add="")
+        self.return_button.bind("<ButtonPress>", self.log_out_func, add="")
         self.snapshot_frame1.place(
             anchor="center",
             relheight=0.15,
@@ -138,9 +139,6 @@ class CameraApp:
             relx=0.5,
             rely=0.925)
     #Contains-snapshot-and-logout-button--------------------------------------------------------------------------------------------------------- 
-        # classifier for the face detection
-        self.haar_face_cascade = cv2.CascadeClassifier(
-        "MainSystem\DetectionData\haarcascade_frontalface_alt.xml")
 
         # see function for description
         self.cam_update()
@@ -166,6 +164,7 @@ class CameraApp:
         self.admin_home_window.deiconify()
         self.snapshot_app.destroy()
 
+
     # this function updates the canvas content - shows the camera
     def cam_update(self):
         # Get a frame from the video source
@@ -175,10 +174,12 @@ class CameraApp:
             # turning the image into gray for the haar cascade to be read
             gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
             # detecting the face
-            faces = self.haar_face_cascade.detectMultiScale(gray, 1.1, 6)
+            # faces = self.haar_face_cascade.detectMultiScale(gray, 1.1, 6)
             # placing a rectangle within the face
+            """
             for (x, y, w, h) in faces:
                 cv2.rectangle(resized, (x, y), (x + w, y + h), (0, 114, 188), 2)
+            """
             # pu tthe image/frame into the canvas
             self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(resized))
             self.camera_canvas.create_image(0, 0, image = self.photo, anchor = tk.NW)
@@ -192,13 +193,22 @@ class CameraApp:
         if ret:
             cv2.imwrite(os.path.join(self.img_path ,("000000000.jpg")), cv2.cvtColor(resized, cv2.COLOR_RGB2BGR))
             # this will open the window that saves the info of the visitor.
-            if self.window_will_open == "Manage Students":
-                rS.RegisterStudentApp(self.snapshot_app, self.img_path)
-            elif self.window_will_open == "Manage Personnels":
-                rP.RegisterPersonnelApp(self.snapshot_app, self.img_path)    
-            elif self.window_will_open == "Manage Visitors":
-                cAV.AddVisitorApp(self.admin_home_window, self.snapshot_app, self.img_path)
-            self.hide_this_window()
+            image = image = face_recognition.load_image_file(self.img_path + "/000000000.jpg")
+            face_locations = face_recognition.face_locations(image, number_of_times_to_upsample=0, model="cnn")
+            
+            if face_locations:
+                if self.window_will_open == "Manage Students":
+                    rS.RegisterStudentApp(self.snapshot_app, self.img_path)
+                elif self.window_will_open == "Manage Personnels":
+                    rP.RegisterPersonnelApp(self.snapshot_app, self.img_path)    
+                elif self.window_will_open == "Manage Visitors":
+                    cAV.AddVisitorApp(self.admin_home_window, self.snapshot_app, self.img_path)
+                self.hide_this_window()
+            else:
+                 messbx.showwarning(
+                "Error", "Face detection failed. Please adjust your posture and capture a clear image."
+            )
+            
 
 
 
@@ -319,19 +329,19 @@ class CameraEditApp:
             relx=.5,
             rely=0.5)
         self.snapshot_button.bind("<ButtonPress>", self.take_picture, add="")
-        self.log_out_button = tk.Button(self.snapshot_frame1)
-        self.log_out_button.configure(
+        self.return_button = tk.Button(self.snapshot_frame1)
+        self.return_button.configure(
             background="#0072bc",
             font="{arial black} 20 {}",
             foreground="#F7FAE9",
-            text='Log out')
-        self.log_out_button.place(
+            text='Return')
+        self.return_button.place(
             anchor="center",
-            relheight=0.25,
+            relheight=0.3,
             relwidth=0.11,
             relx=0.93,
-            rely=0.82)
-        self.log_out_button.bind("<ButtonPress>", self.log_out_func, add="")
+            rely=0.8)
+        self.return_button.bind("<ButtonPress>", self.log_out_func, add="")
         self.snapshot_frame1.place(
             anchor="center",
             relheight=0.15,
@@ -340,8 +350,7 @@ class CameraEditApp:
             rely=0.925)
     #Contains-snapshot-and-logout-button--------------------------------------------------------------------------------------------------------- 
         # classifier for the face detection
-        self.haar_face_cascade = cv2.CascadeClassifier(
-        "MainSystem\DetectionData\haarcascade_frontalface_alt.xml")
+        #self.haar_face_cascade = cv2.CascadeClassifier("MainSystem\DetectionData\haarcascade_frontalface_alt.xml")
 
         # see function for description
         self.cam_update()
@@ -372,10 +381,12 @@ class CameraEditApp:
             # turning the image into gray for the haar cascade to be read
             gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
             # detecting the face
-            faces = self.haar_face_cascade.detectMultiScale(gray, 1.1, 6)
+            # faces = self.haar_face_cascade.detectMultiScale(gray, 1.1, 6)
             # placing a rectangle within the face
+            """
             for (x, y, w, h) in faces:
                 cv2.rectangle(resized, (x, y), (x + w, y + h), (0, 114, 188), 2)
+            """
             # pu tthe image/frame into the canvas
             self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(resized))
             self.camera_canvas.create_image(0, 0, image = self.photo, anchor = tk.NW)
@@ -388,9 +399,19 @@ class CameraEditApp:
         resized = cv2.resize(frame, (1280, 720), interpolation=cv2.INTER_AREA)
         if ret:
             cv2.imwrite(os.path.join(self.img_path ,("000000000.jpg")), cv2.cvtColor(resized, cv2.COLOR_RGB2BGR))
+            
+            image = image = face_recognition.load_image_file(self.img_path + "/000000000.jpg")
+            face_locations = face_recognition.face_locations(image, number_of_times_to_upsample=0, model="cnn")
+
+            if face_locations:
+                self.display_temp_pic()
+                self.show_edit_window()
+            else:
+                 messbx.showwarning(
+                "Error", "Face detection failed. Please adjust your posture and capture a clear image."
+            )
             # this will open the window that saves the info of the visitor.
-            self.display_temp_pic()
-            self.show_edit_window()
+
 
 
     # this command will return to the home window

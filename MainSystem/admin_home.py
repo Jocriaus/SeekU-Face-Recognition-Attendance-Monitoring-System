@@ -733,7 +733,7 @@ class AdminHomeApp:
         self.total_visitor = self.sql_query.get_visitor_count()
         self.ttl_visitor_no_label = tk.Label(self.administrator_db_ttl_frame)
         self.ttl_visitor_no_label.configure(
-            background="#F7FAE9", font="{arial} 30 {bold}", text="0"
+            background="#F7FAE9", font="{arial} 30 {bold}", text=self.total_visitor
         )
         self.ttl_visitor_no_label.place(anchor="center", relx=0.84, rely=0.65, x=0, y=0)
         self.administrator_db_ttl_frame.place(
@@ -1216,17 +1216,14 @@ class AdminHomeApp:
 
     def edit_clients_logic(self):
         if self.clients_man_var.get() == "Manage Students":
-            self.hide_this_window()
             self.select_folder()
             self.edit_student_function()
 
         if self.clients_man_var.get() == "Manage Personnels":
-            self.hide_this_window()
             self.select_folder()
             self.edit_personnel_function()
 
         if self.clients_man_var.get() == "Manage Visitors":
-            self.hide_this_window()
             self.select_folder()
             self.edit_visitor_function()
 
@@ -1269,6 +1266,7 @@ class AdminHomeApp:
             self.administrator_app,
             self.folder_selected ,
         )
+        self.hide_this_window()
 
     def edit_personnel_function(self):
         self.treeview.select_personnel_treeview_row()
@@ -1296,7 +1294,7 @@ class AdminHomeApp:
             self.administrator_app,
             self.folder_selected ,
         )
-        
+        self.hide_this_window()
     
     def edit_visitor_function(self):
         self.treeview.select_visitor_treeview_row()
@@ -1320,6 +1318,7 @@ class AdminHomeApp:
             self.administrator_app,
             self.folder_selected ,
         )
+        self.hide_this_window()
     
     # CLIENT-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
     # ATTENDANCE-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
@@ -1419,22 +1418,18 @@ class AdminHomeApp:
 
     def edit_archived_logic(self):
         if self.archived_man_var.get() == "Archived Students":
-            self.hide_this_window()
             self.select_folder()
             self.edit_student_function()
 
         if self.archived_man_var.get() == "Archived Personnels":
-            self.hide_this_window()
             self.select_folder()
             self.edit_personnel_function()
 
         if self.archived_man_var.get() == "Archived Visitors":
-            self.hide_this_window()
             self.select_folder()
             self.edit_visitor_function()
 
         if self.archived_man_var.get() == "Archived User":
-            self.hide_this_window()
             self.edit_user_function()
 
     def search_archived_info_logic(self):
@@ -1556,12 +1551,10 @@ class AdminHomeApp:
         self.treeview.do_search_user(data, "IsActive")
 
     def edit_user_infos(self, event=None):
-        self.hide_this_window()
         self.edit_user_function()
 
     def add_user_infos(self, event=None):
-        self.hide_this_window()
-        uC.CreateUserApp(self.administrator_app)
+        self.register_user()
         
 
     # USER-COMMANDS---------------------------------------------------------------------------------------------------------------
