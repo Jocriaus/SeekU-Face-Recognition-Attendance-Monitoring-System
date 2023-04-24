@@ -323,10 +323,10 @@ class dbQueries:
             print(student_att_tbl)
 
             if student_att_tbl:
-                tbl_empty = True
+                tbl_empty = False
                 print(tbl_empty)
             else:
-                tbl_empty = False
+                tbl_empty = True
                 print(tbl_empty)
 
             query3 = f"SELECT * FROM tbl_student_attendance WHERE student_no = ?"
@@ -342,7 +342,7 @@ class dbQueries:
                 print(tbl_empty)
 
             # if attendance table is empty, first attendance will have a custom primary key
-            if not tbl_empty:
+            if tbl_empty:
                 insert_query_attendance = f"INSERT INTO tbl_student_attendance (student_attendance_no, student_no, student_attendance_date, student_time_in) VALUES (?, ?, ?, ?)"
                 self.cursor.execute(
                     insert_query_attendance,
@@ -365,7 +365,7 @@ class dbQueries:
                 self.connection.commit()
 
             # if the attendance table not empty and there is no record of the student with that student number
-            if tbl_empty:
+            if not tbl_empty:
                 insert_query_attendance = f"INSERT INTO tbl_student_attendance (student_no, student_attendance_date, student_time_in) VALUES (?, ?, ?)"
                 self.cursor.execute(
                     insert_query_attendance,
@@ -394,10 +394,10 @@ class dbQueries:
             personnel_att_row = self.cursor.fetchone()
 
             if personnel_att_row:
-                tbl_empty = True
+                tbl_empty = False
                 print(tbl_empty)
             else:
-                tbl_empty = False
+                tbl_empty = True
                 print(tbl_empty)
 
             query3 = f"SELECT * FROM tbl_personnel_attendance WHERE personnel_no = ?"
@@ -412,7 +412,7 @@ class dbQueries:
                 print(tbl_empty)
 
             # if attendance table is empty, first attendance will have a custom primary key
-            if not tbl_empty:
+            if tbl_empty:
                 insert_query_attendance = f"INSERT INTO tbl_personnel_attendance (personnel_attendance_no, personnel_no, personnel_attendance_date, personnel_time_in) VALUES (?, ?, ?, ?)"
                 self.cursor.execute(
                     insert_query_attendance,
@@ -435,7 +435,7 @@ class dbQueries:
                 self.connection.commit()
 
             # if the attendance table not empty and there is no record of
-            elif tbl_empty:
+            elif not tbl_empty:
                 insert_query_attendance = f"INSERT INTO tbl_personnel_attendance (personnel_no, personnel_attendance_date, personnel_time_in) VALUES (?, ?, ?)"
                 self.cursor.execute(
                     insert_query_attendance,
@@ -465,11 +465,10 @@ class dbQueries:
             visitor_att_row = self.cursor.fetchone()
 
             if visitor_att_row:
-                tbl_empty = True
-                print(tbl_empty)
-            else:
                 tbl_empty = False
                 print(tbl_empty)
+            else:
+                tbl_empty = True
 
             query3 = f"SELECT * FROM tbl_visitor_attendance WHERE visitor_no = ?"
             self.cursor.execute(query3(visitor_number))
@@ -483,7 +482,7 @@ class dbQueries:
                 print(tbl_empty)
 
             # if attendance table is empty, first attendance will have a custom primary key
-            if not tbl_empty:
+            if tbl_empty:
                 insert_query_attendance = f"INSERT INTO tbl_visitor_attendance (visitor_attendance_no, visitor_no, visitor_attendance_date, visitor_time_in) VALUES (?, ?, ?, ?)"
                 self.cursor.execute(
                     insert_query_attendance,
@@ -505,7 +504,7 @@ class dbQueries:
                 )
                 self.connection.commit()
             # if the attendance table not empty and there is no record of the visitor with that visitor number
-            if tbl_empty:
+            if not tbl_empty:
                 insert_query_attendance = f"INSERT INTO tbl_visitor_attendance (visitor_no, visitor_attendance_date, visitor_time_in) VALUES (?, ?, ?)"
                 self.cursor.execute(
                     insert_query_attendance,
@@ -953,7 +952,6 @@ class dbQueries:
         query = f"SELECT * FROM tbl_personnel WHERE personnel_no = ?"
         self.cursor.execute(query, (personnel_number))
         row = self.cursor.fetchone()
-
         if row:
             return True
         else:

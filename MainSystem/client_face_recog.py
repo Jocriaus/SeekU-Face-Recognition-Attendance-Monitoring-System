@@ -225,7 +225,7 @@ class ClientFaceRecogApp:
             self.attendance()
             # this will call the next person function
             self.face_recog_app.after(4000, self.next_person)
-            #self.save_attendance_func()
+            self.save_attendance_func()
 
         if self.fr_vid.face_detected:
             # this will call the next person function if there is no face detected
@@ -242,11 +242,11 @@ class ClientFaceRecogApp:
     # this will save the attendance of the student
     def save_attendance_func(self):
         if self.sql_query.check_student_no(int(self.fr_vid.name)):
-            self.sql_query.student_attendance_entry(int(self.fr_vid.name),self.current_date, self.current_time)
+            self.sql_query.student_attendance_record(int(self.fr_vid.name),self.current_date, self.current_time)
         if self.sql_query.check_personnel_no(int(self.fr_vid.name)):
-            self.sql_query.personnel_attendance_entry(int(self.fr_vid.name),self.current_date, self.current_time)
+            self.sql_query.personnel_attendance_record(int(self.fr_vid.name),self.current_date, self.current_time)
         if self.sql_query.check_visitor_no(int(self.fr_vid.name)):
-            self.sql_query.visitor_attendance_entry(int(self.fr_vid.name),self.current_date, self.current_time)
+            self.sql_query.visitor_attendance_record(int(self.fr_vid.name),self.current_date, self.current_time)
         
     # this command will return to the home window
     def return_func(self, event=None):
