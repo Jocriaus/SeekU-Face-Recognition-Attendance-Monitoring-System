@@ -139,25 +139,43 @@ class LoginApp:
                 # test for admin = jus    jus123
                 # test for security guard = Jocriaus   password123
 
-                print(self.sql_query.check_user_type(self.username_var, self.password_var))
-                if self.sql_query.check_user_type(self.username_var, self.password_var) == "Security Guard":
+                print(
+                    self.sql_query.check_user_type(self.username_var, self.password_var)
+                )
+                if (
+                    self.sql_query.check_user_type(self.username_var, self.password_var)
+                    == "Security Guard"
+                ):
                     print("login")
                     # add message box
                     self.hide_this_window()
                     self.clear_entry()
                     self.user = "Security Guard"
                     cC.ClientCameraSelectApp(self.user, self.log_in_app)
-                elif (self.sql_query.check_user_type(self.username_var, self.password_var) == "High Admin" or 
-                self.sql_query.check_user_type(self.username_var, self.password_var) == "Low Admin"):
+                elif (
+                    self.sql_query.check_user_type(self.username_var, self.password_var)
+                    == "High Admin"
+                    or self.sql_query.check_user_type(
+                        self.username_var, self.password_var
+                    )
+                    == "Low Admin"
+                ):
                     print("login")
                     # add message box
                     self.hide_this_window()
                     self.clear_entry()
-                    self.user = self.sql_query.check_user_type(self.username_var, self.password_var)
+                    self.user = self.sql_query.check_user_type(
+                        self.username_var, self.password_var
+                    )
                     cC.ClientCameraSelectApp(self.user, self.log_in_app)
-                    
-            elif (self.sql_query.login_entry(self.username_var, self.password_var) == False):
-                messbx.showwarning("Error", "The username and password entered do not match.")
+
+            elif (
+                self.sql_query.login_entry(self.username_var, self.password_var)
+                == False
+            ):
+                messbx.showwarning(
+                    "Error", "The username and password entered do not match."
+                )
             # add if else where it checks the un and pw to match
             # go to the home section
             # add check if the usertype
@@ -165,7 +183,9 @@ class LoginApp:
             # else:
             # messagebox.showwarning("Error", "No Account avilable with this username and password." )
         else:
-            messbx.showwarning("Error", "Kindly ensure all fields are filled by entering a value.")
+            messbx.showwarning(
+                "Error", "Kindly ensure all fields are filled by entering a value."
+            )
 
     # this function will center the window
     def center(self, win):

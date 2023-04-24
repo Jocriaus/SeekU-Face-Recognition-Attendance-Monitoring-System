@@ -234,30 +234,39 @@ class docxClass:
         # populate the report tree
         self.treeview.populate_student_report_bydate(date1, date2)
         # open an existing Word document
-        doc = docx.Document("../Documents/Document_temp/Report Template.docx")
+        doc = docx.Document(".\Documents\Document_temp\Report Template.docx")
 
-        # get the first paragraph in the document
-        p1 = doc.paragraphs[8]
+        column_names = [
+            "Student_No",
+            "Firstname",
+            "Lastname",
+            "Program",
+            "Section",
+            "Date",
+            "Time In",
+            "Time Out",
+        ]
 
-        table = doc.add_table(rows=1, cols=8)
+        table = doc.add_table(rows=1, cols=len(column_names))
         table.style = "Table Grid"
+        hdr_cells = table.rows[0].cells
+
+        for i in range(len(column_names)):
+            hdr_cells[i].text = column_names[i]
 
         treeview_data = []
         # get the table data of student
         for child in self.treeview.student_report_tree.get_children():
             values = self.treeview.student_report_tree.item(child)["values"]
-            treeview_data.append(values)
+            if values not in treeview_data:
+                treeview_data.append(values)
+
         # Inserts the table data of student
         for row in treeview_data:
             row_cells = table.add_row().cells
-            row_cells[0].text = row[0]
-            row_cells[1].text = row[1]
-            row_cells[2].text = row[2]
-            row_cells[3].text = row[3]
-            row_cells[4].text = row[4]
-            row_cells[5].text = row[5]
-            row_cells[6].text = row[6]
-            row_cells[7].text = row[7]
+            for i in range(len(column_names)):
+                row_cells[i].text = str(row[i])
+
         # saves the doc to a new file path
         doc.save(filepath + "/" + filename + ".docx")
 
@@ -267,29 +276,37 @@ class docxClass:
         # populate the report tree
         self.treeview.populate_personnel_report_bydate(date1, date2)
         # open an existing Word document
-        doc = docx.Document("../Documents/Document_temp/Report Template.docx")
+        doc = docx.Document(".\Documents\Document_temp\Report Template.docx")
 
-        # get the first paragraph in the document
-        p1 = doc.paragraphs[8]
-
+        column_names = [
+            "Personnel Number",
+            "First Name",
+            "Last Name",
+            "Personnel Type",
+            "Date",
+            "Time In",
+            "Time Out",
+        ]
         table = doc.add_table(rows=1, cols=2)
         table.style = "Table Grid"
+        hdr_cells = table.rows[0].cells
+
+        for i in range(len(column_names)):
+            hdr_cells[i].text = column_names[i]
 
         treeview_data = []
         # get the table data of student
         for child in self.treeview.personnel_report_tree.get_children():
             values = self.treeview.personnel_report_tree.item(child)["values"]
-            treeview_data.append(values)
+            if values not in treeview_data:
+                treeview_data.append(values)
+
         # Inserts the table data of student
         for row in treeview_data:
             row_cells = table.add_row().cells
-            row_cells[0].text = row[0]
-            row_cells[1].text = row[1]
-            row_cells[2].text = row[2]
-            row_cells[3].text = row[3]
-            row_cells[4].text = row[4]
-            row_cells[5].text = row[5]
-            row_cells[6].text = row[6]
+            for i in range(len(column_names)):
+                row_cells[i].text = str(row[i])
+
         # saves the doc to a new file path
         doc.save(filepath + "/" + filename + ".docx")
         os.startfile(filepath + "/" + filename + ".docx")
@@ -298,29 +315,37 @@ class docxClass:
         # populate the report tree
         self.treeview.populate_personnel_report_bydate(date1, date2)
         # open an existing Word document
-        doc = docx.Document("../Documents/Document_temp/Report Template.docx")
+        doc = docx.Document(".\Documents\Document_temp\Report Template.docx")
 
-        # get the first paragraph in the document
-        p1 = doc.paragraphs[8]
-
+        column_names = [
+            "Personnel Number",
+            "First Name",
+            "Last Name",
+            "Personnel Type",
+            "Date",
+            "Time In",
+            "Time Out",
+        ]
         table = doc.add_table(rows=1, cols=2)
         table.style = "Table Grid"
+        hdr_cells = table.rows[0].cells
+
+        for i in range(len(column_names)):
+            hdr_cells[i].text = column_names[i]
 
         treeview_data = []
         # get the table data of student
         for child in self.treeview.personnel_report_tree.get_children():
             values = self.treeview.personnel_report_tree.item(child)["values"]
-            treeview_data.append(values)
+            if values not in treeview_data:
+                treeview_data.append(values)
+
         # Inserts the table data of student
         for row in treeview_data:
             row_cells = table.add_row().cells
-            row_cells[0].text = row[0]
-            row_cells[1].text = row[1]
-            row_cells[2].text = row[2]
-            row_cells[3].text = row[3]
-            row_cells[4].text = row[4]
-            row_cells[5].text = row[5]
-            row_cells[6].text = row[6]
+            for i in range(len(column_names)):
+                row_cells[i].text = str(row[i])
+
         # saves the doc to a new file path
         doc.save(filepath + "/" + filename + ".docx")
 
@@ -328,28 +353,37 @@ class docxClass:
         # populate the report tree
         self.treeview.populate_visitor_report_bydate(date1, date2)
         # open an existing Word document
-        doc = docx.Document("../Documents/Document_temp/Report Template.docx")
+        doc = docx.Document(".\Documents\Document_temp\Report Template.docx")
 
-        # get the first paragraph in the document
-        p1 = doc.paragraphs[8]
+        column_names = [
+            "Visitor Number",
+            "First Name",
+            "Last Name",
+            "Date",
+            "Time In",
+            "Time Out",
+        ]
 
         table = doc.add_table(rows=1, cols=2)
         table.style = "Table Grid"
+        hdr_cells = table.rows[0].cells
+
+        for i in range(len(column_names)):
+            hdr_cells[i].text = column_names[i]
 
         treeview_data = []
         # get the table data of student
         for child in self.treeview.visitor_report_tree.get_children():
             values = self.treeview.visitor_report_tree.item(child)["values"]
-            treeview_data.append(values)
+            if values not in treeview_data:
+                treeview_data.append(values)
+
         # Inserts the table data of student
         for row in treeview_data:
             row_cells = table.add_row().cells
-            row_cells[0].text = row[0]
-            row_cells[1].text = row[1]
-            row_cells[2].text = row[2]
-            row_cells[3].text = row[3]
-            row_cells[4].text = row[4]
-            row_cells[5].text = row[5]
+            for i in range(len(column_names)):
+                row_cells[i].text = str(row[i])
+
         # saves the doc to a new file path
         doc.save(filepath + "/" + filename + ".docx")
         os.startfile(filepath + "/" + filename + ".docx")
@@ -358,28 +392,37 @@ class docxClass:
         # populate the report tree
         self.treeview.populate_visitor_report_bydate(date1, date2)
         # open an existing Word document
-        doc = docx.Document("../Documents/Document_temp/Report Template.docx")
+        doc = docx.Document(".\Documents\Document_temp\Report Template.docx")
 
-        # get the first paragraph in the document
-        p1 = doc.paragraphs[8]
+        column_names = [
+            "Visitor Number",
+            "First Name",
+            "Last Name",
+            "Date",
+            "Time In",
+            "Time Out",
+        ]
 
         table = doc.add_table(rows=1, cols=2)
         table.style = "Table Grid"
+        hdr_cells = table.rows[0].cells
+
+        for i in range(len(column_names)):
+            hdr_cells[i].text = column_names[i]
 
         treeview_data = []
         # get the table data of student
         for child in self.treeview.visitor_report_tree.get_children():
             values = self.treeview.visitor_report_tree.item(child)["values"]
-            treeview_data.append(values)
+            if values not in treeview_data:
+                treeview_data.append(values)
+
         # Inserts the table data of student
         for row in treeview_data:
             row_cells = table.add_row().cells
-            row_cells[0].text = row[0]
-            row_cells[1].text = row[1]
-            row_cells[2].text = row[2]
-            row_cells[3].text = row[3]
-            row_cells[4].text = row[4]
-            row_cells[5].text = row[5]
+            for i in range(len(column_names)):
+                row_cells[i].text = str(row[i])
+
         # saves the doc to a new file path
         doc.save(filepath + "/" + filename + ".docx")
 
@@ -387,30 +430,39 @@ class docxClass:
         # populate the report tree
         self.treeview.populate_student_report_bydate(date1, date2)
         # open an existing Word document
-        doc = docx.Document("../Documents/Document_temp/Report Template.docx")
+        doc = docx.Document(".\Documents\Document_temp\Report Template.docx")
 
-        # get the first paragraph in the document
-        p1 = doc.paragraphs[8]
+        column_names = [
+            "Student_No",
+            "Firstname",
+            "Lastname",
+            "Program",
+            "Section",
+            "Date",
+            "Time In",
+            "Time Out",
+        ]
 
-        table = doc.add_table(rows=1, cols=8)
+        table = doc.add_table(rows=1, cols=len(column_names))
         table.style = "Table Grid"
+        hdr_cells = table.rows[0].cells
+
+        for i in range(len(column_names)):
+            hdr_cells[i].text = column_names[i]
 
         treeview_data = []
         # get the table data of student
         for child in self.treeview.student_report_tree.get_children():
             values = self.treeview.student_report_tree.item(child)["values"]
-            treeview_data.append(values)
+            if values not in treeview_data:
+                treeview_data.append(values)
+
         # Inserts the table data of student
         for row in treeview_data:
             row_cells = table.add_row().cells
-            row_cells[0].text = row[0]
-            row_cells[1].text = row[1]
-            row_cells[2].text = row[2]
-            row_cells[3].text = row[3]
-            row_cells[4].text = row[4]
-            row_cells[5].text = row[5]
-            row_cells[6].text = row[6]
-            row_cells[7].text = row[7]
+            for i in range(len(column_names)):
+                row_cells[i].text = str(row[i])
+
         # saves the doc to a new file path
         doc.save(filepath + "/" + filename + ".docx")
 
@@ -429,27 +481,37 @@ class docxClass:
         # open an existing Word document
         doc = docx.Document(".\Documents\Document_temp\Report Template.docx")
 
-        # get the first paragraph in the document
-        p1 = doc.paragraphs[8]
+        column_names = [
+            "Student_No",
+            "Firstname",
+            "Lastname",
+            "Program",
+            "Section",
+            "Date",
+            "Time In",
+            "Time Out",
+        ]
 
-        table = doc.add_table(rows=1, cols=8, style="Table Grid")
+        table = doc.add_table(rows=1, cols=len(column_names))
+        table.style = "Table Grid"
+        hdr_cells = table.rows[0].cells
+
+        for i in range(len(column_names)):
+            hdr_cells[i].text = column_names[i]
 
         treeview_data = []
         # get the table data of student
         for child in self.treeview.student_report_tree.get_children():
             values = self.treeview.student_report_tree.item(child)["values"]
-            treeview_data.append(values)
+            if values not in treeview_data:
+                treeview_data.append(values)
+
         # Inserts the table data of student
         for row in treeview_data:
             row_cells = table.add_row().cells
-            row_cells[0].text = str(row[0])
-            row_cells[1].text = str(row[1])
-            row_cells[2].text = str(row[2])
-            row_cells[3].text = str(row[3])
-            row_cells[4].text = str(row[4])
-            row_cells[5].text = str(row[5])
-            row_cells[6].text = str(row[6])
-            row_cells[7].text = str(row[7])
+            for i in range(len(column_names)):
+                row_cells[i].text = str(row[i])
+
         # saves the doc to a new file path
         doc.save(filepath + "/" + filename + ".docx")
 
@@ -465,29 +527,37 @@ class docxClass:
         # populate the report tree
         self.treeview.populate_personnel_report_bydate(date1, date2)
         # open an existing Word document
-        doc = docx.Document("../Documents/Document_temp/Report Template.docx")
+        doc = docx.Document(".\Documents\Document_temp\Report Template.docx")
 
-        # get the first paragraph in the document
-        p1 = doc.paragraphs[8]
-
+        column_names = [
+            "Personnel Number",
+            "First Name",
+            "Last Name",
+            "Personnel Type",
+            "Date",
+            "Time In",
+            "Time Out",
+        ]
         table = doc.add_table(rows=1, cols=2)
         table.style = "Table Grid"
+        hdr_cells = table.rows[0].cells
+
+        for i in range(len(column_names)):
+            hdr_cells[i].text = column_names[i]
 
         treeview_data = []
         # get the table data of student
         for child in self.treeview.personnel_report_tree.get_children():
             values = self.treeview.personnel_report_tree.item(child)["values"]
-            treeview_data.append(values)
+            if values not in treeview_data:
+                treeview_data.append(values)
+
         # Inserts the table data of student
         for row in treeview_data:
             row_cells = table.add_row().cells
-            row_cells[0].text = row[0]
-            row_cells[1].text = row[1]
-            row_cells[2].text = row[2]
-            row_cells[3].text = row[3]
-            row_cells[4].text = row[4]
-            row_cells[5].text = row[5]
-            row_cells[6].text = row[6]
+            for i in range(len(column_names)):
+                row_cells[i].text = str(row[i])
+
         # saves the doc to a new file path
         doc.save(filepath + "/" + filename + ".docx")
 
@@ -502,29 +572,37 @@ class docxClass:
         # populate the report tree
         self.treeview.populate_personnel_report_bydate(date1, date2)
         # open an existing Word document
-        doc = docx.Document("../Documents/Document_temp/Report Template.docx")
+        doc = docx.Document(".\Documents\Document_temp\Report Template.docx")
 
-        # get the first paragraph in the document
-        p1 = doc.paragraphs[8]
-
+        column_names = [
+            "Personnel Number",
+            "First Name",
+            "Last Name",
+            "Personnel Type",
+            "Date",
+            "Time In",
+            "Time Out",
+        ]
         table = doc.add_table(rows=1, cols=2)
         table.style = "Table Grid"
+        hdr_cells = table.rows[0].cells
+
+        for i in range(len(column_names)):
+            hdr_cells[i].text = column_names[i]
 
         treeview_data = []
         # get the table data of student
         for child in self.treeview.personnel_report_tree.get_children():
             values = self.treeview.personnel_report_tree.item(child)["values"]
-            treeview_data.append(values)
+            if values not in treeview_data:
+                treeview_data.append(values)
+
         # Inserts the table data of student
         for row in treeview_data:
             row_cells = table.add_row().cells
-            row_cells[0].text = row[0]
-            row_cells[1].text = row[1]
-            row_cells[2].text = row[2]
-            row_cells[3].text = row[3]
-            row_cells[4].text = row[4]
-            row_cells[5].text = row[5]
-            row_cells[6].text = row[6]
+            for i in range(len(column_names)):
+                row_cells[i].text = str(row[i])
+
         # saves the doc to a new file path
         doc.save(filepath + "/" + filename + ".docx")
 
@@ -538,28 +616,37 @@ class docxClass:
         # populate the report tree
         self.treeview.populate_visitor_report_bydate(date1, date2)
         # open an existing Word document
-        doc = docx.Document("../Documents/Document_temp/Report Template.docx")
+        doc = docx.Document(".\Documents\Document_temp\Report Template.docx")
 
-        # get the first paragraph in the document
-        p1 = doc.paragraphs[8]
+        column_names = [
+            "Visitor Number",
+            "First Name",
+            "Last Name",
+            "Date",
+            "Time In",
+            "Time Out",
+        ]
 
         table = doc.add_table(rows=1, cols=2)
         table.style = "Table Grid"
+        hdr_cells = table.rows[0].cells
+
+        for i in range(len(column_names)):
+            hdr_cells[i].text = column_names[i]
 
         treeview_data = []
         # get the table data of student
         for child in self.treeview.visitor_report_tree.get_children():
             values = self.treeview.visitor_report_tree.item(child)["values"]
-            treeview_data.append(values)
+            if values not in treeview_data:
+                treeview_data.append(values)
+
         # Inserts the table data of student
         for row in treeview_data:
             row_cells = table.add_row().cells
-            row_cells[0].text = row[0]
-            row_cells[1].text = row[1]
-            row_cells[2].text = row[2]
-            row_cells[3].text = row[3]
-            row_cells[4].text = row[4]
-            row_cells[5].text = row[5]
+            for i in range(len(column_names)):
+                row_cells[i].text = str(row[i])
+
         # saves the doc to a new file path
         doc.save(filepath + "/" + filename + ".docx")
 
@@ -574,28 +661,37 @@ class docxClass:
         # populate the report tree
         self.treeview.populate_visitor_report_bydate(date1, date2)
         # open an existing Word document
-        doc = docx.Document("../Documents/Document_temp/Report Template.docx")
+        doc = docx.Document(".\Documents\Document_temp\Report Template.docx")
 
-        # get the first paragraph in the document
-        p1 = doc.paragraphs[8]
+        column_names = [
+            "Visitor Number",
+            "First Name",
+            "Last Name",
+            "Date",
+            "Time In",
+            "Time Out",
+        ]
 
         table = doc.add_table(rows=1, cols=2)
         table.style = "Table Grid"
+        hdr_cells = table.rows[0].cells
+
+        for i in range(len(column_names)):
+            hdr_cells[i].text = column_names[i]
 
         treeview_data = []
         # get the table data of student
         for child in self.treeview.visitor_report_tree.get_children():
             values = self.treeview.visitor_report_tree.item(child)["values"]
-            treeview_data.append(values)
+            if values not in treeview_data:
+                treeview_data.append(values)
+
         # Inserts the table data of student
         for row in treeview_data:
             row_cells = table.add_row().cells
-            row_cells[0].text = row[0]
-            row_cells[1].text = row[1]
-            row_cells[2].text = row[2]
-            row_cells[3].text = row[3]
-            row_cells[4].text = row[4]
-            row_cells[5].text = row[5]
+            for i in range(len(column_names)):
+                row_cells[i].text = str(row[i])
+
         # saves the doc to a new file path
         doc.save(filepath + "/" + filename + ".docx")
 
