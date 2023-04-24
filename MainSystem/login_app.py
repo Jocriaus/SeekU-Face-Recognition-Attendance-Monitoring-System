@@ -2,6 +2,7 @@ import tkinter as tk
 import tkinter.messagebox as messbx
 import query_mod as qry
 import client_cam as cC
+import time
 import sys
 
 
@@ -12,6 +13,14 @@ class LoginApp:
         self.sql_query.default_settings_if_not_exist()
         self.sql_query.default_user_if_not_exist()
         self.user = "None"
+        self.locked = False
+        # will be used for account locked
+        self.init_time = 0
+        self.current_time = 0
+        self.passed_time = 0
+        self.time_locked = 15.0
+        self.timer = 0.0
+        self.tries = self.sql_query.get_login_attempts()
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         # build ui
         self.log_in_app = tk.Tk() if master is None else tk.Toplevel(master)
@@ -131,61 +140,81 @@ class LoginApp:
 
     # this function will enable the user to enter to the system
     def login_logic(self):
-        self.username_var = self.un_entry.get()
-        self.password_var = self.pw_entry.get()
-        if (len(self.username_var) != 0) and (len(self.password_var) != 0):
-            if self.sql_query.login_entry(self.username_var, self.password_var):
+        if not self.locked:
+            self.username_var = self.un_entry.get()
+            self.password_var = self.pw_entry.get()
+            if (len(self.username_var) != 0) and (len(self.password_var) != 0):
+                if self.sql_query.login_entry(self.username_var, self.password_var):
 
-                # test for admin = jus    jus123
-                # test for security guard = jc   123
+                    # test for admin = jus    jus123
+                    # test for security guard = jc   123
 
-                print(
-                    self.sql_query.check_user_type(self.username_var, self.password_var)
-                )
-                if (
-                    self.sql_query.check_user_type(self.username_var, self.password_var)
-                    == "Security Guard"
-                ):
-                    print("login")
-                    # add message box
-                    self.hide_this_window()
-                    self.clear_entry()
-                    self.user = "Security Guard"
-                    cC.ClientCameraSelectApp(self.user, self.log_in_app)
-                elif (
-                    self.sql_query.check_user_type(self.username_var, self.password_var)
-                    == "High Admin"
-                    or self.sql_query.check_user_type(
-                        self.username_var, self.password_var
+                    print(
+                        self.sql_query.check_user_type(self.username_var, self.password_var)
                     )
-                    == "Low Admin"
-                ):
-                    print("login")
-                    # add message box
-                    self.hide_this_window()
-                    self.clear_entry()
-                    self.user = self.sql_query.check_user_type(
-                        self.username_var, self.password_var
-                    )
-                    cC.ClientCameraSelectApp(self.user, self.log_in_app)
+                    if (
+                        self.sql_query.check_user_type(self.username_var, self.password_var)
+                        == "Security Guard"
+                    ):
+                        print("login")
+                        # add message box
+                        self.hide_this_window()
+                        self.clear_entry()
+                        self.user = "Security Guard"
+                        cC.ClientCameraSelectApp(self.user, self.log_in_app)
+                    elif (
+                        self.sql_query.check_user_type(self.username_var, self.password_var)
+                        == "High Admin"
+                        or self.sql_query.check_user_type(
+                            self.username_var, self.password_var
+                        )
+                        == "Low Admin"
+                    ):
+                        print("login")
+                        # add message box
+                        self.hide_this_window()
+                        self.clear_entry()
+                        self.user = self.sql_query.check_user_type(
+                            self.username_var, self.password_var
+                        )
+                        cC.ClientCameraSelectApp(self.user, self.log_in_app)
 
-            elif (
-                self.sql_query.login_entry(self.username_var, self.password_var)
-                == False
-            ):
+                elif (self.sql_query.login_entry(self.username_var, self.password_var) == False):
+                    self.tries = self.tries-1
+                    if self.tries == 1:
+                        if self.init_time == 0:
+                            self.init_time = time.time()
+                        self.locked = True
+                        messbx.showwarning(
+                            "Warning", "The username and password entered do not match. You have remaining {} tries".format(self.tries))
+                        self.time_passing()
+                    else:
+                        
+                        messbx.showwarning(
+                            "Warning", "The username and password entered do not match. You have remaining {} tries".format(self.tries))
+                        
+
+            else:
                 messbx.showwarning(
-                    "Error", "The username and password entered do not match."
+                    "Warning ", "Kindly ensure all fields are filled by entering a value."
                 )
-            # add if else where it checks the un and pw to match
-            # go to the home section
-            # add check if the usertype
-            # go to specific module
-            # else:
-            # messagebox.showwarning("Error", "No Account avilable with this username and password." )
+
         else:
             messbx.showwarning(
-                "Error", "Kindly ensure all fields are filled by entering a value."
-            )
+                    "Warning", "Your account is curretly locked. Please try after {:.0f} seconds".format(self.timer)
+                ) 
+
+    def time_passing(self):
+        self.time_locked = 15.0
+        self.current_time = time.time()
+        self.passed_time = self.current_time - self.init_time
+        self.timer = self.time_locked - self.passed_time
+        if self.timer > 0:
+            self.log_in_app.after(15, self.time_passing)
+        else:
+            self.init_time = 0
+            self.locked = False
+            self.tries = self.sql_query.get_login_attempts()
 
     # this function will center the window
     def center(self, win):
