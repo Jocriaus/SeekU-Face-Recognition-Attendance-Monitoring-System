@@ -1239,86 +1239,103 @@ class AdminHomeApp:
             self.treeview.do_search_visitor(data, "IsActive")
 
     def edit_student_function(self):
+         
         self.treeview.select_student_treeview_row()
         print(self.treeview.student_values)
 
-        student_num = self.treeview.student_values[0]
-        student_firstname = self.treeview.student_values[1]
-        student_lastname = self.treeview.student_values[2]
-        student_middlename = self.treeview.student_values[3]
-        student_program = self.treeview.student_values[4]
-        student_section = self.treeview.student_values[5]
-        student_contact_num = self.treeview.student_values[6]
-        student_address = self.treeview.student_values[7]
-        student_status = self.treeview.student_values[8]
+        if self.treeview.student_values :
+            student_num = self.treeview.student_values[0]
+            student_firstname = self.treeview.student_values[1]
+            student_lastname = self.treeview.student_values[2]
+            student_middlename = self.treeview.student_values[3]
+            student_program = self.treeview.student_values[4]
+            student_section = self.treeview.student_values[5]
+            student_contact_num = self.treeview.student_values[6]
+            student_address = self.treeview.student_values[7]
+            student_status = self.treeview.student_values[8]
 
-        eIS.EditStudentApp(
-            student_num,
-            student_firstname,
-            student_lastname,
-            student_middlename,
-            student_program,
-            student_section,
-            student_contact_num,
-            student_address,
-            student_status,
-            self.video_source,
-            self.administrator_app,
-            self.folder_selected ,
-        )
-        self.hide_this_window()
+            eIS.EditStudentApp(
+                student_num,
+                student_firstname,
+                student_lastname,
+                student_middlename,
+                student_program,
+                student_section,
+                student_contact_num,
+                student_address,
+                student_status,
+                self.video_source,
+                self.administrator_app,
+                self.folder_selected ,
+            )
+            self.hide_this_window()
+
+        else:
+            messbx.showwarning(
+                "Error", "Please choose an item to modify."
+            )
+
 
     def edit_personnel_function(self):
         self.treeview.select_personnel_treeview_row()
         print(self.treeview.personnel_values)
 
-        personnel_number = self.treeview.personnel_values[0]
-        personnel_firstname = self.treeview.personnel_values[1]
-        personnel_lastname = self.treeview.personnel_values[2]
-        personnel_middlename = self.treeview.personnel_values[3]
-        personnel_contact_num = self.treeview.personnel_values[4]
-        personnel_address = self.treeview.personnel_values[5]
-        personnel_type = self.treeview.personnel_values[6]
-        personnel_status = self.treeview.personnel_values[7]
+        if self.treeview.personnel_values:
+            personnel_number = self.treeview.personnel_values[0]
+            personnel_firstname = self.treeview.personnel_values[1]
+            personnel_lastname = self.treeview.personnel_values[2]
+            personnel_middlename = self.treeview.personnel_values[3]
+            personnel_contact_num = self.treeview.personnel_values[4]
+            personnel_address = self.treeview.personnel_values[5]
+            personnel_type = self.treeview.personnel_values[6]
+            personnel_status = self.treeview.personnel_values[7]
 
-        eIP.EditPersonnelApp(
-            personnel_number,
-            personnel_firstname,
-            personnel_lastname,
-            personnel_middlename,
-            personnel_contact_num,
-            personnel_address,
-            personnel_type,
-            personnel_status,
-            self.video_source,
-            self.administrator_app,
-            self.folder_selected ,
-        )
-        self.hide_this_window()
+            eIP.EditPersonnelApp(
+                personnel_number,
+                personnel_firstname,
+                personnel_lastname,
+                personnel_middlename,
+                personnel_contact_num,
+                personnel_address,
+                personnel_type,
+                personnel_status,
+                self.video_source,
+                self.administrator_app,
+                self.folder_selected ,
+            )
+            self.hide_this_window()
+        else:
+            messbx.showwarning(
+                "Error", "Please choose an item to modify.")
     
     def edit_visitor_function(self):
         self.treeview.select_visitor_treeview_row()
         print(self.treeview.visitor_values)
 
-        visitor_number = self.treeview.visitor_values[0]
-        visitor_firstname = self.treeview.visitor_values[1]
-        visitor_lastname = self.treeview.visitor_values[2]
-        visitor_contact_num = self.treeview.visitor_values[3]
-        visitor_address = self.treeview.visitor_values[4]
-        visitor_status = self.treeview.visitor_values[5]
+        if self.treeview.visitor_values:
 
-        eIV.EditVisitorApp(
-            visitor_number,
-            visitor_firstname,
-            visitor_lastname,
-            visitor_contact_num,
-            visitor_address,
-            visitor_status,
-            self.video_source,
-            self.administrator_app,
-            self.folder_selected ,
-        )
-        self.hide_this_window()
+            visitor_number = self.treeview.visitor_values[0]
+            visitor_firstname = self.treeview.visitor_values[1]
+            visitor_lastname = self.treeview.visitor_values[2]
+            visitor_contact_num = self.treeview.visitor_values[3]
+            visitor_address = self.treeview.visitor_values[4]
+            visitor_status = self.treeview.visitor_values[5]
+
+            eIV.EditVisitorApp(
+                visitor_number,
+                visitor_firstname,
+                visitor_lastname,
+                visitor_contact_num,
+                visitor_address,
+                visitor_status,
+                self.video_source,
+                self.administrator_app,
+                self.folder_selected ,
+            )
+            self.hide_this_window()
+        else:
+            messbx.showwarning(
+                "Error", "Please choose an item to modify.")
     
     # CLIENT-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
     # ATTENDANCE-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
@@ -1378,14 +1395,19 @@ class AdminHomeApp:
         self.treeview.select_user_treeview_row()
 
         print(self.treeview.user_values)
-        username = self.treeview.user_values[1]
-        password = self.treeview.user_values[2]
-        firstname = self.treeview.user_values[3]
-        lastname = self.treeview.user_values[4]
-        user_type = self.treeview.user_values[5]
-        user_status = self.treeview.user_values[6]
-        uE.EditUserApp(username, password, firstname, lastname, user_type, user_status, self.administrator_app)
-        self.hide_this_window()
+
+        if self.treeview.user_values:
+            username = self.treeview.user_values[1]
+            password = self.treeview.user_values[2]
+            firstname = self.treeview.user_values[3]
+            lastname = self.treeview.user_values[4]
+            user_type = self.treeview.user_values[5]
+            user_status = self.treeview.user_values[6]
+            uE.EditUserApp(username, password, firstname, lastname, user_type, user_status, self.administrator_app)
+            self.hide_this_window()
+        else:
+            messbx.showwarning(
+                "Error", "Please choose an item to modify.")
 
     def register_user(self):
         uC.CreateUserApp(self.administrator_app)

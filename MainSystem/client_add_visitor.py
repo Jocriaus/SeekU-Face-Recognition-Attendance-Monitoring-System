@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import filedialog
+import tkinter.messagebox as messbx
 import tkinter as tk
 import query_mod as qry
 import PIL.Image, PIL.ImageTk
@@ -196,22 +196,29 @@ class AddVisitorApp:
         """
         Database Connection
         """
-        self.last_name_var = self.last_name_entry.get()
-        self.first_name_var = self.first_name_entry.get()
-        self.contact_num_var = self.contact_no_entry.get()
-        self.address_var = self.address_entry.get()
+        last_name_var = self.last_name_entry.get()
+        first_name_var = self.first_name_entry.get()
+        contact_num_var = self.contact_no_entry.get()
+        address_var = self.address_entry.get()
+        if (len(last_name_var) != 0 and
+            len(first_name_var) != 0 and
+            len(contact_num_var) != 0 and
+            len(address_var) != 0  
+            ):
+            self.sql_query.register_visitor(
+                first_name_var,
+                last_name_var,
+                contact_num_var,
+                address_var,
+            )
 
-        self.sql_query.register_visitor(
-            self.first_name_var,
-            self.last_name_var,
-            self.contact_num_var,
-            self.address_var,
-        )
+            img_name = self.sql_query.capture_visitor_image(
+                first_name_var, last_name_var, contact_num_var, address_var)
 
-        img_name = self.sql_query.capture_visitor_image(self.first_name_var, self.last_name_var, self.contact_num_var, self.address_var)
+            os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/000000000.jpg")
 
-
-        os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/temp.jpg")
+        else:
+            messbx.showwarning("Error", "Kindly ensure all fields are filled by entering a value.")
         """
         Save to database
         Get the primary key

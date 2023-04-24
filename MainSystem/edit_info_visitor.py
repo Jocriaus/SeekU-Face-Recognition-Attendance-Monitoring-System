@@ -300,8 +300,7 @@ class EditVisitorApp:
         if ( len(last_name_var) != 0 and
             len(first_name_var) != 0 and
             len(contact_num_var) != 0 and
-            len(address_var) != 0 and
-            len(visitor_status_var) != 0 
+            len(address_var) != 0 
             ):
             self.sql_query.update_visitor(
                 first_name_var, 

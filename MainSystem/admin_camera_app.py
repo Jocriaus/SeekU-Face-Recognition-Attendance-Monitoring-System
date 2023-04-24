@@ -127,10 +127,10 @@ class CameraApp:
             text='Log out')
         self.return_button.place(
             anchor="center",
-            relheight=0.25,
+            relheight=0.3,
             relwidth=0.11,
             relx=0.93,
-            rely=0.82)
+            rely=0.8)
         self.return_button.bind("<ButtonPress>", self.log_out_func, add="")
         self.snapshot_frame1.place(
             anchor="center",

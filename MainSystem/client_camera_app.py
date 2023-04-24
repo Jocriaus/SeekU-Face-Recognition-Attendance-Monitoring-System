@@ -116,19 +116,19 @@ class CameraApp:
             relx=.5,
             rely=0.5)
         self.snapshot_button.bind("<ButtonPress>", self.take_picture, add="")
-        self.log_out_button = tk.Button(self.snapshot_frame1)
-        self.log_out_button.configure(
+        self.return_button = tk.Button(self.snapshot_frame1)
+        self.return_button.configure(
             background="#0072bc",
             font="{arial black} 20 {}",
             foreground="#F7FAE9",
             text='Log out')
-        self.log_out_button.place(
+        self.return_button.place(
             anchor="center",
-            relheight=0.25,
+            relheight=0.3,
             relwidth=0.11,
             relx=0.93,
-            rely=0.82)
-        self.log_out_button.bind("<ButtonPress>", self.log_out_func, add="")
+            rely=0.8)
+        self.return_button.bind("<ButtonPress>", self.return_func, add="")
         self.snapshot_frame1.place(
             anchor="center",
             relheight=0.15,
@@ -197,7 +197,7 @@ class CameraApp:
 
 
     # this command will return to the home window
-    def log_out_func(self, event=None):
+    def return_func(self, event=None):
         self.show_home_window()
         self.snapshot_app.destroy()
         if os.path.exists(self.img_path + "/000000000.jpg"):
