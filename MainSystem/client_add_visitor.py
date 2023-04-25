@@ -218,7 +218,7 @@ class AddVisitorApp:
             os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/000000000.jpg")
 
         else:
-            messbx.showwarning("Error", "Kindly ensure all fields are filled by entering a value.")
+            messbx.showwarning("Warning", "Kindly ensure all fields are filled by entering a value.")
         """
         Save to database
         Get the primary key

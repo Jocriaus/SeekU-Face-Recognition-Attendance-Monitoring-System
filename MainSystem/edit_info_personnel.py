@@ -9,7 +9,7 @@ import sys
 import os
 
 class EditPersonnelApp:
-    def __init__(self, pn, pfn, pln, pm, pcn, pad, pt, ps, vid_source, admin_win, img_path):
+    def __init__(self, pn, pfn, pln, pm, pcn, pad, pt, ps, vid_source, admin_win, img_path,select,refresh):
 
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.video_source = vid_source
@@ -26,6 +26,8 @@ class EditPersonnelApp:
         self.treeview = tbl.TreeviewGUI()
         self.sql_query = qry.dbQueries()
         self.edit_bool = True
+        self.client = select
+        self.refresh_func = refresh
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
 
         # build ui
@@ -299,6 +301,7 @@ class EditPersonnelApp:
     # this will return to the camera app
     def show_home_win(self):
         self.admin_home_window.deiconify()
+        self.refresh_func(self.client,self.personnel_status)
         self.edit_personnel_app.destroy()
 
     def hide_this_window(self):
@@ -382,7 +385,7 @@ class EditPersonnelApp:
                 img_name = self.personnel_num
                 os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/000000000.jpg")
         else:
-            messbx.showwarning("Error", "Kindly ensure all fields are filled by entering a value.")
+            messbx.showwarning("Warning", "Kindly ensure all fields are filled by entering a value.")
 
 
 

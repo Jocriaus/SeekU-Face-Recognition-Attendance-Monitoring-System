@@ -1451,3 +1451,24 @@ class TreeviewGUI:
                     row[6],
                 ),
             )
+
+
+    def refresh_student_treeview(self, status):
+        for child in self.student_tree.get_children():
+            self.student_tree.delete(child)
+        self.populate_student_treeview(status)
+
+    def refresh_personnel_treeview(self, status):
+        for child in self.student_tree.get_children():
+            self.personnel_treeview.delete(child)
+        self.populate_personnel_treeview(status)
+
+    def refresh_visitor_treeview(self, status):
+        for child in self.student_tree.get_children():
+            self.visitor_treeview.delete(child)
+        self.populate_visitor_treeview(status)
+
+    def refresh_user_treeview(self,status):
+        for child in self.student_tree.get_children():
+            self.user_treeview.delete(child)
+        self.populate_user_treeview(status)

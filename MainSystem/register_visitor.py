@@ -212,7 +212,7 @@ class RegisterVisitorApp:
             img_name = self.sql_query.capture_visitor_image(first_name_var, last_name_var, contact_num_var, address_var)
             os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/000000000.jpg")
         else:
-            messbx.showwarning("Error", "Kindly ensure all fields are filled by entering a value.")
+            messbx.showwarning("Warning", "Kindly ensure all fields are filled by entering a value.")
             
         """
         Save to database

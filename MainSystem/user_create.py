@@ -5,7 +5,7 @@ import query_mod as qry
 
 
 class CreateUserApp:
-    def __init__(self, admin_hom):
+    def __init__(self, admin_hom, refresh):
 
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.admin_home_window = admin_hom
@@ -18,6 +18,7 @@ class CreateUserApp:
         self.register_user_app.resizable(False, False)
         self.register_user_app.title("SeekU - Register User")
         self.register_user_app.iconbitmap("./SeekU/SeekU.ico")
+        self.refresh_func = refresh
         # Contains-the-edit-label-and-entry-widgets---------------------------------------------------------------------------------------------------------
         self.register_user_frame2 = tk.Frame(self.register_user_app)
         self.register_user_frame2.configure(background="#F7FAE9", height=200, width=200)
@@ -124,6 +125,7 @@ class CreateUserApp:
 
     def destroy_this_window(self):
         self.admin_home_window.deiconify()
+        self.refresh_func("IsActive")
         self.register_user_app.destroy() 
 
     def register_user_function(self):
@@ -151,23 +153,22 @@ class CreateUserApp:
                     user_role_var,
                 )
         else:
-            messbx.showwarning("Error", "Kindly ensure all fields are filled by entering a value.")
+            messbx.showwarning("Warning", "Kindly ensure all fields are filled by entering a value.")
 
     def password_check(self,password):
         limit = self.sql_query.get_password_length()
         if len(password) < limit :
-            messbx.showwarning("Error", "The password should have " + str(limit) + " characters." )
+            messbx.showwarning("Warning", "The password should have " + str(limit) + " characters." )
             self.register = False
         else:
             self.register = True
 
     def username_check(self,username):
         if (self.sql_query.check_username(username)):
-            messbx.showwarning("Error", "The username \"" +username+"\" is already in use. ")
+            messbx.showwarning("Warning", "The username \"" +username+"\" is already in use. ")
             self.register = False
         else:
             self.register = True
 
     def register_user(self, event=None):
         self.register_user_function()
-

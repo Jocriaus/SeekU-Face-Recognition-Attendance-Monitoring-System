@@ -9,7 +9,7 @@ import sys
 import os
 
 class EditStudentApp:
-    def __init__(self, sn, sfn, sln, sm, sp, ss, scn, sa, sstat, vid_source, admin_win, img_path):
+    def __init__(self, sn, sfn, sln, sm, sp, ss, scn, sa, sstat, vid_source, admin_win, img_path,select , refresh):
 
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.video_source = vid_source
@@ -24,9 +24,12 @@ class EditStudentApp:
         self.student_contact_number = scn
         self.student_address = sa
         self.student_status = sstat
+        self.first_stat = sstat
         self.treeview = tbl.TreeviewGUI()
         self.sql_query = qry.dbQueries()
         self.edit_bool = True
+        self.client = select
+        self.refresh_func = refresh
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         # build ui
         self.edit_student_app = tk.Toplevel()
@@ -301,6 +304,7 @@ class EditStudentApp:
     # this will return to the camera app
     def show_home_win(self):
         self.admin_home_window.deiconify()
+        self.refresh_func(self.client, self.first_stat)
         self.edit_student_app.destroy()
 
     def hide_this_window(self):
@@ -383,7 +387,7 @@ class EditStudentApp:
                 img_name = self.student_number
                 os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/000000000.jpg")
         else:
-            messbx.showwarning("Error", "Kindly ensure all fields are filled by entering a value.")
+            messbx.showwarning("Warning", "Kindly ensure all fields are filled by entering a value.")
         
     # this function will display the image into the canvas
     def disp_pic(self):

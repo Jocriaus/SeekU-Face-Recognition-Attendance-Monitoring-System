@@ -183,39 +183,38 @@ class HomeApp:
 
     # this function will let the user choose the folder according to what is needed
     def select_folder(self):
-        folder_empty = True
-        while (folder_empty):
             self.home_app.attributes('-topmost', False)
-            folder_select = filedialog.askdirectory()
+            folder_select = filedialog.askdirectory(title = "Select Folder")
             if folder_select == "":
-                folder_empty = True
+                folder_select = False
+                return folder_select
             else:
-                self.folder_selected = folder_select
-                folder_empty = False
-                print(self.folder_selected)
-            self.home_app.attributes('-topmost', True)
+                return folder_select
 
     # this command will open the attendance module
     def attendance_press(self, event=None):
+        folder_selected = ""
         self.hide_this_window()
         current_date = datetime.date.today().strftime("%Y-%m-%d")
         setting = self.sql_query.get_fr_path_file_date().strip()
-        print("cd "+current_date)
-        print("s "+setting)
+        print("cd "+ current_date)
+        print("s "+ setting)
         # if else condition if date setting is similar to current date
         if setting == current_date:
-            self.folder_selected = self.sql_query.get_face_recog_path()
+            folder_selected = self.sql_query.get_face_recog_path()
         else:
-            self.select_folder()
-            newpath = self.fix_path(self.folder_selected)
-            self.sql_query.set_face_recog_path(newpath)
-            self.sql_query.set_fr_path_file_date(current_date)
+            folder_selected = self.select_folder()
+            if folder_selected:
+                newpath = self.fix_path(folder_selected)
+                self.sql_query.set_face_recog_path(newpath)
+                self.sql_query.set_fr_path_file_date(current_date)
         # add for handling the select folder function if nothing is chosen.
         sS.SplashScreenWin(
-            self.video_source,self.login_window,self.sel_cam_window, self.home_app,self.folder_selected )
+            self.video_source,self.login_window,self.sel_cam_window, self.home_app, folder_selected )
         
     # this command will open the add visitor module
     def add_visitors_press(self, event=None):
+        folder_selected = ""
         self.hide_this_window()
         current_date = datetime.date.today().strftime("%Y-%m-%d")
         setting = self.sql_query.get_av_path_file_date().strip()
@@ -223,14 +222,15 @@ class HomeApp:
         print("s "+setting)
         # if else condition if date setting is similar to current date
         if setting == current_date:
-            self.folder_selected = self.sql_query.get_add_visitor_path()
+            folder_selected = self.sql_query.get_add_visitor_path()
         else:
-            self.select_folder()
-            newpath = self.fix_path(self.folder_selected)
-            self.sql_query.set_add_visitor_path(newpath)
-            self.sql_query.set_av_path_file_date(current_date)
+            folder_selected = self.select_folder()
+            if folder_selected:
+                newpath = self.fix_path(folder_selected)
+                self.sql_query.set_add_visitor_path(newpath)
+                self.sql_query.set_av_path_file_date(current_date)
         cCA.CameraApp(
-            self.video_source,self.login_window,self.sel_cam_window, self.home_app,self.folder_selected )
+            self.video_source,self.login_window,self.sel_cam_window, self.home_app, folder_selected )
 
     # this command will open the log in window
     def logout_press(self, event=None):

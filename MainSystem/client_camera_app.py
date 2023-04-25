@@ -190,7 +190,7 @@ class CameraApp:
                 cAV.RegisterVisitorApp(self.home_window, self.snapshot_app, self.img_path)
                 self.hide_this_window()
             else:
-                 messbx.showwarning(
+                 messbx.showerror(
                 "Error", "Face detection failed. Please adjust your posture and capture a clear image."
             )
            

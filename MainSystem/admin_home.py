@@ -964,19 +964,14 @@ class AdminHomeApp:
         self.administrator_app.withdraw()
 
     def select_folder(self):
-        folder_empty = True
-        while (folder_empty):
             self.administrator_app.attributes('-topmost', False)
-            folder_select = filedialog.askdirectory()
+            folder_select = filedialog.askdirectory(title = "Select Folder")
             if folder_select == "":
-                folder_empty = True
+                folder_select = False
+                return folder_select
             else:
-                self.folder_selected = folder_select
-                folder_empty = False
-            print(self.folder_selected)
-            self.administrator_app.attributes('-topmost', True)
-            self.administrator_app.attributes('-topmost', False)
-
+                return folder_select
+            
     def select_file(self):
         file_empty = True
         while (file_empty):
@@ -1211,21 +1206,30 @@ class AdminHomeApp:
     def add_clients_logic(self):
         # if self.clients_man_var.get() == "Manage Students":
         self.hide_this_window()
-        self.select_folder()
-        aCA.CameraApp(self.video_source,self.login_window,self.sel_cam_window, self.administrator_app,self.folder_selected, self.clients_man_var.get())
+        folder = self.select_folder()
+        if folder:
+            aCA.CameraApp(
+                self.video_source,self.login_window,self.sel_cam_window, 
+                self.administrator_app,folder, self.clients_man_var.get(), 
+                self.refresh_clients_logic)
+    
+        
 
     def edit_clients_logic(self):
         if self.clients_man_var.get() == "Manage Students":
-            self.select_folder()
-            self.edit_student_function()
+            folder = self.select_folder()
+            if folder:
+                self.edit_student_function(folder, self.clients_man_var.get())
 
         if self.clients_man_var.get() == "Manage Personnels":
-            self.select_folder()
-            self.edit_personnel_function()
+            folder = self.select_folder()
+            if folder:
+                self.edit_personnel_function(folder, self.clients_man_var.get())
 
         if self.clients_man_var.get() == "Manage Visitors":
-            self.select_folder()
-            self.edit_visitor_function()
+            folder = self.select_folder()
+            if folder:
+                self.edit_visitor_function(folder, self.clients_man_var.get())
 
     def search_clients_info_logic(self):
         if self.clients_man_var.get() == "Manage Students":
@@ -1238,7 +1242,7 @@ class AdminHomeApp:
             data = self.search_c_entry.get()
             self.treeview.do_search_visitor(data, "IsActive")
 
-    def edit_student_function(self):
+    def edit_student_function(self, folder, types):
          
         self.treeview.select_student_treeview_row()
         print(self.treeview.student_values)
@@ -1266,17 +1270,19 @@ class AdminHomeApp:
                 student_status,
                 self.video_source,
                 self.administrator_app,
-                self.folder_selected ,
+                folder ,
+                types,
+                self.refresh_clients_logic
             )
             self.hide_this_window()
 
         else:
             messbx.showwarning(
-                "Error", "Please choose an item to modify."
+                "Warning", "Please choose an item to modify."
             )
 
 
-    def edit_personnel_function(self):
+    def edit_personnel_function(self,folder,types):
         self.treeview.select_personnel_treeview_row()
         print(self.treeview.personnel_values)
 
@@ -1301,14 +1307,16 @@ class AdminHomeApp:
                 personnel_status,
                 self.video_source,
                 self.administrator_app,
-                self.folder_selected ,
+                folder ,
+                types,
+                self.refresh_clients_logic
             )
             self.hide_this_window()
         else:
             messbx.showwarning(
-                "Error", "Please choose an item to modify.")
+                "Warning", "Please choose an item to modify.")
     
-    def edit_visitor_function(self):
+    def edit_visitor_function(self,folder,types ):
         self.treeview.select_visitor_treeview_row()
         print(self.treeview.visitor_values)
 
@@ -1330,12 +1338,33 @@ class AdminHomeApp:
                 visitor_status,
                 self.video_source,
                 self.administrator_app,
-                self.folder_selected ,
+                folder ,
+                types,
+                self.refresh_clients_logic
             )
             self.hide_this_window()
         else:
             messbx.showwarning(
-                "Error", "Please choose an item to modify.")
+                "Warning", "Please choose an item to modify.")
+    
+    def refresh_clients_logic(self,types, status):
+        if types == "Manage Students":
+            self.treeview.refresh_student_treeview(status)
+
+        if types == "Manage Personnels":
+            self.treeview.refresh_personnel_treeview(status)
+
+        if types == "Manage Visitors":
+            self.treeview.refresh_visitor_treeview(status)
+
+        if types == "Archived Students":
+            self.treeview.refresh_student_treeview(status)
+
+        if types == "Archived Personnels":
+            self.treeview.refresh_personnel_treeview(status)
+
+        if types == "Archived Visitors":
+            self.treeview.refresh_visitor_treeview(status)
     
     # CLIENT-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
     # ATTENDANCE-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
@@ -1403,15 +1432,19 @@ class AdminHomeApp:
             lastname = self.treeview.user_values[4]
             user_type = self.treeview.user_values[5]
             user_status = self.treeview.user_values[6]
-            uE.EditUserApp(username, password, firstname, lastname, user_type, user_status, self.administrator_app)
+            uE.EditUserApp(username, password, firstname, lastname, user_type, user_status, self.administrator_app, self.refresh_user_logic)
             self.hide_this_window()
         else:
             messbx.showwarning(
-                "Error", "Please choose an item to modify.")
+                "Warning", "Please choose an item to modify.")
 
     def register_user(self):
-        uC.CreateUserApp(self.administrator_app)
+        uC.CreateUserApp(self.administrator_app, self.refresh_user_logic)
         self.hide_this_window()
+
+    def refresh_user_logic(self, status):
+        self.treeview.refresh_user_treeview(status)
+
 
     # USERS-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
     # ARCHIVED-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
@@ -1440,16 +1473,19 @@ class AdminHomeApp:
 
     def edit_archived_logic(self):
         if self.archived_man_var.get() == "Archived Students":
-            self.select_folder()
-            self.edit_student_function()
+            folder = self.select_folder()
+            if folder:
+                self.edit_student_function(folder, self.archived_man_var.get())
 
         if self.archived_man_var.get() == "Archived Personnels":
-            self.select_folder()
-            self.edit_personnel_function()
+            folder = self.select_folder()
+            if folder:
+                self.edit_personnel_function(folder,  self.archived_man_var.get())
 
         if self.archived_man_var.get() == "Archived Visitors":
-            self.select_folder()
-            self.edit_visitor_function()
+            folder = self.select_folder()
+            if folder:
+                self.edit_visitor_function(folder,  self.archived_man_var.get())
 
         if self.archived_man_var.get() == "Archived User":
             self.edit_user_function()
@@ -1485,9 +1521,9 @@ class AdminHomeApp:
             try:
                 self.sql_query.set_sem_settings(self.deactivation_date_entry.get())
             except ValueError:
-                messbx.showwarning("Error", "The data format is incorrect. Please use the format YYYY-MM-DD.")
+                messbx.showerror("Error", "The data format is incorrect. Please use the format YYYY-MM-DD.")
         else:
-            messbx.showwarning("Error", "Kindly ensure all fields are filled by entering a value.")
+            messbx.showwarning("Warning", "Kindly ensure all fields are filled by entering a value.")
 
     def security_settings_save(self):
         pass_len = self.pass_len_entry.get()
@@ -1495,7 +1531,7 @@ class AdminHomeApp:
         if (pass_len.isnumeric() and login_attempt.isnumeric()):
             self.sql_query.set_pass_len_log_att(pass_len,login_attempt)
         else:
-            messbx.showwarning("Error", "Please enter numerical values only.")
+            messbx.showerror("Error", "Please enter numerical values only.")
     # SETTINGS-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
     
     # DASBOARD-COMMANDS---------------------------------------------------------------------------------------------------------------
@@ -1636,10 +1672,11 @@ class AdminHomeApp:
         self.settings_section_label.configure(foreground="#F7FAE9")
 
     def export_database(self, event=None):
-        self.select_folder()
-        path = self.folder_selected
-        file_name = datetime.now().strftime("%m-%d-%Y-%H-%M-%S")
-        self.sql_query.backup_database(path, file_name)
+        folder = self.select_folder()
+        if folder:
+            path = folder
+            file_name = datetime.now().strftime("%m-%d-%Y-%H-%M-%S")
+            self.sql_query.backup_database(path, file_name)
 
     def import_database(self, event=None):
         self.select_file()
@@ -1647,7 +1684,7 @@ class AdminHomeApp:
         if file.endswith('.bacpac'):
             self.sql_query.restore_database(file)
         else:
-            messbx.showwarning("Error", "Kindly choose the correct file type.")
+            messbx.showerror("Error", "Kindly choose the correct file type.")
 
     def save_dates(self, event=None):
         self.activation_settings_save()

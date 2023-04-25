@@ -106,13 +106,12 @@ class dbQueries:
         personnel_status,
     ):
         query = (
-            f"UPDATE tbl_personnel SET personnel_no = ?, personnel_firstname = ?, personnel_lastname = ?, personnel_middlename = ?,"
+            f"UPDATE tbl_personnel SET personnel_firstname = ?, personnel_lastname = ?, personnel_middlename = ?,"
             + " personnel_contact_no = ?, personnel_address = ?, personnel_type = ?, personnel_status = ? WHERE personnel_no = ?"
         )
         self.cursor.execute(
             query,
             (
-                personnel_number,
                 personnel_firstname,
                 personnel_lastname,
                 personnel_middlename,
@@ -120,7 +119,7 @@ class dbQueries:
                 personnel_address,
                 personnel_type,
                 personnel_status,
-                personnel_number,
+                personnel_number
             ),
         )
         self.connection.commit()
@@ -258,14 +257,13 @@ class dbQueries:
         student_status,
     ):
         query = (
-            f"UPDATE tbl_student SET student_no = ?, student_firstname = ?, student_lastname = ?, student_middlename = ?,"
+            f"UPDATE tbl_student SET student_firstname = ?, student_lastname = ?, student_middlename = ?,"
             + " student_program = ?, student_section = ?, student_contact_no = ?, student_address = ?,"
             + " student_status = ? WHERE student_no = ?"
         )
         self.cursor.execute(
             query,
             (
-                student_number,
                 student_firstname,
                 student_lastname,
                 student_middlename,
@@ -275,7 +273,7 @@ class dbQueries:
                 student_address,
                 student_status,
                 student_number,
-            ),
+            )
         )
         self.connection.commit()
         print(f"Student {student_number} has been updated successfully!")

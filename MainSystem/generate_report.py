@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import tkinter as tk
 import tkcalendar as tkc
+import tkinter.messagebox as messbx
 import query_mod as qry
 import report_mod as rM
 import Treeview_table_mod as tbl
@@ -185,114 +186,119 @@ class SavePrintReportApp:
         self.mainwindow = self.generate_report_app
 
     def select_folder(self):
-        folder_empty = True
-        while folder_empty:
-            self.generate_report_app.attributes("-topmost", False)
-            folder_select = filedialog.askdirectory()
+            self.generate_report_app.attributes('-topmost', False)
+            folder_select = filedialog.askdirectory(title = "Select Folder")
             if folder_select == "":
-                folder_empty = True
+                folder_select = False
+                return folder_select
             else:
-                self.file_path = folder_select
-                folder_empty = False
-            print(self.file_path)
-            self.generate_report_app.attributes("-topmost", True)
-            self.generate_report_app.attributes("-topmost", False)
+                return folder_select
 
     def save_press(self, event=None):
-        self.select_folder()
-        date1 = self.calendar1.selection_get()
-        date2 = self.calendar2.selection_get()
-
-        edited_date1 = date1.strftime("%Y-%m-%d")
-        edited_date2 = date2.strftime("%Y-%m-%d")
-
-        datefrom = datetime.datetime.strptime(edited_date1, "%Y-%m-%d")
-        dateto = datetime.datetime.strptime(edited_date2, "%Y-%m-%d")
-
+        folder = self.select_folder()
         filename = self.file_name.get()
-        filepath = self.file_path
+        if len(filename) !=0:
+            if folder:    
+                date1 = self.calendar1.selection_get()
+                date2 = self.calendar2.selection_get()
 
-        if self.client_type == "Students Report":
+                edited_date1 = date1.strftime("%Y-%m-%d")
+                edited_date2 = date2.strftime("%Y-%m-%d")
 
-            if self.file_type_var.get() == "Excel":
-                self.excel_class.save_student(filepath, filename, datefrom, dateto)
+                datefrom = datetime.datetime.strptime(edited_date1, "%Y-%m-%d")
+                dateto = datetime.datetime.strptime(edited_date2, "%Y-%m-%d")
 
-            if self.file_type_var.get() == "Docx":
-                self.docx_class.save_doc_student(filepath, filename, datefrom, dateto)
+                
+                filepath = folder
+                
+                if self.client_type == "Students Report":
 
-            if self.file_type_var.get() == "Pdf":
-                self.docx_class.save_pdf_student(filepath, filename, datefrom, dateto)
+                    if self.file_type_var.get() == "Excel":
+                        self.excel_class.save_student(filepath, filename, datefrom, dateto)
 
-        if self.client_type == "Personnels Report":
+                    if self.file_type_var.get() == "Docx":
+                        self.docx_class.save_doc_student(filepath, filename, datefrom, dateto)
 
-            if self.file_type_var.get() == "Excel":
-                self.excel_class.save_personnel(filepath, filename, datefrom, dateto)
+                    if self.file_type_var.get() == "Pdf":
+                        self.docx_class.save_pdf_student(filepath, filename, datefrom, dateto)
 
-            if self.file_type_var.get() == "Docx":
-                self.docx_class.save_doc_personnel(filepath, filename, datefrom, dateto)
+                if self.client_type == "Personnels Report":
 
-            if self.file_type_var.get() == "Pdf":
-                self.docx_class.save_pdf_personnel(filepath, filename, datefrom, dateto)
+                    if self.file_type_var.get() == "Excel":
+                        self.excel_class.save_personnel(filepath, filename, datefrom, dateto)
 
-        if self.client_type == "Visitors Report":
+                    if self.file_type_var.get() == "Docx":
+                        self.docx_class.save_doc_personnel(filepath, filename, datefrom, dateto)
 
-            if self.file_type_var.get() == "Excel":
-                self.excel_class.save_visitor(filepath, filename, datefrom, dateto)
+                    if self.file_type_var.get() == "Pdf":
+                        self.docx_class.save_pdf_personnel(filepath, filename, datefrom, dateto)
 
-            if self.file_type_var.get() == "Docx":
-                self.docx_class.save_doc_visitor(filepath, filename, datefrom, dateto)
+                if self.client_type == "Visitors Report":
 
-            if self.file_type_var.get() == "Pdf":
-                self.docx_class.save_pdf_visitor(filepath, filename, datefrom, dateto)
+                    if self.file_type_var.get() == "Excel":
+                        self.excel_class.save_visitor(filepath, filename, datefrom, dateto)
+
+                    if self.file_type_var.get() == "Docx":
+                        self.docx_class.save_doc_visitor(filepath, filename, datefrom, dateto)
+
+                    if self.file_type_var.get() == "Pdf":
+                        self.docx_class.save_pdf_visitor(filepath, filename, datefrom, dateto)
+        else:
+            messbx.showwarning("Warning", "Kindly ensure all fields are filled by entering a value.")
 
     def print_press(self, event=None):
-        self.select_folder()
 
-        date1 = self.calendar1.selection_get()
-        date2 = self.calendar2.selection_get()
-
-        edited_date1 = date1.strftime("%Y-%m-%d")
-        edited_date2 = date2.strftime("%Y-%m-%d")
-
-        datefrom = datetime.datetime.strptime(edited_date1, "%Y-%m-%d")
-        dateto = datetime.datetime.strptime(edited_date2, "%Y-%m-%d")
-
+        folder = self.select_folder()
         filename = self.file_name.get()
-        filepath = self.file_path
+        if len(filename) != 0:
+            if folder:
+                date1 = self.calendar1.selection_get()
+                date2 = self.calendar2.selection_get()
 
-        if self.client_type == "Students Report":
+                edited_date1 = date1.strftime("%Y-%m-%d")
+                edited_date2 = date2.strftime("%Y-%m-%d")
 
-            if self.file_type_var.get() == "Excel":
-                self.excel_class.print_student(filepath, filename, datefrom, dateto)
+                datefrom = datetime.datetime.strptime(edited_date1, "%Y-%m-%d")
+                dateto = datetime.datetime.strptime(edited_date2, "%Y-%m-%d")
 
-            if self.file_type_var.get() == "Docx":
-                self.docx_class.print_doc_student(filepath, filename, datefrom, dateto)
 
-            if self.file_type_var.get() == "Pdf":
-                self.docx_class.print_pdf_student(filepath, filename, datefrom, dateto)
+                filepath = folder
 
-        if self.client_type == "Personnels Report":
+                if self.client_type == "Students Report":
 
-            if self.file_type_var.get() == "Excel":
-                self.excel_class.print_personnel(filepath, filename, datefrom, dateto)
+                    if self.file_type_var.get() == "Excel":
+                        self.excel_class.print_student(filepath, filename, datefrom, dateto)
 
-            if self.file_type_var.get() == "Docx":
-                self.docx_class.print_doc_personnel(
-                    filepath, filename, datefrom, dateto
-                )
+                    if self.file_type_var.get() == "Docx":
+                        self.docx_class.print_doc_student(filepath, filename, datefrom, dateto)
 
-            if self.file_type_var.get() == "Pdf":
-                self.docx_class.print_pdf_personnel(
-                    filepath, filename, datefrom, dateto
-                )
+                    if self.file_type_var.get() == "Pdf":
+                        self.docx_class.print_pdf_student(filepath, filename, datefrom, dateto)
 
-        if self.client_type == "Visitors Report":
+                if self.client_type == "Personnels Report":
 
-            if self.file_type_var.get() == "Excel":
-                self.excel_class.print_visitor(filepath, filename, datefrom, dateto)
+                    if self.file_type_var.get() == "Excel":
+                        self.excel_class.print_personnel(filepath, filename, datefrom, dateto)
 
-            if self.file_type_var.get() == "Docx":
-                self.docx_class.print_doc_visitor(filepath, filename, datefrom, dateto)
+                    if self.file_type_var.get() == "Docx":
+                        self.docx_class.print_doc_personnel(
+                            filepath, filename, datefrom, dateto
+                        )
 
-            if self.file_type_var.get() == "Pdf":
-                self.docx_class.print_pdf_visitor(filepath, filename, datefrom, dateto)
+                    if self.file_type_var.get() == "Pdf":
+                        self.docx_class.print_pdf_personnel(
+                            filepath, filename, datefrom, dateto
+                        )
+
+                if self.client_type == "Visitors Report":
+
+                    if self.file_type_var.get() == "Excel":
+                        self.excel_class.print_visitor(filepath, filename, datefrom, dateto)
+
+                    if self.file_type_var.get() == "Docx":
+                        self.docx_class.print_doc_visitor(filepath, filename, datefrom, dateto)
+
+                    if self.file_type_var.get() == "Pdf":
+                        self.docx_class.print_pdf_visitor(filepath, filename, datefrom, dateto)
+        else:
+           messbx.showwarning("Error", "Kindly ensure all fields are filled by entering a value.")

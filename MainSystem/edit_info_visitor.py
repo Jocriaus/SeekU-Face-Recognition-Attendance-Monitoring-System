@@ -8,7 +8,7 @@ import os
 import sys
 
 class EditVisitorApp:
-    def __init__(self,vn,vfn,vln,vcn,vad,vs, videosource, admin_app, file_path):
+    def __init__(self,vn,vfn,vln,vcn,vad,vs, videosource, admin_app, file_path,select, refresh):
         # build ui
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.video_source = videosource
@@ -20,8 +20,11 @@ class EditVisitorApp:
         self.visitor_contact_number = vcn
         self.visitor_address = vad
         self.visitor_status = vs
+        self.first_stat = vs
         self.sql_query = qry.dbQueries()
         self.edit_bool = True
+        self.client = select
+        self.refresh_func = refresh
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.edit_visitor_app = tk.Toplevel()
         self.edit_visitor_app.configure(
@@ -254,6 +257,7 @@ class EditVisitorApp:
     # this function will destroy the current window and return to camera app
     def back_cam_app_window(self):
         self.admin_home_window.deiconify()
+        self.refresh_func(self.client, self.first_stat)
         self.edit_visitor_app.destroy()
 
     def hide_revert_button(self):
@@ -314,7 +318,7 @@ class EditVisitorApp:
                 img_name = self.visitor_number
                 os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/000000000.jpg")
         else:
-            messbx.showwarning("Error", "Kindly ensure all fields are filled by entering a value.")
+            messbx.showwarning("Warning", "Kindly ensure all fields are filled by entering a value.")
         """
         Save to database
         Get the primary key

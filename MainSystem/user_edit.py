@@ -5,7 +5,7 @@ import query_mod as qry
 
 
 class EditUserApp:
-    def __init__(self, un, pw, ufn, uln, ut, us, admin_hom):
+    def __init__(self, un, pw, ufn, uln, ut, us, admin_hom,refresh):
         # build ui
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.admin_home_window = admin_hom 
@@ -15,8 +15,10 @@ class EditUserApp:
         self.lastname = uln
         self.user_type = ut
         self.user_status = us
+        self.first_stat = us
         self.sql_query = qry.dbQueries()
         self.edit_bool = True
+        self.refresh_func = refresh
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
 
         self.edit_user_app = tk.Toplevel()
@@ -176,6 +178,7 @@ class EditUserApp:
 
     def destroy_this_window(self):
         self.admin_home_window.deiconify()
+        self.refresh_func(self.first_stat)
         self.edit_user_app.destroy() 
 
     # disables entry widgets
@@ -236,12 +239,12 @@ class EditUserApp:
                 )
 
         else:
-            messbx.showwarning("Error", "Kindly ensure all fields are filled by entering a value.")
+            messbx.showwarning("Warning", "Kindly ensure all fields are filled by entering a value.")
 
     def password_check(self,password):
         limit = self.sql_query.get_password_length()
         if len(password) > limit :
-            messbx.showwarning("Error", "The password length limit is " + str(limit) + "." )
+            messbx.showwarning("Warning", "The password length limit is " + str(limit) + "." )
             self.update = False
         else:
             self.update = True

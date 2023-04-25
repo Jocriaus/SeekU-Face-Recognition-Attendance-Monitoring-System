@@ -11,7 +11,7 @@ import os
 import sys
 
 class CameraApp:
-    def __init__(self, vid_source, login_mod, sel_cam,admin_hom, file_path, condition):
+    def __init__(self, vid_source, login_mod, sel_cam,admin_hom, file_path, condition, refresh):
 
     #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.video_source = vid_source
@@ -20,6 +20,7 @@ class CameraApp:
         self.admin_home_window = admin_hom
         self.img_path = file_path
         self.window_will_open = condition
+        self.refresh_func = refresh
     #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         # build ui
         self.snapshot_app = tk.Toplevel()
@@ -205,7 +206,7 @@ class CameraApp:
                     cAV.AddVisitorApp(self.admin_home_window, self.snapshot_app, self.img_path)
                 self.hide_this_window()
             else:
-                 messbx.showwarning(
+                 messbx.showerror(
                 "Error", "Face detection failed. Please adjust your posture and capture a clear image."
             )
             
@@ -215,6 +216,7 @@ class CameraApp:
     # this command will return to the home window
     def log_out_func(self, event=None):
         self.show_home_window()
+        self.refresh_func(self.window_will_open)
         self.snapshot_app.destroy()
 
     # this command will take a picture
@@ -407,7 +409,7 @@ class CameraEditApp:
                 self.display_temp_pic()
                 self.show_edit_window()
             else:
-                 messbx.showwarning(
+                 messbx.showerror(
                 "Error", "Face detection failed. Please adjust your posture and capture a clear image."
             )
             # this will open the window that saves the info of the visitor.
