@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog
-import client_face_recog as cFG
+import splash_screen as sS
 import client_camera_app as cCA
 import datetime
 import query_mod as qry
@@ -211,7 +211,7 @@ class HomeApp:
             self.sql_query.set_face_recog_path(newpath)
             self.sql_query.set_fr_path_file_date(current_date)
         # add for handling the select folder function if nothing is chosen.
-        cFG.ClientFaceRecogApp(
+        sS.SplashScreenWin(
             self.video_source,self.login_window,self.sel_cam_window, self.home_app,self.folder_selected )
         
     # this command will open the add visitor module

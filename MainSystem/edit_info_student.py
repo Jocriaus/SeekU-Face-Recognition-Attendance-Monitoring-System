@@ -356,6 +356,7 @@ class EditStudentApp:
         student_section_var = self.section_entry.get()
         student_contact_num_var = self.contact_num_entry.get()
         student_address_var = self.address_entry.get()
+        student_status_var = self.stat_var
 
         if ( len(student_num_var) != 0 and
             len(student_firstname_var) != 0 and
@@ -376,6 +377,7 @@ class EditStudentApp:
                 student_section_var,
                 student_contact_num_var,
                 student_address_var,
+                student_status_var
             )
             if os.path.exists(self.img_path + "/000000000.jpg"):
                 img_name = self.student_number

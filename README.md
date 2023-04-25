@@ -23,6 +23,10 @@ intall opencv
 install face_recognition library
 -pip install face_recognition
 
+install face detection library (mediapipe)
+-pip install mediapipe
+
+
 install dlib
 Dlib compiled binary (.whl) for python 3.7, 3.8, 3.9 for windows x64
 

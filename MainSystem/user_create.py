@@ -156,7 +156,7 @@ class CreateUserApp:
     def password_check(self,password):
         limit = self.sql_query.get_password_length()
         if len(password) < limit :
-            messbx.showwarning("Error", "The password should have " + limit + " characters." )
+            messbx.showwarning("Error", "The password should have " + str(limit) + " characters." )
             self.register = False
         else:
             self.register = True
