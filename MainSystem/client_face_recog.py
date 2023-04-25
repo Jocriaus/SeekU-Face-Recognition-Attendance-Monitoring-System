@@ -235,8 +235,9 @@ class ClientFaceRecogApp:
             self.face_recog_app.after(4000, self.next_person)
             self.save_attendance_func()
         elif not self.fr_vid.face_detected:
+            print ("no face")
             # this will call the next person function if there is no face detected
-            self.face_recog_app.after(15, self.next_person)
+            self.face_recog_app.after(1000, self.next_person)
 
     # this function will reset the conditions that enables the face detection
     # and camera display, will call the cam_update function to resume cam display

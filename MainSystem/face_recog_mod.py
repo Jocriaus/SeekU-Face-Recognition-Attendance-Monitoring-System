@@ -26,7 +26,7 @@ class FaceRecognition:
         self.face_detected = False
 
 
-        TOLERANCE = 0.55
+        TOLERANCE = 0.5
         MODEL = "cnn"
 
         # array for images, image location, and image names
@@ -153,11 +153,15 @@ class FaceRecognition:
                     # this boolean will be the key for stopping the face recognition and the cam_update function
                     self.face_detected = True
                     print('face matched')
+                    self.center = (0, 0)
                 else:
                     print('face no match')
+                    
             else:
                 print('no face detected')
                 self.face_detected = False
+                self.center = (0, 0)
+                break
 
 
 
