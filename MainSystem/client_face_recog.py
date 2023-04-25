@@ -8,14 +8,17 @@ import sys
 
 
 class ClientFaceRecogApp:
-    def __init__(self, vid_source, login_mod, sel_cam, home_mod, file_path):
+    def __init__(self, vid_source, login_mod, sel_cam, home_mod, splashs, file_path, fr_vid_mod):
 
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
+        self.splash = splashs
         self.login_window = login_mod
         self.select_cam_window = sel_cam
         self.home_window = home_mod
         self.call_cam = False
         self.sql_query = qry.dbQueries()
+        self.fr_vid = fr_vid_mod
+
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
 
         # build ui
@@ -29,6 +32,8 @@ class ClientFaceRecogApp:
         self.face_recog_app.iconbitmap(".\SeekU\SeekU.ico")
 
         # Contains-the-camera-canvas---------------------------------------------------------------------------------------------------------
+        # this sets the camera size
+        
         self.face_recog_frame3 = tk.Frame(self.face_recog_app)
         self.face_recog_frame3.configure(background="#0072bc", height=200, width=200)
         self.face_recog_frame3.place(
@@ -42,8 +47,7 @@ class ClientFaceRecogApp:
         self.camera_canvas.place(
             anchor="center", relheight=1.0, relwidth=1.0, relx=0.5, rely=0.5, x=0, y=0
         )
-        # this sets the camera size
-        self.fr_vid = mf.FaceRecognition(vid_source, file_path, 1280, 720)
+
         # Contains-the-camera-canvas---------------------------------------------------------------------------------------------------------
 
         # Contains-the-sti-logo-attendance-and-student-name---------------------------------------------------------------------------------------------------------
@@ -131,7 +135,7 @@ class ClientFaceRecogApp:
         self.cam_update()
         # see function descritption
         self.hide_name()
-
+        
         # Main widget
         self.mainwindow = self.face_recog_app
 
@@ -139,6 +143,10 @@ class ClientFaceRecogApp:
         self.mainwindow.wm_attributes("-fullscreen", "True")
         # this protocol will do a function after pressing the close button.
         self.mainwindow.protocol("WM_DELETE_WINDOW", self.exit_program)
+        self.splash()
+        self.mainwindow.attributes("-topmost", True)
+        self.mainwindow.attributes("-topmost", False)
+        
 
     # -----------------------------------------------------------------------------------------
     # this function will destroy the window and closes the system/program.
@@ -167,13 +175,13 @@ class ClientFaceRecogApp:
         # Get a frame from the video source
         ret, frame = self.fr_vid.get_frame()
         # if it return a frame and if there are still no face detected
-        if ret & self.fr_vid.face_detected:
+        if ret & (not self.fr_vid.face_detected):
             if not self.fr_vid.cont:
                 self.hide_name()
                 # consistently getting the time and date
                 self.current_time = time.strftime("%H:%M:%S", time.localtime())
-                self.current_date = datetime.date.today().strftime("%m/%d/%y")
-                self.current_date_n_time = self.current_date + " " + self.current_time
+                current_date = datetime.date.today().strftime("%Y/%m/%d")
+                self.current_date_n_time = current_date + " " + self.current_time
                 self.fr_vid.box_and_dot(frame)
                 # saving the frame from the array unto the photo variable as an "image"
                 self.photo = ImageTk.PhotoImage(image=Image.fromarray(frame))
@@ -220,33 +228,37 @@ class ClientFaceRecogApp:
         print("recognize face before not")
         # if a face is detected it will stop detecting and
         # will display the image of the owner of the face
-        if not self.fr_vid.face_detected:
+        if self.fr_vid.face_detected:
             print("run")
             self.attendance()
             # this will call the next person function
             self.face_recog_app.after(4000, self.next_person)
             self.save_attendance_func()
-
-        if self.fr_vid.face_detected:
+        elif not self.fr_vid.face_detected:
+            print ("no face")
             # this will call the next person function if there is no face detected
-            self.face_recog_app.after(15, self.next_person)
+            self.face_recog_app.after(1000, self.next_person)
 
     # this function will reset the conditions that enables the face detection
     # and camera display, will call the cam_update function to resume cam display
     def next_person(self):
         self.fr_vid.cont = False
-        self.fr_vid.face_detected = True
+        self.fr_vid.face_detected = False
         self.fr_vid.recognized = False
         self.cam_update()
 
     # this will save the attendance of the student
     def save_attendance_func(self):
+        current_date = datetime.datetime.now().strftime("%Y-%m-%d")
+        date_int = int(datetime.datetime.now().strftime("%y%m%d"))
+        custom_no = date_int * 100000
+
         if self.sql_query.check_student_no(int(self.fr_vid.name)):
-            self.sql_query.student_attendance_record(int(self.fr_vid.name),self.current_date, self.current_time)
+            self.sql_query.student_attendance_record(custom_no, int(self.fr_vid.name), current_date, self.current_time)
         if self.sql_query.check_personnel_no(int(self.fr_vid.name)):
-            self.sql_query.personnel_attendance_record(int(self.fr_vid.name),self.current_date, self.current_time)
+            self.sql_query.personnel_attendance_record(custom_no, int(self.fr_vid.name), current_date, self.current_time)
         if self.sql_query.check_visitor_no(int(self.fr_vid.name)):
-            self.sql_query.visitor_attendance_record(int(self.fr_vid.name),self.current_date, self.current_time)
+            self.sql_query.visitor_attendance_record(custom_no, int(self.fr_vid.name), current_date, self.current_time)
         
     # this command will return to the home window
     def return_func(self, event=None):

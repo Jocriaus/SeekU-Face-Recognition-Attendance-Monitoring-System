@@ -29,6 +29,7 @@ class LoginApp:
         self.log_in_app.resizable(False, False)
         self.log_in_app.title("SeekU - Login")
         self.log_in_app.iconbitmap(".\SeekU\SeekU.ico")
+        self.log_in_app.bind('<Return>',lambda event:self.login_logic())
         # Contains-the-entry-and-button---------------------------------------------------------------------------------------------------------
         self.log_in_frame2 = tk.Frame(self.log_in_app)
         self.log_in_frame2.configure(background="#0072bc", height=200, width=200)
@@ -85,7 +86,7 @@ class LoginApp:
             x=250,
             y=425,
         )
-        self.login_button.bind("<ButtonPress>", self.login_press, add="")
+        self.login_button.bind("<1>", self.login_press, add="")
         self.log_in_frame2.place(anchor="center", height=500, width=500, x=250, y=250)
         # Contains-the-entry-and-button---------------------------------------------------------------------------------------------------------
         # Contains-the-logo-and-logotype---------------------------------------------------------------------------------------------------------
@@ -186,12 +187,12 @@ class LoginApp:
                             self.init_time = time.time()
                         self.locked = True
                         messbx.showwarning(
-                            "Warning", "The username and password entered do not match. You have remaining {} tries".format(self.tries))
+                            "Warning", "The username and password entered do not match. Remaning tries: {}.".format(self.tries))
                         self.time_passing()
                     else:
                         
                         messbx.showwarning(
-                            "Warning", "The username and password entered do not match. You have remaining {} tries".format(self.tries))
+                            "Warning", "The username and password entered do not match. Remaning tries: {}.".format(self.tries))
                         
 
             else:

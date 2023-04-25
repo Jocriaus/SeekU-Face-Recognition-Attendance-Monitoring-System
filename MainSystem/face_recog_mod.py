@@ -13,7 +13,7 @@ class FaceRecognition:
     #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.recognized = False
         self.enter = False
-
+        self.center = (0, 0)
         # this is used for the detecting if the face is inside the box
         self.init_time = 0
         self.current_time = 0
@@ -23,7 +23,11 @@ class FaceRecognition:
         self.path = file_path
 
         self.cont = False
-        self.face_detected = True
+        self.face_detected = False
+
+
+        TOLERANCE = 0.5
+        MODEL = "cnn"
 
         # array for images, image location, and image names
         self.images = []
@@ -32,11 +36,6 @@ class FaceRecognition:
 
         # os.listdir is a reserve word to list all the folder inside path
         self.myList = os.listdir(self.path)
-
-        # classifier for face detection
-        self.haar_face_cascade = cv2.CascadeClassifier(
-        "MainSystem\DetectionData\haarcascade_frontalface_alt.xml"
-        )
 
         self.mp_draw = mp.solutions.drawing_utils
         self.mp_face_mesh = mp.solutions.face_mesh
@@ -49,9 +48,12 @@ class FaceRecognition:
 
 
     #Getting-the-dataset-------------------------------------------------------------------------------------------
- 
+        print("getting data set")
         # for loop to run through all subfolders of the root folders
         for root, dirs, files in os.walk(self.path):
+            print("dirs: "+ str(dirs))
+            print("root: "+ str(root))
+            print("files: "+ str(files))
             # for loop in every files on folders
             for f in files:
                 # reads the images on root/files
@@ -133,9 +135,9 @@ class FaceRecognition:
         # for loop in order to encode every frame of the camera
         for encodeFace, faceLocation in zip(encodesCurrentFrame, facesCurrentFrame):
             print("entered face recognize")
-            if self.face_detected:
+            if not self.face_detected:
                 # in order to compare the detected face to the training images we need to use face_recognition.compare_faces reserved word
-                matches = face_recognition.compare_faces(self.encodeListKnownFaces, encodeFace)
+                matches = face_recognition.compare_faces(self.encodeListKnownFaces, encodeFace, )
                 # in order to find the distance of face we need to use face_recognition.face_distance reserved word
                 faceDistance = face_recognition.face_distance(self.encodeListKnownFaces, encodeFace)
                 # it returns the minimum values along axis of matchIndex
@@ -143,14 +145,24 @@ class FaceRecognition:
                 # an if statement in order to draw rectangle to the detected face and also to write the name of detected face
                 # if statement that tells it detected the image
                 if matches[matchIndex]:
+                    print('face detected')
                     # change the content - make it appear the original image to the person detected
                     self.name = self.classNames[matchIndex].upper()
                     # getting the image of the index for referencing
                     self.image_index = matchIndex
                     # this boolean will be the key for stopping the face recognition and the cam_update function
-                    self.face_detected = False
-                    print('face detected')
-                    break
+                    self.face_detected = True
+                    print('face matched')
+                    self.center = (0, 0)
+                else:
+                    print('face no match')
+                    
+            else:
+                print('no face detected')
+                self.face_detected = False
+                self.center = (0, 0)
+                break
+
 
 
     def get_mesh_face(self, img, draw=True):    
@@ -201,6 +213,7 @@ class FaceRecognition:
             
     # this function detects if the face is inside the square within the time set.
     def face_in_box(self, recognize_face):
+        print(self.center)
         recognize_face_func = recognize_face
         if self.recognized:
             return

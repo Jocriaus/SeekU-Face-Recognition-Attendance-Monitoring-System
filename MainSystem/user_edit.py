@@ -241,7 +241,7 @@ class EditUserApp:
     def password_check(self,password):
         limit = self.sql_query.get_password_length()
         if len(password) > limit :
-            messbx.showwarning("Error", "The password length limit is " + limit + "." )
+            messbx.showwarning("Error", "The password length limit is " + str(limit) + "." )
             self.update = False
         else:
             self.update = True
