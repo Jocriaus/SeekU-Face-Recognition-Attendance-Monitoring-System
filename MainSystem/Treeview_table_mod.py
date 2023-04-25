@@ -55,7 +55,7 @@ class TreeviewGUI:
         # Create Treeview
         self.student_tree = ttk.Treeview(
             self.student_treeview_frame,
-            yscrollcommand=self.student_treeview_scrollbar.set,
+            yscrollcommand=self.student_treeview_scrollbar.set
         )
 
         # Configure the scrollbar
@@ -65,7 +65,7 @@ class TreeviewGUI:
         self.student_treeview_frame.place(
             anchor="center", relheight=1, relwidth=1, relx=0.5, rely=0.5
         )
-        self.student_tree.pack()
+        self.student_tree.pack(fill='both', expand=1)
 
         # Defining Columns
         self.student_tree["columns"] = (
@@ -164,7 +164,7 @@ class TreeviewGUI:
             anchor="center", relheight=1, relwidth=1, relx=0.5, rely=0.5
         )
 
-        self.student_attendance_tree.pack()
+        self.student_attendance_tree.pack(fill='both', expand=1)
 
         # Defining Columns
         self.student_attendance_tree["columns"] = (
@@ -266,7 +266,7 @@ class TreeviewGUI:
             anchor="center", relheight=1, relwidth=1, relx=0.5, rely=0.5
         )
 
-        self.student_report_tree.pack()
+        self.student_report_tree.pack(fill='both', expand=1)
 
         # Defining Columns
         self.student_report_tree["columns"] = (
@@ -354,7 +354,7 @@ class TreeviewGUI:
             anchor="center", relheight=1, relwidth=1, relx=0.5, rely=0.5
         )
 
-        self.personnel_tree.pack()
+        self.personnel_tree.pack(fill='both', expand=1)
 
         # Defining Columns
         self.personnel_tree["columns"] = (
@@ -449,7 +449,7 @@ class TreeviewGUI:
             anchor="center", relheight=1, relwidth=1, relx=0.5, rely=0.5
         )
 
-        self.personnel_attendance_tree.pack()
+        self.personnel_attendance_tree.pack(fill='both', expand=1)
 
         # Defining Columns
         self.personnel_attendance_tree["columns"] = (
@@ -548,7 +548,7 @@ class TreeviewGUI:
             anchor="center", relheight=1, relwidth=1, relx=0.5, rely=0.5
         )
 
-        self.personnel_report_tree.pack()
+        self.personnel_report_tree.pack(fill='both', expand=1)
 
         # Defining Columns
         self.personnel_report_tree["columns"] = (
@@ -637,7 +637,7 @@ class TreeviewGUI:
             anchor="center", relheight=1, relwidth=1, relx=0.5, rely=0.5
         )
 
-        self.visitor_tree.pack()
+        self.visitor_tree.pack(fill='both', expand=1)
 
         # Defining Columns
         self.visitor_tree["columns"] = (
@@ -723,7 +723,7 @@ class TreeviewGUI:
             anchor="center", relheight=1, relwidth=1, relx=0.5, rely=0.5
         )
 
-        self.visitor_attendance_tree.pack()
+        self.visitor_attendance_tree.pack(fill='both', expand=1)
 
         # Defining Columns
         self.visitor_attendance_tree["columns"] = (
@@ -813,7 +813,7 @@ class TreeviewGUI:
             anchor="center", relheight=1, relwidth=1, relx=0.5, rely=0.5
         )
 
-        self.visitor_report_tree.pack()
+        self.visitor_report_tree.pack(fill='both', expand=1)
 
         # Defining Columns
         self.visitor_report_tree["columns"] = (
@@ -892,7 +892,7 @@ class TreeviewGUI:
             anchor="center", relheight=1, relwidth=1, relx=0.5, rely=0.5
         )
 
-        self.user_tree.pack()
+        self.user_tree.pack(fill='both', expand=1)
 
         # Defining Columns
         self.user_tree["columns"] = (
@@ -1459,16 +1459,16 @@ class TreeviewGUI:
         self.populate_student_treeview(status)
 
     def refresh_personnel_treeview(self, status):
-        for child in self.student_tree.get_children():
-            self.personnel_treeview.delete(child)
+        for child in self.personnel_tree.get_children():
+            self.personnel_tree.delete(child)
         self.populate_personnel_treeview(status)
 
     def refresh_visitor_treeview(self, status):
-        for child in self.student_tree.get_children():
-            self.visitor_treeview.delete(child)
+        for child in self.visitor_tree.get_children():
+            self.visitor_tree.delete(child)
         self.populate_visitor_treeview(status)
 
     def refresh_user_treeview(self,status):
-        for child in self.student_tree.get_children():
-            self.user_treeview.delete(child)
+        for child in self.user_tree.get_children():
+            self.user_tree.delete(child)
         self.populate_user_treeview(status)

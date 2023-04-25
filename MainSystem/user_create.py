@@ -122,6 +122,9 @@ class CreateUserApp:
         # Main widget
         self.mainwindow = self.register_user_app
         self.mainwindow.protocol("WM_DELETE_WINDOW", self.destroy_this_window)
+        self.center(self.mainwindow)
+        self.mainwindow.attributes('-topmost', True)
+
 
     def destroy_this_window(self):
         self.admin_home_window.deiconify()
@@ -155,9 +158,20 @@ class CreateUserApp:
         else:
             messbx.showwarning("Warning", "Kindly ensure all fields are filled by entering a value.")
 
+    def center(self, win):
+        win.update()
+        w_req, h_req = win.winfo_width(), win.winfo_height()
+        w_form = win.winfo_rootx() - win.winfo_x()
+        w = w_req + w_form * 2
+        h = h_req + (win.winfo_rooty() - win.winfo_y()) + w_form
+        x = (win.winfo_screenwidth() // 2) - (w // 2)
+        y = (win.winfo_screenheight() // 2) - (h // 2)
+        win.geometry("{0}x{1}+{2}+{3}".format(w_req, h_req, x, y))
+
+
     def password_check(self,password):
         limit = self.sql_query.get_password_length()
-        if len(password) < limit :
+        if len(password) > limit :
             messbx.showwarning("Warning", "The password should have " + str(limit) + " characters." )
             self.register = False
         else:

@@ -171,10 +171,13 @@ class EditUserApp:
         )
         # Contains-the-logo-and-logotype---------------------------------------------------------------------------------------------------------
         self.selected_user()
+
         self.disable_entry()
         # Main widget
         self.mainwindow = self.edit_user_app
         self.mainwindow.protocol("WM_DELETE_WINDOW", self.destroy_this_window)
+        self.center(self.mainwindow)
+        self.mainwindow.attributes('-topmost', True)
 
     def destroy_this_window(self):
         self.admin_home_window.deiconify()
@@ -210,6 +213,15 @@ class EditUserApp:
         self.stat_var.set(value=self.user_status)
 
         # if status is = IsActive then stat var set to Active else Inactive
+    def center(self, win):
+        win.update()
+        w_req, h_req = win.winfo_width(), win.winfo_height()
+        w_form = win.winfo_rootx() - win.winfo_x()
+        w = w_req + w_form * 2
+        h = h_req + (win.winfo_rooty() - win.winfo_y()) + w_form
+        x = (win.winfo_screenwidth() // 2) - (w // 2)
+        y = (win.winfo_screenheight() // 2) - (h // 2)
+        win.geometry("{0}x{1}+{2}+{3}".format(w_req, h_req, x, y))
 
     def update_user(self):
         self.update = True
