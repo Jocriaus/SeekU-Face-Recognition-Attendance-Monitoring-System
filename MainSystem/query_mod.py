@@ -306,8 +306,7 @@ class dbQueries:
         custom_no,
         student_number,
         student_attendance_date,
-        student_time_in,
-        student_time_out,
+        student_time,
     ):
 
         query = f"SELECT * FROM tbl_student WHERE student_no = ?"
@@ -350,7 +349,7 @@ class dbQueries:
                         custom_no,
                         student_number,
                         student_attendance_date,
-                        student_time_in,
+                        student_time,
                     ),
                 )
                 self.connection.commit()
@@ -360,7 +359,7 @@ class dbQueries:
                 insert_query_att_exit = f"UPDATE tbl_student_attendance SET student_time_out = ? WHERE student_no = ?"
                 self.cursor.execute(
                     insert_query_att_exit,
-                    (student_time_out, student_number),
+                    (student_time, student_number),
                 )
                 self.connection.commit()
 
@@ -369,7 +368,7 @@ class dbQueries:
                 insert_query_attendance = f"INSERT INTO tbl_student_attendance (student_no, student_attendance_date, student_time_in) VALUES (?, ?, ?)"
                 self.cursor.execute(
                     insert_query_attendance,
-                    (student_number, student_attendance_date, student_time_in),
+                    (student_number, student_attendance_date, student_time),
                 )
                 self.connection.commit()
             print("Attendance added successfully!")
@@ -381,8 +380,7 @@ class dbQueries:
         custom_no,
         personnel_number,
         personnel_attendance_date,
-        personnel_time_in,
-        personnel_time_out,
+        personnel_time
     ):
         query = f"SELECT * FROM tbl_personnel WHERE personnel_no = ?"
         self.cursor.execute(query, (personnel_number))
@@ -420,7 +418,7 @@ class dbQueries:
                         custom_no,
                         personnel_number,
                         personnel_attendance_date,
-                        personnel_time_in,
+                        personnel_time,
                     ),
                 )
                 self.connection.commit()
@@ -430,7 +428,7 @@ class dbQueries:
                 insert_query_att_exit = f"UPDATE tbl_personnel_attendance SET personnel_time_out = ? WHERE personnel_no = ?"
                 self.cursor.execute(
                     insert_query_att_exit,
-                    (personnel_time_out),
+                    (personnel_time),
                 )
                 self.connection.commit()
 
@@ -439,7 +437,7 @@ class dbQueries:
                 insert_query_attendance = f"INSERT INTO tbl_personnel_attendance (personnel_no, personnel_attendance_date, personnel_time_in) VALUES (?, ?, ?)"
                 self.cursor.execute(
                     insert_query_attendance,
-                    (personnel_number, personnel_attendance_date, personnel_time_in),
+                    (personnel_number, personnel_attendance_date, personnel_time),
                 )
                 self.connection.commit()
                 print("Attendance added successfully!")
@@ -451,8 +449,7 @@ class dbQueries:
         custom_no,
         visitor_number,
         visitor_attendance_date,
-        visitor_time_in,
-        visitor_time_out,
+        visitor_time
     ):
         query = f"SELECT * FROM tbl_visitor WHERE visitor_no = ?"
         self.cursor.execute(query, (visitor_number))
@@ -490,7 +487,7 @@ class dbQueries:
                         custom_no,
                         visitor_number,
                         visitor_attendance_date,
-                        visitor_time_in,
+                        visitor_time
                     ),
                 )
                 self.connection.commit()
@@ -500,7 +497,7 @@ class dbQueries:
                 insert_query_att_exit = f"UPDATE tbl_visitor_attendance SET visitor_time_out = ? WHERE visitor_no = ?"
                 self.cursor.execute(
                     insert_query_att_exit,
-                    (visitor_time_out, visitor_number),
+                    (visitor_time, visitor_number),
                 )
                 self.connection.commit()
             # if the attendance table not empty and there is no record of the visitor with that visitor number
@@ -508,7 +505,7 @@ class dbQueries:
                 insert_query_attendance = f"INSERT INTO tbl_visitor_attendance (visitor_no, visitor_attendance_date, visitor_time_in) VALUES (?, ?, ?)"
                 self.cursor.execute(
                     insert_query_attendance,
-                    (visitor_number, visitor_attendance_date, visitor_time_in),
+                    (visitor_number, visitor_attendance_date, visitor_time),
                 )
                 self.connection.commit()
 

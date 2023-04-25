@@ -25,6 +25,10 @@ class FaceRecognition:
         self.cont = False
         self.face_detected = True
 
+
+        TOLERANCE = 0.55
+        MODEL = "cnn"
+
         # array for images, image location, and image names
         self.images = []
         self.paths_array = []
@@ -32,11 +36,6 @@ class FaceRecognition:
 
         # os.listdir is a reserve word to list all the folder inside path
         self.myList = os.listdir(self.path)
-
-        # classifier for face detection
-        self.haar_face_cascade = cv2.CascadeClassifier(
-        "MainSystem\DetectionData\haarcascade_frontalface_alt.xml"
-        )
 
         self.mp_draw = mp.solutions.drawing_utils
         self.mp_face_mesh = mp.solutions.face_mesh
@@ -49,9 +48,12 @@ class FaceRecognition:
 
 
     #Getting-the-dataset-------------------------------------------------------------------------------------------
- 
+        print("getting data set")
         # for loop to run through all subfolders of the root folders
         for root, dirs, files in os.walk(self.path):
+            print("dirs: "+ str(dirs))
+            print("root: "+ str(root))
+            print("files: "+ str(files))
             # for loop in every files on folders
             for f in files:
                 # reads the images on root/files

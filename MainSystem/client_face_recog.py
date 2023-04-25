@@ -172,8 +172,8 @@ class ClientFaceRecogApp:
                 self.hide_name()
                 # consistently getting the time and date
                 self.current_time = time.strftime("%H:%M:%S", time.localtime())
-                self.current_date = datetime.date.today().strftime("%m/%d/%y")
-                self.current_date_n_time = self.current_date + " " + self.current_time
+                current_date = datetime.date.today().strftime("%Y/%m/%d")
+                self.current_date_n_time = current_date + " " + self.current_time
                 self.fr_vid.box_and_dot(frame)
                 # saving the frame from the array unto the photo variable as an "image"
                 self.photo = ImageTk.PhotoImage(image=Image.fromarray(frame))
@@ -241,12 +241,16 @@ class ClientFaceRecogApp:
 
     # this will save the attendance of the student
     def save_attendance_func(self):
+        current_date = datetime.datetime.now().strftime("%Y-%m-%d")
+        date_int = int(datetime.datetime.now().strftime("%Y%m%d"))
+        custom_no = date_int * 100000
+
         if self.sql_query.check_student_no(int(self.fr_vid.name)):
-            self.sql_query.student_attendance_record(int(self.fr_vid.name),self.current_date, self.current_time)
+            self.sql_query.student_attendance_record(custom_no, int(self.fr_vid.name), current_date, self.current_time)
         if self.sql_query.check_personnel_no(int(self.fr_vid.name)):
-            self.sql_query.personnel_attendance_record(int(self.fr_vid.name),self.current_date, self.current_time)
+            self.sql_query.personnel_attendance_record(custom_no, int(self.fr_vid.name), current_date, self.current_time)
         if self.sql_query.check_visitor_no(int(self.fr_vid.name)):
-            self.sql_query.visitor_attendance_record(int(self.fr_vid.name),self.current_date, self.current_time)
+            self.sql_query.visitor_attendance_record(custom_no, int(self.fr_vid.name), current_date, self.current_time)
         
     # this command will return to the home window
     def return_func(self, event=None):
