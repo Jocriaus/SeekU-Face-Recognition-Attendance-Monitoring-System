@@ -380,7 +380,7 @@ class EditPersonnelApp:
         personnel_contact_num_var = self.contact_num_entry.get()
         personnel_address_var = self.address_entry.get()
         personnel_type_variable = self.personnel_type_var.get()
-        pesonnel_status_var = self.stat_var
+        pesonnel_status_var = self.stat_var.get()
         if (
             len(personnel_num_var) != 0
             and len(personnel_firstname_var) != 0

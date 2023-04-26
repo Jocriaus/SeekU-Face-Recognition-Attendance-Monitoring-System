@@ -378,7 +378,7 @@ class EditStudentApp:
         student_section_var = self.section_entry.get()
         student_contact_num_var = self.contact_num_entry.get()
         student_address_var = self.address_entry.get()
-        student_status_var = self.stat_var
+        student_status_var = self.stat_var.get()
 
         if (
             len(student_num_var) != 0
