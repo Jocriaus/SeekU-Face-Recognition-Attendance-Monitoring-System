@@ -87,7 +87,7 @@ class AddVisitorApp:
         self.add_visitor_frame.configure(background="#F7FAE9", height=200, width=200)
         self.save_info_button = tk.Button(self.add_visitor_frame)
         self.save_info_button.configure(
-            font="{arial black} 30 {}", foreground="#0072bc", text="Save"
+            font="{arial black} 30 {}",background="#0072bc", foreground="#F7FAE9", text="Register"
         )
         self.save_info_button.place(
             anchor="center", relheight=0.1, relwidth=0.50, relx=0.5, rely=0.90
@@ -162,11 +162,11 @@ class AddVisitorApp:
         # Main widget
         self.mainwindow = self.add_visitor_app
         # will set the window to fullscreen
-        self.mainwindow.attributes("-topmost", True)
-        # this protocol will do a function after pressing the close button.
         self.mainwindow.wm_attributes("-fullscreen", "True")
         # this protocol will do a function after pressing the close button.
         self.mainwindow.protocol("WM_DELETE_WINDOW", self.exit_program)
+        self.mainwindow.attributes("-topmost", True)
+        self.mainwindow.attributes("-topmost", False)
 
     # -----------------------------------------------------------------------------------------
     # this function will destroy the window and closes the system/program.
@@ -180,7 +180,7 @@ class AddVisitorApp:
 
     # this function will display the image into the canvas
     def disp_pic(self):
-        self.load_image = PIL.Image.open(self.img_path + "/temp.jpg")
+        self.load_image = PIL.Image.open(self.img_path + "/000000000.jpg")
         # will use the ImageTK.PhotoImage() function to set the image
         # as a readable image.
         self.resized_image = self.load_image.resize((854, 480), PIL.Image.ANTIALIAS)
@@ -215,7 +215,9 @@ class AddVisitorApp:
             img_name = self.sql_query.capture_visitor_image(
                 first_name_var, last_name_var, contact_num_var, address_var)
 
-            os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/000000000.jpg")
+            print(img_name)
+
+            os.rename(self.img_path + "/000000000.jpg",self.img_path+"/" +str(img_name[0])+ ".jpg")
 
         else:
             messbx.showwarning("Warning", "Kindly ensure all fields are filled by entering a value.")

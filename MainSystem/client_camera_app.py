@@ -4,7 +4,7 @@ import tkinter as tk
 import face_recognition
 import cv2
 import PIL.Image, PIL.ImageTk
-import register_visitor as cAV
+import client_add_visitor as cAV
 import os
 import sys
 

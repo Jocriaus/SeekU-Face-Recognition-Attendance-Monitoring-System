@@ -2,6 +2,7 @@
 import tkinter as tk
 import query_mod as qry
 import tkinter.messagebox as messbx
+import PIL.Image, PIL.ImageTk
 import os
 import sys
 
@@ -10,6 +11,7 @@ class RegisterStudentApp:
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.admin_cam_window = cam_app
         self.img_path = file_path
+        print(self.img_path)
         self.sql_query = qry.dbQueries()
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         # build ui
@@ -214,6 +216,7 @@ class RegisterStudentApp:
             anchor="center", relheight=0.13, relwidth=1.0, relx=0.5, rely=0.065
         )
         # Contains-school-logo-------------------------------------------------------------------------------------------------------------------------------------
+        self.disp_pic()
 
         # Main widget
         self.mainwindow = self.register_student_app
@@ -265,12 +268,9 @@ class RegisterStudentApp:
                     address_var,
                 )
                 img_name = student_num_var
-                os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/000000000.jpg")
+                os.rename(self.img_path + "/000000000.jpg",self.img_path+"/" +img_name+ ".jpg")
         else:
             messbx.showwarning("Warning", "Kindly ensure all fields are filled by entering a value.")
-
-
-
 
 
     def client_no_check(self,client_no):
@@ -281,7 +281,15 @@ class RegisterStudentApp:
             self.register = True
 
 
-
+        # this function will display the image into the canvas
+    def disp_pic(self):
+        self.load_image = PIL.Image.open(self.img_path + "/000000000.jpg")
+        # will use the ImageTK.PhotoImage() function to set the image
+        # as a readable image.
+        self.resized_image = self.load_image.resize((854, 480), PIL.Image.ANTIALIAS)
+        self.student_image = PIL.ImageTk.PhotoImage(self.resized_image)
+        # will display the image into the canvas
+        self.camera_canvas.create_image(0, 0, image=self.student_image, anchor=tk.NW)
 
     def register_student(self, event=None):
         self.register_student_function()

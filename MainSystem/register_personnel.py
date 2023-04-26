@@ -266,7 +266,7 @@ class RegisterPersonnelApp:
                 personnel_type_var,
             )
             img_name = personnel_num_var
-            os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/000000000.jpg")
+            os.rename(self.img_path + "/000000000.jpg",self.img_path+"/" +img_name+ ".jpg")
             
         else:
             messbx.showwarning("Warning", "Kindly ensure all fields are filled by entering a value.")

@@ -6,7 +6,7 @@ import tkinter.messagebox as messbx
 import PIL.Image, PIL.ImageTk
 import register_personnel as rP
 import register_student as rS
-import client_add_visitor as cAV
+import register_visitor as rV
 import os
 import sys
 
@@ -203,7 +203,7 @@ class CameraApp:
                 elif self.window_will_open == "Manage Personnels":
                     rP.RegisterPersonnelApp(self.snapshot_app, self.img_path)    
                 elif self.window_will_open == "Manage Visitors":
-                    cAV.AddVisitorApp(self.admin_home_window, self.snapshot_app, self.img_path)
+                    rV.RegisterVisitorApp(self.admin_home_window, self.snapshot_app, self.img_path)
                 self.hide_this_window()
             else:
                  messbx.showerror(
@@ -216,7 +216,7 @@ class CameraApp:
     # this command will return to the home window
     def log_out_func(self, event=None):
         self.show_home_window()
-        self.refresh_func(self.window_will_open)
+        self.refresh_func(self.window_will_open, "IsActive" )
         self.snapshot_app.destroy()
 
     # this command will take a picture
