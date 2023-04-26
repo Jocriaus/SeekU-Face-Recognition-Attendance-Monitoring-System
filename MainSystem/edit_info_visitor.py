@@ -6,9 +6,24 @@ import PIL.Image, PIL.ImageTk
 import tkinter.messagebox as messbx
 import os
 import sys
+import re
+
 
 class EditVisitorApp:
-    def __init__(self,vn,vfn,vln,vcn,vad,vs, videosource, admin_app, file_path,select, refresh):
+    def __init__(
+        self,
+        vn,
+        vfn,
+        vln,
+        vcn,
+        vad,
+        vs,
+        videosource,
+        admin_app,
+        file_path,
+        select,
+        refresh,
+    ):
         # build ui
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.video_source = videosource
@@ -27,9 +42,7 @@ class EditVisitorApp:
         self.refresh_func = refresh
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.edit_visitor_app = tk.Toplevel()
-        self.edit_visitor_app.configure(
-            background="#F7FAE9", height=200, width=200
-        )
+        self.edit_visitor_app.configure(background="#F7FAE9", height=200, width=200)
         width = self.edit_visitor_app.winfo_screenwidth()
         height = self.edit_visitor_app.winfo_screenheight()
         self.edit_visitor_app.geometry("%dx%d" % (width, height))
@@ -74,7 +87,7 @@ class EditVisitorApp:
             background="#F7FAE9", image=self.img_SeekUlarge, text="label1"
         )
         self.app_logo_label.place(anchor="center", relx=0.32, rely=0.5)
-        self.return_button = tk.Button(self.edit_stud_frame3)
+        self.return_button = tk.Button(self.edit_visitor_frame3)
         self.return_button.configure(
             background="#0072bc",
             font="{arial} 20 {bold}",
@@ -84,15 +97,14 @@ class EditVisitorApp:
         self.return_button.place(anchor="center", relx=0.935, rely=0.85, x=0, y=0)
         self.return_button.bind("<1>", self.return_func, add="")
 
-        self.revert_button = tk.Button(self.edit_stud_frame3)
+        self.revert_button = tk.Button(self.edit_visitor_frame3)
         self.revert_button.configure(
             background="#0072bc",
             font="{arial} 20 {bold}",
             foreground="#ffffff",
             text="Revert Pic",
-
         )
-        self.revert_button.place(anchor="center",relx=0.914, rely=0.5)
+        self.revert_button.place(anchor="center", relx=0.914, rely=0.5)
         self.revert_button.bind("<1>", self.revert_pic_func, add="")
 
         self.edit_visitor_frame3.place(
@@ -165,7 +177,7 @@ class EditVisitorApp:
             background="#F7FAE9", font="{arial} 20 {bold}", text="Visitor Status"
         )
         self.user_status_label.place(anchor="center", relx=0.370, rely=0.51, x=0, y=0)
-                # variable for the radiobuttons, to connect them
+        # variable for the radiobuttons, to connect them
         self.stat_var = tk.StringVar()
         self.stat_var.set(self.visitor_status)
         self.active_radiobutton = tk.Radiobutton(self.edit_visitor_frame2)
@@ -236,10 +248,9 @@ class EditVisitorApp:
         # this protocol will do a function after pressing the close button.
         self.mainwindow.protocol("WM_DELETE_WINDOW", self.exit_program)
 
-
     # this function will destroy the window and closes the system/program.
     def exit_program(self):
-        sys.exit() 
+        sys.exit()
 
     # this will return to the camera app
     def show_home_win(self):
@@ -252,7 +263,9 @@ class EditVisitorApp:
     # this function will destroy the current window and return to camera app
     def show_cam_app_window(self):
         self.hide_this_window()
-        aCA.CameraEditApp(self.disp_temp_pic,self.video_source,self.edit_visitor_app, self.img_path)
+        aCA.CameraEditApp(
+            self.disp_temp_pic, self.video_source, self.edit_visitor_app, self.img_path
+        )
 
     # this function will destroy the current window and return to camera app
     def back_cam_app_window(self):
@@ -264,7 +277,7 @@ class EditVisitorApp:
         self.revert_button.place_forget()
 
     def show_revert_button(self):
-        self.revert_button.place(anchor="center",relx=0.914, rely=0.5)
+        self.revert_button.place(anchor="center", relx=0.914, rely=0.5)
 
     # enables entry widgets
     def disable_entry(self):
@@ -272,7 +285,6 @@ class EditVisitorApp:
         self.last_name_entry.configure(state="disabled")
         self.first_name_entry.configure(state="disabled")
         self.contact_num_entry.configure(state="disabled")
-
 
     # enables entry widgets
     def enable_entry(self):
@@ -287,7 +299,6 @@ class EditVisitorApp:
         self.contact_num_entry.insert(0, self.visitor_contact_number)
         self.address_entry.insert(0, self.visitor_address)
 
-
     def save_visitor_function(self):
         # putting the values into variables to save into the database.
         # create a data for the user then get the PK for the name of the image
@@ -301,24 +312,41 @@ class EditVisitorApp:
         address_var = self.address_entry.get()
         visitor_status_var = self.stat_var
 
-        if ( len(last_name_var) != 0 and
-            len(first_name_var) != 0 and
-            len(contact_num_var) != 0 and
-            len(address_var) != 0 
-            ):
-            self.sql_query.update_visitor(
-                first_name_var, 
+        if (
+            len(last_name_var) != 0
+            and len(first_name_var) != 0
+            and len(contact_num_var) != 0
+            and len(address_var) != 0
+        ):
+            input_values = [
+                first_name_var,
                 last_name_var,
-                contact_num_var, 
+                contact_num_var,
                 address_var,
-                visitor_status_var,
-                self.visitor_number,
-            )
-            if os.path.exists(self.img_path + "/000000000.jpg"):
-                img_name = self.visitor_number
-                os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/000000000.jpg")
+            ]
+            concatenated_inputs = "".join(input_values)
+            if not re.search(r"[^\w\s]+", concatenated_inputs):
+
+                self.sql_query.update_visitor(
+                    first_name_var,
+                    last_name_var,
+                    contact_num_var,
+                    address_var,
+                    visitor_status_var,
+                    self.visitor_number,
+                )
+                if os.path.exists(self.img_path + "/000000000.jpg"):
+                    img_name = self.visitor_number
+                    os.rename(
+                        self.img_path + "/" + img_name + ".jpg",
+                        self.img_path + "/000000000.jpg",
+                    )
+            else:
+                messbx.showwarning("Error", "Input contains special characters.")
         else:
-            messbx.showwarning("Warning", "Kindly ensure all fields are filled by entering a value.")
+            messbx.showwarning(
+                "Warning", "Kindly ensure all fields are filled by entering a value."
+            )
         """
         Save to database
         Get the primary key
@@ -327,7 +355,9 @@ class EditVisitorApp:
 
     # this function will display the image into the canvas
     def disp_pic(self):
-        self.load_image = PIL.Image.open(self.img_path +"/" + self.visitor_number +".jpg")
+        self.load_image = PIL.Image.open(
+            self.img_path + "/" + self.visitor_number + ".jpg"
+        )
         # will use the ImageTK.PhotoImage() function to set the image
         # as a readable image.
         self.resized_image = self.load_image.resize((854, 480), PIL.Image.ANTIALIAS)
@@ -337,15 +367,13 @@ class EditVisitorApp:
 
     def disp_temp_pic(self):
         self.show_revert_button()
-        self.load_image = PIL.Image.open(self.img_path +"/000000000.jpg")
+        self.load_image = PIL.Image.open(self.img_path + "/000000000.jpg")
         # will use the ImageTK.PhotoImage() function to set the image
         # as a readable image.
         self.resized_image = self.load_image.resize((854, 480), PIL.Image.ANTIALIAS)
         self.visitor_image = PIL.ImageTk.PhotoImage(self.resized_image)
         # will display the image into the canvas
         self.camera_canvas.create_image(0, 0, image=self.visitor_image, anchor=tk.NW)
-
-
 
     def edit_visitor(self, event=None):
         # enables and disables the entry and optionmenu
@@ -355,7 +383,6 @@ class EditVisitorApp:
         elif self.edit_bool == False:
             self.disable_entry()
             self.edit_bool = True
-
 
     def save_visitor(self, event=None):
         self.save_visitor_function()
@@ -375,5 +402,3 @@ class EditVisitorApp:
         self.show_home_win()
         if os.path.exists(self.img_path + "/000000000.jpg"):
             os.remove(self.img_path + "/000000000.jpg")
-
-

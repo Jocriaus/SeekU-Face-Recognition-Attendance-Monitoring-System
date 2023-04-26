@@ -7,9 +7,27 @@ import PIL.Image, PIL.ImageTk
 import admin_camera_app as aCA
 import sys
 import os
+import re
+
 
 class EditStudentApp:
-    def __init__(self, sn, sfn, sln, sm, sp, ss, scn, sa, sstat, vid_source, admin_win, img_path,select , refresh):
+    def __init__(
+        self,
+        sn,
+        sfn,
+        sln,
+        sm,
+        sp,
+        ss,
+        scn,
+        sa,
+        sstat,
+        vid_source,
+        admin_win,
+        img_path,
+        select,
+        refresh,
+    ):
 
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.video_source = vid_source
@@ -50,7 +68,7 @@ class EditStudentApp:
         self.camera_canvas.place(
             anchor="center", relheight=1.0, relwidth=1.0, relx=0.5, rely=0.5, x=0, y=0
         )
-        self.camera_canvas.bind("<1>",  self.change_pic, add="")
+        self.camera_canvas.bind("<1>", self.change_pic, add="")
         self.edit_stud_frame4.place(
             anchor="center", relheight=0.50, relwidth=0.50, relx=0.65, rely=0.47
         )
@@ -94,9 +112,8 @@ class EditStudentApp:
             font="{arial} 20 {bold}",
             foreground="#ffffff",
             text="Revert Pic",
-
         )
-        self.revert_button.place(anchor="center",relx=0.914, rely=0.5)
+        self.revert_button.place(anchor="center", relx=0.914, rely=0.5)
         self.revert_button.bind("<1>", self.revert_pic_func, add="")
 
         self.edit_stud_frame3.place(
@@ -124,7 +141,7 @@ class EditStudentApp:
         self.student_num_entry.place(
             anchor="center", relwidth=0.62, relx=0.5, rely=0.14, x=0, y=0
         )
-        #rely minus.025
+        # rely minus.025
         self.first_name_label = tk.Label(self.edit_stud_frame2)
         self.first_name_label.configure(
             background="#F7FAE9",
@@ -221,7 +238,7 @@ class EditStudentApp:
             background="#F7FAE9", font="{arial} 20 {bold}", text="Student Status"
         )
         self.user_status_label.place(anchor="center", relx=0.370, rely=0.8, x=0, y=0)
-                # variable for the radiobuttons, to connect them
+        # variable for the radiobuttons, to connect them
         self.stat_var = tk.StringVar()
         self.stat_var.set(self.student_status)
         self.active_radiobutton = tk.Radiobutton(self.edit_stud_frame2)
@@ -294,12 +311,13 @@ class EditStudentApp:
 
     # this function will destroy the window and closes the system/program.
     def exit_program(self):
-        sys.exit() 
+        sys.exit()
 
     def hide_revert_button(self):
         self.revert_button.place_forget()
+
     def show_revert_button(self):
-        self.revert_button.place(anchor="center",relx=0.914, rely=0.5)
+        self.revert_button.place(anchor="center", relx=0.914, rely=0.5)
 
     # this will return to the camera app
     def show_home_win(self):
@@ -313,8 +331,9 @@ class EditStudentApp:
     # this function will destroy the current window and return to camera app
     def show_cam_app_window(self):
         self.hide_this_window()
-        aCA.CameraEditApp(self.disp_temp_pic,self.video_source,self.edit_student_app, self.img_path)
-        
+        aCA.CameraEditApp(
+            self.disp_temp_pic, self.video_source, self.edit_student_app, self.img_path
+        )
 
     def put_info(self):
         self.select_student()
@@ -337,7 +356,6 @@ class EditStudentApp:
         self.last_name_entry.configure(state="normal")
         self.first_name_entry.configure(state="normal")
         self.contact_num_entry.configure(state="normal")
-        self.student_num_entry.configure(state="normal")
         self.program_entry.configure(state="normal")
         self.section_entry.configure(state="normal")
 
@@ -362,46 +380,67 @@ class EditStudentApp:
         student_address_var = self.address_entry.get()
         student_status_var = self.stat_var
 
-        if ( len(student_num_var) != 0 and
-            len(student_firstname_var) != 0 and
-            len(student_middlename_var) != 0 and
-            len(student_lastname_var) != 0 and
-            len(student_contact_num_var) != 0 and
-            len(student_program_var) != 0 and
-            len(student_section_var) != 0 and
-            len(student_address_var) != 0
-            ) :
-
-            self.sql_query.update_student(
+        if (
+            len(student_num_var) != 0
+            and len(student_firstname_var) != 0
+            and len(student_middlename_var) != 0
+            and len(student_lastname_var) != 0
+            and len(student_contact_num_var) != 0
+            and len(student_program_var) != 0
+            and len(student_section_var) != 0
+            and len(student_address_var) != 0
+        ):
+            input_values = [
                 student_num_var,
                 student_firstname_var,
                 student_lastname_var,
-                student_middlename_var,
+                student_contact_num_var,
                 student_program_var,
                 student_section_var,
-                student_contact_num_var,
                 student_address_var,
-                student_status_var
-            )
-            if os.path.exists(self.img_path + "/000000000.jpg"):
-                img_name = self.student_number
-                os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/000000000.jpg")
+            ]
+            concatenated_inputs = "".join(input_values)
+            if not re.search(r"[^\w\s]+", concatenated_inputs):
+
+                self.sql_query.update_student(
+                    student_num_var,
+                    student_firstname_var,
+                    student_lastname_var,
+                    student_middlename_var,
+                    student_program_var,
+                    student_section_var,
+                    student_contact_num_var,
+                    student_address_var,
+                    student_status_var,
+                )
+                if os.path.exists(self.img_path + "/000000000.jpg"):
+                    img_name = self.student_number
+                    os.rename(
+                        self.img_path + "/" + img_name + ".jpg",
+                        self.img_path + "/000000000.jpg",
+                    )
+            else:
+                messbx.showwarning("Error", "Input contains special characters.")
         else:
-            messbx.showwarning("Warning", "Kindly ensure all fields are filled by entering a value.")
-        
+            messbx.showwarning(
+                "Warning", "Kindly ensure all fields are filled by entering a value."
+            )
+
     # this function will display the image into the canvas
     def disp_pic(self):
-        self.load_image = PIL.Image.open(self.img_path +"/" + self.student_number +".jpg")
+        self.load_image = PIL.Image.open(
+            self.img_path + "/" + self.student_number + ".jpg"
+        )
         # will use the ImageTK.PhotoImage() function to set the image
         # as a readable image.
         self.resized_image = self.load_image.resize((854, 480), PIL.Image.ANTIALIAS)
         self.student_image = PIL.ImageTk.PhotoImage(self.resized_image)
         # will display the image into the canvas
         self.camera_canvas.create_image(0, 0, image=self.student_image, anchor=tk.NW)
-    
+
     def disp_temp_pic(self):
         self.show_revert_button()
-        self.load_image = PIL.Image.open(self.img_path +"/000000000.jpg")
+        self.load_image = PIL.Image.open(self.img_path + "/000000000.jpg")
         # will use the ImageTK.PhotoImage() function to set the image
         # as a readable image.
         self.resized_image = self.load_image.resize((854, 480), PIL.Image.ANTIALIAS)
@@ -436,5 +475,3 @@ class EditStudentApp:
         self.show_home_win()
         if os.path.exists(self.img_path + "/000000000.jpg"):
             os.remove(self.img_path + "/000000000.jpg")
-
-    

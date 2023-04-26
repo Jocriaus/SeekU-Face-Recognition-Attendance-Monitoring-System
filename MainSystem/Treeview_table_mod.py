@@ -10,7 +10,7 @@ class TreeviewGUI:
         # "DESKTOP-DG7AK17\SQLEXPRESS"
         # "STAR-PLATINUM\SQLEXPRESS01"
         # "DESKTOP-3MNAAKG\SQLEXPRESS"
-        self.server = "STAR-PLATINUM\SQLEXPRESS01"
+        self.server = "DESKTOP-DG7AK17\SQLEXPRESS"
         self.database = "seeku_database"
         self.username = ""
         self.password = ""
@@ -55,7 +55,7 @@ class TreeviewGUI:
         # Create Treeview
         self.student_tree = ttk.Treeview(
             self.student_treeview_frame,
-            yscrollcommand=self.student_treeview_scrollbar.set
+            yscrollcommand=self.student_treeview_scrollbar.set,
         )
 
         # Configure the scrollbar
@@ -65,7 +65,7 @@ class TreeviewGUI:
         self.student_treeview_frame.place(
             anchor="center", relheight=1, relwidth=1, relx=0.5, rely=0.5
         )
-        self.student_tree.pack(fill='both', expand=1)
+        self.student_tree.pack(fill="both", expand=1)
 
         # Defining Columns
         self.student_tree["columns"] = (
@@ -164,7 +164,7 @@ class TreeviewGUI:
             anchor="center", relheight=1, relwidth=1, relx=0.5, rely=0.5
         )
 
-        self.student_attendance_tree.pack(fill='both', expand=1)
+        self.student_attendance_tree.pack(fill="both", expand=1)
 
         # Defining Columns
         self.student_attendance_tree["columns"] = (
@@ -266,7 +266,7 @@ class TreeviewGUI:
             anchor="center", relheight=1, relwidth=1, relx=0.5, rely=0.5
         )
 
-        self.student_report_tree.pack(fill='both', expand=1)
+        self.student_report_tree.pack(fill="both", expand=1)
 
         # Defining Columns
         self.student_report_tree["columns"] = (
@@ -354,7 +354,7 @@ class TreeviewGUI:
             anchor="center", relheight=1, relwidth=1, relx=0.5, rely=0.5
         )
 
-        self.personnel_tree.pack(fill='both', expand=1)
+        self.personnel_tree.pack(fill="both", expand=1)
 
         # Defining Columns
         self.personnel_tree["columns"] = (
@@ -449,7 +449,7 @@ class TreeviewGUI:
             anchor="center", relheight=1, relwidth=1, relx=0.5, rely=0.5
         )
 
-        self.personnel_attendance_tree.pack(fill='both', expand=1)
+        self.personnel_attendance_tree.pack(fill="both", expand=1)
 
         # Defining Columns
         self.personnel_attendance_tree["columns"] = (
@@ -548,7 +548,7 @@ class TreeviewGUI:
             anchor="center", relheight=1, relwidth=1, relx=0.5, rely=0.5
         )
 
-        self.personnel_report_tree.pack(fill='both', expand=1)
+        self.personnel_report_tree.pack(fill="both", expand=1)
 
         # Defining Columns
         self.personnel_report_tree["columns"] = (
@@ -637,7 +637,7 @@ class TreeviewGUI:
             anchor="center", relheight=1, relwidth=1, relx=0.5, rely=0.5
         )
 
-        self.visitor_tree.pack(fill='both', expand=1)
+        self.visitor_tree.pack(fill="both", expand=1)
 
         # Defining Columns
         self.visitor_tree["columns"] = (
@@ -723,7 +723,7 @@ class TreeviewGUI:
             anchor="center", relheight=1, relwidth=1, relx=0.5, rely=0.5
         )
 
-        self.visitor_attendance_tree.pack(fill='both', expand=1)
+        self.visitor_attendance_tree.pack(fill="both", expand=1)
 
         # Defining Columns
         self.visitor_attendance_tree["columns"] = (
@@ -813,7 +813,7 @@ class TreeviewGUI:
             anchor="center", relheight=1, relwidth=1, relx=0.5, rely=0.5
         )
 
-        self.visitor_report_tree.pack(fill='both', expand=1)
+        self.visitor_report_tree.pack(fill="both", expand=1)
 
         # Defining Columns
         self.visitor_report_tree["columns"] = (
@@ -892,7 +892,7 @@ class TreeviewGUI:
             anchor="center", relheight=1, relwidth=1, relx=0.5, rely=0.5
         )
 
-        self.user_tree.pack(fill='both', expand=1)
+        self.user_tree.pack(fill="both", expand=1)
 
         # Defining Columns
         self.user_tree["columns"] = (
@@ -1452,7 +1452,6 @@ class TreeviewGUI:
                 ),
             )
 
-
     def refresh_student_treeview(self, status):
         for child in self.student_tree.get_children():
             self.student_tree.delete(child)
@@ -1468,7 +1467,7 @@ class TreeviewGUI:
             self.visitor_tree.delete(child)
         self.populate_visitor_treeview(status)
 
-    def refresh_user_treeview(self,status):
+    def refresh_user_treeview(self, status):
         for child in self.user_tree.get_children():
             self.user_tree.delete(child)
         self.populate_user_treeview(status)

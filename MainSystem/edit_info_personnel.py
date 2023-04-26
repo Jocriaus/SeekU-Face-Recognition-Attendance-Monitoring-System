@@ -7,9 +7,26 @@ import admin_camera_app as aCA
 import PIL.Image, PIL.ImageTk
 import sys
 import os
+import re
+
 
 class EditPersonnelApp:
-    def __init__(self, pn, pfn, pln, pm, pcn, pad, pt, ps, vid_source, admin_win, img_path,select,refresh):
+    def __init__(
+        self,
+        pn,
+        pfn,
+        pln,
+        pm,
+        pcn,
+        pad,
+        pt,
+        ps,
+        vid_source,
+        admin_win,
+        img_path,
+        select,
+        refresh,
+    ):
 
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.video_source = vid_source
@@ -32,9 +49,7 @@ class EditPersonnelApp:
 
         # build ui
         self.edit_personnel_app = tk.Toplevel()
-        self.edit_personnel_app.configure(
-            background="#F7FAE9", height=200, width=200
-        )
+        self.edit_personnel_app.configure(background="#F7FAE9", height=200, width=200)
         width = self.edit_personnel_app.winfo_screenwidth()
         height = self.edit_personnel_app.winfo_screenheight()
         self.edit_personnel_app.geometry("%dx%d" % (width, height))
@@ -78,7 +93,7 @@ class EditPersonnelApp:
             background="#F7FAE9", image=self.img_SeekUlarge, text="label1"
         )
         self.app_logo_label.place(anchor="center", relx=0.32, rely=0.5)
-        self.return_button = tk.Button(self.edit_stud_frame3)
+        self.return_button = tk.Button(self.edit_pers_frame3)
         self.return_button.configure(
             background="#0072bc",
             font="{arial} 20 {bold}",
@@ -88,15 +103,14 @@ class EditPersonnelApp:
         self.return_button.place(anchor="center", relx=0.935, rely=0.85, x=0, y=0)
         self.return_button.bind("<1>", self.return_func, add="")
 
-        self.revert_button = tk.Button(self.edit_stud_frame3)
+        self.revert_button = tk.Button(self.edit_pers_frame3)
         self.revert_button.configure(
             background="#0072bc",
             font="{arial} 20 {bold}",
             foreground="#ffffff",
             text="Revert Pic",
-
         )
-        self.revert_button.place(anchor="center",relx=0.914, rely=0.5)
+        self.revert_button.place(anchor="center", relx=0.914, rely=0.5)
         self.revert_button.bind("<1>", self.revert_pic_func, add="")
 
         self.edit_pers_frame3.place(
@@ -221,7 +235,7 @@ class EditPersonnelApp:
             background="#F7FAE9", font="{arial} 20 {bold}", text="Personnel Status"
         )
         self.user_status_label.place(anchor="center", relx=0.390, rely=0.8, x=0, y=0)
-                # variable for the radiobuttons, to connect them
+        # variable for the radiobuttons, to connect them
         self.stat_var = tk.StringVar()
         self.stat_var.set(self.personnel_status)
         self.active_radiobutton = tk.Radiobutton(self.edit_pers_frame2)
@@ -293,15 +307,14 @@ class EditPersonnelApp:
         # this protocol will do a function after pressing the close button.
         self.mainwindow.protocol("WM_DELETE_WINDOW", self.exit_program)
 
-
     # this function will destroy the window and closes the system/program.
     def exit_program(self):
-        sys.exit() 
+        sys.exit()
 
     # this will return to the camera app
     def show_home_win(self):
         self.admin_home_window.deiconify()
-        self.refresh_func(self.client,self.personnel_status)
+        self.refresh_func(self.client, self.personnel_status)
         self.edit_personnel_app.destroy()
 
     def hide_this_window(self):
@@ -310,13 +323,18 @@ class EditPersonnelApp:
     # this function will destroy the current window and return to camera app
     def show_cam_app_window(self):
         self.hide_this_window()
-        aCA.CameraEditApp(self.disp_temp_pic,self.video_source,self.edit_personnel_app, self.img_path)
+        aCA.CameraEditApp(
+            self.disp_temp_pic,
+            self.video_source,
+            self.edit_personnel_app,
+            self.img_path,
+        )
 
     def hide_revert_button(self):
         self.revert_button.place_forget()
 
     def show_revert_button(self):
-        self.revert_button.place(anchor="center",relx=0.914, rely=0.5)
+        self.revert_button.place(anchor="center", relx=0.914, rely=0.5)
 
     # enables entry widgets
     def disable_entry(self):
@@ -337,7 +355,6 @@ class EditPersonnelApp:
         self.last_name_entry.configure(state="normal")
         self.first_name_entry.configure(state="normal")
         self.contact_num_entry.configure(state="normal")
-        self.personnel_num_entry.configure(state="normal")
         self.personnel_optionmenu.configure(state="normal")
         self.active_radiobutton.configure(state="normal")
         self.inactive_radiobutton.configure(state="normal")
@@ -345,7 +362,6 @@ class EditPersonnelApp:
     def put_info(self):
         self.select_personnel()
         # set the content of the entry as the users information
-
 
     def select_personnel(self):
         self.personnel_num_entry.insert(0, self.personnel_num)
@@ -364,46 +380,66 @@ class EditPersonnelApp:
         personnel_contact_num_var = self.contact_num_entry.get()
         personnel_address_var = self.address_entry.get()
         personnel_type_variable = self.personnel_type_var.get()
-        if ( len(personnel_num_var) != 0 and
-            len(personnel_firstname_var) != 0 and
-            len(personnel_middlename_var) != 0 and
-            len(personnel_lastname_var) != 0 and
-            len(personnel_contact_num_var) != 0 and
-            len(personnel_type_variable) != 0 and
-            len(personnel_address_var) != 0
-            ) :
-            self.sql_query.update_personnel(
+        pesonnel_status_var = self.stat_var
+        if (
+            len(personnel_num_var) != 0
+            and len(personnel_firstname_var) != 0
+            and len(personnel_middlename_var) != 0
+            and len(personnel_lastname_var) != 0
+            and len(personnel_contact_num_var) != 0
+            and len(personnel_type_variable) != 0
+            and len(personnel_address_var) != 0
+        ):
+            input_values = [
                 personnel_num_var,
                 personnel_firstname_var,
-                personnel_lastname_var,
                 personnel_middlename_var,
+                personnel_lastname_var,
                 personnel_contact_num_var,
-                personnel_address_var,
                 personnel_type_variable,
-            )
-            if os.path.exists(self.img_path + "/000000000.jpg"):
-                img_name = self.personnel_num
-                os.rename(self.img_path+"/" +img_name+ ".jpg",self.img_path + "/000000000.jpg")
+                personnel_address_var,
+            ]
+            concatenated_inputs = "".join(input_values)
+            if not re.search(r"[^\w\s]+", concatenated_inputs):
+
+                self.sql_query.update_personnel(
+                    personnel_num_var,
+                    personnel_firstname_var,
+                    personnel_lastname_var,
+                    personnel_middlename_var,
+                    personnel_contact_num_var,
+                    personnel_address_var,
+                    personnel_type_variable,
+                    pesonnel_status_var,
+                )
+                if os.path.exists(self.img_path + "/000000000.jpg"):
+                    img_name = self.personnel_num
+                    os.rename(
+                        self.img_path + "/" + img_name + ".jpg",
+                        self.img_path + "/000000000.jpg",
+                    )
+            else:
+                messbx.showwarning("Error", "Input contains special characters.")
         else:
-            messbx.showwarning("Warning", "Kindly ensure all fields are filled by entering a value.")
-
-
-
-
+            messbx.showwarning(
+                "Warning", "Kindly ensure all fields are filled by entering a value."
+            )
 
     # this function will display the image into the canvas
     def disp_pic(self):
-        self.load_image = PIL.Image.open(self.img_path +"/" + self.personnel_num +".jpg")
+        self.load_image = PIL.Image.open(
+            self.img_path + "/" + self.personnel_num + ".jpg"
+        )
         # will use the ImageTK.PhotoImage() function to set the image
         # as a readable image.
         self.resized_image = self.load_image.resize((854, 480), PIL.Image.ANTIALIAS)
         self.student_image = PIL.ImageTk.PhotoImage(self.resized_image)
         # will display the image into the canvas
         self.camera_canvas.create_image(0, 0, image=self.student_image, anchor=tk.NW)
-    
+
     def disp_temp_pic(self):
         self.show_revert_button()
-        self.load_image = PIL.Image.open(self.img_path +"/000000000.jpg")
+        self.load_image = PIL.Image.open(self.img_path + "/000000000.jpg")
         # will use the ImageTK.PhotoImage() function to set the image
         # as a readable image.
         self.resized_image = self.load_image.resize((854, 480), PIL.Image.ANTIALIAS)
@@ -437,4 +473,3 @@ class EditPersonnelApp:
         self.show_home_win()
         if os.path.exists(self.img_path + "/000000000.jpg"):
             os.remove(self.img_path + "/000000000.jpg")
-

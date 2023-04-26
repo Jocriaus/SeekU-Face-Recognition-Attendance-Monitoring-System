@@ -6,7 +6,7 @@ class dbQueries:
         # "DESKTOP-DG7AK17\SQLEXPRESS"
         # "STAR-PLATINUM\SQLEXPRESS01"
         # "DESKTOP-3MNAAKG\SQLEXPRESS"
-        self.server = "STAR-PLATINUM\SQLEXPRESS01"
+        self.server = "DESKTOP-DG7AK17\SQLEXPRESS"
         self.database = "seeku_database"
         self.username = ""
         self.password = ""
@@ -119,7 +119,7 @@ class dbQueries:
                 personnel_address,
                 personnel_type,
                 personnel_status,
-                personnel_number
+                personnel_number,
             ),
         )
         self.connection.commit()
@@ -146,7 +146,15 @@ class dbQueries:
         visitor_address,
     ):
         query = f"INSERT INTO tbl_visitor(visitor_firstname, visitor_lastname, visitor_contact_no, visitor_address) VALUES (?, ?, ?, ?)"
-        self.cursor.execute(query,(visitor_firstname,visitor_lastname,visitor_contact_number,visitor_address,),)
+        self.cursor.execute(
+            query,
+            (
+                visitor_firstname,
+                visitor_lastname,
+                visitor_contact_number,
+                visitor_address,
+            ),
+        )
         self.connection.commit()
         print(f"User {visitor_firstname} has been registered successfully!")
 
@@ -273,12 +281,13 @@ class dbQueries:
                 student_address,
                 student_status,
                 student_number,
-            )
+            ),
         )
         self.connection.commit()
         print(f"Student {student_number} has been updated successfully!")
 
         # CREATE MORE
+
     def create_student_report(self):
         query = f"INSERT INTO tbl_student_report SELECT * FROM tbl_student_attendance"
         self.cursor.execute(query)
@@ -311,7 +320,7 @@ class dbQueries:
                 print(tbl_empty)
 
             query3 = f"SELECT * FROM tbl_student_attendance WHERE student_no = ?"
-            self.cursor.execute(query3,(student_number))
+            self.cursor.execute(query3, (student_number))
             student_no_att_row = self.cursor.fetchone()
             print(student_no_att_row)
 
@@ -324,11 +333,15 @@ class dbQueries:
 
             # if attendance table is empty, first attendance will have a custom primary key
             if tbl_empty:
-                reset_startingid_query = f"DBCC CHECKIDENT ('tbl_student_attendance', RESEED, 0)"
+                reset_startingid_query = (
+                    f"DBCC CHECKIDENT ('tbl_student_attendance', RESEED, 0)"
+                )
                 self.cursor.execute(reset_startingid_query)
                 self.connection.commit()
 
-                set_startingid_query = f"DBCC CHECKIDENT ('tbl_student_attendance', RESEED, ?)"
+                set_startingid_query = (
+                    f"DBCC CHECKIDENT ('tbl_student_attendance', RESEED, ?)"
+                )
                 self.cursor.execute(set_startingid_query, (custom_no))
                 self.connection.commit()
 
@@ -364,13 +377,8 @@ class dbQueries:
         else:
             print("Student not found.")
 
-
     def personnel_attendance_record(
-        self,
-        custom_no,
-        personnel_number,
-        personnel_attendance_date,
-        personnel_time
+        self, custom_no, personnel_number, personnel_attendance_date, personnel_time
     ):
         query = f"SELECT * FROM tbl_personnel WHERE personnel_no = ?"
         self.cursor.execute(query, (personnel_number))
@@ -389,7 +397,7 @@ class dbQueries:
                 print(tbl_empty)
 
             query3 = f"SELECT * FROM tbl_personnel_attendance WHERE personnel_no = ?"
-            self.cursor.execute(query3,(personnel_number))
+            self.cursor.execute(query3, (personnel_number))
             personnel_no_att_row = self.cursor.fetchall()
 
             if personnel_no_att_row:
@@ -402,11 +410,15 @@ class dbQueries:
             # if attendance table is empty, first attendance will have a custom primary key
             if tbl_empty:
 
-                reset_startingid_query = f"DBCC CHECKIDENT ('tbl_personnel_attendance', RESEED, 0)"
+                reset_startingid_query = (
+                    f"DBCC CHECKIDENT ('tbl_personnel_attendance', RESEED, 0)"
+                )
                 self.cursor.execute(reset_startingid_query)
                 self.connection.commit()
 
-                set_startingid_query = f"DBCC CHECKIDENT ('tbl_personnel_attendance', RESEED, ?)"
+                set_startingid_query = (
+                    f"DBCC CHECKIDENT ('tbl_personnel_attendance', RESEED, ?)"
+                )
                 self.cursor.execute(set_startingid_query, (custom_no))
                 self.connection.commit()
 
@@ -443,11 +455,7 @@ class dbQueries:
             print("Personnel not found.")
 
     def visitor_attendance_record(
-        self,
-        custom_no,
-        visitor_number,
-        visitor_attendance_date,
-        visitor_time
+        self, custom_no, visitor_number, visitor_attendance_date, visitor_time
     ):
         query = f"SELECT * FROM tbl_visitor WHERE visitor_no = ?"
         self.cursor.execute(query, (visitor_number))
@@ -466,7 +474,7 @@ class dbQueries:
                 tbl_empty = True
 
             query3 = f"SELECT * FROM tbl_visitor_attendance WHERE visitor_no = ?"
-            self.cursor.execute(query3,(visitor_number))
+            self.cursor.execute(query3, (visitor_number))
             visitor_no_att_row = self.cursor.fetchall()
 
             if visitor_no_att_row:
@@ -479,22 +487,22 @@ class dbQueries:
             # if attendance table is empty, first attendance will have a custom primary key
             if tbl_empty:
 
-                reset_startingid_query = f"DBCC CHECKIDENT ('tbl_visitor_attendance', RESEED, 0)"
+                reset_startingid_query = (
+                    f"DBCC CHECKIDENT ('tbl_visitor_attendance', RESEED, 0)"
+                )
                 self.cursor.execute(reset_startingid_query)
                 self.connection.commit()
 
-                set_startingid_query = f"DBCC CHECKIDENT ('tbl_visitor_attendance', RESEED, ?)"
+                set_startingid_query = (
+                    f"DBCC CHECKIDENT ('tbl_visitor_attendance', RESEED, ?)"
+                )
                 self.cursor.execute(set_startingid_query, (custom_no))
                 self.connection.commit()
 
                 insert_query_attendance = f"INSERT INTO tbl_visitor_attendance (visitor_no, visitor_attendance_date, visitor_time_in) VALUES ( ?, ?, ?)"
                 self.cursor.execute(
                     insert_query_attendance,
-                    (
-                        visitor_number,
-                        visitor_attendance_date,
-                        visitor_time
-                    ),
+                    (visitor_number, visitor_attendance_date, visitor_time),
                 )
                 self.connection.commit()
 
@@ -763,8 +771,8 @@ class dbQueries:
         self.cursor.execute(query, (date1, date2))
         column = [desc[0] for desc in self.cursor.description]
         rows = self.cursor.fetchall()
-        print (len(column))
-        
+        print(len(column))
+
         if rows:
             selected_values = []
 
@@ -778,11 +786,10 @@ class dbQueries:
                     row_values.append(col)
                 # append the row values list to the selected values list
                 selected_values.append(row_values)
-            print (len(selected_values))
+            print(len(selected_values))
             return selected_values, column
         else:
             return False
-
 
     def sort_student_report_bydate_docx(self, date1, date2):
         query = (
@@ -810,8 +817,8 @@ class dbQueries:
         self.cursor.execute(query, (date1, date2))
         column = [desc[0] for desc in self.cursor.description]
         rows = self.cursor.fetchall()
-        print (len(column))
-        
+        print(len(column))
+
         if rows:
             selected_values = []
 
@@ -825,7 +832,7 @@ class dbQueries:
                     row_values.append(col)
                 # append the row values list to the selected values list
                 selected_values.append(row_values)
-            print (len(selected_values))
+            print(len(selected_values))
             return selected_values, column
         else:
             return False
@@ -853,8 +860,8 @@ class dbQueries:
         self.cursor.execute(query, (date1, date2))
         column = [desc[0] for desc in self.cursor.description]
         rows = self.cursor.fetchall()
-        print (len(column))
-        
+        print(len(column))
+
         if rows:
             selected_values = []
 
@@ -868,11 +875,11 @@ class dbQueries:
                     row_values.append(col)
                 # append the row values list to the selected values list
                 selected_values.append(row_values)
-            print (len(selected_values))
+            print(len(selected_values))
             return selected_values, column
         else:
             return False
-        
+
     def sort_visitor_report_bydate_docx(self, date1, date2):
         query = (
             f"SELECT tbl_visitor.visitor_no, tbl_visitor.visitor_firstname, tbl_visitor.visitor_lastname, "
@@ -886,7 +893,6 @@ class dbQueries:
             return rows
         else:
             return False
-
 
     def check_username(self, username):
         query = f"SELECT * FROM tbl_user WHERE username = ?"
@@ -1221,8 +1227,8 @@ class dbQueries:
 
     # AV-----------------------------------------
 
-    def backup_database(self,path,date_time):
-        self.backup_file_path = path + "/"+ date_time +"_database_backup.bacpac"
+    def backup_database(self, path, date_time):
+        self.backup_file_path = path + "/" + date_time + "_database_backup.bacpac"
         query = f"BACKUP DATABASE {self.database} TO DISK = '{self.backup_file_path}'"
         self.cursor.execute(query)
         self.cursor.commit()
