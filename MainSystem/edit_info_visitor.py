@@ -329,12 +329,12 @@ class EditVisitorApp:
 
             if not pattern.search(concatenated_inputs):
                 self.sql_query.update_visitor(
+                    self.visitor_number,
                     first_name_var,
                     last_name_var,
                     contact_num_var,
                     address_var,
                     visitor_status_var,
-                    self.visitor_number,
                 )
                 if os.path.exists(self.img_path + "/000000000.jpg"):
                     img_name = self.visitor_number
