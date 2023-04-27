@@ -310,7 +310,7 @@ class EditVisitorApp:
         first_name_var = self.first_name_entry.get()
         contact_num_var = self.contact_num_entry.get()
         address_var = self.address_entry.get()
-        visitor_status_var = self.stat_var.get()
+        visitor_status_var = self.stat_var
 
         if (
             len(last_name_var) != 0
