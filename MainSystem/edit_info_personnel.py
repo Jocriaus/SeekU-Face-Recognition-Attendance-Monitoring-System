@@ -404,25 +404,44 @@ class EditPersonnelApp:
             pattern = re.compile("[^a-zA-Z0-9 \-@.,]")
 
             if not pattern.search(concatenated_inputs):
-                self.sql_query.update_personnel(
-                    personnel_num_var,
-                    personnel_firstname_var,
-                    personnel_lastname_var,
-                    personnel_middlename_var,
-                    personnel_contact_num_var,
-                    personnel_address_var,
-                    personnel_type_variable,
-                    pesonnel_status_var,
-                )
-                if os.path.exists(self.img_path + "/000000000.jpg"):
-                    img_name = self.personnel_num
-                    os.rename(
-                        self.img_path + "/" + img_name + ".jpg",
-                        self.img_path + "/000000000.jpg",
+                if personnel_num_var.isdigit() or (
+                    personnel_num_var.startswith("-")
+                    and personnel_num_var[1:].isdigit()
+                ):
+                    if personnel_contact_num_var.isdigit() or (
+                        personnel_contact_num_var.startswith("-")
+                        and personnel_contact_num_var[1:].isdigit()
+                    ):
+                        self.sql_query.update_personnel(
+                            personnel_num_var,
+                            personnel_firstname_var,
+                            personnel_lastname_var,
+                            personnel_middlename_var,
+                            personnel_contact_num_var,
+                            personnel_address_var,
+                            personnel_type_variable,
+                            pesonnel_status_var,
+                        )
+                        if os.path.exists(self.img_path + "/000000000.jpg"):
+                            img_name = self.personnel_num
+                            os.rename(
+                                self.img_path + "/" + img_name + ".jpg",
+                                self.img_path + "/000000000.jpg",
+                            )
+                        messbx.showinfo(
+                            "Success",
+                            "The personnel record has been edited successfully.",
+                        )
+                    else:
+                        messbx.showwarning(
+                            "Warning",
+                            "The input for the personnel number or contact number is not a valid number.",
+                        )
+                else:
+                    messbx.showwarning(
+                        "Warning",
+                        "The input for the personnel number or contact number is not a valid number.",
                     )
-                messbx.showinfo(
-                    "Success", "The personnel record has been edited successfully."
-                )
             else:
                 messbx.showwarning("Warning", "The input contains special characters.")
         else:

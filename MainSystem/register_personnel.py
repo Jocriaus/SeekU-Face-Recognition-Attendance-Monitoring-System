@@ -270,25 +270,42 @@ class RegisterPersonnelApp:
             pattern = re.compile("[^a-zA-Z0-9 \-@.,]")
 
             if not pattern.search(concatenated_inputs):
-
-                self.sql_query.register_personnel(
-                    personnel_num_var,
-                    first_name_var,
-                    last_name_var,
-                    mid_name_var,
-                    contact_num_var,
-                    address_var,
-                    personnel_type_var,
-                )
-                img_name = personnel_num_var
-                os.rename(
-                    self.img_path + "/000000000.jpg",
-                    self.img_path + "/" + img_name + ".jpg",
-                )
-                messbx.showinfo(
-                    "Success",
-                    "The personnel record has been registered successfully.",
-                )
+                if personnel_num_var.isdigit() or (
+                    personnel_num_var.startswith("-")
+                    and personnel_num_var[1:].isdigit()
+                ):
+                    if contact_num_var.isdigit() or (
+                        contact_num_var.startswith("-")
+                        and contact_num_var[1:].isdigit()
+                    ):
+                        self.sql_query.register_personnel(
+                            personnel_num_var,
+                            first_name_var,
+                            last_name_var,
+                            mid_name_var,
+                            contact_num_var,
+                            address_var,
+                            personnel_type_var,
+                        )
+                        img_name = personnel_num_var
+                        os.rename(
+                            self.img_path + "/000000000.jpg",
+                            self.img_path + "/" + img_name + ".jpg",
+                        )
+                        messbx.showinfo(
+                            "Success",
+                            "The personnel record has been registered successfully.",
+                        )
+                    else:
+                        messbx.showwarning(
+                            "Warning",
+                            "The input for the personnel number or contact number is not a valid number.",
+                        )
+                else:
+                    messbx.showwarning(
+                        "Warning",
+                        "The input for the personnel number or contact number is not a valid number.",
+                    )
             else:
                 messbx.showwarning("Warning", "The input contains special characters.")
         else:

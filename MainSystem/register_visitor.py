@@ -222,23 +222,31 @@ class RegisterVisitorApp:
             pattern = re.compile("[^a-zA-Z0-9 \-@.,]")
 
             if not pattern.search(concatenated_inputs):
-                self.sql_query.register_visitor(
-                    first_name_var,
-                    last_name_var,
-                    contact_num_var,
-                    address_var,
-                )
-                img_name = self.sql_query.capture_visitor_image(
-                    first_name_var, last_name_var, contact_num_var, address_var
-                )
-                os.rename(
-                    self.img_path + "/000000000.jpg",
-                    self.img_path + "/" + str(img_name[0]) + ".jpg",
-                )
-                messbx.showinfo(
-                    "Success",
-                    "The visitor record has been registered successfully.",
-                )
+                if contact_num_var.isdigit() or (
+                    contact_num_var.startswith("-") and contact_num_var[1:].isdigit()
+                ):
+                    self.sql_query.register_visitor(
+                        first_name_var,
+                        last_name_var,
+                        contact_num_var,
+                        address_var,
+                    )
+                    img_name = self.sql_query.capture_visitor_image(
+                        first_name_var, last_name_var, contact_num_var, address_var
+                    )
+                    os.rename(
+                        self.img_path + "/000000000.jpg",
+                        self.img_path + "/" + str(img_name[0]) + ".jpg",
+                    )
+                    messbx.showinfo(
+                        "Success",
+                        "The visitor record has been registered successfully.",
+                    )
+                else:
+                    messbx.showwarning(
+                        "Warning",
+                        "The input for the contact number is not a valid number.",
+                    )
             else:
                 messbx.showwarning("Warning", "The input contains special characters.")
         else:

@@ -405,26 +405,44 @@ class EditStudentApp:
             pattern = re.compile("[^a-zA-Z0-9 \-@.,]")
 
             if not pattern.search(concatenated_inputs):
-                self.sql_query.update_student(
-                    student_num_var,
-                    student_firstname_var,
-                    student_lastname_var,
-                    student_middlename_var,
-                    student_program_var,
-                    student_section_var,
-                    student_contact_num_var,
-                    student_address_var,
-                    student_status_var,
-                )
-                if os.path.exists(self.img_path + "/000000000.jpg"):
-                    img_name = self.student_number
-                    os.rename(
-                        self.img_path + "/" + img_name + ".jpg",
-                        self.img_path + "/000000000.jpg",
+                if student_num_var.isdigit() or (
+                    student_num_var.startswith("-") and student_num_var[1:].isdigit()
+                ):
+                    if student_contact_num_var.isdigit() or (
+                        student_contact_num_var.startswith("-")
+                        and student_contact_num_var[1:].isdigit()
+                    ):
+                        self.sql_query.update_student(
+                            student_num_var,
+                            student_firstname_var,
+                            student_lastname_var,
+                            student_middlename_var,
+                            student_program_var,
+                            student_section_var,
+                            student_contact_num_var,
+                            student_address_var,
+                            student_status_var,
+                        )
+                        if os.path.exists(self.img_path + "/000000000.jpg"):
+                            img_name = self.student_number
+                            os.rename(
+                                self.img_path + "/" + img_name + ".jpg",
+                                self.img_path + "/000000000.jpg",
+                            )
+                        messbx.showinfo(
+                            "Success",
+                            "The student record has been edited successfully.",
+                        )
+                    else:
+                        messbx.showwarning(
+                            "Warning",
+                            "The input for the student number or contact number is not a valid number.",
+                        )
+                else:
+                    messbx.showwarning(
+                        "Warning",
+                        "The input for the student number or contact number is not a valid number.",
                     )
-                messbx.showinfo(
-                    "Success", "The student record has been edited successfully."
-                )
             else:
                 messbx.showwarning("Warning", "The input contains special characters.")
         else:

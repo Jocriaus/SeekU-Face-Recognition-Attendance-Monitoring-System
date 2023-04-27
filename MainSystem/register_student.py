@@ -270,25 +270,42 @@ class RegisterStudentApp:
             concatenated_inputs = "".join(input_values)
             pattern = re.compile("[^a-zA-Z0-9 \-@.,]")
             if not pattern.search(concatenated_inputs):
-                if self.register == True:
-                    self.sql_query.register_student(
-                        student_num_var,
-                        first_name_var,
-                        last_name_var,
-                        mid_name_var,
-                        program_var,
-                        section_var,
-                        contact_num_var,
-                        address_var,
-                    )
-                    img_name = student_num_var
-                    os.rename(
-                        self.img_path + "/000000000.jpg",
-                        self.img_path + "/" + img_name + ".jpg",
-                    )
-                    messbx.showinfo(
-                        "Success",
-                        "The student record has been registered successfully.",
+                if student_num_var.isdigit() or (
+                    student_num_var.startswith("-") and student_num_var[1:].isdigit()
+                ):
+                    if contact_num_var.isdigit() or (
+                        contact_num_var.startswith("-")
+                        and contact_num_var[1:].isdigit()
+                    ):
+                        if self.register == True:
+                            self.sql_query.register_student(
+                                student_num_var,
+                                first_name_var,
+                                last_name_var,
+                                mid_name_var,
+                                program_var,
+                                section_var,
+                                contact_num_var,
+                                address_var,
+                            )
+                            img_name = student_num_var
+                            os.rename(
+                                self.img_path + "/000000000.jpg",
+                                self.img_path + "/" + img_name + ".jpg",
+                            )
+                            messbx.showinfo(
+                                "Success",
+                                "The student record has been registered successfully.",
+                            )
+                    else:
+                        messbx.showwarning(
+                            "Warning",
+                            "The input for the student number or contact number is not a valid number.",
+                        )
+                else:
+                    messbx.showwarning(
+                        "Warning",
+                        "The input for the student number or contact number is not a valid number.",
                     )
             else:
                 messbx.showwarning("Warning", "The input contains special characters.")
