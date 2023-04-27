@@ -287,7 +287,8 @@ class RegisterStudentApp:
                         self.img_path + "/" + img_name + ".jpg",
                     )
                     messbx.showinfo(
-                        "Success", "The student record has been edited successfully."
+                        "Success",
+                        "The student record has been registered successfully.",
                     )
             else:
                 messbx.showwarning("Warning", "The input contains special characters.")

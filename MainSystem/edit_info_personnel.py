@@ -393,15 +393,17 @@ class EditPersonnelApp:
             input_values = [
                 personnel_num_var,
                 personnel_firstname_var,
-                personnel_middlename_var,
                 personnel_lastname_var,
+                personnel_middlename_var,
                 personnel_contact_num_var,
-                personnel_type_variable,
                 personnel_address_var,
+                personnel_type_variable,
+                pesonnel_status_var,
             ]
             concatenated_inputs = "".join(input_values)
-            if not re.search(r"[^\w\s]+", concatenated_inputs):
+            pattern = re.compile("[^a-zA-Z0-9 \-@.,]")
 
+            if not pattern.search(concatenated_inputs):
                 self.sql_query.update_personnel(
                     personnel_num_var,
                     personnel_firstname_var,
@@ -418,8 +420,11 @@ class EditPersonnelApp:
                         self.img_path + "/" + img_name + ".jpg",
                         self.img_path + "/000000000.jpg",
                     )
+                messbx.showinfo(
+                    "Success", "The personnel record has been edited successfully."
+                )
             else:
-                messbx.showwarning("Error", "Input contains special characters.")
+                messbx.showwarning("Warning", "The input contains special characters.")
         else:
             messbx.showwarning(
                 "Warning", "Kindly ensure all fields are filled by entering a value."

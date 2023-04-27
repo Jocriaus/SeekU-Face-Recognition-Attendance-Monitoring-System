@@ -325,8 +325,9 @@ class EditVisitorApp:
                 address_var,
             ]
             concatenated_inputs = "".join(input_values)
-            if not re.search(r"[^\w\s]+", concatenated_inputs):
+            pattern = re.compile("[^a-zA-Z0-9 \-@.,]")
 
+            if not pattern.search(concatenated_inputs):
                 self.sql_query.update_visitor(
                     first_name_var,
                     last_name_var,
@@ -341,8 +342,11 @@ class EditVisitorApp:
                         self.img_path + "/" + img_name + ".jpg",
                         self.img_path + "/000000000.jpg",
                     )
+                messbx.showinfo(
+                    "Success", "The visitor record has been edited successfully."
+                )
             else:
-                messbx.showwarning("Error", "Input contains special characters.")
+                messbx.showwarning("Warning", "The input contains special characters.")
         else:
             messbx.showwarning(
                 "Warning", "Kindly ensure all fields are filled by entering a value."

@@ -5,6 +5,8 @@ import tkinter.messagebox as messbx
 import PIL.Image, PIL.ImageTk
 import os
 import sys
+import re
+
 
 class RegisterPersonnelApp:
     def __init__(self, cam_app, file_path):
@@ -226,16 +228,14 @@ class RegisterPersonnelApp:
         # this protocol will do a function after pressing the close button.
         self.mainwindow.protocol("WM_DELETE_WINDOW", self.exit_program)
 
-
     # this function will destroy the window and closes the system/program.
     def exit_program(self):
-        sys.exit() 
+        sys.exit()
 
     # this function will destroy the current window and return to camera app
     def back_cam_app_window(self):
         self.admin_cam_window.deiconify()
         self.register_personnel_app.destroy()
-
 
     def register_personnel_function(self):
 
@@ -248,15 +248,16 @@ class RegisterPersonnelApp:
         personnel_type_var = self.personnel_type_entry.get()
         address_var = self.address_entry.get()
 
-        if ( len(personnel_num_var) != 0 and
-            len(first_name_var) != 0 and
-            len(mid_name_var) != 0 and
-            len(last_name_var) != 0 and
-            len(contact_num_var) != 0 and
-            len(personnel_type_var) != 0 and
-            len(address_var) != 0
-            ) :
-            self.sql_query.register_personnel(
+        if (
+            len(personnel_num_var) != 0
+            and len(first_name_var) != 0
+            and len(mid_name_var) != 0
+            and len(last_name_var) != 0
+            and len(contact_num_var) != 0
+            and len(personnel_type_var) != 0
+            and len(address_var) != 0
+        ):
+            input_values = [
                 personnel_num_var,
                 first_name_var,
                 last_name_var,
@@ -264,21 +265,51 @@ class RegisterPersonnelApp:
                 contact_num_var,
                 address_var,
                 personnel_type_var,
-            )
-            img_name = personnel_num_var
-            os.rename(self.img_path + "/000000000.jpg",self.img_path+"/" +img_name+ ".jpg")
-            
-        else:
-            messbx.showwarning("Warning", "Kindly ensure all fields are filled by entering a value.")
+            ]
+            concatenated_inputs = "".join(input_values)
+            pattern = re.compile("[^a-zA-Z0-9 \-@.,]")
 
-    def client_no_check(self,client_no):
-        if (self.sql_query.check_username(client_no)):
-            messbx.showwarning("Warning", "The personnel number " + client_no + " has already been assigned/taken." )
+            if not pattern.search(concatenated_inputs):
+
+                self.sql_query.register_personnel(
+                    personnel_num_var,
+                    first_name_var,
+                    last_name_var,
+                    mid_name_var,
+                    contact_num_var,
+                    address_var,
+                    personnel_type_var,
+                )
+                img_name = personnel_num_var
+                os.rename(
+                    self.img_path + "/000000000.jpg",
+                    self.img_path + "/" + img_name + ".jpg",
+                )
+                messbx.showinfo(
+                    "Success",
+                    "The personnel record has been registered successfully.",
+                )
+            else:
+                messbx.showwarning("Warning", "The input contains special characters.")
+        else:
+            messbx.showwarning(
+                "Warning", "Kindly ensure all fields are filled by entering a value."
+            )
+
+    def client_no_check(self, client_no):
+        if self.sql_query.check_username(client_no):
+            messbx.showwarning(
+                "Warning",
+                "The personnel number "
+                + client_no
+                + " has already been assigned/taken.",
+            )
             self.register = False
         else:
             self.register = True
 
         # this function will display the image into the canvas
+
     def disp_pic(self):
         self.load_image = PIL.Image.open(self.img_path + "/000000000.jpg")
         # will use the ImageTK.PhotoImage() function to set the image
@@ -287,7 +318,6 @@ class RegisterPersonnelApp:
         self.student_image = PIL.ImageTk.PhotoImage(self.resized_image)
         # will display the image into the canvas
         self.camera_canvas.create_image(0, 0, image=self.student_image, anchor=tk.NW)
-
 
     def register_personnel(self, event=None):
         self.register_personnel_function()
@@ -299,5 +329,4 @@ class RegisterPersonnelApp:
     def return_func(self, event=None):
         self.back_cam_app_window()
         if os.path.exists(self.img_path + "/000000000.jpg"):
-            os.remove(self.img_path + "/000000000.jpg")        
-
+            os.remove(self.img_path + "/000000000.jpg")

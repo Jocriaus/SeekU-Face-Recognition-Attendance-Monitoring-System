@@ -5,6 +5,8 @@ import tkinter.messagebox as messbx
 import PIL.Image, PIL.ImageTk
 import os
 import sys
+import re
+
 
 class RegisterVisitorApp:
     def __init__(self, home_mod, cam_app, file_path):
@@ -16,9 +18,7 @@ class RegisterVisitorApp:
         self.sql_query = qry.dbQueries()
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.register_visitor_app = tk.Toplevel()
-        self.register_visitor_app.configure(
-            background="#F7FAE9", height=200, width=200
-        )
+        self.register_visitor_app.configure(background="#F7FAE9", height=200, width=200)
         width = self.register_visitor_app.winfo_screenwidth()
         height = self.register_visitor_app.winfo_screenheight()
         self.register_visitor_app.geometry("%dx%d" % (width, height))
@@ -27,7 +27,9 @@ class RegisterVisitorApp:
         self.register_visitor_app.iconbitmap(".\SeekU\SeekU.ico")
         # Contains-the-camera-canvas---------------------------------------------------------------------------------------------------------
         self.register_visitor_frame4 = tk.Frame(self.register_visitor_app)
-        self.register_visitor_frame4.configure(background="#0072bc", height=200, width=200)
+        self.register_visitor_frame4.configure(
+            background="#0072bc", height=200, width=200
+        )
         self.camera_canvas = tk.Canvas(self.register_visitor_frame4)
         self.camera_canvas.configure(
             background="#0072bc", highlightbackground="#0072bc"
@@ -42,7 +44,9 @@ class RegisterVisitorApp:
         # Contains-the-camera-canvas---------------------------------------------------------------------------------------------------------
         # Contains-return-button-the-app-name-logotype-and-app-logo---------------------------------------------------------------------------------------------------------
         self.register_visitor_frame3 = tk.Frame(self.register_visitor_app)
-        self.register_visitor_frame3.configure(background="#F7FAE9", height=200, width=200)
+        self.register_visitor_frame3.configure(
+            background="#F7FAE9", height=200, width=200
+        )
         self.app_name_logo = tk.Label(self.register_visitor_frame3)
         self.img_SeekULogotypesmall = tk.PhotoImage(
             file=".\SeekU\SeekU Logotype small.png"
@@ -78,12 +82,16 @@ class RegisterVisitorApp:
         # Contains-return-button-the-app-name-logotype-and-app-logo---------------------------------------------------------------------------------------------------------
         # Contains-register-button-the-entry-widgets---------------------------------------------------------------------------------------------------------
         self.register_visitor_frame2 = tk.Frame(self.register_visitor_app)
-        self.register_visitor_frame2.configure(background="#F7FAE9", height=200, width=200)
+        self.register_visitor_frame2.configure(
+            background="#F7FAE9", height=200, width=200
+        )
         self.register_visitor_label = tk.Label(self.register_visitor_frame2)
         self.register_visitor_label.configure(
             background="#F7FAE9", font="{arial} 28 {bold}", text="Register Visitor"
         )
-        self.register_visitor_label.place(anchor="center", relx=0.5, rely=0.05, x=0, y=0)
+        self.register_visitor_label.place(
+            anchor="center", relx=0.5, rely=0.05, x=0, y=0
+        )
         self.first_name_label = tk.Label(self.register_visitor_frame2)
         self.first_name_label.configure(
             background="#F7FAE9",
@@ -152,7 +160,9 @@ class RegisterVisitorApp:
         # Contains-register-button-the-entry-widgets---------------------------------------------------------------------------------------------------------
         # Contains-school-logo-------------------------------------------------------------------------------------------------------------------------------------
         self.register_visitor_frame1 = tk.Frame(self.register_visitor_app)
-        self.register_visitor_frame1.configure(background="#fff000", height=200, width=200)
+        self.register_visitor_frame1.configure(
+            background="#fff000", height=200, width=200
+        )
         self.school_logo_label = tk.Label(self.register_visitor_frame1)
         self.img_STICollegeBalagtasLogomedium = tk.PhotoImage(
             file=".\SeekU\STI College Balagtas Logo medium.png"
@@ -175,16 +185,14 @@ class RegisterVisitorApp:
         # this protocol will do a function after pressing the close button.
         self.mainwindow.protocol("WM_DELETE_WINDOW", self.exit_program)
 
-
     # this function will destroy the window and closes the system/program.
     def exit_program(self):
-        sys.exit() 
+        sys.exit()
 
     # this function will destroy the current window and return to camera app
     def back_cam_app_window(self):
         self.client_cam_app.deiconify()
         self.register_visitor_app.destroy()
-
 
     def register_visitor_function(self):
         # putting the values into variables to save into the database.
@@ -193,28 +201,51 @@ class RegisterVisitorApp:
         """
         Database Connection
         """
-        
+
         last_name_var = self.last_name_entry.get()
         first_name_var = self.first_name_entry.get()
         contact_num_var = self.contact_num_entry.get()
         address_var = self.address_entry.get()
-        if ( len(last_name_var) != 0 and
-            len(first_name_var) != 0 and
-            len(contact_num_var) != 0 and
-            len(address_var) != 0
-            ) :
-            self.sql_query.register_visitor(
+        if (
+            len(last_name_var) != 0
+            and len(first_name_var) != 0
+            and len(contact_num_var) != 0
+            and len(address_var) != 0
+        ):
+            input_values = [
                 first_name_var,
                 last_name_var,
                 contact_num_var,
                 address_var,
-            )
-            img_name = self.sql_query.capture_visitor_image(first_name_var, last_name_var, contact_num_var, address_var)
-            os.rename(self.img_path + "/000000000.jpg",self.img_path+"/" +str(img_name[0])+ ".jpg")
-            
+            ]
+            concatenated_inputs = "".join(input_values)
+            pattern = re.compile("[^a-zA-Z0-9 \-@.,]")
+
+            if not pattern.search(concatenated_inputs):
+                self.sql_query.register_visitor(
+                    first_name_var,
+                    last_name_var,
+                    contact_num_var,
+                    address_var,
+                )
+                img_name = self.sql_query.capture_visitor_image(
+                    first_name_var, last_name_var, contact_num_var, address_var
+                )
+                os.rename(
+                    self.img_path + "/000000000.jpg",
+                    self.img_path + "/" + str(img_name[0]) + ".jpg",
+                )
+                messbx.showinfo(
+                    "Success",
+                    "The visitor record has been registered successfully.",
+                )
+            else:
+                messbx.showwarning("Warning", "The input contains special characters.")
         else:
-            messbx.showwarning("Warning", "Kindly ensure all fields are filled by entering a value.")
-            
+            messbx.showwarning(
+                "Warning", "Kindly ensure all fields are filled by entering a value."
+            )
+
         """
         Save to database
         Get the primary key
@@ -222,6 +253,7 @@ class RegisterVisitorApp:
         """
 
         # this function will display the image into the canvas
+
     def disp_pic(self):
         self.load_image = PIL.Image.open(self.img_path + "/000000000.jpg")
         # will use the ImageTK.PhotoImage() function to set the image
@@ -230,7 +262,6 @@ class RegisterVisitorApp:
         self.student_image = PIL.ImageTk.PhotoImage(self.resized_image)
         # will display the image into the canvas
         self.camera_canvas.create_image(0, 0, image=self.student_image, anchor=tk.NW)
-
 
     def register_visitor(self, event=None):
         self.register_visitor_function()
@@ -243,4 +274,3 @@ class RegisterVisitorApp:
         self.back_cam_app_window()
         if os.path.exists(self.img_path + "/000000000.jpg"):
             os.remove(self.img_path + "/000000000.jpg")
-
