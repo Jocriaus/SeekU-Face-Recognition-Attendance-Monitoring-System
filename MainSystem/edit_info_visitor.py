@@ -255,6 +255,7 @@ class EditVisitorApp:
     # this will return to the camera app
     def show_home_win(self):
         self.admin_home_window.deiconify()
+        self.refresh_func(self.client, self.visitor_status)
         self.edit_visitor_app.destroy()
 
     def hide_this_window(self):
