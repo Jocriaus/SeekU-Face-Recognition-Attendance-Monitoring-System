@@ -2,13 +2,14 @@
 import tkinter as tk
 import tkinter.messagebox as messbx
 import query_mod as qry
+import re
 
 
 class EditUserApp:
-    def __init__(self, un, pw, ufn, uln, ut, us, admin_hom,refresh):
+    def __init__(self, un, pw, ufn, uln, ut, us, admin_hom, refresh):
         # build ui
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
-        self.admin_home_window = admin_hom 
+        self.admin_home_window = admin_hom
         self.username = un
         self.password = pw
         self.firstname = ufn
@@ -177,12 +178,12 @@ class EditUserApp:
         self.mainwindow = self.edit_user_app
         self.mainwindow.protocol("WM_DELETE_WINDOW", self.destroy_this_window)
         self.center(self.mainwindow)
-        self.mainwindow.attributes('-topmost', True)
+        self.mainwindow.attributes("-topmost", True)
 
     def destroy_this_window(self):
         self.admin_home_window.deiconify()
         self.refresh_func(self.first_stat)
-        self.edit_user_app.destroy() 
+        self.edit_user_app.destroy()
 
     # disables entry widgets
     def disable_entry(self):
@@ -213,6 +214,7 @@ class EditUserApp:
         self.stat_var.set(value=self.user_status)
 
         # if status is = IsActive then stat var set to Active else Inactive
+
     def center(self, win):
         win.update()
         w_req, h_req = win.winfo_width(), win.winfo_height()
@@ -233,30 +235,51 @@ class EditUserApp:
         self.user_role_variable = self.user_role_var.get()
         self.user_status_var = self.stat_var.get()
 
-        if ( len(self.username_var) != 0 and
-            len(self.password_var) != 0 and
-            len(self.firstname_var) != 0 and
-            len(self.lastname_var) != 0 and
-            len(self.user_role_variable) != 0 and
-            len(self.user_status_var) != 0
-            ) :
-            if self.update == True:
-                self.sql_query.update_user(
-                    self.username_var,
-                    self.password_var,
-                    self.firstname_var,
-                    self.lastname_var,
-                    self.user_role_variable,
-                    self.user_status_var,
-                )
+        if (
+            len(self.username_var) != 0
+            and len(self.password_var) != 0
+            and len(self.firstname_var) != 0
+            and len(self.lastname_var) != 0
+            and len(self.user_role_variable) != 0
+            and len(self.user_status_var) != 0
+        ):
+            input_values = [
+                self.username_var,
+                self.password_var,
+                self.firstname_var,
+                self.lastname_var,
+                self.user_role_variable,
+                self.user_status_var,
+            ]
 
+            concatenated_inputs = "".join(input_values)
+            pattern = re.compile("[^a-zA-Z0-9 \-@.,]")
+            if not pattern.search(concatenated_inputs):
+                if self.update == True:
+                    self.sql_query.update_user(
+                        self.username_var,
+                        self.password_var,
+                        self.firstname_var,
+                        self.lastname_var,
+                        self.user_role_variable,
+                        self.user_status_var,
+                    )
+                    messbx.showinfo(
+                        "Success", "The user record has been registered successfully."
+                    )
+            else:
+                messbx.showwarning("Warning", "The input contains special characters.")
         else:
-            messbx.showwarning("Warning", "Kindly ensure all fields are filled by entering a value.")
+            messbx.showwarning(
+                "Warning", "Kindly ensure all fields are filled by entering a value."
+            )
 
-    def password_check(self,password):
+    def password_check(self, password):
         limit = self.sql_query.get_password_length()
-        if len(password) > limit :
-            messbx.showwarning("Warning", "The password length limit is " + str(limit) + "." )
+        if len(password) > limit:
+            messbx.showwarning(
+                "Warning", "The password length limit is " + str(limit) + "."
+            )
             self.update = False
         else:
             self.update = True
@@ -272,5 +295,3 @@ class EditUserApp:
 
     def save_user(self, event=None):
         self.update_user()
-
-

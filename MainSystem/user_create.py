@@ -2,6 +2,7 @@
 import tkinter as tk
 import tkinter.messagebox as messbx
 import query_mod as qry
+import re
 
 
 class CreateUserApp:
@@ -123,13 +124,12 @@ class CreateUserApp:
         self.mainwindow = self.register_user_app
         self.mainwindow.protocol("WM_DELETE_WINDOW", self.destroy_this_window)
         self.center(self.mainwindow)
-        self.mainwindow.attributes('-topmost', True)
-
+        self.mainwindow.attributes("-topmost", True)
 
     def destroy_this_window(self):
         self.admin_home_window.deiconify()
         self.refresh_func("IsActive")
-        self.register_user_app.destroy() 
+        self.register_user_app.destroy()
 
     def register_user_function(self):
         self.register = True
@@ -141,22 +141,41 @@ class CreateUserApp:
         last_name_var = self.last_name_entry.get()
         user_role_var = self.user_role_entry.get()
 
-        if ( len(username_var) != 0 and
-            len(password_var) != 0 and
-            len(first_name_var) != 0 and
-            len(last_name_var) != 0 and
-            len(user_role_var) != 0
-            ) :
-            if self.register == True:
-                self.sql_query.register_user(
-                    username_var,
-                    password_var,
-                    first_name_var,
-                    last_name_var,
-                    user_role_var,
-                )
+        if (
+            len(username_var) != 0
+            and len(password_var) != 0
+            and len(first_name_var) != 0
+            and len(last_name_var) != 0
+            and len(user_role_var) != 0
+        ):
+            input_values = [
+                username_var,
+                password_var,
+                first_name_var,
+                last_name_var,
+                user_role_var,
+            ]
+
+            concatenated_inputs = "".join(input_values)
+            pattern = re.compile("[^a-zA-Z0-9 \-@.,]")
+            if not pattern.search(concatenated_inputs):
+                if self.register == True:
+                    self.sql_query.register_user(
+                        username_var,
+                        password_var,
+                        first_name_var,
+                        last_name_var,
+                        user_role_var,
+                    )
+                    messbx.showinfo(
+                        "Success", "The user record has been registered successfully."
+                    )
+            else:
+                messbx.showwarning("Warning", "The input contains special characters.")
         else:
-            messbx.showwarning("Warning", "Kindly ensure all fields are filled by entering a value.")
+            messbx.showwarning(
+                "Warning", "Kindly ensure all fields are filled by entering a value."
+            )
 
     def center(self, win):
         win.update()
@@ -168,18 +187,21 @@ class CreateUserApp:
         y = (win.winfo_screenheight() // 2) - (h // 2)
         win.geometry("{0}x{1}+{2}+{3}".format(w_req, h_req, x, y))
 
-
-    def password_check(self,password):
+    def password_check(self, password):
         limit = self.sql_query.get_password_length()
-        if len(password) > limit :
-            messbx.showwarning("Warning", "The password should have " + str(limit) + " characters." )
+        if len(password) > limit:
+            messbx.showwarning(
+                "Warning", "The password should have " + str(limit) + " characters."
+            )
             self.register = False
         else:
             self.register = True
 
-    def username_check(self,username):
-        if (self.sql_query.check_username(username)):
-            messbx.showwarning("Warning", "The username \"" +username+"\" is already in use. ")
+    def username_check(self, username):
+        if self.sql_query.check_username(username):
+            messbx.showwarning(
+                "Warning", 'The username "' + username + '" is already in use. '
+            )
             self.register = False
         else:
             self.register = True
