@@ -125,7 +125,7 @@ class CameraApp:
             background="#0072bc",
             font="{arial black} 20 {}",
             foreground="#F7FAE9",
-            text='Log out')
+            text='Return')
         self.return_button.place(
             anchor="center",
             relheight=0.3,

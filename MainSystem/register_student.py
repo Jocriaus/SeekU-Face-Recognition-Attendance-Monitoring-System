@@ -300,12 +300,12 @@ class RegisterStudentApp:
                     else:
                         messbx.showwarning(
                             "Warning",
-                            "The input for the student number or contact number is not a valid number.",
+                            "The provided input for the contact number is not a valid numeric value.",
                         )
                 else:
                     messbx.showwarning(
                         "Warning",
-                        "The input for the student number or contact number is not a valid number.",
+                        "The provided input for the student number is not a valid numeric value.",
                     )
             else:
                 messbx.showwarning("Warning", "The input contains special characters.")

@@ -299,12 +299,12 @@ class RegisterPersonnelApp:
                     else:
                         messbx.showwarning(
                             "Warning",
-                            "The input for the personnel number or contact number is not a valid number.",
+                            "The provided input for the contact number is not a valid numeric value.",
                         )
                 else:
                     messbx.showwarning(
                         "Warning",
-                        "The input for the personnel number or contact number is not a valid number.",
+                        "The provided input for the personnel number is not a valid numeric value.",
                     )
             else:
                 messbx.showwarning("Warning", "The input contains special characters.")
