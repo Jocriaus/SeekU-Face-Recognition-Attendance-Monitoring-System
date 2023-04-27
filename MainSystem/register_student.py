@@ -5,9 +5,11 @@ import tkinter.messagebox as messbx
 import PIL.Image, PIL.ImageTk
 import os
 import sys
+import re
+
 
 class RegisterStudentApp:
-    def __init__(self,cam_app, file_path):
+    def __init__(self, cam_app, file_path):
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.admin_cam_window = cam_app
         self.img_path = file_path
@@ -226,13 +228,12 @@ class RegisterStudentApp:
 
     # this function will destroy the window and closes the system/program.
     def exit_program(self):
-        sys.exit() 
+        sys.exit()
 
     # this function will destroy the current window and return to camera app
     def back_cam_app_window(self):
         self.admin_cam_window.deiconify()
         self.register_student_app.destroy()
-
 
     def register_student_function(self):
         self.register = True
@@ -246,42 +247,70 @@ class RegisterStudentApp:
         contact_num_var = self.contact_num_entry.get()
         address_var = self.address_entry.get()
 
-        if ( len(student_num_var) != 0 and
-            len(first_name_var) != 0 and
-            len(mid_name_var) != 0 and
-            len(last_name_var) != 0 and
-            len(contact_num_var) != 0 and
-            len(program_var) != 0 and
-            len(section_var) != 0 and
-            len(address_var) != 0
-            ) :
-
-            if self.register == True :
-                self.sql_query.register_student(
-                    student_num_var,
-                    first_name_var,
-                    last_name_var,
-                    mid_name_var,
-                    program_var,
-                    section_var,
-                    contact_num_var,
-                    address_var,
-                )
-                img_name = student_num_var
-                os.rename(self.img_path + "/000000000.jpg",self.img_path+"/" +img_name+ ".jpg")
+        if (
+            len(student_num_var) != 0
+            and len(first_name_var) != 0
+            and len(mid_name_var) != 0
+            and len(last_name_var) != 0
+            and len(contact_num_var) != 0
+            and len(program_var) != 0
+            and len(section_var) != 0
+            and len(address_var) != 0
+        ):
+            input_values = [
+                student_num_var,
+                first_name_var,
+                last_name_var,
+                mid_name_var,
+                program_var,
+                section_var,
+                contact_num_var,
+                address_var,
+            ]
+            concatenated_inputs = "".join(input_values)
+            pattern = re.compile("[^a-zA-Z0-9 \-@.,]")
+            if not pattern.search(concatenated_inputs):
+                if self.register == True:
+                    self.sql_query.register_student(
+                        student_num_var,
+                        first_name_var,
+                        last_name_var,
+                        mid_name_var,
+                        program_var,
+                        section_var,
+                        contact_num_var,
+                        address_var,
+                    )
+                    img_name = student_num_var
+                    os.rename(
+                        self.img_path + "/000000000.jpg",
+                        self.img_path + "/" + img_name + ".jpg",
+                    )
+                    messbx.showinfo(
+                        "Success", "The student record has been edited successfully."
+                    )
+            else:
+                messbx.showwarning("Warning", "The input contains special characters.")
         else:
-            messbx.showwarning("Warning", "Kindly ensure all fields are filled by entering a value.")
+            messbx.showwarning(
+                "Warning",
+                "Kindly ensure all fields are filled by entering a value.",
+            )
 
-
-    def client_no_check(self,client_no):
-        if (self.sql_query.check_username(client_no)):
-            messbx.showwarning("Warning", "The personnel number " + client_no + " has already been assigned/taken." )
+    def client_no_check(self, client_no):
+        if self.sql_query.check_username(client_no):
+            messbx.showwarning(
+                "Warning",
+                "The personnel number "
+                + client_no
+                + " has already been assigned/taken.",
+            )
             self.register = False
         else:
             self.register = True
 
-
         # this function will display the image into the canvas
+
     def disp_pic(self):
         self.load_image = PIL.Image.open(self.img_path + "/000000000.jpg")
         # will use the ImageTK.PhotoImage() function to set the image
@@ -293,8 +322,6 @@ class RegisterStudentApp:
 
     def register_student(self, event=None):
         self.register_student_function()
-        
-
 
     # this command will open the camera app
     def change_pic(self, event=None):
