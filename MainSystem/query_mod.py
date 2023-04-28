@@ -1251,6 +1251,34 @@ class dbQueries:
         query = f"UPDATE tbl_visitor_attendance SET visitor_time_out = ? WHERE visitor_time_out IS NULL"
         self.cursor.execute(query(time_out))
 
+    def get_data_set_fldr(self):
+        query = f"SELECT data_set_fldr FROM tbl_setting WHERE setting_no = 1"
+        self.cursor.execute(query)
+        row = self.cursor.fetchone()[0]
+        if row:
+            return row
+        else:
+            return False
+
+    def set_data_set_fldr(self, data_set_fldr):
+        query = f"SELECT data_set_fldr FROM tbl_setting WHERE setting_no = 1"
+        self.cursor.execute(query, (data_set_fldr))
+        self.connection.commit()
+
+    def get_tolerance_lvl(self):
+        query = f"SELECT tolerance_lvl FROM tbl_setting WHERE setting_no = 1"
+        self.cursor.execute(query)
+        row = self.cursor.fetchone()[0]
+        if row:
+            return row
+        else:
+            return False
+
+    def set_tolerance_lvl(self, tolerance_lvl):
+        query = f"SELECT tolerance_lvl FROM tbl_setting WHERE setting_no = 1"
+        self.cursor.execute(query, (tolerance_lvl))
+        self.connection.commit()
+
     # AV-----------------------------------------
 
     def backup_database(self, path, date_time):
