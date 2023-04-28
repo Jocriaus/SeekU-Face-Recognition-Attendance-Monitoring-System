@@ -1209,20 +1209,6 @@ class dbQueries:
             return False
         # get face recog path from database
 
-    def get_today_date(self):
-        query = f"SELECT today_date FROM tbl_setting WHERE setting_no = 1"
-        self.cursor.execute(query)
-        row = self.cursor.fetchone()[0]
-        if row:
-            return row
-        else:
-            return False
-
-    def set_today_date(self, today_date):
-        query = f"SELECT today_date FROM tbl_setting WHERE setting_no = 1"
-        self.cursor.execute(query, (today_date))
-        self.connection.commit()
-
     def set_av_path_file_date(self, add_visitor_file_date):
         query = f"UPDATE tbl_setting SET av_date = ? WHERE setting_no = 1 "
         self.cursor.execute(query, (add_visitor_file_date))
@@ -1238,6 +1224,32 @@ class dbQueries:
         else:
             return False
         # get date
+
+    def get_today_date(self):
+        query = f"SELECT today_date FROM tbl_setting WHERE setting_no = 1"
+        self.cursor.execute(query)
+        row = self.cursor.fetchone()[0]
+        if row:
+            return row
+        else:
+            return False
+
+    def set_today_date(self, today_date):
+        query = f"SELECT today_date FROM tbl_setting WHERE setting_no = 1"
+        self.cursor.execute(query, (today_date))
+        self.connection.commit()
+
+    def update_student_time_out(self, time_out):
+        query = f"UPDATE tbl_student_attendance SET student_time_out = ? WHERE student_time_out IS NULL"
+        self.cursor.execute(query(time_out))
+
+    def update_personnel_time_out(self, time_out):
+        query = f"UPDATE tbl_personnel_attendance SET personnel_time_out = ? WHERE personnel_time_out IS NULL"
+        self.cursor.execute(query(time_out))
+
+    def update_visitor_time_out(self, time_out):
+        query = f"UPDATE tbl_visitor_attendance SET visitor_time_out = ? WHERE visitor_time_out IS NULL"
+        self.cursor.execute(query(time_out))
 
     # AV-----------------------------------------
 
