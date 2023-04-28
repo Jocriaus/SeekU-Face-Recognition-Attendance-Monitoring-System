@@ -132,11 +132,12 @@ class CreateUserApp:
         self.register_user_app.destroy()
 
     def register_user_function(self):
-        self.register = True
+        registeru = True
+        registerp = True
         username_var = self.username_entry.get()
-        self.username_check(username_var)
+        registeru = self.username_check(username_var)
         password_var = self.password_entry.get()
-        self.password_check(password_var)
+        registerp = self.password_check(password_var)
         first_name_var = self.first_name_entry.get()
         last_name_var = self.last_name_entry.get()
         user_role_var = self.user_role_entry.get()
@@ -150,7 +151,6 @@ class CreateUserApp:
         ):
             input_values = [
                 username_var,
-                password_var,
                 first_name_var,
                 last_name_var,
                 user_role_var,
@@ -159,29 +159,26 @@ class CreateUserApp:
             concatenated_inputs = "".join(input_values)
             pattern = re.compile("[^a-zA-Z0-9 \-@.,]")
             if not pattern.search(concatenated_inputs):
-                if first_name_var.replace(" ", "").isalpha():
-                    if last_name_var.replace(" ", "").isalpha():
-                        if self.register == True:
-                            self.sql_query.register_user(
-                                username_var,
-                                password_var,
-                                first_name_var,
-                                last_name_var,
-                                user_role_var,
-                            )
-                            messbx.showinfo(
-                                "Success",
-                                "The user record has been registered successfully.",
-                            )
-                    else:
-                        messbx.showwarning(
-                            "Warning",
-                            "The input for the firstname or lastname is not a valid character.",
+                if (first_name_var.replace(" ", "").isalpha() and
+                    last_name_var.replace(" ", "").isalpha()
+                    ):
+                    if registeru and registerp:
+                        self.sql_query.register_user(
+                            username_var,
+                            password_var,
+                            first_name_var,
+                            last_name_var,
+                            user_role_var,
                         )
+                        messbx.showinfo(
+                            "Success",
+                            "The user record has been registered successfully.",
+                        )
+
                 else:
                     messbx.showwarning(
                         "Warning",
-                        "The input for the firstname or lastname is not a valid character.",
+                        "There is an invalid character in the input for the name of the user.",
                     )
             else:
                 messbx.showwarning("Warning", "The input contains special characters.")
@@ -206,18 +203,22 @@ class CreateUserApp:
             messbx.showwarning(
                 "Warning", "The password should have " + str(limit) + " characters."
             )
-            self.register = False
+            register = False
+            return register
         else:
-            self.register = True
+            register = True
+            return register
 
     def username_check(self, username):
         if self.sql_query.check_username(username):
             messbx.showwarning(
                 "Warning", 'The username "' + username + '" is already in use. '
             )
-            self.register = False
+            register = False
+            return register
         else:
-            self.register = True
+            register = True
+            return register
 
     def register_user(self, event=None):
         self.register_user_function()

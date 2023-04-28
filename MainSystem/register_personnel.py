@@ -238,9 +238,9 @@ class RegisterPersonnelApp:
         self.register_personnel_app.destroy()
 
     def register_personnel_function(self):
-
+        register = True
         personnel_num_var = self.personnel_num_entry.get()
-        self.client_no_check(personnel_num_var)
+        register = self.client_no_check(personnel_num_var)
         first_name_var = self.first_name_entry.get()
         mid_name_var = self.mid_name_entry.get()
         last_name_var = self.last_name_entry.get()
@@ -256,7 +256,7 @@ class RegisterPersonnelApp:
             and len(contact_num_var) != 0
             and len(personnel_type_var) != 0
             and len(address_var) != 0
-        ):
+            ):
             input_values = [
                 personnel_num_var,
                 first_name_var,
@@ -267,63 +267,57 @@ class RegisterPersonnelApp:
                 personnel_type_var,
             ]
             concatenated_inputs = "".join(input_values)
-            pattern = re.compile("[^a-zA-Z0-9 \-@.,]")
+            pattern = re.compile("[^a-zA-Z0-9 .,]")
 
             if not pattern.search(concatenated_inputs):
                 if personnel_num_var.isdigit() or (
                     personnel_num_var.startswith("-")
                     and personnel_num_var[1:].isdigit()
-                ):
+                    ):
                     if contact_num_var.isdigit() or (
                         contact_num_var.startswith("-")
                         and contact_num_var[1:].isdigit()
-                    ):
-                        if first_name_var.replace(" ", "").isalpha():
-                            if last_name_var.replace(" ", "").isalpha():
-                                if mid_name_var.replace(" ", "").isalpha():
-
-                                    self.sql_query.register_personnel(
-                                        personnel_num_var,
-                                        first_name_var,
-                                        last_name_var,
-                                        mid_name_var,
-                                        contact_num_var,
-                                        address_var,
-                                        personnel_type_var,
-                                    )
-                                    img_name = personnel_num_var
-                                    os.rename(
-                                        self.img_path + "/000000000.jpg",
-                                        self.img_path + "/" + img_name + ".jpg",
-                                    )
-                                    messbx.showinfo(
-                                        "Success",
-                                        "The personnel record has been registered successfully.",
-                                    )
-                                else:
-                                    messbx.showwarning(
-                                        "Warning",
-                                        "The input for the firstname or lastname or middlename is not a valid character.",
-                                    )
-                            else:
-                                messbx.showwarning(
-                                    "Warning",
-                                    "The input for the firstname or lastname or middlename is not a valid character.",
+                        and len(contact_num_var) == 11
+                        ):
+                        if (first_name_var.replace(" ", "").isalpha() and 
+                            last_name_var.replace(" ", "").isalpha() and 
+                            mid_name_var.replace(" ", "").isalpha() 
+                            ):
+                            if register == True:
+                                self.sql_query.register_personnel(
+                                    personnel_num_var,
+                                    first_name_var,
+                                    last_name_var,
+                                    mid_name_var,
+                                    contact_num_var,
+                                    address_var,
+                                    personnel_type_var,
+                                )
+                                img_name = personnel_num_var
+                                os.rename(
+                                    self.img_path + "/000000000.jpg",
+                                    self.img_path + "/" + img_name + ".jpg",
+                                )
+                                messbx.showinfo(
+                                    "Success",
+                                    "The personnel's record has been registered successfully.",
                                 )
                         else:
                             messbx.showwarning(
                                 "Warning",
-                                "The input for the firstname or lastname or middlename is not a valid character.",
+                                "There is an invalid character in the input for the name of the personnel.",
                             )
                     else:
                         messbx.showwarning(
                             "Warning",
-                            "The provided input for the contact number is not a valid numeric value.",
+                            "The provided input for the contact number is "+
+                            "invalid and does not correspond to a valid number.",
                         )
                 else:
                     messbx.showwarning(
                         "Warning",
-                        "The provided input for the personnel number is not a valid numeric value.",
+                        "The provided input for the personnel number is "+
+                        "invalid and does not correspond to a valid number.",
                     )
             else:
                 messbx.showwarning("Warning", "The input contains special characters.")
@@ -340,9 +334,11 @@ class RegisterPersonnelApp:
                 + client_no
                 + " has already been assigned/taken.",
             )
-            self.register = False
+            register = False
+            return register
         else:
-            self.register = True
+            register = True
+            return register
 
         # this function will display the image into the canvas
 

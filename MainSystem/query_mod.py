@@ -1,12 +1,12 @@
 import pyodbc as odbc
-
+import datetime as datetime 
 
 class dbQueries:
     def __init__(self, master=None):
         # "DESKTOP-DG7AK17\SQLEXPRESS"
         # "STAR-PLATINUM\SQLEXPRESS01"
         # "DESKTOP-3MNAAKG\SQLEXPRESS"
-        self.server = "DESKTOP-DG7AK17\SQLEXPRESS"
+        self.server = "STAR-PLATINUM\SQLEXPRESS01"
         self.database = "seeku_database"
         self.username = ""
         self.password = ""
@@ -125,12 +125,6 @@ class dbQueries:
         self.connection.commit()
         print(f"Personnel {personnel_number} has been updated successfully!")
 
-    def create_personnel_report(self):
-        query = (
-            f"INSERT INTO tbl_personnel_report SELECT * FROM tbl_personnel_attendance"
-        )
-        self.cursor.execute(query)
-
     def delete_personnel_status(self, personnel_status, personnel_number):
         query = f"UPDATE tbl_personnel SET personnel_status = IsDeleted WHERE personnel_no = ?"
         self.cursor.execute(query, (personnel_status, personnel_status))
@@ -210,10 +204,6 @@ class dbQueries:
         self.connection.commit()
         print(f"Personnel {visitor_number} has been updated successfully!")
 
-    def create_visitor_report(self):
-        query = f"INSERT INTO tbl_visitor_report SELECT * FROM tbl_visitor_attendance"
-        self.cursor.execute(query)
-
     # ano tong delete visitor status
     def delete_visitor_status(self, visitor_status, visitor_number):
         query = (
@@ -287,10 +277,6 @@ class dbQueries:
         print(f"Student {student_number} has been updated successfully!")
 
         # CREATE MORE
-
-    def create_student_report(self):
-        query = f"INSERT INTO tbl_student_report SELECT * FROM tbl_student_attendance"
-        self.cursor.execute(query)
 
     def student_attendance_record(
         self,
@@ -1050,6 +1036,12 @@ class dbQueries:
 
     # USER-TABLE-QUERY--------------------------------------------------------------------------------------------------------------
     def default_user_if_not_exist(self):
+        reset_startingid_query = (
+            f"DBCC CHECKIDENT ('tbl_student_attendance', RESEED, 0)"
+        )
+        self.cursor.execute(reset_startingid_query)
+        self.connection.commit()
+
         query = f"SELECT * FROM tbl_user"
         self.cursor.execute(query)
         row = self.cursor.fetchone()
@@ -1075,9 +1067,54 @@ class dbQueries:
             )
             self.connection.commit()
 
+    def create_personnel_report(self):
+        query = (
+            f"INSERT INTO tbl_personnel_report SELECT * FROM tbl_personnel_attendance"
+        )
+        self.cursor.execute(query)
+        self.connection.commit()
+
+        query2 = (
+            f"Delete FROM tbl_personnel_attendance"
+        )
+        self.cursor.execute(query2)
+        self.connection.commit()
+
+
+    def create_visitor_report(self):
+        query = f"INSERT INTO tbl_visitor_report SELECT * FROM tbl_visitor_attendance"
+        self.cursor.execute(query)
+        self.connection.commit()
+
+        query2 = (
+            f"Delete FROM tbl_visitor_attendance"
+        )
+        self.cursor.execute(query2)
+        self.connection.commit()
+
+    def create_student_report(self):
+        query = f"INSERT INTO tbl_student_report SELECT * FROM tbl_student_attendance"
+        self.cursor.execute(query)
+        self.connection.commit()
+
+        query2 = (
+            f"Delete FROM tbl_student_attendance"
+        )
+        self.cursor.execute(query2)
+        self.connection.commit()
+
     # SETTINGS-TABLE-QUERY--------------------------------------------------------------------------------------------------------------
 
     def default_settings_if_not_exist(self):
+        table_name ="tbl_setting"
+        self.cursor.execute(f'SET IDENTITY_INSERT {table_name} ON')
+        self.connection.commit()
+        reset_startingid_query = (
+            f"DBCC CHECKIDENT ('tbl_setting', RESEED, 0)"
+        )
+        self.cursor.execute(reset_startingid_query)
+        self.connection.commit()
+
         query = f"SELECT * FROM tbl_setting"
         self.cursor.execute(query)
         row = self.cursor.fetchone()
@@ -1090,21 +1127,27 @@ class dbQueries:
             print(condition)
 
         if not condition:
-
+            setting_no = 1
             pass_length = 6
             log_attempt = 5
-            sem_end = "2022-12-30"
+            sem_end = "2020-01-01"
             facerecog_filepath = "C:\\Users\\JC Austria\\Documents\\GitHub\\Face-Recognition-Attendance-Monitoring-System\\MainSystem\\DataSet"
-            facerecog_date = "2022-12-30"
+            facerecog_date = "2020-01-01"
             add_visitor_filepath = "C:\\Users\\JC Austria\\Documents\\GitHub\\Face-Recognition-Attendance-Monitoring-System\\MainSystem\\DataSet\\Guest"
-            add_visitor_date = "2022-12-30"
+            add_visitor_date = "2020-01-01"
+            today_date = "2020-01-01"
+            date_set_fldr = "DataSet"
+            tolerance_lvl = 0.5
+            timeout_time = datetime.datetime.strptime("10:30:00", "%H:%M:%S")
             query2 = (
-                f"INSERT INTO tbl_setting (password_length, login_attempt,sem_end_setting,"
-                + "face_recog_file_path,face_recog_date,av_file_path,av_date) VALUES (?, ?, ? ,? ,? ,? ,?)"
+                f"INSERT INTO tbl_setting (setting_no, password_length, login_attempt,sem_end_setting,"
+                + "face_recog_file_path,face_recog_date,av_file_path,av_date, today_date, "
+                + "data_set_fldr,tolerance_lvl,timeout_time) VALUES (?,?, ?, ? ,?, ?, ?, ? ,? ,? ,? ,?)"
             )
             self.cursor.execute(
                 query2,
-                (
+                ( 
+                    setting_no,
                     pass_length,
                     log_attempt,
                     sem_end,
@@ -1112,8 +1155,14 @@ class dbQueries:
                     facerecog_date,
                     add_visitor_filepath,
                     add_visitor_date,
+                    today_date,
+                    date_set_fldr,
+                    tolerance_lvl,
+                    timeout_time
                 ),
             )
+            self.connection.commit()
+            self.cursor.execute(f'SET IDENTITY_INSERT {table_name} OFF')
             self.connection.commit()
 
     def get_password_length(self):
@@ -1225,6 +1274,21 @@ class dbQueries:
             return False
         # get date
 
+    # AV-----------------------------------------
+    def get_time_out_time(self):
+        query = f"SELECT timeout_time FROM tbl_setting WHERE setting_no = 1"
+        self.cursor.execute(query)
+        row = self.cursor.fetchone()[0]
+        if row:
+            return row
+        else:
+            return False
+
+    def set_time_out_time(self, timeout_time):
+        query = f"UPDATE tbl_setting SET timeout_time = ? WHERE setting_no = 1"
+        self.cursor.execute(query, (timeout_time))
+        self.connection.commit()
+
     def get_today_date(self):
         query = f"SELECT today_date FROM tbl_setting WHERE setting_no = 1"
         self.cursor.execute(query)
@@ -1235,21 +1299,21 @@ class dbQueries:
             return False
 
     def set_today_date(self, today_date):
-        query = f"SELECT today_date FROM tbl_setting WHERE setting_no = 1"
+        query = f"UPDATE tbl_setting SET today_date = ? WHERE setting_no = 1"
         self.cursor.execute(query, (today_date))
         self.connection.commit()
 
     def update_student_time_out(self, time_out):
         query = f"UPDATE tbl_student_attendance SET student_time_out = ? WHERE student_time_out IS NULL"
-        self.cursor.execute(query(time_out))
+        self.cursor.execute(query,(time_out))
 
     def update_personnel_time_out(self, time_out):
         query = f"UPDATE tbl_personnel_attendance SET personnel_time_out = ? WHERE personnel_time_out IS NULL"
-        self.cursor.execute(query(time_out))
+        self.cursor.execute(query,(time_out))
 
     def update_visitor_time_out(self, time_out):
         query = f"UPDATE tbl_visitor_attendance SET visitor_time_out = ? WHERE visitor_time_out IS NULL"
-        self.cursor.execute(query(time_out))
+        self.cursor.execute(query,(time_out))
 
     def get_data_set_fldr(self):
         query = f"SELECT data_set_fldr FROM tbl_setting WHERE setting_no = 1"
@@ -1261,7 +1325,7 @@ class dbQueries:
             return False
 
     def set_data_set_fldr(self, data_set_fldr):
-        query = f"SELECT data_set_fldr FROM tbl_setting WHERE setting_no = 1"
+        query = f"UPDATE tbl_setting SET data_set_fldr = ? WHERE setting_no = 1"
         self.cursor.execute(query, (data_set_fldr))
         self.connection.commit()
 
@@ -1275,11 +1339,9 @@ class dbQueries:
             return False
 
     def set_tolerance_lvl(self, tolerance_lvl):
-        query = f"SELECT tolerance_lvl FROM tbl_setting WHERE setting_no = 1"
+        query = f"UPDATE tbl_setting SET tolerance_lvl = ? WHERE setting_no = 1"
         self.cursor.execute(query, (tolerance_lvl))
         self.connection.commit()
-
-    # AV-----------------------------------------
 
     def backup_database(self, path, date_time):
         self.backup_file_path = path + "/" + date_time + "_database_backup.bacpac"

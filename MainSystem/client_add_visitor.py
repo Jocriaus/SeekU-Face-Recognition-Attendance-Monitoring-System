@@ -5,6 +5,7 @@ import query_mod as qry
 import PIL.Image, PIL.ImageTk
 import os
 import sys
+import re
 
 
 class AddVisitorApp:
@@ -200,27 +201,65 @@ class AddVisitorApp:
         first_name_var = self.first_name_entry.get()
         contact_num_var = self.contact_no_entry.get()
         address_var = self.address_entry.get()
-        if (len(last_name_var) != 0 and
-            len(first_name_var) != 0 and
-            len(contact_num_var) != 0 and
-            len(address_var) != 0  
+        if (
+            len(last_name_var) != 0
+            and len(first_name_var) != 0
+            and len(contact_num_var) != 0
+            and len(address_var) != 0
             ):
-            self.sql_query.register_visitor(
+            input_values = [
                 first_name_var,
                 last_name_var,
                 contact_num_var,
                 address_var,
-            )
+            ]
+            concatenated_inputs = "".join(input_values)
+            pattern = re.compile("[^a-zA-Z0-9 .,]")
 
-            img_name = self.sql_query.capture_visitor_image(
-                first_name_var, last_name_var, contact_num_var, address_var)
-
-            print(img_name)
-
-            os.rename(self.img_path + "/000000000.jpg",self.img_path+"/" +str(img_name[0])+ ".jpg")
-
+            if not pattern.search(concatenated_inputs):
+                if  contact_num_var.isdigit() or (
+                    contact_num_var.startswith("-") and contact_num_var[1:].isdigit()
+                    ):
+                    if (first_name_var.replace(" ", "").isalpha() and 
+                        last_name_var.replace(" ", "").isalpha()
+                        ):
+                        self.sql_query.register_visitor(
+                            first_name_var,
+                            last_name_var,
+                            contact_num_var,
+                            address_var,
+                        )
+                        img_name = self.sql_query.capture_visitor_image(
+                            first_name_var,
+                            last_name_var,
+                            contact_num_var,
+                            address_var,
+                        )
+                        os.rename(
+                            self.img_path + "/000000000.jpg",
+                            self.img_path + "/" + str(img_name[0]) + ".jpg",
+                        )
+                        messbx.showinfo(
+                            "Success",
+                            "The visitor's record has been successfully updated.",
+                        )
+                    else:
+                        messbx.showwarning(
+                            "Warning",
+                            "There is an invalid character in the input for the name the visitor.",
+                        )
+                else:
+                    messbx.showwarning(
+                        "Warning",
+                        "The provided input for the contact number is "+
+                        "invalid and does not correspond to a valid number.",
+                    )
+            else:
+                messbx.showwarning("Warning", "The input contains special characters.")
         else:
-            messbx.showwarning("Warning", "Kindly ensure all fields are filled by entering a value.")
+            messbx.showwarning(
+                "Warning", "Kindly ensure all fields are filled by entering a value."
+            )
         """
         Save to database
         Get the primary key

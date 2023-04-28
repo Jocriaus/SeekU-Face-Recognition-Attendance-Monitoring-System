@@ -10,7 +10,7 @@ class TreeviewGUI:
         # "DESKTOP-DG7AK17\SQLEXPRESS"
         # "STAR-PLATINUM\SQLEXPRESS01"
         # "DESKTOP-3MNAAKG\SQLEXPRESS"
-        self.server = "DESKTOP-DG7AK17\SQLEXPRESS"
+        self.server = "STAR-PLATINUM\SQLEXPRESS01"
         self.database = "seeku_database"
         self.username = ""
         self.password = ""
@@ -1471,3 +1471,18 @@ class TreeviewGUI:
         for child in self.user_tree.get_children():
             self.user_tree.delete(child)
         self.populate_user_treeview(status)
+
+    def refresh_student_att_treeview(self):
+        for child in self.student_attendance_tree.get_children():
+            self.student_attendance_tree.delete(child)
+        self.populate_personnel_attendance_treeview()
+
+    def refresh_personnel_att_treeview(self):
+        for child in self.personnel_attendance_tree.get_children():
+            self.personnel_attendance_tree.delete(child)
+        self.populate_personnel_attendance_treeview()
+
+    def refresh_visitor_att_treeview(self):
+        for child in self.visitor_attendance_tree.get_children():
+            self.visitor_attendance_tree.delete(child)
+        self.populate_personnel_attendance_treeview()

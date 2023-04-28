@@ -1205,14 +1205,13 @@ class AdminHomeApp:
 
     def add_clients_logic(self):
         # if self.clients_man_var.get() == "Manage Students":
-        self.hide_this_window()
         folder = self.select_folder()
         if folder:
             aCA.CameraApp(
                 self.video_source,self.login_window,self.sel_cam_window, 
                 self.administrator_app,folder, self.clients_man_var.get(), 
                 self.refresh_clients_logic)
-    
+        self.hide_this_window()
         
 
     def edit_clients_logic(self):
@@ -1373,12 +1372,15 @@ class AdminHomeApp:
     # selected option on the option menu for the report section
     def change_layout_attendance(self):
         if self.clients_at_var.get() == "Students Attendance":
+            self.treeview.refresh_student_att_treeview()
             self.treeview.student_attendance_treeview(self.admin_at_sec2_frame)
 
         if self.clients_at_var.get() == "Personnels Attendance":
+            self.treeview.refresh_personnel_att_treeview()
             self.treeview.personnel_attendance_treeview(self.admin_at_sec2_frame)
 
         if self.clients_at_var.get() == "Visitors Attendance":
+            self.treeview.refresh_visitor_att_treeview()
             self.treeview.visitor_attendance_treeview(self.admin_at_sec2_frame)
 
     def search_attendance_info_logic(self):
@@ -1391,6 +1393,12 @@ class AdminHomeApp:
         if self.clients_at_var.get() == "Visitors Attendance":
             data = self.search_at_entry.get()
             self.treeview.do_search_visitor_attendance(data)
+
+    def refresh_attendance_treeviews(self):
+        self.treeview.refresh_student_att_treeview()
+        self.treeview.refresh_personnel_att_treeview()
+        self.treeview.refresh_visitor_att_treeview()
+
 
     # ATTENDANCE-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
     # REPORT-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
@@ -1575,6 +1583,7 @@ class AdminHomeApp:
     # ATTENDANCE-COMMANDS---------------------------------------------------------------------------------------------------------------
 
     def attendance_appear(self, event=None):
+        self.refresh_attendance_treeviews()
         self.attendance_appear_logic()
 
     def open_diff_attendance(self, event=None):

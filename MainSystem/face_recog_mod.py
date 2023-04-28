@@ -8,7 +8,7 @@ import time
 import mediapipe as mp
 
 class FaceRecognition:
-    def __init__(self, video_source, file_path, xsize,ysize):    
+    def __init__(self, video_source,tolerance, file_path, xsize,ysize):    
     
     #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.recognized = False

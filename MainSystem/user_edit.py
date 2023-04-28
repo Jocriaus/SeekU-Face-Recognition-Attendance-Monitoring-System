@@ -226,59 +226,54 @@ class EditUserApp:
         win.geometry("{0}x{1}+{2}+{3}".format(w_req, h_req, x, y))
 
     def update_user(self):
-        self.update = True
-        self.username_var = self.username_entry.get()
-        self.password_var = self.password_entry.get()
-        self.password_check(self.password_var)
-        self.firstname_var = self.first_name_entry.get()
-        self.lastname_var = self.last_name_entry.get()
-        self.user_role_variable = self.user_role_var.get()
-        self.user_status_var = self.stat_var.get()
-
+        update = True
+        username_var = self.username_entry.get()
+        password_var = self.password_entry.get()
+        firstname_var = self.first_name_entry.get()
+        lastname_var = self.last_name_entry.get()
+        user_role_variable = self.user_role_var.get()
+        user_status_var = self.stat_var.get()
+        update = self.password_check(self.password_var)
         if (
-            len(self.username_var) != 0
-            and len(self.password_var) != 0
-            and len(self.firstname_var) != 0
-            and len(self.lastname_var) != 0
-            and len(self.user_role_variable) != 0
-            and len(self.user_status_var) != 0
+            len(username_var) != 0
+            and len(password_var) != 0
+            and len(firstname_var) != 0
+            and len(lastname_var) != 0
+            and len(user_role_variable) != 0
+            and len(user_status_var) != 0
         ):
             input_values = [
-                self.username_var,
-                self.password_var,
-                self.firstname_var,
-                self.lastname_var,
-                self.user_role_variable,
-                self.user_status_var,
+                username_var,
+                password_var,
+                firstname_var,
+                lastname_var,
+                user_role_variable,
+                user_status_var,
             ]
 
             concatenated_inputs = "".join(input_values)
             pattern = re.compile("[^a-zA-Z0-9 \-@.,]")
             if not pattern.search(concatenated_inputs):
-                if self.firstname_var.replace(" ", "").isalpha():
-                    if self.lastname_var.replace(" ", "").isalpha():
-                        if self.update == True:
-                            self.sql_query.update_user(
-                                self.username_var,
-                                self.password_var,
-                                self.firstname_var,
-                                self.lastname_var,
-                                self.user_role_variable,
-                                self.user_status_var,
-                            )
-                            messbx.showinfo(
-                                "Success",
-                                "The user record has been registered successfully.",
-                            )
-                    else:
-                        messbx.showwarning(
-                            "Warning",
-                            "The input for the firstname or lastname is not a valid character.",
+                if (firstname_var.replace(" ", "").isalpha() and
+                    lastname_var.replace(" ", "").isalpha()
+                    ):
+                    if update:
+                        self.sql_query.update_user(
+                            username_var,
+                            password_var,
+                            firstname_var,
+                            lastname_var,
+                            user_role_variable,
+                            user_status_var,
+                        )
+                        messbx.showinfo(
+                            "Success",
+                            "The user record has been registered successfully.",
                         )
                 else:
                     messbx.showwarning(
                         "Warning",
-                        "The input for the firstname or lastname is not a valid character.",
+                        "There is an invalid character in the input for the name of the user.",
                     )
             else:
                 messbx.showwarning("Warning", "The input contains special characters.")
@@ -293,9 +288,11 @@ class EditUserApp:
             messbx.showwarning(
                 "Warning", "The password length limit is " + str(limit) + "."
             )
-            self.update = False
+            update = False
+            return update
         else:
-            self.update = True
+            update = True
+            return update
 
     # enables and disables entry
     def edit_user(self, event=None):

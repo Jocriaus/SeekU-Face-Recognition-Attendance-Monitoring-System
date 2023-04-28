@@ -389,7 +389,7 @@ class EditStudentApp:
             and len(student_program_var) != 0
             and len(student_section_var) != 0
             and len(student_address_var) != 0
-        ):
+            ):
             input_values = [
                 student_num_var,
                 student_firstname_var,
@@ -402,64 +402,60 @@ class EditStudentApp:
                 student_status_var,
             ]
             concatenated_inputs = "".join(input_values)
-            pattern = re.compile("[^a-zA-Z0-9 \-@.,]")
+            pattern = re.compile("[^a-zA-Z0-9 .,]")
 
             if not pattern.search(concatenated_inputs):
                 if student_num_var.isdigit() or (
                     student_num_var.startswith("-") and student_num_var[1:].isdigit()
-                ):
+                    ):
                     if student_contact_num_var.isdigit() or (
                         student_contact_num_var.startswith("-")
                         and student_contact_num_var[1:].isdigit()
-                    ):
-                        if student_firstname_var.replace(" ", "").isalpha():
-                            if student_lastname_var.replace(" ", "").isalpha():
-                                if student_middlename_var.replace(" ", "").isalpha():
-                                    self.sql_query.update_student(
-                                        student_num_var,
-                                        student_firstname_var,
-                                        student_lastname_var,
-                                        student_middlename_var,
-                                        student_program_var,
-                                        student_section_var,
-                                        student_contact_num_var,
-                                        student_address_var,
-                                        student_status_var,
-                                    )
-                                    if os.path.exists(self.img_path + "/000000000.jpg"):
-                                        img_name = self.student_number
-                                        os.rename(
-                                            self.img_path + "/" + img_name + ".jpg",
-                                            self.img_path + "/000000000.jpg",
-                                        )
-                                    messbx.showinfo(
-                                        "Success",
-                                        "The student record has been edited successfully.",
-                                    )
-                                else:
-                                    messbx.showwarning(
-                                        "Warning",
-                                        "The input for the firstname or lastname or middlename is not a valid character.",
-                                    )
-                            else:
-                                messbx.showwarning(
-                                    "Warning",
-                                    "The input for the firstname or lastname or middlename is not a valid character.",
+                        and len(student_contact_num_var) == 11
+                        ):
+                        if (student_firstname_var.replace(" ", "").isalpha() and 
+                            student_lastname_var.replace(" ", "").isalpha() and 
+                            student_middlename_var.replace(" ", "").isalpha() and 
+                            student_program_var.replace(" ", "").isalpha()):
+                            
+                            self.sql_query.update_student(
+                                student_num_var,
+                                student_firstname_var,
+                                student_lastname_var,
+                                student_middlename_var,
+                                student_program_var,
+                                student_section_var,
+                                student_contact_num_var,
+                                student_address_var,
+                                student_status_var,
+                            )
+                            if os.path.exists(self.img_path + "/000000000.jpg"):
+                                img_name = self.student_number
+                                os.rename(
+                                    self.img_path + "/" + img_name + ".jpg",
+                                    self.img_path + "/000000000.jpg",
                                 )
+                            messbx.showinfo(
+                                "Success",
+                                "The student's record has been successfully updated.",
+                            )
+
                         else:
                             messbx.showwarning(
                                 "Warning",
-                                "The input for the firstname or lastname or middlename is not a valid character.",
+                                "There is an invalid character in the input for the name or program of the student.",
                             )
                     else:
                         messbx.showwarning(
                             "Warning",
-                            "The input for the student number or contact number is not a valid number.",
+                            "The provided input for the contact number is "+
+                            "invalid and does not correspond to a valid number.",
                         )
                 else:
                     messbx.showwarning(
                         "Warning",
-                        "The input for the student number or contact number is not a valid number.",
+                        "The provided input for the student number is "+
+                        "invalid and does not correspond to a valid number.",
                     )
             else:
                 messbx.showwarning("Warning", "The input contains special characters.")

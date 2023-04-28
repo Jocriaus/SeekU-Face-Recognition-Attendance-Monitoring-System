@@ -193,6 +193,7 @@ class HomeApp:
 
     # this command will open the attendance module
     def attendance_press(self, event=None):
+        tolerance = self.sql_query.get_tolerance_lvl()
         folder_selected = ""
         self.hide_this_window()
         current_date = datetime.date.today().strftime("%Y-%m-%d")
@@ -210,7 +211,7 @@ class HomeApp:
                 self.sql_query.set_fr_path_file_date(current_date)
         # add for handling the select folder function if nothing is chosen.
         sS.SplashScreenWin(
-            self.video_source,self.login_window,self.sel_cam_window, self.home_app, folder_selected )
+            self.video_source,self.login_window,self.sel_cam_window, self.home_app,tolerance, folder_selected )
         
     # this command will open the add visitor module
     def add_visitors_press(self, event=None):

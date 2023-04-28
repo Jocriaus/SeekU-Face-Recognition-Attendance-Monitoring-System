@@ -236,9 +236,9 @@ class RegisterStudentApp:
         self.register_student_app.destroy()
 
     def register_student_function(self):
-        self.register = True
+        register = True
         student_num_var = self.student_num_entry.get()
-        self.client_no_check(student_num_var)
+        register = self.client_no_check(student_num_var)
         first_name_var = self.first_name_entry.get()
         last_name_var = self.last_name_entry.get()
         mid_name_var = self.mid_name_entry.get()
@@ -256,7 +256,7 @@ class RegisterStudentApp:
             and len(program_var) != 0
             and len(section_var) != 0
             and len(address_var) != 0
-        ):
+            ):
             input_values = [
                 student_num_var,
                 first_name_var,
@@ -268,82 +268,79 @@ class RegisterStudentApp:
                 address_var,
             ]
             concatenated_inputs = "".join(input_values)
-            pattern = re.compile("[^a-zA-Z0-9 \-@.,]")
+            pattern = re.compile("[^a-zA-Z0-9 .,]")
             if not pattern.search(concatenated_inputs):
                 if student_num_var.isdigit() or (
                     student_num_var.startswith("-") and student_num_var[1:].isdigit()
-                ):
+                    ):
                     if contact_num_var.isdigit() or (
                         contact_num_var.startswith("-")
                         and contact_num_var[1:].isdigit()
-                    ):
-                        if first_name_var.replace(" ", "").isalpha():
-                            if last_name_var.replace(" ", "").isalpha():
-                                if mid_name_var.replace(" ", "").isalpha():
-                                    if self.register == True:
-                                        self.sql_query.register_student(
-                                            student_num_var,
-                                            first_name_var,
-                                            last_name_var,
-                                            mid_name_var,
-                                            program_var,
-                                            section_var,
-                                            contact_num_var,
-                                            address_var,
-                                        )
-                                        img_name = student_num_var
-                                        os.rename(
-                                            self.img_path + "/000000000.jpg",
-                                            self.img_path + "/" + img_name + ".jpg",
-                                        )
-                                        messbx.showinfo(
-                                            "Success",
-                                            "The student record has been registered successfully.",
-                                        )
-                                else:
-                                    messbx.showwarning(
-                                        "Warning",
-                                        "The input for the firstname or lastname or middlename is not a valid character.",
-                                    )
-                            else:
-                                messbx.showwarning(
-                                    "Warning",
-                                    "The input for the firstname or lastname or middlename is not a valid character.",
+                        and len(contact_num_var) == 11
+                        ):
+                        if (first_name_var.replace(" ", "").isalpha() and 
+                            last_name_var.replace(" ", "").isalpha() and 
+                            mid_name_var.replace(" ", "").isalpha() and 
+                            program_var.replace(" ", "").isalpha()):
+
+                            if register == True:
+                                self.sql_query.register_student(
+                                    student_num_var,
+                                    first_name_var,
+                                    last_name_var,
+                                    mid_name_var,
+                                    program_var,
+                                    section_var,
+                                    contact_num_var,
+                                    address_var,
                                 )
+                                img_name = student_num_var
+                                os.rename(
+                                    self.img_path + "/000000000.jpg",
+                                    self.img_path + "/" + img_name + ".jpg",
+                                )
+                                messbx.showinfo(
+                                    "Success",
+                                    "The student's record has been registered successfully.",
+                                )
+
                         else:
                             messbx.showwarning(
                                 "Warning",
-                                "The input for the firstname or lastname or middlename is not a valid character.",
+                                "There is an invalid character in the input for the name or program of the student.",
                             )
                     else:
                         messbx.showwarning(
                             "Warning",
-                            "The provided input for the contact number is not a valid numeric value.",
+                            "The provided input for the contact number is "+
+                            "invalid and does not correspond to a valid number.",
                         )
                 else:
                     messbx.showwarning(
                         "Warning",
-                        "The provided input for the student number is not a valid numeric value.",
+                        "The provided input for the student number is "+
+                        "invalid and does not correspond to a valid number.",
                     )
             else:
                 messbx.showwarning("Warning", "The input contains special characters.")
         else:
             messbx.showwarning(
-                "Warning",
-                "Kindly ensure all fields are filled by entering a value.",
+                "Warning", "Kindly ensure all fields are filled by entering a value."
             )
 
     def client_no_check(self, client_no):
         if self.sql_query.check_username(client_no):
             messbx.showwarning(
                 "Warning",
-                "The personnel number "
+                "The student number "
                 + client_no
                 + " has already been assigned/taken.",
             )
-            self.register = False
+            register = False
+            return register
         else:
-            self.register = True
+            register = True
+            return register
 
         # this function will display the image into the canvas
 

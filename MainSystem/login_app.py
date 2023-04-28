@@ -3,6 +3,7 @@ import tkinter.messagebox as messbx
 import query_mod as qry
 import client_cam as cC
 import time
+import datetime
 import sys
 
 
@@ -12,6 +13,7 @@ class LoginApp:
         self.sql_query = qry.dbQueries()
         self.sql_query.default_settings_if_not_exist()
         self.sql_query.default_user_if_not_exist()
+        self.current_date = datetime.datetime.now().strftime("%Y-%m-%d")
         self.user = "None"
         self.locked = False
         # will be used for account locked
@@ -113,12 +115,14 @@ class LoginApp:
         # Contains-the-logo-and-logotype---------------------------------------------------------------------------------------------------------
         # this protocol will do a function after pressing the close button.
         self.log_in_app.protocol("WM_DELETE_WINDOW", self.exit_program)
-
+        self.turnin_report()
         # Main widget
         self.mainwindow = self.log_in_app
 
         # refer to the function's comments
         self.center(self.mainwindow)
+        self.mainwindow.attributes("-topmost", True)
+        self.mainwindow.attributes("-topmost", False)
 
     # -----------------------------------------------------------------------------------------
 
@@ -216,6 +220,19 @@ class LoginApp:
             self.init_time = 0
             self.locked = False
             self.tries = self.sql_query.get_login_attempts()
+
+    def turnin_report(self):
+        if self.current_date != self.sql_query.get_today_date():
+            timeout = self.sql_query.get_time_out_time()
+            self.sql_query.update_personnel_time_out(timeout)
+            self.sql_query.update_student_time_out(timeout)
+            self.sql_query.update_visitor_time_out(timeout)
+
+            self.sql_query.create_personnel_report()
+            self.sql_query.create_student_report()
+            self.sql_query.create_visitor_report()
+            self.sql_query.set_today_date(self.current_date)
+
 
     # this function will center the window
     def center(self, win):

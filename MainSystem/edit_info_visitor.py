@@ -318,7 +318,7 @@ class EditVisitorApp:
             and len(first_name_var) != 0
             and len(contact_num_var) != 0
             and len(address_var) != 0
-        ):
+            ):
             input_values = [
                 first_name_var,
                 last_name_var,
@@ -326,46 +326,45 @@ class EditVisitorApp:
                 address_var,
             ]
             concatenated_inputs = "".join(input_values)
-            pattern = re.compile("[^a-zA-Z0-9 \-@.,]")
+            pattern = re.compile("[^a-zA-Z0-9 .,]")
 
             if not pattern.search(concatenated_inputs):
                 if contact_num_var.isdigit() or (
-                    contact_num_var.startswith("-") and contact_num_var[1:].isdigit()
-                ):
-                    if first_name_var.replace(" ", "").isalpha():
-                        if last_name_var.replace(" ", "").isalpha():
-                            self.sql_query.update_visitor(
-                                self.visitor_number,
-                                first_name_var,
-                                last_name_var,
-                                contact_num_var,
-                                address_var,
-                                visitor_status_var,
+                    contact_num_var.startswith("-")
+                    and contact_num_var[1:].isdigit()
+                    and len(contact_num_var) == 11
+                    ):
+                    if (first_name_var.replace(" ", "").isalpha() and 
+                        last_name_var.replace(" ", "").isalpha()
+                        ):
+                        self.sql_query.update_visitor(
+                            self.visitor_number,
+                            first_name_var,
+                            last_name_var,
+                            contact_num_var,
+                            address_var,
+                            visitor_status_var,
+                        )
+                        if os.path.exists(self.img_path + "/000000000.jpg"):
+                            img_name = self.visitor_number
+                            os.rename(
+                                self.img_path + "/" + img_name + ".jpg",
+                                self.img_path + "/000000000.jpg",
                             )
-                            if os.path.exists(self.img_path + "/000000000.jpg"):
-                                img_name = self.visitor_number
-                                os.rename(
-                                    self.img_path + "/" + img_name + ".jpg",
-                                    self.img_path + "/000000000.jpg",
-                                )
-                            messbx.showinfo(
-                                "Success",
-                                "The visitor record has been edited successfully.",
-                            )
-                        else:
-                            messbx.showwarning(
-                                "Warning",
-                                "The input for the firstname or lastname is not a valid character.",
-                            )
+                        messbx.showinfo(
+                            "Success",
+                            "The visitor's record has been successfully updated.",
+                        )
                     else:
                         messbx.showwarning(
                             "Warning",
-                            "The input for the firstname or lastname is not a valid character.",
+                            "There is an invalid character in the input for the name the visitor.",
                         )
                 else:
                     messbx.showwarning(
                         "Warning",
-                        "The input for the contact number is not a valid number.",
+                        "The provided input for the contact number is "+
+                        "invalid and does not correspond to a valid number.",
                     )
             else:
                 messbx.showwarning("Warning", "The input contains special characters.")
