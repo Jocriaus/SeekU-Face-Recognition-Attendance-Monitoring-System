@@ -159,16 +159,29 @@ class CreateUserApp:
             concatenated_inputs = "".join(input_values)
             pattern = re.compile("[^a-zA-Z0-9 \-@.,]")
             if not pattern.search(concatenated_inputs):
-                if self.register == True:
-                    self.sql_query.register_user(
-                        username_var,
-                        password_var,
-                        first_name_var,
-                        last_name_var,
-                        user_role_var,
-                    )
-                    messbx.showinfo(
-                        "Success", "The user record has been registered successfully."
+                if first_name_var.replace(" ", "").isalpha():
+                    if last_name_var.replace(" ", "").isalpha():
+                        if self.register == True:
+                            self.sql_query.register_user(
+                                username_var,
+                                password_var,
+                                first_name_var,
+                                last_name_var,
+                                user_role_var,
+                            )
+                            messbx.showinfo(
+                                "Success",
+                                "The user record has been registered successfully.",
+                            )
+                    else:
+                        messbx.showwarning(
+                            "Warning",
+                            "The input for the firstname or lastname is not a valid character.",
+                        )
+                else:
+                    messbx.showwarning(
+                        "Warning",
+                        "The input for the firstname or lastname is not a valid character.",
                     )
             else:
                 messbx.showwarning("Warning", "The input contains special characters.")

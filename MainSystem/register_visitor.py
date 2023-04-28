@@ -225,23 +225,38 @@ class RegisterVisitorApp:
                 if contact_num_var.isdigit() or (
                     contact_num_var.startswith("-") and contact_num_var[1:].isdigit()
                 ):
-                    self.sql_query.register_visitor(
-                        first_name_var,
-                        last_name_var,
-                        contact_num_var,
-                        address_var,
-                    )
-                    img_name = self.sql_query.capture_visitor_image(
-                        first_name_var, last_name_var, contact_num_var, address_var
-                    )
-                    os.rename(
-                        self.img_path + "/000000000.jpg",
-                        self.img_path + "/" + str(img_name[0]) + ".jpg",
-                    )
-                    messbx.showinfo(
-                        "Success",
-                        "The visitor record has been registered successfully.",
-                    )
+                    if first_name_var.replace(" ", "").isalpha():
+                        if last_name_var.replace(" ", "").isalpha():
+                            self.sql_query.register_visitor(
+                                first_name_var,
+                                last_name_var,
+                                contact_num_var,
+                                address_var,
+                            )
+                            img_name = self.sql_query.capture_visitor_image(
+                                first_name_var,
+                                last_name_var,
+                                contact_num_var,
+                                address_var,
+                            )
+                            os.rename(
+                                self.img_path + "/000000000.jpg",
+                                self.img_path + "/" + str(img_name[0]) + ".jpg",
+                            )
+                            messbx.showinfo(
+                                "Success",
+                                "The visitor record has been registered successfully.",
+                            )
+                        else:
+                            messbx.showwarning(
+                                "Warning",
+                                "The input for the firstname or lastname is not a valid character.",
+                            )
+                    else:
+                        messbx.showwarning(
+                            "Warning",
+                            "The input for the firstname or lastname is not a valid character.",
+                        )
                 else:
                     messbx.showwarning(
                         "Warning",

@@ -255,17 +255,30 @@ class EditUserApp:
             concatenated_inputs = "".join(input_values)
             pattern = re.compile("[^a-zA-Z0-9 \-@.,]")
             if not pattern.search(concatenated_inputs):
-                if self.update == True:
-                    self.sql_query.update_user(
-                        self.username_var,
-                        self.password_var,
-                        self.firstname_var,
-                        self.lastname_var,
-                        self.user_role_variable,
-                        self.user_status_var,
-                    )
-                    messbx.showinfo(
-                        "Success", "The user record has been registered successfully."
+                if self.firstname_var.replace(" ", "").isalpha():
+                    if self.lastname_var.replace(" ", "").isalpha():
+                        if self.update == True:
+                            self.sql_query.update_user(
+                                self.username_var,
+                                self.password_var,
+                                self.firstname_var,
+                                self.lastname_var,
+                                self.user_role_variable,
+                                self.user_status_var,
+                            )
+                            messbx.showinfo(
+                                "Success",
+                                "The user record has been registered successfully.",
+                            )
+                    else:
+                        messbx.showwarning(
+                            "Warning",
+                            "The input for the firstname or lastname is not a valid character.",
+                        )
+                else:
+                    messbx.showwarning(
+                        "Warning",
+                        "The input for the firstname or lastname is not a valid character.",
                     )
             else:
                 messbx.showwarning("Warning", "The input contains special characters.")

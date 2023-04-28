@@ -412,27 +412,45 @@ class EditStudentApp:
                         student_contact_num_var.startswith("-")
                         and student_contact_num_var[1:].isdigit()
                     ):
-                        self.sql_query.update_student(
-                            student_num_var,
-                            student_firstname_var,
-                            student_lastname_var,
-                            student_middlename_var,
-                            student_program_var,
-                            student_section_var,
-                            student_contact_num_var,
-                            student_address_var,
-                            student_status_var,
-                        )
-                        if os.path.exists(self.img_path + "/000000000.jpg"):
-                            img_name = self.student_number
-                            os.rename(
-                                self.img_path + "/" + img_name + ".jpg",
-                                self.img_path + "/000000000.jpg",
+                        if student_firstname_var.replace(" ", "").isalpha():
+                            if student_lastname_var.replace(" ", "").isalpha():
+                                if student_middlename_var.replace(" ", "").isalpha():
+                                    self.sql_query.update_student(
+                                        student_num_var,
+                                        student_firstname_var,
+                                        student_lastname_var,
+                                        student_middlename_var,
+                                        student_program_var,
+                                        student_section_var,
+                                        student_contact_num_var,
+                                        student_address_var,
+                                        student_status_var,
+                                    )
+                                    if os.path.exists(self.img_path + "/000000000.jpg"):
+                                        img_name = self.student_number
+                                        os.rename(
+                                            self.img_path + "/" + img_name + ".jpg",
+                                            self.img_path + "/000000000.jpg",
+                                        )
+                                    messbx.showinfo(
+                                        "Success",
+                                        "The student record has been edited successfully.",
+                                    )
+                                else:
+                                    messbx.showwarning(
+                                        "Warning",
+                                        "The input for the firstname or lastname or middlename is not a valid character.",
+                                    )
+                            else:
+                                messbx.showwarning(
+                                    "Warning",
+                                    "The input for the firstname or lastname or middlename is not a valid character.",
+                                )
+                        else:
+                            messbx.showwarning(
+                                "Warning",
+                                "The input for the firstname or lastname or middlename is not a valid character.",
                             )
-                        messbx.showinfo(
-                            "Success",
-                            "The student record has been edited successfully.",
-                        )
                     else:
                         messbx.showwarning(
                             "Warning",
