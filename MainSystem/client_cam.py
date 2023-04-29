@@ -17,38 +17,36 @@ class ClientCameraSelectApp:
         self.camera_app.resizable(False, False)
         self.camera_app.title("SeekU - Camera")
         self.camera_app.iconbitmap(".\SeekU\SeekU.ico")
-        self.camera_frame = tk.Frame(self.camera_app)
-        self.camera_frame.configure(
-            background="#0072bc", height=200, width=200)
-
-
         # variable for the radiobuttons, to connect them
         self.cam_var = tk.IntVar()
         self.cam_var.set(0)
 
     #Contains-the-radiobuttons-entry-and-button---------------------------------------------------------------------------------------------- 
+        self.camera_frame = tk.Frame(self.camera_app)
+        self.camera_frame.configure(
+            background="#0072bc", height=200, width=200)    
         self.first_cam_radiobutton = tk.Radiobutton(self.camera_frame)
         self.first_cam_radiobutton.configure(
             background="#0072bc",
             font="{arial} 24 {}",
             foreground="#F7FAE9",
-            text='First Camera',
+            text='Camera 1',
             selectcolor='black',
             variable = self.cam_var,
             value = 0,
             command= self.check_selection)
-        self.first_cam_radiobutton.place(anchor="center", x=186, y=250)
+        self.first_cam_radiobutton.place(anchor="center", relx=.5, rely=.42)
         self.second_cam_radiobutton = tk.Radiobutton(self.camera_frame)
         self.second_cam_radiobutton.configure(
             background="#0072bc",
             font="{arial} 24 {}",
             foreground="#F7FAE9",
-            text='Second Camera',
+            text='Camera 2',
             selectcolor='black',
             variable = self.cam_var,
             value = 1,
             command= self.check_selection)
-        self.second_cam_radiobutton.place(anchor="center", x=208, y=300)
+        self.second_cam_radiobutton.place(anchor="center", relx= .5, rely=.5)
         self.ip_cam_radiobutton = tk.Radiobutton(self.camera_frame)
         self.ip_cam_radiobutton.configure(
             background="#0072bc",
@@ -59,7 +57,7 @@ class ClientCameraSelectApp:
             variable = self.cam_var,
             value = 2,
             command= self.check_selection)
-        self.ip_cam_radiobutton.place(anchor="center", x=170, y=350)
+        self.ip_cam_radiobutton.place(anchor="center", relx=0.5, rely=0.58)
         self.ip_cam_entry = tk.Entry(self.camera_frame)
         self.ip_cam_entry.configure(
             background="#F7FAE9",
@@ -68,33 +66,11 @@ class ClientCameraSelectApp:
             state='disabled')
         self.ip_cam_entry.place(
             anchor="center",
-            height=40,
-            relx=0.0,
-            rely=0.0,
-            width=350,
-            x=250,
-            y=400)
-        self.log_out_button = tk.Button(self.camera_frame)
-        self.log_out_button.configure(
-            background="#F7FAE9",
-            default="active",
-            font="{arial} 12 {}",
-            foreground="#0072bc",
-            justify="center",
-            relief="ridge",
-            text='Log out',
-            width=10)
-        self.log_out_button.place(
-            anchor="center",
-            height=35,
-            relheight=0.0,
-            relwidth=0.0,
-            relx=0.0,
-            rely=0.0,
-            width=100,
-            x=75,
-            y=550)
-        self.log_out_button.bind("<ButtonPress>", self.logout_press, add="")
+            relheight=.06,
+            relwidth=.6,
+            relx=0.51,
+            rely=0.675,
+            )
         self.open_button = tk.Button(self.camera_frame)
         self.open_button.configure(
             background="#F7FAE9",
@@ -107,21 +83,18 @@ class ClientCameraSelectApp:
             width=10)
         self.open_button.place(
             anchor="center",
-            height=50,
-            relheight=0.0,
-            relwidth=0.0,
-            relx=0.0,
-            rely=0.0,
-            width=200,
-            x=250,
-            y=475)
+            relheight=0.09,
+            relwidth=0.4,
+            relx=0.5,
+            rely=0.8
+            )
         self.open_button.bind("<ButtonPress>", self.open_press, add="")
         self.camera_frame.place(
             anchor="center",
-            height=600,
-            width=500,
-            x=250,
-            y=300)
+            relheight=1,
+            relwidth=1,
+            relx=.5,
+            rely=.5)
 
     #Contains-the-radiobuttons-entry-and-button----------------------------------------------------------------------------------------------
 
@@ -130,32 +103,49 @@ class ClientCameraSelectApp:
         self.camera_frame2.configure(
             background="#F7FAE9", height=200, width=200)
         self.seeku_logo = tk.Label(self.camera_frame2)
-        self.img_SeekU2 = tk.PhotoImage(file=".\SeekU\SeekU small.png")
+        self.img_SeekUsmall = tk.PhotoImage(file=".\SeekU\SeekU small.png")
         self.seeku_logo.configure(
             background="#F7FAE9",
-            image=self.img_SeekU2)
-        self.seeku_logo.place(anchor="center", relx=0.0, rely=0.0, x=150, y=80)
-        self.app_name_logo = tk.Label(self.camera_frame2)
+            image=self.img_SeekUsmall,
+            text='label1')
+        self.seeku_logo.place(anchor="center", relx=0.3, rely=0.5)
+        self.app_name_label = tk.Label(self.camera_frame2)
         self.img_SeekULogotypemicro = tk.PhotoImage(
             file=".\SeekU\SeekU Logotype micro.png")
-        self.app_name_logo.configure(
+        self.app_name_label.configure(
             background="#F7FAE9",
+            font="{arial black} 40 {}",
             foreground="#0072bc",
             image=self.img_SeekULogotypemicro,
             relief="flat",
             text='SEEK')
-        self.app_name_logo.place(
-            anchor="center",
-            relx=0.05,
-            rely=0.04,
-            x=290,
-            y=80)
+        self.app_name_label.place(anchor="center", relx=0.65, rely=0.5)
         self.camera_frame2.place(
             anchor="center",
-            height=150,
-            width=500,
-            x=250,
-            y=75)
+            relheight=0.25,
+            relwidth=1,
+            relx=.5,
+            rely=.12)
+        self.camera_frame3 = tk.Frame(self.camera_app)
+        self.camera_frame3.configure(
+            background="#F7FAE9", height=200, width=200)        
+        self.logout_label = tk.Label(self.camera_frame3)
+        self.logout_label.config(            
+            background="#F7FAE9",
+            font="{arial} 12 {}",
+            foreground="#0072bc",
+            relief="flat",
+            text='Log out')
+        self.logout_label.place(anchor="center", relx=0.9, rely=0.5)
+        self.logout_label.bind("<1>", self.logout_press, add="")
+        self.logout_label.bind("<Enter>", self.logout_hover, add="")
+        self.logout_label.bind("<Leave>", self.logout_hover_out, add="")
+        self.camera_frame3.place(
+            anchor="center",
+            relheight=0.05,
+            relwidth=1,
+            relx=.5,
+            rely=.975)
     #Contains-the-logo-and-logotype--------------------------------------------------------------------------------------------------------- 
         # this protocol will do a function after pressing the close button.
         self.camera_app.protocol("WM_DELETE_WINDOW", self.exit_program )
@@ -232,3 +222,8 @@ class ClientCameraSelectApp:
     def logout_press(self, event=None):
         self.show_log_window()
 
+    def logout_hover(self, event=None):
+        self.logout_label.configure(font="{arial} 12 {bold}")
+
+    def logout_hover_out(self, event=None):
+        self.logout_label.configure(font="{arial} 12 {}")

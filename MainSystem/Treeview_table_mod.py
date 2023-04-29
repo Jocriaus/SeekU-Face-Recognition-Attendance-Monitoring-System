@@ -1473,16 +1473,19 @@ class TreeviewGUI:
         self.populate_user_treeview(status)
 
     def refresh_student_att_treeview(self):
-        for child in self.student_attendance_tree.get_children():
-            self.student_attendance_tree.delete(child)
+        if not self.student_attendance_tree.selection():
+            for child in self.student_attendance_tree.get_children():
+                self.student_attendance_tree.delete(child)
         self.populate_personnel_attendance_treeview()
 
     def refresh_personnel_att_treeview(self):
-        for child in self.personnel_attendance_tree.get_children():
-            self.personnel_attendance_tree.delete(child)
+        if not self.personnel_attendance_tree.selection():
+            for child in self.personnel_attendance_tree.get_children():
+                self.personnel_attendance_tree.delete(child)
         self.populate_personnel_attendance_treeview()
 
     def refresh_visitor_att_treeview(self):
-        for child in self.visitor_attendance_tree.get_children():
-            self.visitor_attendance_tree.delete(child)
+        if not self.visitor_attendance_tree.selection():
+            for child in self.visitor_attendance_tree.get_children():
+                self.visitor_attendance_tree.delete(child)
         self.populate_personnel_attendance_treeview()

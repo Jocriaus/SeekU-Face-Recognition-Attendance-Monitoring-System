@@ -8,7 +8,7 @@ import sys
 
 
 class ClientFaceRecogApp:
-    def __init__(self, vid_source, login_mod, sel_cam, home_mod, splashs, file_path, fr_vid_mod):
+    def __init__(self, login_mod, sel_cam, home_mod, splashs, fr_vid_mod):
 
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.splash = splashs

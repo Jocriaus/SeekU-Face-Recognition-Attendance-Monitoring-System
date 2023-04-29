@@ -6,7 +6,8 @@ import time
 import datetime
 import sys
 
-
+# test for admin = jus    jus123
+# test for security guard = jc   123
 class LoginApp:
     def __init__(self, master=None):
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
@@ -42,13 +43,13 @@ class LoginApp:
             foreground="#F7FAE9",
             text="Username",
         )
-        self.un_label.place(anchor="center", relx=0.0, rely=0.0, x=150, y=190)
+        self.un_label.place(anchor="center",relx=0.3, rely=0.375)
         self.un_entry = tk.Entry(self.log_in_frame2)
         self.un_entry.configure(
             background="#F7FAE9", font="{arial} 18 {}", foreground="#010303"
         )
         self.un_entry.place(
-            anchor="center", height=40, relx=0.0, rely=0.0, width=320, x=250, y=225
+            anchor="center", relheight=0.08, relwidth=0.64, relx=0.5, rely=0.45
         )
         self.pw_label = tk.Label(self.log_in_frame2)
         self.pw_label.configure(
@@ -58,13 +59,13 @@ class LoginApp:
             justify="left",
             text="Password",
         )
-        self.pw_label.place(anchor="center", relx=0.0, rely=0.0, x=150, y=285)
+        self.pw_label.place(anchor="center", relx=0.3, rely=0.57,)
         self.pw_entry = tk.Entry(self.log_in_frame2)
         self.pw_entry.configure(
             background="#F7FAE9", font="{arial} 18 {}", foreground="#010303", show="•"
         )
         self.pw_entry.place(
-            anchor="center", height=40, relx=0.0, rely=0.0, width=320, x=250, y=320
+            anchor="center", relheight=.08, relwidth=0.64, relx=0.5, rely=0.64
         )
         self.login_button = tk.Button(self.log_in_frame2)
         self.login_button.configure(
@@ -79,14 +80,10 @@ class LoginApp:
         )
         self.login_button.place(
             anchor="center",
-            height=50,
-            relheight=0.0,
-            relwidth=0.0,
-            relx=0.0,
-            rely=0.0,
-            width=200,
-            x=250,
-            y=425,
+            relheight=.12,
+            relwidth=0.3,
+            relx=.5,
+            rely=0.85
         )
         self.login_button.bind("<1>", self.login_press, add="")
         self.log_in_frame2.place(anchor="center", height=500, width=500, x=250, y=250)

@@ -1529,7 +1529,7 @@ class AdminHomeApp:
             try:
                 self.sql_query.set_sem_settings(self.deactivation_date_entry.get())
             except ValueError:
-                messbx.showerror("Error", "The data format is incorrect. Please use the format YYYY-MM-DD.")
+                messbx.showerror("Error", "Please use the format YYYY-MM-DD as the data format provided is incorrect.")
         else:
             messbx.showwarning("Warning", "Kindly ensure all fields are filled by entering a value.")
 
@@ -1583,8 +1583,8 @@ class AdminHomeApp:
     # ATTENDANCE-COMMANDS---------------------------------------------------------------------------------------------------------------
 
     def attendance_appear(self, event=None):
-        self.refresh_attendance_treeviews()
         self.attendance_appear_logic()
+        self.refresh_attendance_treeviews()
 
     def open_diff_attendance(self, event=None):
         self.change_layout_attendance()

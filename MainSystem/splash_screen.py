@@ -33,7 +33,7 @@ class SplashScreenWin:
 
     def callmf(self):
         self.fr_vid = mf.FaceRecognition(self.vid_source,self.tolerance, self.file_path, 1280, 720)
-        cFG.ClientFaceRecogApp(self.vid_source,self.login_mod,self.sel_cam,self.home_mod,self.splashend,self.file_path,self.fr_vid)
+        cFG.ClientFaceRecogApp(self.login_mod,self.sel_cam,self.home_mod,self.splashend,self.fr_vid)
 
     def splashend(self):
         self.splashscreen_app.destroy()

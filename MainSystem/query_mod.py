@@ -424,7 +424,7 @@ class dbQueries:
                 insert_query_att_exit = f"UPDATE tbl_personnel_attendance SET personnel_time_out = ? WHERE personnel_no = ?"
                 self.cursor.execute(
                     insert_query_att_exit,
-                    (personnel_time),
+                    (personnel_time, personnel_number)
                 )
                 self.connection.commit()
 
@@ -1139,10 +1139,11 @@ class dbQueries:
             date_set_fldr = "DataSet"
             tolerance_lvl = 0.5
             timeout_time = datetime.datetime.strptime("10:30:00", "%H:%M:%S")
+            detection_time = 3
             query2 = (
                 f"INSERT INTO tbl_setting (setting_no, password_length, login_attempt,sem_end_setting,"
                 + "face_recog_file_path,face_recog_date,av_file_path,av_date, today_date, "
-                + "data_set_fldr,tolerance_lvl,timeout_time) VALUES (?,?, ?, ? ,?, ?, ?, ? ,? ,? ,? ,?)"
+                + "data_set_fldr,tolerance_lvl,timeout_time) VALUES (?,?, ?, ? ,?, ?, ?, ? ,? ,? ,? ,?,?)"
             )
             self.cursor.execute(
                 query2,
@@ -1158,7 +1159,8 @@ class dbQueries:
                     today_date,
                     date_set_fldr,
                     tolerance_lvl,
-                    timeout_time
+                    timeout_time,
+                    detection_time
                 ),
             )
             self.connection.commit()
@@ -1275,6 +1277,28 @@ class dbQueries:
         # get date
 
     # AV-----------------------------------------
+    def set_client_setting(self,tolerance_lvl,data_set_fldr,timeout_time, detection_time):
+        query = (f"UPDATE tbl_setting SET tolerance_lvl = ?, data_set_fldr = ?,"+
+                 "timeout_time = ?, detection_time = ? WHERE setting_no = 1")
+        self.cursor.execute(query, 
+            (
+            tolerance_lvl,
+            data_set_fldr,
+            timeout_time,
+            detection_time
+            )
+        )
+        self.connection.commit()
+        
+    def get_detection_time(self):
+        query = f"SELECT detection_time FROM tbl_setting WHERE setting_no = 1"
+        self.cursor.execute(query)
+        row = self.cursor.fetchone()[0]
+        if row:
+            return row
+        else:
+            return False
+
     def get_time_out_time(self):
         query = f"SELECT timeout_time FROM tbl_setting WHERE setting_no = 1"
         self.cursor.execute(query)
@@ -1283,11 +1307,6 @@ class dbQueries:
             return row
         else:
             return False
-
-    def set_time_out_time(self, timeout_time):
-        query = f"UPDATE tbl_setting SET timeout_time = ? WHERE setting_no = 1"
-        self.cursor.execute(query, (timeout_time))
-        self.connection.commit()
 
     def get_today_date(self):
         query = f"SELECT today_date FROM tbl_setting WHERE setting_no = 1"
@@ -1324,11 +1343,6 @@ class dbQueries:
         else:
             return False
 
-    def set_data_set_fldr(self, data_set_fldr):
-        query = f"UPDATE tbl_setting SET data_set_fldr = ? WHERE setting_no = 1"
-        self.cursor.execute(query, (data_set_fldr))
-        self.connection.commit()
-
     def get_tolerance_lvl(self):
         query = f"SELECT tolerance_lvl FROM tbl_setting WHERE setting_no = 1"
         self.cursor.execute(query)
@@ -1337,11 +1351,6 @@ class dbQueries:
             return row
         else:
             return False
-
-    def set_tolerance_lvl(self, tolerance_lvl):
-        query = f"UPDATE tbl_setting SET tolerance_lvl = ? WHERE setting_no = 1"
-        self.cursor.execute(query, (tolerance_lvl))
-        self.connection.commit()
 
     def backup_database(self, path, date_time):
         self.backup_file_path = path + "/" + date_time + "_database_backup.bacpac"
