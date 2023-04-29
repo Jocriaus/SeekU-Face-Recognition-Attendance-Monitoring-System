@@ -1476,7 +1476,7 @@ class TreeviewGUI:
         if not self.student_attendance_tree.selection():
             for child in self.student_attendance_tree.get_children():
                 self.student_attendance_tree.delete(child)
-        self.populate_personnel_attendance_treeview()
+        self.populate_student_attendance_treeview()
 
     def refresh_personnel_att_treeview(self):
         if not self.personnel_attendance_tree.selection():
@@ -1488,4 +1488,4 @@ class TreeviewGUI:
         if not self.visitor_attendance_tree.selection():
             for child in self.visitor_attendance_tree.get_children():
                 self.visitor_attendance_tree.delete(child)
-        self.populate_personnel_attendance_treeview()
+        self.populate_visitor_attendance_treeview()

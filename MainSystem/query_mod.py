@@ -418,7 +418,7 @@ class dbQueries:
                     ),
                 )
                 self.connection.commit()
-
+                print("Attendance added successfully!")
             # if there is existing record with that personnel number
             elif have_time_in:
                 insert_query_att_exit = f"UPDATE tbl_personnel_attendance SET personnel_time_out = ? WHERE personnel_no = ?"
@@ -427,7 +427,7 @@ class dbQueries:
                     (personnel_time, personnel_number)
                 )
                 self.connection.commit()
-
+                print("Attendance added successfully!")
             # if the attendance table not empty and there is no record of
             elif not tbl_empty:
                 insert_query_attendance = f"INSERT INTO tbl_personnel_attendance (personnel_no, personnel_attendance_date, personnel_time_in) VALUES (?, ?, ?)"
@@ -491,6 +491,7 @@ class dbQueries:
                     (visitor_number, visitor_attendance_date, visitor_time),
                 )
                 self.connection.commit()
+                print("Attendance added successfully!")
 
             # if there is existing record with that visitor number
             elif have_time_in:
@@ -500,6 +501,7 @@ class dbQueries:
                     (visitor_time, visitor_number),
                 )
                 self.connection.commit()
+                print("Attendance added successfully!")
             # if the attendance table not empty and there is no record of the visitor with that visitor number
             elif not tbl_empty:
                 insert_query_attendance = f"INSERT INTO tbl_visitor_attendance (visitor_no, visitor_attendance_date, visitor_time_in) VALUES (?, ?, ?)"
@@ -508,8 +510,8 @@ class dbQueries:
                     (visitor_number, visitor_attendance_date, visitor_time),
                 )
                 self.connection.commit()
-
-            self.connection.commit()
+                print("Attendance added successfully!")
+            
 
             print("Attendance added successfully!")
         else:

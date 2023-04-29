@@ -7,6 +7,7 @@ import datetime
 import query_mod as qry
 import datetime as datetime
 import sys
+import os
 import re
 class HomeApp:
     def __init__(self,vid_source, login_mod, sel_cam):
@@ -318,14 +319,16 @@ class HomeApp:
                 self.sql_query.set_face_recog_path(newpath)
                 self.sql_query.set_fr_path_file_date(current_date)
         # add for handling the select folder function if nothing is chosen.
-        sS.SplashScreenWin(
-            self.video_source,
-            self.login_window,
-            self.sel_cam_window, 
-            self.home_app,
-            self.tolerance, 
-            folder_selected
-             )
+        if self.data_set_name == os.path.basename(folder_selected):
+            sS.SplashScreenWin(
+                self.video_source,
+                self.login_window,
+                self.sel_cam_window, 
+                self.home_app,
+                self.detection_time,
+                self.tolerance, 
+                folder_selected
+                )
         
     # this command will open the add visitor module
     def add_visitors_press(self, event=None):

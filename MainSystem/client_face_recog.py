@@ -8,13 +8,14 @@ import sys
 
 
 class ClientFaceRecogApp:
-    def __init__(self, login_mod, sel_cam, home_mod, splashs, fr_vid_mod):
+    def __init__(self, login_mod, sel_cam, home_mod,detection,splashs, fr_vid_mod):
 
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.splash = splashs
         self.login_window = login_mod
         self.select_cam_window = sel_cam
         self.home_window = home_mod
+        self.detection_time = detection *1000
         self.call_cam = False
         self.sql_query = qry.dbQueries()
         self.fr_vid = fr_vid_mod
@@ -232,7 +233,7 @@ class ClientFaceRecogApp:
             print("run")
             self.attendance()
             # this will call the next person function
-            self.face_recog_app.after(4000, self.next_person)
+            self.face_recog_app.after(self.detection_time, self.next_person)
             self.save_attendance_func()
         elif not self.fr_vid.face_detected:
             print ("no face")
@@ -254,15 +255,16 @@ class ClientFaceRecogApp:
         custom_no = date_int * 100000
 
         if self.sql_query.check_student_no(int(self.fr_vid.name)):
-            self.sql_query.student_attendance_record(custom_no, int(self.fr_vid.name), current_date, self.current_time)
-        if self.sql_query.check_personnel_no(int(self.fr_vid.name)):
-            self.sql_query.personnel_attendance_record(custom_no, int(self.fr_vid.name), current_date, self.current_time)
-        if self.sql_query.check_visitor_no(int(self.fr_vid.name)):
-            self.sql_query.visitor_attendance_record(custom_no, int(self.fr_vid.name), current_date, self.current_time)
+            self.sql_query.student_attendance_record(custom_no, str(self.fr_vid.name), current_date, self.current_time)
+        elif self.sql_query.check_personnel_no(self.fr_vid.name):
+            self.sql_query.personnel_attendance_record(custom_no, str(self.fr_vid.name), current_date, self.current_time)
+        elif self.sql_query.check_visitor_no(self.fr_vid.name):
+            self.sql_query.visitor_attendance_record(custom_no, str(self.fr_vid.name), current_date, self.current_time)
         
     # this command will return to the home window
     def return_func(self, event=None):
         self.show_home_window()
+        self.fr_vid.cam_release()
         self.face_recog_app.destroy()
 
     # this will cancel the saving the current attendance of the person detected

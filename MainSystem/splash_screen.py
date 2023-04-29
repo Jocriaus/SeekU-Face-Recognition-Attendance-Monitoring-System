@@ -3,13 +3,14 @@ import face_recog_mod as mf
 import client_face_recog as cFG
 
 class SplashScreenWin:
-    def __init__(self,vid_source, login_mod, sel_cam, home_mod,tolerance, file_path):
+    def __init__(self,vid_source, login_mod, sel_cam, home_mod,detection,tolerance, file_path):
             
         self.vid_source = vid_source
         self.file_path = file_path
         self.login_mod = login_mod
         self.sel_cam = sel_cam
         self.home_mod = home_mod
+        self.detection_time = detection
         self.tolerance = tolerance
         self.splashscreen_app = tk.Toplevel()
         self.splashscreen_app.configure(background="#0072bc",height=200, width=200)
@@ -33,7 +34,7 @@ class SplashScreenWin:
 
     def callmf(self):
         self.fr_vid = mf.FaceRecognition(self.vid_source,self.tolerance, self.file_path, 1280, 720)
-        cFG.ClientFaceRecogApp(self.login_mod,self.sel_cam,self.home_mod,self.splashend,self.fr_vid)
+        cFG.ClientFaceRecogApp(self.login_mod,self.sel_cam,self.home_mod,self.detection_time,self.splashend,self.fr_vid)
 
     def splashend(self):
         self.splashscreen_app.destroy()

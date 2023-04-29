@@ -18,7 +18,7 @@ class FaceRecognition:
         self.init_time = 0
         self.current_time = 0
         self.passed_time = 0
-
+    
         # path for training images
         self.path = file_path
 
@@ -26,7 +26,7 @@ class FaceRecognition:
         self.face_detected = False
 
 
-        TOLERANCE = 0.5
+        self.TOLERANCE = tolerance
         MODEL = "cnn"
 
         # array for images, image location, and image names
@@ -103,6 +103,8 @@ class FaceRecognition:
         self.width = self.live_feed.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = self.live_feed.get(cv2.CAP_PROP_FRAME_HEIGHT)
     #---------------------------------------------------------------------------------------------------------
+    def cam_release(self):
+        self.live_feed.release()
 
 
     def get_frame(self):
@@ -137,7 +139,7 @@ class FaceRecognition:
             print("entered face recognize")
             if not self.face_detected:
                 # in order to compare the detected face to the training images we need to use face_recognition.compare_faces reserved word
-                matches = face_recognition.compare_faces(self.encodeListKnownFaces, encodeFace, )
+                matches = face_recognition.compare_faces(self.encodeListKnownFaces, encodeFace,self.TOLERANCE )
                 # in order to find the distance of face we need to use face_recognition.face_distance reserved word
                 faceDistance = face_recognition.face_distance(self.encodeListKnownFaces, encodeFace)
                 # it returns the minimum values along axis of matchIndex
