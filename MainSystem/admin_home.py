@@ -170,6 +170,8 @@ class AdminHomeApp:
         )
         self.admin_at_sec2_frame = tk.Frame(self.administrator_attendance_frame)
         self.admin_at_sec2_frame.configure(background="#F7FAE9", height=200, width=200)
+        self.treeview.visitor_attendance_treeview(self.admin_at_sec2_frame)
+        self.treeview.personnel_attendance_treeview(self.admin_at_sec2_frame)
         self.treeview.student_attendance_treeview(self.admin_at_sec2_frame)
         self.admin_at_sec2_frame.place(
             anchor="center", relheight=0.65, relwidth=0.9, relx=0.5, rely=0.5, x=0, y=0
@@ -320,6 +322,8 @@ class AdminHomeApp:
         )
         self.admin_r_sec2_frame = tk.Frame(self.administrator_report_frame)
         self.admin_r_sec2_frame.configure(background="#F7FAE9", height=200, width=200)
+        self.treeview.visitor_report_treeview(self.admin_r_sec2_frame)
+        self.treeview.personnel_report_treeview(self.admin_r_sec2_frame)
         self.treeview.student_report_treeview(self.admin_r_sec2_frame)
         self.admin_r_sec2_frame.place(
             anchor="center", relheight=0.65, relwidth=0.9, relx=0.5, rely=0.5, x=0, y=0
