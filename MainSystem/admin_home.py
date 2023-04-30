@@ -969,27 +969,23 @@ class AdminHomeApp:
         self.administrator_app.withdraw()
 
     def select_folder(self):
-            self.administrator_app.attributes('-topmost', False)
-            folder_select = filedialog.askdirectory(title = "Select Folder")
-            if folder_select == "":
-                folder_select = False
-                return folder_select
-            else:
-                return folder_select
+        self.administrator_app.attributes('-topmost', False)
+        folder_select = filedialog.askdirectory(title = "Select Folder")
+        if folder_select == "":
+            folder_select = False
+            return folder_select
+        else:
+            return folder_select
             
     def select_file(self):
-        file_empty = True
-        while (file_empty):
-            self.administrator_app.attributes('-topmost', False)
-            file_select = filedialog.askopenfilename()
-            if file_select == "":
-                file_empty = True
-            else:
-                self.file_selected = file_select
-                file_empty = False
-            print(self.file_selected)
-            self.administrator_app.attributes('-topmost', True)
-            self.administrator_app.attributes('-topmost', False)
+        self.administrator_app.attributes('-topmost', False)
+        file_select = filedialog.askopenfilename()
+        if file_select == "":
+            file_select = False
+            return file_select
+        else:
+            return file_select
+
 
     def set_user(self):
         if self.user == "Low Admin":
@@ -1691,8 +1687,7 @@ class AdminHomeApp:
             self.sql_query.backup_database(path, file_name)
 
     def import_database(self, event=None):
-        self.select_file()
-        file = self.file_selected
+        file = self.select_file()
         if file.endswith('.bacpac'):
             self.sql_query.restore_database(file)
         else:
