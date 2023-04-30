@@ -3,17 +3,18 @@ import tkinter as tk
 import query_mod as qry
 import tkinter.messagebox as messbx
 import PIL.Image, PIL.ImageTk
+import face_recognition
 import os
 import sys
 import re
 
 
 class RegisterStudentApp:
-    def __init__(self, cam_app, file_path):
+    def __init__(self, cam_app, file_path, saveonly):
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.admin_cam_window = cam_app
         self.img_path = file_path
-        print(self.img_path)
+        self.saveonly = saveonly
         self.sql_query = qry.dbQueries()
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         # build ui
@@ -218,7 +219,8 @@ class RegisterStudentApp:
             anchor="center", relheight=0.13, relwidth=1.0, relx=0.5, rely=0.065
         )
         # Contains-school-logo-------------------------------------------------------------------------------------------------------------------------------------
-        self.disp_pic()
+        if not self.saveonly:
+            self.disp_pic()
 
         # Main widget
         self.mainwindow = self.register_student_app
@@ -232,8 +234,11 @@ class RegisterStudentApp:
 
     # this function will destroy the current window and return to camera app
     def back_cam_app_window(self):
-        self.admin_cam_window.deiconify()
-        self.register_student_app.destroy()
+        if self.saveonly:
+            self.admin_cam_window.show_add_select_window()
+            self.register_student_app.destroy()
+        else:
+            self.register_student_app.destroy()
 
     def register_student_function(self):
         register = True
@@ -284,24 +289,56 @@ class RegisterStudentApp:
                             program_var.replace(" ", "").isalpha()):
 
                             if register == True:
-                                self.sql_query.register_student(
-                                    student_num_var,
-                                    first_name_var,
-                                    last_name_var,
-                                    mid_name_var,
-                                    program_var,
-                                    section_var,
-                                    contact_num_var,
-                                    address_var,
-                                )
                                 img_name = student_num_var
-                                os.rename(
-                                    self.img_path + "/000000000.jpg",
-                                    self.img_path + "/" + img_name + ".jpg",
-                                )
-                                messbx.showinfo(
-                                    "Success",
-                                    "The student's record has been registered successfully.",
+                                path_check = self.img_path + "/000000000.jpg"
+                                if os.path.exists(path_check):
+                                    os.rename( path_check, 
+                                              self.img_path + "/" + img_name + ".jpg"
+                                              )
+                                path_check = self.img_path  + "/" + img_name + ".jpg"
+                                if  self.saveonly and os.path.exists(path_check) :
+                                    image = face_recognition.load_image_file(path_check)
+                                    face_locations = face_recognition.face_locations(image, number_of_times_to_upsample=0, model="cnn")
+            
+                                    if face_locations:
+                                        self.sql_query.register_student(
+                                            student_num_var,
+                                            first_name_var,
+                                            last_name_var,
+                                            mid_name_var,
+                                            program_var,
+                                            section_var,
+                                            contact_num_var,
+                                            address_var,
+                                        )
+                                        messbx.showinfo(
+                                            "Success",
+                                            "The student's record has been registered successfully.",
+                                        )
+                                    else:
+                                        messbx.showwarning(
+                                        "Warning",
+                                        "There is no face detected on the image.",
+                                    )
+                                elif (not self.saveonly) and os.path.exists(path_check): 
+                                        self.sql_query.register_student(
+                                            student_num_var,
+                                            first_name_var,
+                                            last_name_var,
+                                            mid_name_var,
+                                            program_var,
+                                            section_var,
+                                            contact_num_var,
+                                            address_var,
+                                        )
+                                        messbx.showinfo(
+                                            "Success",
+                                            "The student's record has been registered successfully.",
+                                        )
+                                else:
+                                    messbx.showwarning(
+                                    "Warning",
+                                    "No image was found in the directory matching the entered client number.",
                                 )
 
                         else:
@@ -358,7 +395,9 @@ class RegisterStudentApp:
 
     # this command will open the camera app
     def change_pic(self, event=None):
-        self.back_cam_app_window()
+        path_check = self.img_path + "/000000000.jpg"
+        if os.path.exists(path_check):
+            self.back_cam_app_window()
 
     def return_func(self, event=None):
         self.back_cam_app_window()

@@ -3,18 +3,20 @@ import tkinter as tk
 import query_mod as qry
 import tkinter.messagebox as messbx
 import PIL.Image, PIL.ImageTk
+import face_recognition
 import os
 import sys
 import re
 
 
 class RegisterPersonnelApp:
-    def __init__(self, cam_app, file_path):
+    def __init__(self, cam_app, file_path, saveonly):
         # build ui
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.admin_cam_window = cam_app
         self.img_path = file_path
         self.sql_query = qry.dbQueries()
+        self.saveonly = saveonly
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.register_personnel_app = tk.Toplevel()
         self.register_personnel_app.configure(
@@ -234,8 +236,11 @@ class RegisterPersonnelApp:
 
     # this function will destroy the current window and return to camera app
     def back_cam_app_window(self):
-        self.admin_cam_window.deiconify()
-        self.register_personnel_app.destroy()
+        if self.saveonly:
+            self.admin_cam_window.show_add_select_window()
+            self.register_personnel_app.destroy()
+        else:
+            self.register_personnel_app.destroy()
 
     def register_personnel_function(self):
         register = True
@@ -284,24 +289,51 @@ class RegisterPersonnelApp:
                             mid_name_var.replace(" ", "").isalpha() 
                             ):
                             if register == True:
-                                self.sql_query.register_personnel(
-                                    personnel_num_var,
-                                    first_name_var,
-                                    last_name_var,
-                                    mid_name_var,
-                                    contact_num_var,
-                                    address_var,
-                                    personnel_type_var,
-                                )
                                 img_name = personnel_num_var
-                                os.rename(
-                                    self.img_path + "/000000000.jpg",
-                                    self.img_path + "/" + img_name + ".jpg",
-                                )
-                                messbx.showinfo(
-                                    "Success",
-                                    "The personnel's record has been registered successfully.",
-                                )
+                                path_check = self.img_path + "/000000000.jpg"
+                                if os.path.exists(path_check):
+                                    os.rename( path_check, 
+                                              self.img_path + "/" + img_name + ".jpg",
+                                    )
+                                path_check = self.img_path + img_name
+                                if os.path.exists(path_check) and self.saveonly:
+                                    image = face_recognition.load_image_file(path_check)
+                                    face_locations = face_recognition.face_locations(image, number_of_times_to_upsample=0, model="cnn")
+            
+                                    if face_locations:
+                                        self.sql_query.register_personnel(
+                                            personnel_num_var,
+                                            first_name_var,
+                                            last_name_var,
+                                            mid_name_var,
+                                            contact_num_var,
+                                            address_var,
+                                            personnel_type_var,
+                                        )
+                                        messbx.showinfo(
+                                            "Success",
+                                            "The personnel's record has been registered successfully.",
+                                        )
+                                elif os.path.exists(path_check):
+                                    self.sql_query.register_personnel(
+                                            personnel_num_var,
+                                            first_name_var,
+                                            last_name_var,
+                                            mid_name_var,
+                                            contact_num_var,
+                                            address_var,
+                                            personnel_type_var,
+                                    )
+                                    messbx.showinfo(
+                                            "Success",
+                                            "The personnel's record has been registered successfully.",
+                                    )
+                            
+                                else:
+                                    messbx.showwarning(
+                                    "Warning",
+                                    "No image was found in the directory matching the entered client number.",
+                                    )
                         else:
                             messbx.showwarning(
                                 "Warning",

@@ -211,7 +211,19 @@ class HomeApp:
         #Contains logout and settings --------------------------------------------
         self.home_app_frame3 = tk.Frame(self.home_app)
         self.home_app_frame3.configure(
-            background="#F7FAE9", height=200, width=200)        
+            background="#F7FAE9", height=200, width=200)       
+        self.return_label = tk.Label(self.home_app_frame3)
+        self.return_label.config(            
+            background="#F7FAE9",
+            font="{arial} 12 {}",
+            foreground="#0072bc",
+            relief="flat",
+            text='Return')
+        self.return_label.place(anchor="center", relx=0.1, rely=0.5)
+        self.return_label.bind("<1>", self.return_press, add="")
+        self.return_label.bind("<Enter>", self.return_hover, add="")
+        self.return_label.bind("<Leave>", self.return_hover_out, add="")
+
         self.logout_label = tk.Label(self.home_app_frame3)
         self.logout_label.config(            
             background="#F7FAE9",
@@ -267,7 +279,11 @@ class HomeApp:
         self.login_window.deiconify()
         self.home_app.destroy()
 
+    def show_select_cam(self):
+        self.sel_cam_window.deiconify()
+        self.home_app.destroy()
     
+
     def fix_path(self, path):
         newpath = ""
         for char in path:
@@ -386,6 +402,15 @@ class HomeApp:
         self.default_time_out_entry.insert(0, self.timeout)
         self.detection_time_entry.insert(0, self.detection_time)
 
+    def return_press(self, event=None):
+        self.show_select_cam()
+
+    def return_hover(self, event=None):
+        self.return_label.configure(font="{arial} 12 {bold}")
+
+    def return_hover_out(self, event=None):
+        self.return_label.configure(font="{arial} 12 {}")
+
     # this command will open the log in window
     def logout_press(self, event=None):
         self.show_log_window()
@@ -406,10 +431,19 @@ class HomeApp:
             self.on_settings = True
             self.settings_label.configure(text='Home')
         elif self.on_settings:
-            if not (self.tolerance_lvl_scale.get() != self.sql_query.get_tolerance_lvl()
-            and self.data_set_entry.get() != self.sql_query.get_data_set_fldr()
-            and self.default_time_out_entry.get() != self.sql_query.get_time_out_time()
-            and self.detection_time_entry.get() != self.sql_query.get_detection_time()
+            timeout_w_micros = self.sql_query.get_time_out_time() 
+            # Format the datetime object as a string without microseconds
+            timeout = timeout_w_micros[0:8]
+
+            print(str(self.tolerance_lvl_scale.get())+" tls vs "+" tlq "+ str(self.sql_query.get_tolerance_lvl()))
+            print(str(self.data_set_entry.get()) +" dse vs "+"dsq " + str(self.sql_query.get_data_set_fldr()))
+            print(str(self.default_time_out_entry.get()) +" toe vs "+"toq "+ str(timeout))
+            print(str(self.detection_time_entry.get()) +" dte vs "+ "dtq " + str(self.sql_query.get_detection_time()))
+                  
+            if  (str(self.tolerance_lvl_scale.get()) == str(self.sql_query.get_tolerance_lvl())
+                and str(self.data_set_entry.get()) == str(self.sql_query.get_data_set_fldr())
+                and str(self.default_time_out_entry.get()) == str(timeout)
+                and str(self.detection_time_entry.get()) == str(self.sql_query.get_detection_time())
                 ):
                 self.show_home_frame()
                 self.settings_label.configure(text='Settings')

@@ -26,15 +26,26 @@ class SplashScreenWin:
             anchor="center", relheight=1, relwidth=1, relx=0.50, rely=0.5
         )
         self.mainwindow = self.splashscreen_app
-        
+        self.message = tk.Label(self.splashscreen_app)
+        self.message.configure(
+            anchor="center",
+            background="#F7FAE9",
+            font="{lucida} 10 {}",
+            foreground="#000000",
+            justify="left",
+            text="Image processing may take up to a few minutes. Please wait patiently."
+        )
+        self.message.place(
+            anchor="center", relx=0.5, rely=0.975
+        )
         self.center(self.mainwindow)
 
         self.splashscreen_app.after(1000, self.callmf)
         
 
     def callmf(self):
-        self.fr_vid = mf.FaceRecognition(self.vid_source,self.tolerance, self.file_path, 1280, 720)
-        cFG.ClientFaceRecogApp(self.login_mod,self.sel_cam,self.home_mod,self.detection_time,self.splashend,self.fr_vid)
+        self.fr_vid = mf.FaceRecognition(self.vid_source,self.tolerance,self.detection_time, self.file_path, 1280, 720)
+        cFG.ClientFaceRecogApp(self.login_mod,self.sel_cam,self.home_mod,self.splashend,self.fr_vid)
 
     def splashend(self):
         self.splashscreen_app.destroy()

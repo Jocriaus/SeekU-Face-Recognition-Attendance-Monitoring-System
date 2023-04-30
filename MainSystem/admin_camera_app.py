@@ -11,16 +11,16 @@ import os
 import sys
 
 class CameraApp:
-    def __init__(self, vid_source, login_mod, sel_cam,admin_hom, file_path, condition, refresh):
+    def __init__(self, vid_source, add_select, admin_home, file_path, condition, refresh, saveonly):
 
     #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.video_source = vid_source
-        self.login_window = login_mod
-        self.sel_cam_window = sel_cam
-        self.admin_home_window = admin_hom
+        self.add_select_window = add_select
+        self.admin_home_window = admin_home
         self.img_path = file_path
         self.window_will_open = condition
         self.refresh_func = refresh
+        self.saveonly = saveonly
     #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         # build ui
         self.snapshot_app = tk.Toplevel()
@@ -150,6 +150,9 @@ class CameraApp:
         self.mainwindow.wm_attributes('-fullscreen', 'True')
         # this protocol will do a function after pressing the close button.
         self.mainwindow.protocol("WM_DELETE_WINDOW", self.exit_program )
+        if self.saveonly:
+            self.hide_this_window()
+            self.pic_taken()
     #--------------------------------------------------------------------------------------------------------- 
 
     # this function will destroy the window and closes the system/program.
@@ -161,8 +164,9 @@ class CameraApp:
         self.snapshot_app.withdraw()
 
     # this will show the home window and destroy this window
-    def show_home_window(self):
+    def show_add_select_window(self):
         self.admin_home_window.deiconify()
+        self.add_select_window.deiconify()
         self.snapshot_app.destroy()
 
 
@@ -194,28 +198,35 @@ class CameraApp:
         if ret:
             cv2.imwrite(os.path.join(self.img_path ,("000000000.jpg")), cv2.cvtColor(resized, cv2.COLOR_RGB2BGR))
             # this will open the window that saves the info of the visitor.
-            image = image = face_recognition.load_image_file(self.img_path + "/000000000.jpg")
+            image = face_recognition.load_image_file(self.img_path + "/000000000.jpg")
             face_locations = face_recognition.face_locations(image, number_of_times_to_upsample=0, model="cnn")
             
             if face_locations:
                 if self.window_will_open == "Manage Students":
-                    rS.RegisterStudentApp(self.snapshot_app, self.img_path)
+                    rS.RegisterStudentApp(self.snapshot_app, self.img_path,self.saveonly)
                 elif self.window_will_open == "Manage Personnels":
-                    rP.RegisterPersonnelApp(self.snapshot_app, self.img_path)    
+                    rP.RegisterPersonnelApp(self.snapshot_app, self.img_path,self.saveonly)    
                 elif self.window_will_open == "Manage Visitors":
-                    rV.RegisterVisitorApp(self.admin_home_window, self.snapshot_app, self.img_path)
+                    rV.RegisterVisitorApp( self.snapshot_app, self.img_path,self.saveonly)
                 self.hide_this_window()
             else:
                  messbx.showerror(
                 "Error", "Face detection failed. Please adjust your posture and capture a clear image."
             )
             
+    def pic_taken(self):
+        if self.window_will_open == "Manage Students":
+            rS.RegisterStudentApp(self.snapshot_app, self.img_path,self.saveonly)
+        elif self.window_will_open == "Manage Personnels":
+            rP.RegisterPersonnelApp(self.snapshot_app, self.img_path,self.saveonly)    
+        elif self.window_will_open == "Manage Visitors":
+            rV.RegisterVisitorApp( self.snapshot_app, self.img_path,self.saveonly)
 
 
 
     # this command will return to the home window
     def log_out_func(self, event=None):
-        self.show_home_window()
+        self.show_add_select_window()
         self.refresh_func(self.window_will_open, "IsActive" )
         self.snapshot_app.destroy()
 

@@ -163,6 +163,7 @@ class LoginApp:
                         self.hide_this_window()
                         self.clear_entry()
                         self.user = "Security Guard"
+                        self.tries = self.sql_query.get_login_attempts()
                         cC.ClientCameraSelectApp(self.user, self.log_in_app)
                     elif (
                         self.sql_query.check_user_type(self.username_var, self.password_var)
@@ -179,6 +180,7 @@ class LoginApp:
                         self.user = self.sql_query.check_user_type(
                             self.username_var, self.password_var
                         )
+                        self.tries = self.sql_query.get_login_attempts()
                         cC.ClientCameraSelectApp(self.user, self.log_in_app)
 
                 elif (self.sql_query.login_entry(self.username_var, self.password_var) == False):

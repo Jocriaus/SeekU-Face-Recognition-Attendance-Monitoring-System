@@ -8,7 +8,7 @@ import time
 import mediapipe as mp
 
 class FaceRecognition:
-    def __init__(self, video_source,tolerance, file_path, xsize,ysize):    
+    def __init__(self, video_source,tolerance,detection, file_path, xsize,ysize):    
     
     #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.recognized = False
@@ -18,7 +18,7 @@ class FaceRecognition:
         self.init_time = 0
         self.current_time = 0
         self.passed_time = 0
-    
+        self.detection_time = detection
         # path for training images
         self.path = file_path
 
@@ -155,7 +155,7 @@ class FaceRecognition:
                     # this boolean will be the key for stopping the face recognition and the cam_update function
                     self.face_detected = True
                     print('face matched')
-                    self.center = (0, 0)
+                    
                 else:
                     print('face no match')
                     
@@ -193,7 +193,8 @@ class FaceRecognition:
             face = faces[0]
             self.center = face[1]
             cv2.circle(frame,self.center,5, (0, 114, 188),5)
-
+        else:
+            self.center = (0, 0)
         height, width, z = frame.shape
         self.TL = (math.floor(width/3), math.floor(height/4))
         self.TR = (self.TL[0]*2, self.TL[1])
@@ -228,13 +229,14 @@ class FaceRecognition:
             self.passed_time = self.current_time - self.init_time
             print(self.passed_time)
             # three is the time set 
-            if self.passed_time >= 3:
+            if self.passed_time >= self.detection_time:
                 self.init_time = 0
                 self.current_time = 0
                 self.recognized = True
                 self.cont = True
                 self.enter = False
                 recognize_face_func()
+                self.center = (0, 0)
         else:
             self.enter = False
 

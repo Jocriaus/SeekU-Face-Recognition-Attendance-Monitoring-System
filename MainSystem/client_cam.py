@@ -146,6 +146,7 @@ class ClientCameraSelectApp:
             relwidth=1,
             relx=.5,
             rely=.975)
+        
     #Contains-the-logo-and-logotype--------------------------------------------------------------------------------------------------------- 
         # this protocol will do a function after pressing the close button.
         self.camera_app.protocol("WM_DELETE_WINDOW", self.exit_program )

@@ -9,12 +9,12 @@ import re
 
 
 class RegisterVisitorApp:
-    def __init__(self, home_mod, cam_app, file_path):
+    def __init__(self, cam_app, file_path, saveonly):
         # build ui
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.client_cam_app = cam_app
-        self.home_window = home_mod
         self.img_path = file_path
+        self.saveonly = saveonly
         self.sql_query = qry.dbQueries()
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.register_visitor_app = tk.Toplevel()
@@ -178,7 +178,8 @@ class RegisterVisitorApp:
         )
         # Contains-school-logo-------------------------------------------------------------------------------------------------------------------------------------
         # see the function for description
-        self.disp_pic()
+        if not self.saveonly:
+            self.disp_pic()
         # Main widget
         self.mainwindow = self.register_visitor_app
         self.mainwindow.wm_attributes("-fullscreen", "True")
@@ -242,10 +243,12 @@ class RegisterVisitorApp:
                             contact_num_var,
                             address_var,
                         )
-                        os.rename(
-                            self.img_path + "/000000000.jpg",
-                            self.img_path + "/" + str(img_name[0]) + ".jpg",
-                        )
+                        self.path_check = self.img_path + "/000000000.jpg"
+                        if os.path.exists(self.path_check):
+                            os.rename(
+                                self.path_check,
+                                self.img_path + "/" + str(img_name[0]) + ".jpg",
+                            )
                         messbx.showinfo(
                             "Success",
                             "The visitor's record has been successfully updated.",
@@ -290,7 +293,8 @@ class RegisterVisitorApp:
 
     # this command will open the camera app
     def change_pic(self, event=None):
-        self.back_cam_app_window()
+        if self.saveonly:
+            self.back_cam_app_window()
 
     def return_func(self, event=None):
         self.back_cam_app_window()

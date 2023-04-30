@@ -11,6 +11,7 @@ import edit_info_visitor as eIV
 import user_create as uC
 import user_edit as uE
 import generate_report as gR
+import add_client_select as aCS
 import admin_camera_app as aCA
 import Treeview_table_mod as tbl
 
@@ -1209,13 +1210,11 @@ class AdminHomeApp:
 
     def add_clients_logic(self):
         # if self.clients_man_var.get() == "Manage Students":
-        folder = self.select_folder()
-        if folder:
-            aCA.CameraApp(
-                self.video_source,self.login_window,self.sel_cam_window, 
-                self.administrator_app,folder, self.clients_man_var.get(), 
-                self.refresh_clients_logic)
-        self.hide_this_window()
+        aCS.AddSelectorApp(
+            self.video_source, 
+            self.administrator_app, self.clients_man_var.get(), 
+            self.refresh_clients_logic)
+
         
 
     def edit_clients_logic(self):
