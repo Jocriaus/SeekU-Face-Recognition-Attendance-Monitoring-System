@@ -206,7 +206,7 @@ class ClientCameraSelectApp:
                 vid_source = self.ip_cam_entry.get()
                 cH.HomeApp(vid_source, self.login_window, self.camera_app )  
 
-        if self.user == "High Admin" or self.user == "Low Admin": 
+        if self.user == "System Admin" or self.user == "Staff": 
             if(self.cam_var.get() == 0):
                 vid_source = 0
                 aH.AdminHomeApp(self.user, vid_source, self.login_window, self.camera_app )

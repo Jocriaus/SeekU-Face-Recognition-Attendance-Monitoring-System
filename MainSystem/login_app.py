@@ -170,7 +170,7 @@ class LoginApp:
                         cC.ClientCameraSelectApp(self.user, self.log_in_app)
                     elif (
                         self.sql_query.check_user_type(self.username_var, self.password_var)
-                        == "Admin"
+                        == "System Admin"
                         or self.sql_query.check_user_type(
                             self.username_var, self.password_var
                         )

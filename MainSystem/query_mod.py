@@ -1017,7 +1017,7 @@ class dbQueries:
     def get_visitor_attendance_count(self):
         query = (
             f"SELECT COUNT(*) FROM tbl_visitor INNER JOIN tbl_visitor_attendance"
-            + " ON tbl_visitor.visitor_no = tbl_visitor_report.visitor_no"
+            + " ON tbl_visitor.visitor_no = tbl_visitor_attendance.visitor_no"
         )
 
         self.cursor.execute(query)
