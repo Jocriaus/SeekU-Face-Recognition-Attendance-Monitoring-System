@@ -968,6 +968,15 @@ class AdminHomeApp:
     def hide_this_window(self):
         self.administrator_app.withdraw()
 
+    def fix_path(self, path):
+        newpath = ""
+        for char in path:
+            if char == "/":
+                newpath += "\\"
+            else:
+                newpath += char
+        return newpath
+
     def select_folder(self):
         self.administrator_app.attributes('-topmost', False)
         folder_select = filedialog.askdirectory(title = "Select Folder")
@@ -1681,6 +1690,7 @@ class AdminHomeApp:
 
     def export_database(self, event=None):
         folder = self.select_folder()
+        folder = self.fix_path(folder)
         if folder:
             path = folder
             file_name = datetime.now().strftime("%m-%d-%Y-%H-%M-%S")
