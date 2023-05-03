@@ -319,7 +319,6 @@ class HomeApp:
     # this command will open the attendance module
     def attendance_press(self, event=None):
         tolerance = self.sql_query.get_tolerance_lvl()
-        folder_selected = ""
         self.hide_this_window()
         current_date = datetime.date.today().strftime("%Y-%m-%d")
         setting = self.sql_query.get_fr_path_file_date().strip()
