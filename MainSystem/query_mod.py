@@ -922,10 +922,7 @@ class dbQueries:
             student_firstname = row[0]
             student_lastname = row[1]
             student_middlename = row[2]
-            full_name = (
-                student_firstname + " " + student_middlename + " " + student_lastname
-            )
-            return full_name
+            return student_firstname, student_lastname, student_middlename
 
     def get_student_count(self):
         query = f"SELECT COUNT(*) FROM tbl_student WHERE student_status = 'IsActive'"
@@ -964,15 +961,8 @@ class dbQueries:
             personnel_firstname = row[0]
             personnel_lastname = row[1]
             personnel_middlename = row[2]
-            full_name = (
-                personnel_firstname
-                + " "
-                + personnel_middlename
-                + " "
-                + personnel_lastname
-            )
 
-            return full_name
+            return personnel_firstname, personnel_lastname, personnel_middlename
 
     def get_personnel_count(self):
         query = (
@@ -1014,8 +1004,7 @@ class dbQueries:
         if row:
             visitor_firstname = row[0]
             visitor_lastname = row[1]
-            full_name = visitor_firstname + " " + visitor_lastname
-            return full_name
+            return visitor_firstname, visitor_lastname
 
     def get_visitor_count(self):
         query = f"SELECT COUNT(*) FROM tbl_visitor WHERE visitor_status = 'IsActive'"
@@ -1027,7 +1016,7 @@ class dbQueries:
 
     def get_visitor_attendance_count(self):
         query = (
-            f"SELECT COUNT(*) FROM tbl_visitor INNER JOIN tbl_visitor_report"
+            f"SELECT COUNT(*) FROM tbl_visitor INNER JOIN tbl_visitor_attendance"
             + " ON tbl_visitor.visitor_no = tbl_visitor_report.visitor_no"
         )
 

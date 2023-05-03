@@ -22,7 +22,7 @@ class ClientFaceRecogApp:
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
 
         # build ui
-        self.face_recog_app = tk.Toplevel()
+        self.face_recog_app = tk.Toplevel()#0072bc
         self.face_recog_app.configure(background="#F7FAE9", height=200, width=200)
         width = self.face_recog_app.winfo_screenwidth()
         height = self.face_recog_app.winfo_screenheight()
@@ -36,9 +36,6 @@ class ClientFaceRecogApp:
         
         self.face_recog_frame3 = tk.Frame(self.face_recog_app)
         self.face_recog_frame3.configure(background="#0072bc",borderwidth=4, height=200, width=200)
-        self.face_recog_frame3.place(
-            anchor="center", relheight=0.83, relwidth=0.83, relx=0.425, rely=0.425
-        )
 
         self.camera_canvas = tk.Canvas(self.face_recog_frame3)
         self.camera_canvas.configure(
@@ -46,6 +43,10 @@ class ClientFaceRecogApp:
         )
         self.camera_canvas.place(
             anchor="center", relheight=1.0, relwidth=1.0, relx=0.5, rely=0.5, x=0, y=0
+        )
+
+        self.face_recog_frame3.place(
+            anchor="center", relheight=0.83, relwidth=0.83, relx=0.45, rely=0.425
         )
 
         # Contains-the-camera-canvas---------------------------------------------------------------------------------------------------------
@@ -57,23 +58,23 @@ class ClientFaceRecogApp:
         self.client_name_label = tk.Label(self.face_recog_frame2)
         self.client_name_label.configure(
             background="#F7FAE9",
-            font="{lucida} 45 {bold}",
+            font="{lucida} 35 {bold}",
             foreground="#0072bc",
             justify="left",
-            text="Client Name",
+            text="Last name \nFirst Name",
         )
-        self.client_name_label.place(anchor="center", relx=0.4, rely=0.3)
+        self.client_name_label.place(anchor="center", relx=0.12, rely=0.5)
         self.attendance_label = tk.Label(self.face_recog_frame2)
         self.attendance_label.configure(
             anchor="center",
             background="#F7FAE9",
             cursor="arrow",
-            font="{lucida} 35 {}",
+            font="{lucida} 32 {}",
             foreground="#0072bc",
-            justify="left",
-            text="Attendance",
+            justify="right",
+            text="Da/t/e\n time in/out",
         )
-        self.attendance_label.place(anchor="center", relx=0.35, rely=0.75)
+        self.attendance_label.place(anchor="center", relx=0.79, rely=0.5)
         self.face_recog_frame2.place(
             anchor="center", relheight=0.16, relwidth=1.0, relx=0.50, rely=0.92
         )
@@ -115,22 +116,22 @@ class ClientFaceRecogApp:
         self.app_name_logo.place(anchor="center", relx=0.5, rely=0.525)
         self.return_button = tk.Button(self.face_recog_frame)
         self.return_button.configure(
-            font="{arial black} 20 {}", foreground="#0072bc", text="Return"
+            font="{lucida} 24 {}", foreground="#0072bc", text="Return"
         )
         self.return_button.place(
-            anchor="center", relheight=0.05, relwidth=0.55, relx=0.5, rely=0.925
+            anchor="center", relheight=0.065, relwidth=0.6, relx=0.5, rely=0.95
         )
         self.return_button.bind("<ButtonPress>", self.return_func, add="")
         self.cancel_button = tk.Button(self.face_recog_frame)
         self.cancel_button.configure(
-            font="{arial black} 26 {}", foreground="#0072bc", text="Cancel"
+            font="{lucida} 24 {bold}", foreground="#0072bc", text="Cancel"
         )
         self.cancel_button.place(
-            anchor="center", relheight=0.08, relwidth=0.69, relx=0.5, rely=0.85
+            anchor="center", relheight=0.065, relwidth=0.6, relx=0.5, rely=0.875
         )
         self.cancel_button.bind("<ButtonPress>", self.cancel_attendance, add="")
         self.face_recog_frame.place(
-            anchor="center", relheight=1.0, relwidth=0.16, relx=0.92, rely=0.5
+            anchor="center", relheight=1.0, relwidth=0.125, relx=0.93, rely=0.5
         )
         # Contains-the-signout-button-app-logo-and-logotype---------------------------------------------------------------------------------------------------------
         # see function description
@@ -169,8 +170,8 @@ class ClientFaceRecogApp:
 
     # this function will show the name and the attendance widgets
     def show_name(self):
-        self.client_name_label.place(anchor="center", relx=0.5, rely=0.3)
-        self.attendance_label.place(anchor="center", relx=0.5, rely=0.75)
+        self.client_name_label.place(anchor="center", relx=0.12, rely=0.5)
+        self.attendance_label.place(anchor="center", relx=0.79, rely=0.5)
 
     # this function updates the canvas content - shows the camera
     def cam_update(self):
@@ -185,7 +186,7 @@ class ClientFaceRecogApp:
                 # consistently getting the time and date
                 self.current_time = time.strftime("%H:%M:%S", time.localtime())
                 current_date = datetime.date.today().strftime("%Y/%m/%d")
-                self.current_date_n_time = current_date + "      " + self.current_time
+                self.current_date_n_time = current_date + "\n" + self.current_time
                 self.fr_vid.box_and_dot(frame)
                 # saving the frame from the array unto the photo variable as an "image"
                 self.photo = ImageTk.PhotoImage(image=Image.fromarray(frame))
@@ -206,8 +207,9 @@ class ClientFaceRecogApp:
         client_num = self.fr_vid.name
         print(client_num)
         if self.sql_query.check_student_no(client_num):
-            full_name = self.sql_query.get_student_name(client_num)
-            self.client_name_label.config(text=full_name)
+            fname, lname, mname = self.sql_query.get_student_name(client_num)
+
+            self.client_name_label.config(text=lname +"\n" + fname +" "+ mname)
             self.attendance_label.config(text=self.current_date_n_time)
             # the system will open the image of the client using the array
             # of paths of the image with the index of the image.
@@ -220,8 +222,8 @@ class ClientFaceRecogApp:
             self.camera_canvas.create_image(0, 0, image=self.student_image, anchor=tk.NW)
 
         elif self.sql_query.check_personnel_no(client_num):
-            full_name = self.sql_query.get_personnel_name(client_num)
-            self.client_name_label.config(text=full_name)
+            fname, lname, mname  = self.sql_query.get_personnel_name(client_num)
+            self.client_name_label.config(text=lname +"\n" + fname +" "+ mname)
             self.attendance_label.config(text=self.current_date_n_time)
             # the system will open the image of the client using the array
             # of paths of the image with the index of the image.
@@ -233,8 +235,8 @@ class ClientFaceRecogApp:
             # will display the image into the canvas
             self.camera_canvas.create_image(0, 0, image=self.student_image, anchor=tk.NW)
         elif self.sql_query.check_visitor_no(client_num):      
-            full_name = self.sql_query.get_visitor_name(client_num) 
-            self.client_name_label.config(text=full_name)
+            fname, lname = self.sql_query.get_visitor_name(client_num) 
+            self.client_name_label.config(text=lname +"\n" + fname)
             self.attendance_label.config(text=self.current_date_n_time)
             # the system will open the image of the client using the array
             # of paths of the image with the index of the image.

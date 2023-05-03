@@ -8,6 +8,9 @@ import sys
 
 # test for admin = jus    jus123
 # test for security guard = jc   123
+# coe data set = 
+# user type = staff ' low admin, admin ' high admin
+# user template = changes
 class LoginApp:
     def __init__(self, master=None):
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
@@ -167,12 +170,12 @@ class LoginApp:
                         cC.ClientCameraSelectApp(self.user, self.log_in_app)
                     elif (
                         self.sql_query.check_user_type(self.username_var, self.password_var)
-                        == "High Admin"
+                        == "Admin"
                         or self.sql_query.check_user_type(
                             self.username_var, self.password_var
                         )
-                        == "Low Admin"
-                    ):
+                        == "Staff"
+                        ):
                         print("login")
                         # add message box
                         self.hide_this_window()

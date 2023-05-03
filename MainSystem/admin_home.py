@@ -988,7 +988,7 @@ class AdminHomeApp:
 
 
     def set_user(self):
-        if self.user == "Low Admin":
+        if self.user == "Staff":
             self.add_user_button.configure(state="disabled")
             self.edit_user_button.configure(state="disabled")
             self.export_db_button.configure(state="disabled")

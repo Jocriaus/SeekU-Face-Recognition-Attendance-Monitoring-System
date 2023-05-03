@@ -80,7 +80,7 @@ class CreateUserApp:
             anchor="center", relwidth=0.4, relx=0.5, rely=0.6, x=0, y=0
         )
         self.user_role_entry = tk.StringVar(value="Choose User Type")
-        __values = ["Security Guard", "High Admin", "Low Admin"]
+        __values = ["Security Guard", "Admin", "Staff"]
         self.user_role_optionmenu = tk.OptionMenu(
             self.register_user_frame2, self.user_role_entry, *__values, command=None
         )
