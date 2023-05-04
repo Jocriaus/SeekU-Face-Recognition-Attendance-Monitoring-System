@@ -117,7 +117,7 @@ class ClientFaceRecogApp:
             font="{lucida} 24 {}", foreground="#0072bc", text="Return"
         )
         self.return_button.place(
-            anchor="center", relheight=0.065, relwidth=0.6, relx=0.5, rely=0.95
+            anchor="center", relheight=0.06, relwidth=0.6, relx=0.5, rely=0.95
         )
         self.return_button.bind("<ButtonPress>", self.return_func, add="")
         self.cancel_button = tk.Button(self.face_recog_frame)
