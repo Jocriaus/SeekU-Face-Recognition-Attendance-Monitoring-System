@@ -35,12 +35,10 @@ class ClientFaceRecogApp:
         # this sets the camera size
         
         self.face_recog_frame3 = tk.Frame(self.face_recog_app)
-        self.face_recog_frame3.configure(background="#0072bc",borderwidth=4, height=200, width=200)
+        self.face_recog_frame3.configure(background="#F7FAE9", height=200, width=200)
 
         self.camera_canvas = tk.Canvas(self.face_recog_frame3)
-        self.camera_canvas.configure(
-            background="#0072bc", highlightbackground="#0072bc"
-        )
+        self.camera_canvas.configure(background="#0072bc")
         self.camera_canvas.place(
             anchor="center", relheight=1.0, relwidth=1.0, relx=0.5, rely=0.5, x=0, y=0
         )
@@ -124,7 +122,7 @@ class ClientFaceRecogApp:
         self.return_button.bind("<ButtonPress>", self.return_func, add="")
         self.cancel_button = tk.Button(self.face_recog_frame)
         self.cancel_button.configure(
-            font="{lucida} 24 {bold}", foreground="#0072bc", text="Cancel"
+            font="{lucida} 24 {bold}",background="#0072bc", foreground="#F7FAE9", text="Cancel"
         )
         self.cancel_button.place(
             anchor="center", relheight=0.065, relwidth=0.6, relx=0.5, rely=0.875
@@ -183,6 +181,7 @@ class ClientFaceRecogApp:
         if ret & (not self.fr_vid.face_detected):
             if not self.fr_vid.cont:
                 self.hide_name()
+                self.camera_canvas.configure(background="#0072bc", border=5)
                 # consistently getting the time and date
                 self.current_time = time.strftime("%H:%M:%S", time.localtime())
                 current_date = datetime.date.today().strftime("%Y/%m/%d")
@@ -260,7 +259,7 @@ class ClientFaceRecogApp:
             print("run")
             self.attendance()
             self.fr_vid.face_detected = False
-            self.face_recog_app.after(4000, self.next_person)
+            self.face_recog_app.after(3000, self.next_person)
         elif not self.fr_vid.face_detected:
             print ("no face")
             # this will call the next person function if there is no face detected
@@ -276,10 +275,13 @@ class ClientFaceRecogApp:
             print("not cancelled")
             self.save_attendance_func()
             self.cancelled = False
+            self.camera_canvas.configure(background="#00FF00", border=5)
+            self.face_recog_app.after(1000, self.cam_update)
         elif self.cancelled:
             print("cancelled")
             self.cancelled = False
-        self.cam_update()
+            self.face_recog_app.after(1000, self.cam_update)
+        
 
 
     # this will save the attendance of the student
@@ -303,4 +305,5 @@ class ClientFaceRecogApp:
 
     # this will cancel the saving the current attendance of the person detected
     def cancel_attendance(self, event=None):
+        self.camera_canvas.configure(background="#FF0000", border=5)
         self.cancelled = True

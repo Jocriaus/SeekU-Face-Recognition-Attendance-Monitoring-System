@@ -199,8 +199,6 @@ class LoginApp:
                         
                         messbx.showwarning(
                             "Warning", "The username and password entered do not match. Remaning tries: {}.".format(self.tries))
-                        
-
             else:
                 messbx.showwarning(
                     "Warning ", "Kindly ensure all fields are filled by entering a value."
