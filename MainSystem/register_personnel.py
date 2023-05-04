@@ -256,7 +256,6 @@ class RegisterPersonnelApp:
         if (
             len(personnel_num_var) != 0
             and len(first_name_var) != 0
-            and len(mid_name_var) != 0
             and len(last_name_var) != 0
             and len(contact_num_var) != 0
             and len(personnel_type_var) != 0
