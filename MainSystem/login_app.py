@@ -115,7 +115,9 @@ class LoginApp:
         # Contains-the-logo-and-logotype---------------------------------------------------------------------------------------------------------
         # this protocol will do a function after pressing the close button.
         self.log_in_app.protocol("WM_DELETE_WINDOW", self.exit_program)
+
         self.turnin_report()
+        self.end_of_sem()
         # Main widget
         self.mainwindow = self.log_in_app
 
@@ -233,6 +235,9 @@ class LoginApp:
             self.sql_query.create_visitor_report()
             self.sql_query.set_today_date(self.current_date)
 
+    def end_of_sem(self):
+        if self.sql_query.get_end_settings() == self.current_date:
+            self.sql_query.records_deactivation()
 
     # this function will center the window
     def center(self, win):

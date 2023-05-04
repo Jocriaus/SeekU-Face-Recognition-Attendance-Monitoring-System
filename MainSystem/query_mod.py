@@ -1200,6 +1200,13 @@ class dbQueries:
         self.connection.commit()
         # save date to the database
 
+    def records_deactivation(self):
+        query = f"UPDATE tbl_student SET student_status = 'IsArchived' "
+        self.cursor.execute(query)
+        self.connection.commit()
+        query = f"UPDATE tbl_visitor SET visitor_status = 'IsArchived'  "
+        self.cursor.execute(query)
+        self.connection.commit()
     # FR-----------------------------------------
     def set_face_recog_path(self, facerecog_filepath):
         query = f"UPDATE tbl_setting SET face_recog_file_path = ? WHERE setting_no = 1 "
