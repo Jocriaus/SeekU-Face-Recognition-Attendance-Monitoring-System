@@ -100,6 +100,7 @@ class LoginApp:
         self.sti_logo.configure(background="#F7FAE9", image=self.img_SeekU)
         self.sti_logo.place(anchor="center", relx=0.0, rely=0.0, x=150, y=80)
         self.app_name_logo = tk.Label(self.log_in_frame)
+        
         self.img_SeekULogotypemicro = tk.PhotoImage(
             file=".\SeekU\SeekU Logotype micro.png"
         )
