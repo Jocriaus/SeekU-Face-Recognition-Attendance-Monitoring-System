@@ -143,7 +143,6 @@ class AddSelectorApp:
     # this function will return to the login window
     def show_home_window(self):
         self.add_select_app.grab_release()
-        self.admin_home_window.deiconify()
         self.add_select_app.destroy()
 
     def disable_save_only(self):

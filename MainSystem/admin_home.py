@@ -1449,14 +1449,12 @@ class AdminHomeApp:
             user_type = self.treeview.user_values[5]
             user_status = self.treeview.user_values[6]
             uE.EditUserApp(username, password, firstname, lastname, user_type, user_status, self.administrator_app, self.refresh_user_logic)
-            self.hide_this_window()
         else:
             messbx.showwarning(
                 "Warning", "Please choose an item to modify.")
 
     def register_user(self):
         uC.CreateUserApp(self.administrator_app, self.refresh_user_logic)
-        self.hide_this_window()
 
     def refresh_user_logic(self, status):
         self.treeview.refresh_user_treeview(status)

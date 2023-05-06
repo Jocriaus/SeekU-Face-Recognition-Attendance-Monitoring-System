@@ -179,9 +179,11 @@ class EditUserApp:
         self.mainwindow.protocol("WM_DELETE_WINDOW", self.destroy_this_window)
         self.center(self.mainwindow)
         self.mainwindow.attributes("-topmost", True)
+        self.mainwindow.grab_set()
+
 
     def destroy_this_window(self):
-        self.admin_home_window.deiconify()
+        self.edit_user_app.grab_release()
         self.refresh_func(self.first_stat)
         self.edit_user_app.destroy()
 
@@ -233,7 +235,7 @@ class EditUserApp:
         lastname_var = self.last_name_entry.get()
         user_role_variable = self.user_role_var.get()
         user_status_var = self.stat_var.get()
-        update = self.password_check(self.password_var)
+        update = self.password_check(password_var)
         if (
             len(username_var) != 0
             and len(password_var) != 0

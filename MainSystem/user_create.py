@@ -122,12 +122,17 @@ class CreateUserApp:
 
         # Main widget
         self.mainwindow = self.register_user_app
-        self.mainwindow.protocol("WM_DELETE_WINDOW", self.destroy_this_window)
+        self.mainwindow.protocol("WM_DELETE_WINDOW", self.exit_window)
         self.center(self.mainwindow)
         self.mainwindow.attributes("-topmost", True)
+        self.mainwindow.grab_set()
 
-    def destroy_this_window(self):
-        self.admin_home_window.deiconify()
+    def exit_window(self):
+        self.show_home_window()
+
+
+    def show_home_window(self):
+        self.register_user_app.grab_release()
         self.refresh_func("IsActive")
         self.register_user_app.destroy()
 
