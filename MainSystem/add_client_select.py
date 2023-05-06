@@ -124,7 +124,7 @@ class AddSelectorApp:
             relx=.5,
             rely=.95)
 
-
+        self.disable_save_only()
         # Main widget
         self.mainwindow = self.add_select_app
         self.center(self.mainwindow)        
@@ -145,6 +145,10 @@ class AddSelectorApp:
         self.add_select_app.grab_release()
         self.admin_home_window.deiconify()
         self.add_select_app.destroy()
+
+    def disable_save_only(self):
+        if self.window_will_open == "Manage Visitors":
+            self.save_button.configure(state="disabled")
 
     def capture_save_clients_logic(self):
         saveonly = False
