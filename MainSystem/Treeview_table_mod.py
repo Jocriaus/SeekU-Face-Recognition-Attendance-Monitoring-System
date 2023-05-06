@@ -10,7 +10,7 @@ class TreeviewGUI:
         # "DESKTOP-DG7AK17\SQLEXPRESS"
         # "STAR-PLATINUM\SQLEXPRESS01"
         # "DESKTOP-3MNAAKG\SQLEXPRESS"
-        self.server = "STAR-PLATINUM\SQLEXPRESS01"
+        self.server = "DESKTOP-DG7AK17\SQLEXPRESS"
         self.database = "seeku_database"
         self.username = ""
         self.password = ""
@@ -1278,7 +1278,7 @@ class TreeviewGUI:
         result = self.sql_query.search_student_attendance(search_term)
 
         for row in result:
-            self.student_report_tree.insert(
+            self.student_attendance_tree.insert(
                 "",
                 "end",
                 text=row[0],
@@ -1348,7 +1348,7 @@ class TreeviewGUI:
         result = self.sql_query.search_personnel_attendance(self.search_term)
 
         for row in result:
-            self.personnel_report_tree.insert(
+            self.personnel_attendance_tree.insert(
                 "",
                 "end",
                 text=[0],
@@ -1415,7 +1415,7 @@ class TreeviewGUI:
         result = self.sql_query.search_visitor_attendance(self.search_term)
 
         for row in result:
-            self.visitor_report_tree.insert(
+            self.visitor_attendance_tree.insert(
                 "",
                 "end",
                 text=[0],

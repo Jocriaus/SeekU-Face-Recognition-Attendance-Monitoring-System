@@ -17,7 +17,7 @@ import Treeview_table_mod as tbl
 
 
 class AdminHomeApp:
-    def __init__(self, user ,vid_source, login_mod, sel_cam):
+    def __init__(self, user, vid_source, login_mod, sel_cam):
 
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.user = user
@@ -162,7 +162,9 @@ class AdminHomeApp:
         self.search_clients_attendance.place(
             anchor="center", relheight=0.5, relwidth=0.16, relx=0.9, rely=0.5, x=0, y=0
         )
-        self.search_clients_attendance.bind("<Button>", self.search_clients_attendance, add="")
+        self.search_clients_attendance.bind(
+            "<Button>", self.search_client_attendance, add=""
+        )
         self.search_at_entry = tk.Entry(self.admin_at_sec1_frame)
         self.search_at_entry.configure(background="#F7FAE9", font="{arial} 24 {}")
         self.search_at_entry.place(anchor="center", relx=0.63, rely=0.5, x=0, y=0)
@@ -178,7 +180,11 @@ class AdminHomeApp:
             anchor="center", relheight=0.65, relwidth=0.9, relx=0.5, rely=0.5, x=0, y=0
         )
         self.clients_at_var = tk.StringVar(value="Students Attendance")
-        __values = ["Students Attendance", "Personnels Attendance", "Visitors Attendance"]
+        __values = [
+            "Students Attendance",
+            "Personnels Attendance",
+            "Visitors Attendance",
+        ]
         self.client_attendance_optionmenu = tk.OptionMenu(
             self.administrator_attendance_frame,
             self.clients_at_var,
@@ -393,7 +399,7 @@ class AdminHomeApp:
             text="Edit Students",
         )
         self.edit_a_button.place(anchor="center", relx=0.85, rely=0.5, x=0, y=0)
-        self.edit_a_button.bind("<Button>", self. edit_archiveds, add="")
+        self.edit_a_button.bind("<Button>", self.edit_archiveds, add="")
         self.admin_a_sec1_frame.place(
             anchor="center", relheight=0.1, relwidth=1.0, relx=0.5, rely=0.09
         )
@@ -434,7 +440,12 @@ class AdminHomeApp:
             anchor="center", relheight=0.6, relwidth=0.9, relx=0.5, rely=0.6, x=0, y=0
         )
         self.archived_man_var = tk.StringVar(value="Archived Students")
-        __values = ["Archived Students", "Archived Personnels", "Archived Visitors", "Archived User"]
+        __values = [
+            "Archived Students",
+            "Archived Personnels",
+            "Archived Visitors",
+            "Archived User",
+        ]
         self.manage_archived_optionmenu = tk.OptionMenu(
             self.administrator_archived_frame,
             self.archived_man_var,
@@ -710,9 +721,11 @@ class AdminHomeApp:
         self.total_student = self.sql_query.get_student_count()
         self.ttl_students_no_label = tk.Label(self.administrator_db_ttl_frame)
         self.ttl_students_no_label.configure(
-            background="#F7FAE9", font="{arial} 30 {bold}", text = self.total_student
+            background="#F7FAE9", font="{arial} 30 {bold}", text=self.total_student
         )
-        self.ttl_students_no_label.place(anchor="center", relx=0.16, rely=0.65, x=0, y=0)
+        self.ttl_students_no_label.place(
+            anchor="center", relx=0.16, rely=0.65, x=0, y=0
+        )
         self.ttl_personnels_label = tk.Label(self.administrator_db_ttl_frame)
         self.ttl_personnels_label.configure(
             anchor="n",
@@ -727,9 +740,11 @@ class AdminHomeApp:
             anchor="n",
             background="#F7FAE9",
             font="{arial} 30 {bold}",
-            text= self.total_personnel,
+            text=self.total_personnel,
         )
-        self.ttl_personnels_no_label.place(anchor="center", relx=0.5, rely=0.65, x=0, y=0)
+        self.ttl_personnels_no_label.place(
+            anchor="center", relx=0.5, rely=0.65, x=0, y=0
+        )
         self.ttl_visitor_label = tk.Label(self.administrator_db_ttl_frame)
         self.ttl_visitor_label.configure(
             background="#F7FAE9", font="{arial} 24 {bold}", text="Total Visitors"
@@ -758,7 +773,7 @@ class AdminHomeApp:
 
         self.ol_students_no_label = tk.Label(self.administrator_db_ol_frame)
         self.ol_students_no_label.configure(
-            background="#F7FAE9", font="{arial} 30 {bold}", text= self.present_students
+            background="#F7FAE9", font="{arial} 30 {bold}", text=self.present_students
         )
         self.ol_students_no_label.place(anchor="center", relx=0.16, rely=0.65, x=0, y=0)
         self.ol_personnels_label = tk.Label(self.administrator_db_ol_frame)
@@ -777,10 +792,11 @@ class AdminHomeApp:
             anchor="n",
             background="#F7FAE9",
             font="{arial} 30 {bold}",
-            text= self.present_personnels ,
+            text=self.present_personnels,
         )
-        self.ol_personnels_no_label.place(anchor="center", relx=0.5, rely=0.65, x=0, y=0)
-
+        self.ol_personnels_no_label.place(
+            anchor="center", relx=0.5, rely=0.65, x=0, y=0
+        )
 
         self.ol_visitor_label = tk.Label(self.administrator_db_ol_frame)
         self.ol_visitor_label.configure(
@@ -792,7 +808,7 @@ class AdminHomeApp:
 
         self.ol_visitor_no_label = tk.Label(self.administrator_db_ol_frame)
         self.ol_visitor_no_label.configure(
-            background="#F7FAE9", font="{arial} 30 {bold}", text= self.present_visitor
+            background="#F7FAE9", font="{arial} 30 {bold}", text=self.present_visitor
         )
         self.ol_visitor_no_label.place(anchor="center", relx=0.84, rely=0.65, x=0, y=0)
 
@@ -858,7 +874,6 @@ class AdminHomeApp:
         self.attendance_section_label.bind("<1>", self.attendance_appear, add="")
         self.attendance_section_label.bind("<Enter>", self.attendance_hover, add="")
         self.attendance_section_label.bind("<Leave>", self.attendance_hover_out, add="")
-
 
         self.user_section_label = tk.Label(self.administrator_frame3)
         self.user_section_label.configure(
@@ -957,7 +972,6 @@ class AdminHomeApp:
         self.mainwindow = self.administrator_app
         self.mainwindow.protocol("WM_DELETE_WINDOW", self.exit_program)
         self.mainwindow.wm_attributes("-fullscreen", "True")
-        
 
     # -------------------------------------------------------------------------------------------
 
@@ -978,23 +992,22 @@ class AdminHomeApp:
         return newpath
 
     def select_folder(self):
-        self.administrator_app.attributes('-topmost', False)
-        folder_select = filedialog.askdirectory(title = "Select Folder")
+        self.administrator_app.attributes("-topmost", False)
+        folder_select = filedialog.askdirectory(title="Select Folder")
         if folder_select == "":
             folder_select = False
             return folder_select
         else:
             return folder_select
-            
+
     def select_file(self):
-        self.administrator_app.attributes('-topmost', False)
+        self.administrator_app.attributes("-topmost", False)
         file_select = filedialog.askopenfilename()
         if file_select == "":
             file_select = False
             return file_select
         else:
             return file_select
-
 
     def set_user(self):
         if self.user == "Staff":
@@ -1023,8 +1036,7 @@ class AdminHomeApp:
 
     def starting_layout(self):
         self.treeview.student_treeview(self.admin_c_sec3_frame, "IsActive")
-        self.treeview.student_treeview(self.admin_a_sec3_frame, "IsArchived")  
-
+        self.treeview.student_treeview(self.admin_a_sec3_frame, "IsArchived")
 
     # APPEAR-LOGIC-------------------------------------------------------------------------------------------------------
     # this function removes all uncessesary widgets except the dasboard
@@ -1041,9 +1053,9 @@ class AdminHomeApp:
         # settings_forget-------------------------------------
         self.administrator_settings_frame.place_forget()
         # settings_forget-------------------------------------
-        #archived_forget------------------------------------
+        # archived_forget------------------------------------
         self.administrator_archived_frame.place_forget()
-        #archived_forget-----------------------------------
+        # archived_forget-----------------------------------
 
         self.administrator_db_frame.place(
             anchor="center", relheight=0.95, relwidth=0.78, relx=0.61, rely=0.525
@@ -1218,11 +1230,11 @@ class AdminHomeApp:
     def add_clients_logic(self):
         # if self.clients_man_var.get() == "Manage Students":
         aCS.AddSelectorApp(
-            self.video_source, 
-            self.administrator_app, self.clients_man_var.get(), 
-            self.refresh_clients_logic)
-
-        
+            self.video_source,
+            self.administrator_app,
+            self.clients_man_var.get(),
+            self.refresh_clients_logic,
+        )
 
     def edit_clients_logic(self):
         if self.clients_man_var.get() == "Manage Students":
@@ -1252,11 +1264,11 @@ class AdminHomeApp:
             self.treeview.do_search_visitor(data, "IsActive")
 
     def edit_student_function(self, folder, types):
-         
+
         self.treeview.select_student_treeview_row()
         print(self.treeview.student_values)
 
-        if self.treeview.student_values :
+        if self.treeview.student_values:
             student_num = self.treeview.student_values[0]
             student_firstname = self.treeview.student_values[1]
             student_lastname = self.treeview.student_values[2]
@@ -1279,19 +1291,16 @@ class AdminHomeApp:
                 student_status,
                 self.video_source,
                 self.administrator_app,
-                folder ,
+                folder,
                 types,
-                self.refresh_clients_logic
+                self.refresh_clients_logic,
             )
             self.hide_this_window()
 
         else:
-            messbx.showwarning(
-                "Warning", "Please choose an item to modify."
-            )
+            messbx.showwarning("Warning", "Please choose an item to modify.")
 
-
-    def edit_personnel_function(self,folder,types):
+    def edit_personnel_function(self, folder, types):
         self.treeview.select_personnel_treeview_row()
         print(self.treeview.personnel_values)
 
@@ -1316,16 +1325,15 @@ class AdminHomeApp:
                 personnel_status,
                 self.video_source,
                 self.administrator_app,
-                folder ,
+                folder,
                 types,
-                self.refresh_clients_logic
+                self.refresh_clients_logic,
             )
             self.hide_this_window()
         else:
-            messbx.showwarning(
-                "Warning", "Please choose an item to modify.")
-    
-    def edit_visitor_function(self,folder,types ):
+            messbx.showwarning("Warning", "Please choose an item to modify.")
+
+    def edit_visitor_function(self, folder, types):
         self.treeview.select_visitor_treeview_row()
         print(self.treeview.visitor_values)
 
@@ -1347,16 +1355,15 @@ class AdminHomeApp:
                 visitor_status,
                 self.video_source,
                 self.administrator_app,
-                folder ,
+                folder,
                 types,
-                self.refresh_clients_logic
+                self.refresh_clients_logic,
             )
             self.hide_this_window()
         else:
-            messbx.showwarning(
-                "Warning", "Please choose an item to modify.")
-    
-    def refresh_clients_logic(self,types, status):
+            messbx.showwarning("Warning", "Please choose an item to modify.")
+
+    def refresh_clients_logic(self, types, status):
         if types == "Manage Students":
             self.treeview.refresh_student_treeview(status)
 
@@ -1374,7 +1381,7 @@ class AdminHomeApp:
 
         if types == "Archived Visitors":
             self.treeview.refresh_visitor_treeview(status)
-    
+
     # CLIENT-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
     # ATTENDANCE-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
 
@@ -1408,7 +1415,6 @@ class AdminHomeApp:
         self.treeview.refresh_student_att_treeview()
         self.treeview.refresh_personnel_att_treeview()
         self.treeview.refresh_visitor_att_treeview()
-
 
     # ATTENDANCE-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
     # REPORT-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
@@ -1450,17 +1456,24 @@ class AdminHomeApp:
             lastname = self.treeview.user_values[4]
             user_type = self.treeview.user_values[5]
             user_status = self.treeview.user_values[6]
-            uE.EditUserApp(username, password, firstname, lastname, user_type, user_status, self.administrator_app, self.refresh_user_logic)
+            uE.EditUserApp(
+                username,
+                password,
+                firstname,
+                lastname,
+                user_type,
+                user_status,
+                self.administrator_app,
+                self.refresh_user_logic,
+            )
         else:
-            messbx.showwarning(
-                "Warning", "Please choose an item to modify.")
+            messbx.showwarning("Warning", "Please choose an item to modify.")
 
     def register_user(self):
         uC.CreateUserApp(self.administrator_app, self.refresh_user_logic)
 
     def refresh_user_logic(self, status):
         self.treeview.refresh_user_treeview(status)
-
 
     # USERS-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
     # ARCHIVED-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
@@ -1470,7 +1483,7 @@ class AdminHomeApp:
         if self.archived_man_var.get() == "Archived Students":
             self.edit_a_button.configure(text="Edit Students")
             self.archived_list.configure(text="Students List")
-            self.treeview.student_treeview(self.admin_a_sec3_frame, "IsArchived") 
+            self.treeview.student_treeview(self.admin_a_sec3_frame, "IsArchived")
 
         if self.archived_man_var.get() == "Archived Personnels":
             self.edit_a_button.configure(text="Edit Personnels")
@@ -1496,12 +1509,12 @@ class AdminHomeApp:
         if self.archived_man_var.get() == "Archived Personnels":
             folder = self.select_folder()
             if folder:
-                self.edit_personnel_function(folder,  self.archived_man_var.get())
+                self.edit_personnel_function(folder, self.archived_man_var.get())
 
         if self.archived_man_var.get() == "Archived Visitors":
             folder = self.select_folder()
             if folder:
-                self.edit_visitor_function(folder,  self.archived_man_var.get())
+                self.edit_visitor_function(folder, self.archived_man_var.get())
 
         if self.archived_man_var.get() == "Archived User":
             self.edit_user_function()
@@ -1519,6 +1532,7 @@ class AdminHomeApp:
         if self.archived_man_var.get() == "Archived User":
             data = self.search_a_entry.get()
             self.treeview.do_search_user(data, "IsArchived")
+
     # ARCHIVED-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
 
     # SETTINGS-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
@@ -1526,30 +1540,35 @@ class AdminHomeApp:
         log_in_attempt = self.sql_query.get_login_attempts()
         password_len = self.sql_query.get_password_length()
         sem_end = self.sql_query.get_end_settings()
-        
+
         self.login_attempt_entry.insert(0, log_in_attempt)
         self.pass_len_entry.insert(0, password_len)
-        self.deactivation_date_entry.insert(0,sem_end)
-
+        self.deactivation_date_entry.insert(0, sem_end)
 
     def activation_settings_save(self):
         if len(self.deactivation_date_entry.get()) != 0:
             try:
                 self.sql_query.set_sem_settings(self.deactivation_date_entry.get())
             except ValueError:
-                messbx.showerror("Error", "Please use the format YYYY-MM-DD as the data format provided is incorrect.")
+                messbx.showerror(
+                    "Error",
+                    "Please use the format YYYY-MM-DD as the data format provided is incorrect.",
+                )
         else:
-            messbx.showwarning("Warning", "Kindly ensure all fields are filled by entering a value.")
+            messbx.showwarning(
+                "Warning", "Kindly ensure all fields are filled by entering a value."
+            )
 
     def security_settings_save(self):
         pass_len = self.pass_len_entry.get()
         login_attempt = self.login_attempt_entry.get()
-        if (pass_len.isnumeric() and login_attempt.isnumeric()):
-            self.sql_query.set_pass_len_log_att(pass_len,login_attempt)
+        if pass_len.isnumeric() and login_attempt.isnumeric():
+            self.sql_query.set_pass_len_log_att(pass_len, login_attempt)
         else:
             messbx.showerror("Error", "Please enter numerical values only.")
+
     # SETTINGS-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
-    
+
     # DASBOARD-COMMANDS---------------------------------------------------------------------------------------------------------------
     def dashboard_appear(self, event=None):
         self.db_appear_logic()
@@ -1587,7 +1606,6 @@ class AdminHomeApp:
 
     # CLIENTS-COMMANDS---------------------------------------------------------------------------------------------------------------
 
-
     # ATTENDANCE-COMMANDS---------------------------------------------------------------------------------------------------------------
 
     def attendance_appear(self, event=None):
@@ -1605,10 +1623,8 @@ class AdminHomeApp:
 
     def search_client_attendance(self, event=None):
         self.search_attendance_info_logic()
-        
 
     # ATTENDANCE-COMMANDS---------------------------------------------------------------------------------------------------------------
-
 
     # USER-COMMANDS---------------------------------------------------------------------------------------------------------------
 
@@ -1630,7 +1646,6 @@ class AdminHomeApp:
 
     def add_user_infos(self, event=None):
         self.register_user()
-        
 
     # USER-COMMANDS---------------------------------------------------------------------------------------------------------------
     # REPORTS-COMMANDS---------------------------------------------------------------------------------------------------------------
@@ -1653,7 +1668,6 @@ class AdminHomeApp:
     def generate_clients_reports(self, event=None):
         gR.SavePrintReportApp(self.clients_rep_var.get())
 
-
     # REPORTS-COMMANDS---------------------------------------------------------------------------------------------------------------
     # ARCHIVED-COMMANDS---------------------------------------------------------------------------------------------------------------
     def archived_appear(self, event=None):
@@ -1674,9 +1688,8 @@ class AdminHomeApp:
 
     def search_archived_info(self, event=None):
         self.search_archived_info_logic()
+
     # ARCHIVED-COMMANDS---------------------------------------------------------------------------------------------------------------
-
-
 
     # SETTINGS-COMMANDS---------------------------------------------------------------------------------------------------------------
     def settings_appear(self, event=None):
@@ -1698,7 +1711,7 @@ class AdminHomeApp:
 
     def import_database(self, event=None):
         file = self.select_file()
-        if file.endswith('.bacpac'):
+        if file.endswith(".bacpac"):
             self.sql_query.restore_database(file)
         else:
             messbx.showerror("Error", "Kindly choose the correct file type.")
