@@ -1017,6 +1017,8 @@ class AdminHomeApp:
         self.time_and_date_label_db.configure(text=self.current_date_n_time)
         self.time_and_date_label_u.configure(text=self.current_date_n_time)
         self.time_and_date_label_s.configure(text=self.current_date_n_time)
+        self.time_and_date_label_at.configure(text=self.current_date_n_time)
+        self.time_and_date_label_a.configure(text=self.current_date_n_time)
         self.administrator_app.after(15, self.update_time)
 
     def starting_layout(self):
