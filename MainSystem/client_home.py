@@ -274,6 +274,9 @@ class HomeApp:
     def hide_this_window(self):
         self.home_app.withdraw()
 
+    def show_this_window(self):
+        self.home_app.deiconify()
+
     # this function will return to the login window
     def show_log_window(self):
         self.login_window.deiconify()
@@ -334,21 +337,23 @@ class HomeApp:
                 self.sql_query.set_face_recog_path(newpath)
                 self.sql_query.set_fr_path_file_date(current_date)
         # add for handling the select folder function if nothing is chosen.
-        if self.data_set_name == os.path.basename(folder_selected):
-            sS.SplashScreenWin(
-                self.video_source,
-                self.login_window,
-                self.sel_cam_window, 
-                self.home_app,
-                self.detection_time,
-                self.tolerance, 
-                folder_selected
-                )
+        if folder_selected:
+            if self.data_set_name == os.path.basename(folder_selected):
+                sS.SplashScreenWin(
+                    self.video_source,
+                    self.login_window,
+                    self.sel_cam_window, 
+                    self.home_app,
+                    self.detection_time,
+                    tolerance, 
+                    folder_selected
+                    )
+        else:
+            self.show_this_window()
         
     # this command will open the add visitor module
     def add_visitors_press(self, event=None):
         folder_selected = ""
-        self.hide_this_window()
         current_date = datetime.date.today().strftime("%Y-%m-%d")
         setting = self.sql_query.get_av_path_file_date().strip()
         print("cd "+current_date)
@@ -362,9 +367,11 @@ class HomeApp:
                 newpath = self.fix_path(folder_selected)
                 self.sql_query.set_add_visitor_path(newpath)
                 self.sql_query.set_av_path_file_date(current_date)
-        cCA.CameraApp(
-            self.video_source,self.login_window,self.sel_cam_window, self.home_app, folder_selected )
-
+        if folder_selected:
+            cCA.CameraApp(
+                self.video_source,self.login_window,self.sel_cam_window, self.home_app, folder_selected )
+        else:
+            self.show_this_window()
 
     def show_setting_frame(self):
         self.home_app_frame2.place_forget()
