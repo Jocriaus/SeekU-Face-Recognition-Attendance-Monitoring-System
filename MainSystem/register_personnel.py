@@ -292,8 +292,7 @@ class RegisterPersonnelApp:
                             and len(contact_num_var) == 11
                             ):
                             if (first_name_var.replace(" ", "").isalpha() and 
-                                last_name_var.replace(" ", "").isalpha() and 
-                                mid_name_var.replace(" ", "").isalpha() 
+                                last_name_var.replace(" ", "").isalpha() 
                                 ):
                                 if register == True:
                                     img_name = personnel_num_var

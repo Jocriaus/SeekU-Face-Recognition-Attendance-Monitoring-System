@@ -1281,7 +1281,7 @@ class AdminHomeApp:
             student_address = self.treeview.student_values[7]
             student_status = self.treeview.student_values[8]
 
-            path_check = self.img_path +f"/{student_num}.jpg"
+            path_check = folder +f"/{student_num}.jpg"
             if os.path.exists(path_check):
                 eIS.EditStudentApp(
                     student_num,
@@ -1322,7 +1322,7 @@ class AdminHomeApp:
             personnel_type = self.treeview.personnel_values[6]
             personnel_status = self.treeview.personnel_values[7]
 
-            path_check = self.img_path +f"/{personnel_number}.jpg"
+            path_check = folder +f"/{personnel_number}.jpg"
             if os.path.exists(path_check):
                 eIP.EditPersonnelApp(
                     personnel_number,
@@ -1361,7 +1361,7 @@ class AdminHomeApp:
             visitor_address = self.treeview.visitor_values[4]
             visitor_status = self.treeview.visitor_values[5]
 
-            path_check = self.img_path +f"/{visitor_number}.jpg"
+            path_check = folder +f"/{visitor_number}.jpg"
             if os.path.exists(path_check):
                 eIV.EditVisitorApp(
                     visitor_number,

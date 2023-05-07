@@ -957,23 +957,43 @@ class TreeviewGUI:
         )
 
         for row in self.cursor.fetchall():
-            timein= row[6] 
-            timeout= row[7]
-            self.student_attendance_tree.insert(
-                "",
-                "end",
-                text=[0],
-                values=(
-                    row[0],
-                    row[1],
-                    row[2],
-                    row[3],
-                    row[4],
-                    row[5],
-                    timein[0:8],
-                    timeout[0:8],
-                ),
-            )
+            if row[7] is None:
+                timein= row[6] 
+                timeout= row[7]
+                self.student_attendance_tree.insert(
+                    "",
+                    "end",
+                    text=[0],
+                    values=(
+                        row[0],
+                        row[1],
+                        row[2],
+                        row[3],
+                        row[4],
+                        row[5],
+                        timein[0:8],
+                        timeout,
+                        ),
+                    )
+            else:
+                timein= row[6] 
+                timeout= row[7]
+                self.student_attendance_tree.insert(
+                    "",
+                    "end",
+                    text=[0],
+                    values=(
+                        row[0],
+                        row[1],
+                        row[2],
+                        row[3],
+                        row[4],
+                        row[5],
+                        timein[0:8],
+                        timeout[0:8],
+                        ),
+                    )
+
 
     def populate_student_report_treeview(self):
         self.cursor.execute(
@@ -1026,22 +1046,40 @@ class TreeviewGUI:
             "SELECT tbl_personnel.personnel_no, tbl_personnel.personnel_firstname, tbl_personnel.personnel_lastname, tbl_personnel.personnel_type, tbl_personnel_attendance.personnel_attendance_date, tbl_personnel_attendance.personnel_time_in, tbl_personnel_attendance.personnel_time_out FROM tbl_personnel RIGHT JOIN tbl_personnel_attendance ON tbl_personnel.personnel_no = tbl_personnel_attendance.personnel_no"
         )
         for row in self.cursor.fetchall():
-            timein= row[5] 
-            timeout= row[6]
-            self.personnel_attendance_tree.insert(
-                "",
-                "end",
-                text=[0],
-                values=(
-                    row[0],
-                    row[1],
-                    row[2],
-                    row[3],
-                    row[4],
-                    timein[0:8],
-                    timeout[0:8],
-                ),
-            )
+            if row[6] is None:
+                timein= row[5] 
+                timeout= row[6]
+                self.personnel_attendance_tree.insert(
+                    "",
+                    "end",
+                    text=[0],
+                    values=(
+                        row[0],
+                        row[1],
+                        row[2],
+                        row[3],
+                        row[4],
+                        timein[0:8],
+                        timeout,
+                        )
+                    )
+            else:
+                timein= row[5] 
+                timeout= row[6]
+                self.personnel_attendance_tree.insert(
+                    "",
+                    "end",
+                    text=[0],
+                    values=(
+                        row[0],
+                        row[1],
+                        row[2],
+                        row[3],
+                        row[4],
+                        timein[0:8],
+                        timeout[0:8],
+                        )
+                    )
 
     def populate_personnel_report_treeview(self):
         self.cursor.execute(
@@ -1091,9 +1129,26 @@ class TreeviewGUI:
         )
 
         for row in self.cursor.fetchall():
-            timein= row[4] 
-            timeout= row[5]
-            self.visitor_attendance_tree.insert(
+            if row[5] is None:
+                timein= row[4] 
+                timeout= row[5]
+                self.visitor_attendance_tree.insert(
+                "",
+                "end",
+                text=[0],
+                values=(
+                    row[0],
+                    row[1],
+                    row[2],
+                    row[3],
+                    timein[0:8],
+                    timeout,
+                    )
+                )
+            else:
+                timein= row[4] 
+                timeout= row[5]
+                self.visitor_attendance_tree.insert(
                 "",
                 "end",
                 text=[0],
@@ -1104,8 +1159,9 @@ class TreeviewGUI:
                     row[3],
                     timein[0:8],
                     timeout[0:8],
-                ),
-            )
+                    )
+                )
+
 
     def populate_visitor_report_treeview(self):
         self.cursor.execute(

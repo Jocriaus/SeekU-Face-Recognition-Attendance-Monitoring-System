@@ -168,7 +168,7 @@ class ClientFaceRecogApp:
 
     # this function will show the name and the attendance widgets
     def show_name(self):
-        self.client_name_label.place(anchor="center", relx=0.12, rely=0.5)
+        self.client_name_label.place(anchor="center", relx=0.15, rely=0.5)
         self.attendance_label.place(anchor="center", relx=0.79, rely=0.5)
 
     # this function updates the canvas content - shows the camera

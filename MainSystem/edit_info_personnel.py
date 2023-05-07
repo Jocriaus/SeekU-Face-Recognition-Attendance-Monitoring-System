@@ -391,7 +391,6 @@ class EditPersonnelApp:
         if (
             len(personnel_num_var) != 0
             and len(personnel_firstname_var) != 0
-            and len(personnel_middlename_var) != 0
             and len(personnel_lastname_var) != 0
             and len(personnel_contact_num_var) != 0
             and len(personnel_type_variable) != 0
@@ -421,8 +420,7 @@ class EditPersonnelApp:
                         and len(personnel_contact_num_var) == 11
                         ):
                         if (personnel_firstname_var.replace(" ", "").isalpha() and 
-                            personnel_lastname_var.replace(" ", "").isalpha() and 
-                            personnel_middlename_var.replace(" ", "").isalpha()
+                            personnel_lastname_var.replace(" ", "").isalpha() 
                             ):
 
                             path_check = self.img_path + "/000000000.jpg"

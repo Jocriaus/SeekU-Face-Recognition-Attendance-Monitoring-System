@@ -388,7 +388,6 @@ class EditStudentApp:
         if (
             len(student_num_var) != 0
             and len(student_firstname_var) != 0
-            and len(student_middlename_var) != 0
             and len(student_lastname_var) != 0
             and len(student_contact_num_var) != 0
             and len(student_program_var) != 0
@@ -420,7 +419,6 @@ class EditStudentApp:
                         ):
                         if (student_firstname_var.replace(" ", "").isalpha() and 
                             student_lastname_var.replace(" ", "").isalpha() and 
-                            student_middlename_var.replace(" ", "").isalpha() and 
                             student_program_var.replace(" ", "").isalpha()):
                             
                             path_check = self.img_path + "/000000000.jpg"

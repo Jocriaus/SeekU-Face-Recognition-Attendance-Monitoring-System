@@ -292,7 +292,6 @@ class RegisterStudentApp:
                             ):
                             if (first_name_var.replace(" ", "").isalpha() and 
                                 last_name_var.replace(" ", "").isalpha() and 
-                                mid_name_var.replace(" ", "").isalpha() and 
                                 program_var.replace(" ", "").isalpha()):
 
                                 if register == True:
