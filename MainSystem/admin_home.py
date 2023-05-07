@@ -530,15 +530,15 @@ class AdminHomeApp:
         self.student_stat_label.configure(
             background="#F7FAE9", font="{arial} 14 {bold}", text="Student Status"
         )
-        self.student_stat_label.place(anchor="center", relx=0.22, rely=0.55, x=0, y=0)
+        self.student_stat_label.place(anchor="center", relx=0.22, rely=0.6, x=0, y=0)
         self.stud_stat_rem_label = tk.Label(self.admin_s_sec1_frame)
         self.stud_stat_rem_label.configure(
             background="#F7FAE9",
             font="{arial} 12 {}",
             justify="left",
-            text="Student Informations will be activated\nand deactivated on selected dates\nFormat = YYYY-MM-DD",
+            text="Student Informations will be\ndeactivated on selected date\nFormat = YYYY-MM-DD",
         )
-        self.stud_stat_rem_label.place(anchor="center", relx=0.325, rely=0.63, x=0, y=0)
+        self.stud_stat_rem_label.place(anchor="center", relx=0.325, rely=0.68, x=0, y=0)
         self.deactivation_date_entry = tk.Entry(self.admin_s_sec1_frame)
         self.deactivation_date_entry.configure(
             borderwidth=2,
@@ -1644,7 +1644,7 @@ class AdminHomeApp:
 
     def attendance_appear(self, event=None):
         self.attendance_appear_logic()
-        self.refresh_attendance_treeviews("IsActive")
+        self.refresh_attendance_treeviews()
 
     def open_diff_attendance(self, event=None):
         self.change_layout_attendance()
