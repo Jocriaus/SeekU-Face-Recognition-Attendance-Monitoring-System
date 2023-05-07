@@ -83,12 +83,12 @@ class CameraApp:
             rely=0.21)
         self.snapshot_frame2 = tk.Frame(self.snapshot_app)
         self.snapshot_frame2.configure(
-            background="#fff000", height=200, width=200)
+            background="#FFF875", height=200, width=200)
         self.school_logo_label = tk.Label(self.snapshot_frame2)
         self.img_STICollegeBalagtasLogomedium = tk.PhotoImage(
             file=".\SeekU\STI College Balagtas Logo medium.png")
         self.school_logo_label.configure(
-            background="#fff000",
+            background="#FFF875",
             image=self.img_STICollegeBalagtasLogomedium,
             text='label1')
         self.school_logo_label.place(anchor="center", relx=.25, rely=0.5)
@@ -183,11 +183,11 @@ class CameraApp:
             cv2.imwrite(os.path.join(self.img_path ,("000000000.jpg")), cv2.cvtColor(resized, cv2.COLOR_RGB2BGR))
 
             image = image = face_recognition.load_image_file(self.img_path + "/000000000.jpg")
-            face_locations = face_recognition.face_locations(image, number_of_times_to_upsample=0, model="cnn")
+            face_locations = face_recognition.face_locations(image)
             
             if face_locations:
                  # this will open the window that saves the info of the visitor.
-                cAV.RegisterVisitorApp(self.home_window, self.snapshot_app, self.img_path)
+                cAV.AddVisitorApp(self.home_window, self.snapshot_app, self.img_path)
                 self.hide_this_window()
             else:
                  messbx.showerror(

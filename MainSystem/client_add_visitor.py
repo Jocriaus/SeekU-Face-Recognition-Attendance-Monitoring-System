@@ -223,26 +223,28 @@ class AddVisitorApp:
                     if (first_name_var.replace(" ", "").isalpha() and 
                         last_name_var.replace(" ", "").isalpha()
                         ):
-                        self.sql_query.register_visitor(
-                            first_name_var,
-                            last_name_var,
-                            contact_num_var,
-                            address_var,
-                        )
-                        img_name = self.sql_query.capture_visitor_image(
-                            first_name_var,
-                            last_name_var,
-                            contact_num_var,
-                            address_var,
-                        )
-                        os.rename(
-                            self.img_path + "/000000000.jpg",
-                            self.img_path + "/" + str(img_name[0]) + ".jpg",
-                        )
-                        messbx.showinfo(
-                            "Success",
-                            "The visitor's record has been successfully updated.",
-                        )
+                        result = messbx.askokcancel("Confirm Action", "Do you wish to proceed without saving?")
+                        if result:
+                            self.sql_query.register_visitor(
+                                first_name_var,
+                                last_name_var,
+                                contact_num_var,
+                                address_var,
+                            )
+                            img_name = self.sql_query.capture_visitor_image(
+                                first_name_var,
+                                last_name_var,
+                                contact_num_var,
+                                address_var,
+                            )
+                            os.rename(
+                                self.img_path + "/000000000.jpg",
+                                self.img_path + "/" + str(img_name[0]) + ".jpg",
+                            )
+                            messbx.showinfo(
+                                "Success",
+                                "The visitor's record has been successfully updated.",
+                            )
                     else:
                         messbx.showwarning(
                             "Warning",

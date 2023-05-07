@@ -1273,8 +1273,8 @@ class TreeviewGUI:
             )
 
     def populate_student_report_bydate(self, date1, date2):
-
-        # search_term = search_entry.get()
+        for child in self.student_report_tree.get_children():
+            self.student_report_tree.delete(child)
         result = self.sql_query.sort_student_report_bydate_docx(date1, date2)
 
         if result:
@@ -1304,8 +1304,8 @@ class TreeviewGUI:
             return False
 
     def populate_personnel_report_bydate(self, date1, date2):
-
-        # search_term = search_entry.get()
+        for child in self.personnel_report_tree.get_children():
+            self.personnel_report_tree.delete(child)
         result = self.sql_query.sort_personnel_report_bydate_docx(date1, date2)
 
         if result:
@@ -1334,7 +1334,8 @@ class TreeviewGUI:
             return False
 
     def populate_visitor_report_bydate(self, date1, date2):
-        # search_term = search_entry.get()
+        for child in self.visitor_report_tree.get_children():
+            self.visitor_report_tree.delete(child)
         result = self.sql_query.sort_visitor_report_bydate_docx(date1, date2)
 
         if result:

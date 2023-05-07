@@ -33,8 +33,8 @@ class HomeApp:
         self.home_app_frame4 = tk.Frame(self.home_app)
         self.home_app_frame4.configure(
             background="#0072bc", height=200, width=200)
-        self.attendance_button = tk.Button(self.home_app_frame4)
-        self.attendance_button.configure(
+        self.save_button = tk.Button(self.home_app_frame4)
+        self.save_button.configure(
             background="#F7FAE9",
             default="active",
             font="{arial Black} 20 {}",
@@ -43,14 +43,34 @@ class HomeApp:
             relief="ridge",
             text='Save',
             width=10)
-        self.attendance_button.place(
+        self.save_button.place(
             anchor="center",
             relheight=0.12,
             relwidth=0.34,
-            relx=.5,
+            relx=.31,
             rely=0.925)
-        self.attendance_button.bind(
+        self.save_button.bind(
             "<ButtonPress>", self.save_settings, add="")
+        
+        self.reset_button = tk.Button(self.home_app_frame4)
+        self.reset_button.configure(
+            background="#F7FAE9",
+            default="active",
+            font="{arial Black} 12 {}",
+            foreground="#0072bc",
+            justify="center",
+            relief="ridge",
+            text='Reset',
+            width=10)
+        self.reset_button.place(
+            anchor="center",
+            relheight=0.09,
+            relwidth=0.15,
+            relx=.90,
+            rely=0.965)
+        self.reset_button.bind(
+            "<ButtonPress>", self.reset_folder, add="")
+        
         self.tolerance_lvl_label = tk.Label(self.home_app_frame4)
         self.tolerance_lvl_label.configure(
             background="#0072bc",
@@ -464,6 +484,14 @@ class HomeApp:
 
     def setting_hover_out(self, event=None):
         self.settings_label.configure(font="{arial} 12 {}")
+
+    def reset_folder(self, event=None):
+
+        result = messbx.askokcancel("Confirm Action", "Do you wish to reset selected folders?")
+        if result:
+            reset_date = "2020-01-01"
+            self.sql_query.set_av_path_file_date(reset_date)
+            self.sql_query.set_fr_path_file_date(reset_date)
 
     def save_settings(self, event=None):
         tolerance = self.tolerance_lvl_scale.get()

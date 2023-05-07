@@ -161,14 +161,14 @@ class RegisterVisitorApp:
         # Contains-school-logo-------------------------------------------------------------------------------------------------------------------------------------
         self.register_visitor_frame1 = tk.Frame(self.register_visitor_app)
         self.register_visitor_frame1.configure(
-            background="#fff000", height=200, width=200
+            background="#FFF875", height=200, width=200
         )
         self.school_logo_label = tk.Label(self.register_visitor_frame1)
         self.img_STICollegeBalagtasLogomedium = tk.PhotoImage(
             file=".\SeekU\STI College Balagtas Logo medium.png"
         )
         self.school_logo_label.configure(
-            background="#fff000",
+            background="#FFF875",
             image=self.img_STICollegeBalagtasLogomedium,
             text="label1",
         )

@@ -10,13 +10,15 @@ import re
 
 
 class RegisterPersonnelApp:
-    def __init__(self, cam_app, admin_hom, file_path, saveonly):
+    def __init__(self, cam_app, admin_hom, file_path, saveonly, refresh, condition):
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.select_cam_window = cam_app
         self.admin_home_window = admin_hom
         self.img_path = file_path
         self.sql_query = qry.dbQueries()
         self.saveonly = saveonly
+        self.refresh_func =refresh
+        self.window_will_open= condition
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.register_personnel_app = tk.Toplevel()
         self.register_personnel_app.configure(
@@ -207,13 +209,13 @@ class RegisterPersonnelApp:
         # Contains-register-button-the-entry-widgets---------------------------------------------------------------------------------------------------------
         # Contains-school-logo-------------------------------------------------------------------------------------------------------------------------------------
         self.register_pers_frame1 = tk.Frame(self.register_personnel_app)
-        self.register_pers_frame1.configure(background="#fff000", height=200, width=200)
+        self.register_pers_frame1.configure(background="#FFF875", height=200, width=200)
         self.school_logo_label = tk.Label(self.register_pers_frame1)
         self.img_STICollegeBalagtasLogomedium = tk.PhotoImage(
             file=".\SeekU\STI College Balagtas Logo medium.png"
         )
         self.school_logo_label.configure(
-            background="#fff000",
+            background="#FFF875",
             image=self.img_STICollegeBalagtasLogomedium,
             text="label1",
         )
@@ -238,6 +240,7 @@ class RegisterPersonnelApp:
     # this function will destroy the current window and return to camera app
     def back_cam_app_window(self):
         if self.saveonly:
+            self.refresh_func(self.window_will_open, "IsActive" )
             self.admin_home_window.deiconify()
             self.select_cam_window.deiconify()
             self.register_personnel_app.destroy()

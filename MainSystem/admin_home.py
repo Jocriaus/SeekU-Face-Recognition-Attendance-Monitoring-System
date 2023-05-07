@@ -1663,6 +1663,7 @@ class AdminHomeApp:
     # USER-COMMANDS---------------------------------------------------------------------------------------------------------------
 
     def user_appear(self, event=None):
+        self.treeview.user_treeview(self.admin_u_sec2_frame, "IsActive")
         self.users_appear_logic()
         self.refresh_user_logic("IsActive")
 

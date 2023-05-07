@@ -801,7 +801,7 @@ class dbQueries:
             f"SELECT tbl_personnel.personnel_no, tbl_personnel.personnel_firstname, tbl_personnel.personnel_lastname,"
             + "tbl_personnel.personnel_type, tbl_personnel_report.personnel_attendance_date, tbl_personnel_report.personnel_time_in, "
             + "tbl_personnel_report.personnel_time_out FROM tbl_personnel RIGHT JOIN tbl_personnel_report "
-            + "ON tbl_personnel.personnel_no = tbl_personnel_report.personnel_no"
+            + "ON tbl_personnel.personnel_no = tbl_personnel_report.personnel_no WHERE personnel_attendance_date BETWEEN ? AND ?"
         )
         self.cursor.execute(query, (date1, date2))
         column = [desc[0] for desc in self.cursor.description]
@@ -847,7 +847,8 @@ class dbQueries:
         query = (
             f"SELECT tbl_visitor.visitor_no, tbl_visitor.visitor_firstname, tbl_visitor.visitor_lastname, "
             + "tbl_visitor_report.visitor_attendance_date, tbl_visitor_report.visitor_time_in, tbl_visitor_report.visitor_time_out "
-            + "FROM  tbl_visitor RIGHT JOIN tbl_visitor_report ON tbl_visitor.visitor_no = tbl_visitor_report.visitor_no"
+            + "FROM  tbl_visitor RIGHT JOIN tbl_visitor_report ON tbl_visitor.visitor_no = tbl_visitor_report.visitor_no "
+            + "WHERE visitor_attendance_date BETWEEN ? AND ?"
         )
         self.cursor.execute(query, (date1, date2))
         column = [desc[0] for desc in self.cursor.description]
