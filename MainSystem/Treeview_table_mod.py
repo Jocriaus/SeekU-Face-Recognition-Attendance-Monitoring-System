@@ -1241,10 +1241,12 @@ class TreeviewGUI:
                         timeout[0:8],
                     ),
                 )
+            return True
         else:
             messbx.showwarning(
                 "Warning", "There are no records of attendance for the selected date."
             )
+            return False
 
 
     def populate_personnel_report_bydate(self, date1, date2):
@@ -1270,10 +1272,12 @@ class TreeviewGUI:
                         timeout[0:8],
                     ),
                 )
+            return True
         else:
             messbx.showwarning(
                 "Warning", "There are no records of attendance for the selected date."
             )
+            return False
 
     def populate_visitor_report_bydate(self, date1, date2):
         # search_term = search_entry.get()
@@ -1296,10 +1300,12 @@ class TreeviewGUI:
                         timeout[0:8],
                     ),
                 )
+            return True
         else:
             messbx.showwarning(
                 "Warning", "There are no records of attendance for the selected date."
             )
+            return False
     # JOCRIAUS--------------------------------------------------------------------------
 
     def do_search_student_attendance(self, search_term):

@@ -7,7 +7,7 @@ import report_mod as rM
 import Treeview_table_mod as tbl
 import datetime
 from tkinter import filedialog
-
+import re
 
 class SavePrintReportApp:
     def __init__(self, optionmenu):
@@ -204,108 +204,116 @@ class SavePrintReportApp:
     def save_press(self, event=None):
         folder = self.select_folder()
         filename = self.file_name.get()
-        if len(filename) !=0:
-            if folder:    
-                date1 = self.calendar1.selection_get()
-                date2 = self.calendar2.selection_get()
+        pattern = re.compile("[^a-zA-Z0-9 @]")
+        if not pattern.search(filename):
+            if len(filename) !=0:
+                if folder:    
+                    date1 = self.calendar1.selection_get()
+                    date2 = self.calendar2.selection_get()
 
-                edited_date1 = date1.strftime("%Y-%m-%d")
-                edited_date2 = date2.strftime("%Y-%m-%d")
+                    edited_date1 = date1.strftime("%Y-%m-%d")
+                    edited_date2 = date2.strftime("%Y-%m-%d")
 
-                datefrom = datetime.datetime.strptime(edited_date1, "%Y-%m-%d")
-                dateto = datetime.datetime.strptime(edited_date2, "%Y-%m-%d")
+                    datefrom = datetime.datetime.strptime(edited_date1, "%Y-%m-%d")
+                    dateto = datetime.datetime.strptime(edited_date2, "%Y-%m-%d")
 
-                
-                filepath = folder
-                
-                if self.client_type == "Students Report":
+                    
+                    filepath = folder
+                    
+                    if self.client_type == "Students Report":
 
-                    if self.file_type_var.get() == "Excel":
-                        self.excel_class.save_student(filepath, filename, datefrom, dateto)
+                        if self.file_type_var.get() == "Excel":
+                            self.excel_class.save_student(filepath, filename, datefrom, dateto)
 
-                    if self.file_type_var.get() == "Docx":
-                        self.docx_class.save_doc_student(filepath, filename, datefrom, dateto)
+                        if self.file_type_var.get() == "Docx":
+                            self.docx_class.save_doc_student(filepath, filename, datefrom, dateto)
 
-                    if self.file_type_var.get() == "Pdf":
-                        self.docx_class.save_pdf_student(filepath, filename, datefrom, dateto)
+                        if self.file_type_var.get() == "Pdf":
+                            self.docx_class.save_pdf_student(filepath, filename, datefrom, dateto)
 
-                if self.client_type == "Personnels Report":
+                    if self.client_type == "Personnels Report":
 
-                    if self.file_type_var.get() == "Excel":
-                        self.excel_class.save_personnel(filepath, filename, datefrom, dateto)
+                        if self.file_type_var.get() == "Excel":
+                            self.excel_class.save_personnel(filepath, filename, datefrom, dateto)
 
-                    if self.file_type_var.get() == "Docx":
-                        self.docx_class.save_doc_personnel(filepath, filename, datefrom, dateto)
+                        if self.file_type_var.get() == "Docx":
+                            self.docx_class.save_doc_personnel(filepath, filename, datefrom, dateto)
 
-                    if self.file_type_var.get() == "Pdf":
-                        self.docx_class.save_pdf_personnel(filepath, filename, datefrom, dateto)
+                        if self.file_type_var.get() == "Pdf":
+                            self.docx_class.save_pdf_personnel(filepath, filename, datefrom, dateto)
 
-                if self.client_type == "Visitors Report":
+                    if self.client_type == "Visitors Report":
 
-                    if self.file_type_var.get() == "Excel":
-                        self.excel_class.save_visitor(filepath, filename, datefrom, dateto)
+                        if self.file_type_var.get() == "Excel":
+                            self.excel_class.save_visitor(filepath, filename, datefrom, dateto)
 
-                    if self.file_type_var.get() == "Docx":
-                        self.docx_class.save_doc_visitor(filepath, filename, datefrom, dateto)
+                        if self.file_type_var.get() == "Docx":
+                            self.docx_class.save_doc_visitor(filepath, filename, datefrom, dateto)
 
-                    if self.file_type_var.get() == "Pdf":
-                        self.docx_class.save_pdf_visitor(filepath, filename, datefrom, dateto)
+                        if self.file_type_var.get() == "Pdf":
+                            self.docx_class.save_pdf_visitor(filepath, filename, datefrom, dateto)
+            else:
+                messbx.showwarning("Warning", "Kindly ensure all fields are filled by entering a value.")
         else:
-            messbx.showwarning("Warning", "Kindly ensure all fields are filled by entering a value.")
+            messbx.showwarning("Warning", "The input contains special characters.")
 
     def print_press(self, event=None):
 
         folder = self.select_folder()
         filename = self.file_name.get()
-        if len(filename) != 0:
-            if folder:
-                date1 = self.calendar1.selection_get()
-                date2 = self.calendar2.selection_get()
+        pattern = re.compile("[^a-zA-Z0-9 @]")
+        if not pattern.search(filename):
+            if len(filename) != 0:
+                if folder:
+                    date1 = self.calendar1.selection_get()
+                    date2 = self.calendar2.selection_get()
 
-                edited_date1 = date1.strftime("%Y-%m-%d")
-                edited_date2 = date2.strftime("%Y-%m-%d")
+                    edited_date1 = date1.strftime("%Y-%m-%d")
+                    edited_date2 = date2.strftime("%Y-%m-%d")
 
-                datefrom = datetime.datetime.strptime(edited_date1, "%Y-%m-%d")
-                dateto = datetime.datetime.strptime(edited_date2, "%Y-%m-%d")
+                    datefrom = datetime.datetime.strptime(edited_date1, "%Y-%m-%d")
+                    dateto = datetime.datetime.strptime(edited_date2, "%Y-%m-%d")
 
 
-                filepath = folder
+                    filepath = folder
 
-                if self.client_type == "Students Report":
+                    if self.client_type == "Students Report":
 
-                    if self.file_type_var.get() == "Excel":
-                        self.excel_class.print_student(filepath, filename, datefrom, dateto)
+                        if self.file_type_var.get() == "Excel":
+                            self.excel_class.print_student(filepath, filename, datefrom, dateto)
 
-                    if self.file_type_var.get() == "Docx":
-                        self.docx_class.print_doc_student(filepath, filename, datefrom, dateto)
+                        if self.file_type_var.get() == "Docx":
+                            self.docx_class.print_doc_student(filepath, filename, datefrom, dateto)
 
-                    if self.file_type_var.get() == "Pdf":
-                        self.docx_class.print_pdf_student(filepath, filename, datefrom, dateto)
+                        if self.file_type_var.get() == "Pdf":
+                            self.docx_class.print_pdf_student(filepath, filename, datefrom, dateto)
 
-                if self.client_type == "Personnels Report":
+                    if self.client_type == "Personnels Report":
 
-                    if self.file_type_var.get() == "Excel":
-                        self.excel_class.print_personnel(filepath, filename, datefrom, dateto)
+                        if self.file_type_var.get() == "Excel":
+                            self.excel_class.print_personnel(filepath, filename, datefrom, dateto)
 
-                    if self.file_type_var.get() == "Docx":
-                        self.docx_class.print_doc_personnel(
-                            filepath, filename, datefrom, dateto
-                        )
+                        if self.file_type_var.get() == "Docx":
+                            self.docx_class.print_doc_personnel(
+                                filepath, filename, datefrom, dateto
+                            )
 
-                    if self.file_type_var.get() == "Pdf":
-                        self.docx_class.print_pdf_personnel(
-                            filepath, filename, datefrom, dateto
-                        )
+                        if self.file_type_var.get() == "Pdf":
+                            self.docx_class.print_pdf_personnel(
+                                filepath, filename, datefrom, dateto
+                            )
 
-                if self.client_type == "Visitors Report":
+                    if self.client_type == "Visitors Report":
 
-                    if self.file_type_var.get() == "Excel":
-                        self.excel_class.print_visitor(filepath, filename, datefrom, dateto)
+                        if self.file_type_var.get() == "Excel":
+                            self.excel_class.print_visitor(filepath, filename, datefrom, dateto)
 
-                    if self.file_type_var.get() == "Docx":
-                        self.docx_class.print_doc_visitor(filepath, filename, datefrom, dateto)
+                        if self.file_type_var.get() == "Docx":
+                            self.docx_class.print_doc_visitor(filepath, filename, datefrom, dateto)
 
-                    if self.file_type_var.get() == "Pdf":
-                        self.docx_class.print_pdf_visitor(filepath, filename, datefrom, dateto)
+                        if self.file_type_var.get() == "Pdf":
+                            self.docx_class.print_pdf_visitor(filepath, filename, datefrom, dateto)
+            else:
+                messbx.showwarning("Warning", "Kindly ensure all fields are filled by entering a value.")
         else:
-           messbx.showwarning("Error", "Kindly ensure all fields are filled by entering a value.")
+            messbx.showwarning("Warning", "The input contains special characters.")

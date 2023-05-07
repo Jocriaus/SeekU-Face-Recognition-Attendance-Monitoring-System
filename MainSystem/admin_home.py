@@ -1576,7 +1576,13 @@ class AdminHomeApp:
         if len(self.deactivation_date_entry.get()) != 0:
             try:
                 self.sql_query.set_sem_settings(self.deactivation_date_entry.get())
+                messbx.showinfo("Saved", "Settings have been saved successfully!")
             except ValueError:
+                messbx.showerror(
+                    "Error",
+                    "Please use the format YYYY-MM-DD as the data format provided is incorrect.",
+                )
+            except Exception:
                 messbx.showerror(
                     "Error",
                     "Please use the format YYYY-MM-DD as the data format provided is incorrect.",
@@ -1591,6 +1597,7 @@ class AdminHomeApp:
         login_attempt = self.login_attempt_entry.get()
         if pass_len.isnumeric() and login_attempt.isnumeric():
             self.sql_query.set_pass_len_log_att(pass_len, login_attempt)
+            messbx.showinfo("Saved", "Settings have been saved successfully!")
         else:
             messbx.showerror("Error", "Please enter numerical values only.")
 
