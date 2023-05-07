@@ -418,6 +418,7 @@ class EditStudentApp:
                         and len(student_contact_num_var) == 11
                         ):
                         if (student_firstname_var.replace(" ", "").isalpha() and 
+                            student_middlename_var.isalpha() and
                             student_lastname_var.replace(" ", "").isalpha() and 
                             student_program_var.replace(" ", "").isalpha()):
                             

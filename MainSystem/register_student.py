@@ -292,8 +292,7 @@ class RegisterStudentApp:
                             if (
                                 first_name_var.replace(" ", "").isalpha()
                                 and last_name_var.replace(" ", "").isalpha()
-                                and ((not mid_name_var.isdigit()) or (contact_num_var.startswith("-") )
-                                     and contact_num_var[1:].isdigit()) 
+                                and mid_name_var.isalpha()
                                 and program_var.replace(" ", "").isalpha()
                             ):
 

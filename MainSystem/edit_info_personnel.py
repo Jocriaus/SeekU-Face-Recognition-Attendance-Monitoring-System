@@ -419,8 +419,9 @@ class EditPersonnelApp:
                         and personnel_contact_num_var[1:].isdigit()
                         and len(personnel_contact_num_var) == 11
                         ):
-                        if (personnel_firstname_var.replace(" ", "").isalpha() and 
-                            personnel_lastname_var.replace(" ", "").isalpha() 
+                        if (personnel_firstname_var.replace(" ", "").isalpha()
+                            and personnel_middlename_var.isalpha()
+                            and personnel_lastname_var.replace(" ", "").isalpha()
                             ):
 
                             path_check = self.img_path + "/000000000.jpg"
