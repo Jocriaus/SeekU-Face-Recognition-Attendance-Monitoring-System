@@ -274,7 +274,6 @@ class RegisterPersonnelApp:
                     mid_name_var,
                     contact_num_var,
                     address_var,
-                    personnel_type_var,
                 ]
                 concatenated_inputs = "".join(input_values)
                 pattern = re.compile("[^a-zA-Z0-9 .,]")
@@ -291,30 +290,25 @@ class RegisterPersonnelApp:
                         ):
                             if (
                                 first_name_var.replace(" ", "").isalpha()
+                                and ((not mid_name_var.isdigit()) or (contact_num_var.startswith("-") )
+                                     and contact_num_var[1:].isdigit()) 
                                 and last_name_var.replace(" ", "").isalpha()
                             ):
                                 if register == True:
                                     img_name = personnel_num_var
                                     path_check = self.img_path + "/000000000.jpg"
-                                    if os.path.exists(path_check):
-                                        os.rename(
-                                            path_check,
-                                            self.img_path + "/" + img_name + ".jpg",
+                                    if self.saveonly and (not os.path.exists(path_check)):
+                                        result = messbx.askokcancel(
+                                            "Confirm Action",
+                                            "Please review all the details you have inputted. Are you sure everything is final and correct?",
                                         )
-                                    if os.path.exists(path_check) and self.saveonly:
-                                        image = face_recognition.load_image_file(
-                                            path_check
-                                        )
-                                        face_locations = (
-                                            face_recognition.face_locations(image)
-                                        )
+                                        if result:
+                                            path_check = self.img_path + "/" + img_name + ".jpg"
+                                            image = face_recognition.load_image_file(path_check)
+                                            face_locations = (
+                                                face_recognition.face_locations(image))
 
-                                        if face_locations:
-                                            result = messbx.askokcancel(
-                                                "Confirm Action",
-                                                "Please review all the details you have inputted. Are you sure everything is final and correct?",
-                                            )
-                                            if result:
+                                            if face_locations:
                                                 # User clicked OK
                                                 self.sql_query.register_personnel(
                                                     personnel_num_var,
@@ -329,11 +323,11 @@ class RegisterPersonnelApp:
                                                     "Success",
                                                     "The personnel's record has been registered successfully.",
                                                 )
-                                        else:
-                                            messbx.showerror(
-                                                "Error",
-                                                "Face detection failed. There are no face detected on the image.",
-                                            )
+                                            else:
+                                                messbx.showerror(
+                                                    "Error",
+                                                    "Face detection failed. There are no face detected on the image.",
+                                                )
                                     elif (not self.saveonly) and (
                                         os.path.exists(path_check)
                                     ):
@@ -342,6 +336,7 @@ class RegisterPersonnelApp:
                                             "Please review all the details you have inputted. Are you sure everything is final and correct?",
                                         )
                                         if result:
+                                            os.rename(path_check, self.img_path + "/" + img_name + ".jpg")
                                             self.sql_query.register_personnel(
                                                 personnel_num_var,
                                                 first_name_var,

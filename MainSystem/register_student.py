@@ -292,33 +292,26 @@ class RegisterStudentApp:
                             if (
                                 first_name_var.replace(" ", "").isalpha()
                                 and last_name_var.replace(" ", "").isalpha()
-                                and mid_name_var.replace(" ", "").isalpha()
+                                and ((not mid_name_var.isdigit()) or (contact_num_var.startswith("-") )
+                                     and contact_num_var[1:].isdigit()) 
                                 and program_var.replace(" ", "").isalpha()
                             ):
 
                                 if register == True:
                                     img_name = student_num_var
                                     path_check = self.img_path + "/000000000.jpg"
-                                    if os.path.exists(path_check):
-                                        os.rename(
-                                            path_check,
-                                            self.img_path + "/" + img_name + ".jpg",
+                                    if self.saveonly and (not os.path.exists(path_check)):
+                                        result = messbx.askokcancel(
+                                            "Confirm Action",
+                                            "Please review all the details you have inputted. Are you sure everything is final and correct?",
                                         )
-                                    path_check = self.img_path + "/" + img_name + ".jpg"
-                                    if self.saveonly and os.path.exists(path_check):
-                                        image = face_recognition.load_image_file(
-                                            path_check
-                                        )
-                                        face_locations = (
-                                            face_recognition.face_locations(image)
-                                        )
+                                        if result:
+                                            path_check = self.img_path + "/" + img_name + ".jpg"
+                                            image = face_recognition.load_image_file(path_check)
+                                            face_locations = (
+                                                face_recognition.face_locations(image))
 
-                                        if face_locations:
-                                            result = messbx.askokcancel(
-                                                "Confirm Action",
-                                                "Please review all the details you have inputted. Are you sure everything is final and correct?",
-                                            )
-                                            if result:
+                                            if face_locations:
                                                 self.sql_query.register_student(
                                                     student_num_var,
                                                     first_name_var,
@@ -331,21 +324,20 @@ class RegisterStudentApp:
                                                 )
                                                 messbx.showinfo(
                                                     "Success",
-                                                    "The student's record has been registered successfully.",
+                                                    "The personnel's record has been registered successfully.",
                                                 )
-                                        else:
-                                            messbx.showwarning(
-                                                "Warning",
-                                                "There is no face detected on the image.",
-                                            )
-                                    elif (not self.saveonly) and (
-                                        not os.path.exists(path_check)
-                                    ):
+                                            else:
+                                                messbx.showerror(
+                                                    "Error",
+                                                    "Face detection failed. There are no face detected on the image.",
+                                                )
+                                    elif (not self.saveonly) and os.path.exists(path_check):
                                         result = messbx.askokcancel(
                                             "Confirm Action",
                                             "Please review all the details you have inputted. Are you sure everything is final and correct?",
                                         )
                                         if result:
+                                            os.rename(path_check, self.img_path + "/" + img_name + ".jpg")
                                             self.sql_query.register_student(
                                                 student_num_var,
                                                 first_name_var,
@@ -421,9 +413,7 @@ class RegisterStudentApp:
 
     # this command will open the camera app
     def change_pic(self, event=None):
-        path_check = self.img_path + "/000000000.jpg"
-        if os.path.exists(path_check):
-            self.back_cam_app_window()
+        self.back_cam_app_window()
 
     def return_func(self, event=None):
         self.back_cam_app_window()
