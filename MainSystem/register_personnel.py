@@ -290,7 +290,8 @@ class RegisterPersonnelApp:
                         ):
                             if (
                                 first_name_var.replace(" ", "").isalpha()
-                                and mid_name_var.isalpha()
+                                and ((not mid_name_var.isdigit()) or (mid_name_var.startswith("-") )
+                                     and mid_name_var[1:].isdigit()) 
                                 and last_name_var.replace(" ", "").isalpha()
                             ):
                                 if register == True:
