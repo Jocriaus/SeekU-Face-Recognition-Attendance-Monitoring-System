@@ -278,7 +278,7 @@ class RegisterStudentApp:
                     address_var,
                 ]
                 concatenated_inputs = "".join(input_values)
-                pattern = re.compile("[^a-zA-Z0-9 .,]")
+                pattern = re.compile("[^a-zA-Z0-9 ]")
                 if not pattern.search(concatenated_inputs):
                     if student_num_var.isdigit() or (
                         student_num_var.startswith("-")
