@@ -257,9 +257,7 @@ class RegisterPersonnelApp:
         address_var = self.address_entry.get()
 
         if self.sql_query.check_student_no(personnel_num_var) == True:
-            messbx.showwarning(
-                "Warning", "Personnel number already exists."
-            )
+            messbx.showwarning("Warning", "Personnel number already exists.")
         else:
             if (
                 len(personnel_num_var) != 0
@@ -268,7 +266,7 @@ class RegisterPersonnelApp:
                 and len(contact_num_var) != 0
                 and len(personnel_type_var) != 0
                 and len(address_var) != 0
-                ):
+            ):
                 input_values = [
                     personnel_num_var,
                     first_name_var,
@@ -285,31 +283,39 @@ class RegisterPersonnelApp:
                     if personnel_num_var.isdigit() or (
                         personnel_num_var.startswith("-")
                         and personnel_num_var[1:].isdigit()
-                        ):
+                    ):
                         if contact_num_var.isdigit() or (
                             contact_num_var.startswith("-")
                             and contact_num_var[1:].isdigit()
                             and len(contact_num_var) == 11
+                        ):
+                            if (
+                                first_name_var.replace(" ", "").isalpha()
+                                and last_name_var.replace(" ", "").isalpha()
                             ):
-                            if (first_name_var.replace(" ", "").isalpha() and 
-                                last_name_var.replace(" ", "").isalpha() 
-                                ):
                                 if register == True:
                                     img_name = personnel_num_var
                                     path_check = self.img_path + "/000000000.jpg"
                                     if os.path.exists(path_check):
-                                        os.rename( path_check, 
-                                                self.img_path + "/" + img_name + ".jpg",
+                                        os.rename(
+                                            path_check,
+                                            self.img_path + "/" + img_name + ".jpg",
                                         )
-                                    path_check = self.img_path + img_name
                                     if os.path.exists(path_check) and self.saveonly:
-                                        image = face_recognition.load_image_file(path_check)
-                                        face_locations = face_recognition.face_locations(image)
-                
+                                        image = face_recognition.load_image_file(
+                                            path_check
+                                        )
+                                        face_locations = (
+                                            face_recognition.face_locations(image)
+                                        )
+
                                         if face_locations:
-                                            result = messbx.askokcancel("Confirm Action","Please review all the details you have inputted. Are you sure everything is final and correct?")
+                                            result = messbx.askokcancel(
+                                                "Confirm Action",
+                                                "Please review all the details you have inputted. Are you sure everything is final and correct?",
+                                            )
                                             if result:
-                                                # User clicked OK      
+                                                # User clicked OK
                                                 self.sql_query.register_personnel(
                                                     personnel_num_var,
                                                     first_name_var,
@@ -324,30 +330,35 @@ class RegisterPersonnelApp:
                                                     "The personnel's record has been registered successfully.",
                                                 )
                                         else:
-                                            messbx.showerror("Error", 
-                                            "Face detection failed. There are no face detected on the image."
+                                            messbx.showerror(
+                                                "Error",
+                                                "Face detection failed. There are no face detected on the image.",
                                             )
-                                    elif (not self.saveonly) and os.path.exists(path_check):
-                                        result = messbx.askokcancel("Confirm Action","Please review all the details you have inputted. Are you sure everything is final and correct?")
+                                    elif (not self.saveonly) and (
+                                        os.path.exists(path_check)
+                                    ):
+                                        result = messbx.askokcancel(
+                                            "Confirm Action",
+                                            "Please review all the details you have inputted. Are you sure everything is final and correct?",
+                                        )
                                         if result:
                                             self.sql_query.register_personnel(
-                                                    personnel_num_var,
-                                                    first_name_var,
-                                                    last_name_var,
-                                                    mid_name_var,
-                                                    contact_num_var,
-                                                    address_var,
-                                                    personnel_type_var,
+                                                personnel_num_var,
+                                                first_name_var,
+                                                last_name_var,
+                                                mid_name_var,
+                                                contact_num_var,
+                                                address_var,
+                                                personnel_type_var,
                                             )
                                             messbx.showinfo(
-                                                    "Success",
-                                                    "The personnel's record has been registered successfully.",
+                                                "Success",
+                                                "The personnel's record has been registered successfully.",
                                             )
-                                
                                     else:
                                         messbx.showwarning(
-                                        "Warning",
-                                        "No image was found in the directory matching the entered client number.",
+                                            "Warning",
+                                            "No image was found in the directory matching the entered client number.",
                                         )
                             else:
                                 messbx.showwarning(
@@ -357,20 +368,23 @@ class RegisterPersonnelApp:
                         else:
                             messbx.showwarning(
                                 "Warning",
-                                "The provided input for the contact number is "+
-                                "invalid and does not correspond to a valid number.",
+                                "The provided input for the contact number is "
+                                + "invalid and does not correspond to a valid number.",
                             )
                     else:
                         messbx.showwarning(
                             "Warning",
-                            "The provided input for the personnel number is "+
-                            "invalid and does not correspond to a valid number.",
+                            "The provided input for the personnel number is "
+                            + "invalid and does not correspond to a valid number.",
                         )
                 else:
-                    messbx.showwarning("Warning", "The input contains special characters.")
+                    messbx.showwarning(
+                        "Warning", "The input contains special characters."
+                    )
             else:
                 messbx.showwarning(
-                    "Warning", "Kindly ensure all fields are filled by entering a value."
+                    "Warning",
+                    "Kindly ensure all fields are filled by entering a value.",
                 )
 
     def client_no_check(self, client_no):

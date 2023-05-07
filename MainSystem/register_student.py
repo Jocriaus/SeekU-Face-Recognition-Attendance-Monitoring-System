@@ -256,9 +256,7 @@ class RegisterStudentApp:
         address_var = self.address_entry.get()
 
         if self.sql_query.check_student_no(student_num_var) == True:
-            messbx.showwarning(
-                "Warning", "Student number already exists."
-            )
+            messbx.showwarning("Warning", "Student number already exists.")
         else:
             if (
                 len(student_num_var) != 0
@@ -268,7 +266,7 @@ class RegisterStudentApp:
                 and len(program_var) != 0
                 and len(section_var) != 0
                 and len(address_var) != 0
-                ):
+            ):
                 input_values = [
                     student_num_var,
                     first_name_var,
@@ -283,31 +281,43 @@ class RegisterStudentApp:
                 pattern = re.compile("[^a-zA-Z0-9 .,]")
                 if not pattern.search(concatenated_inputs):
                     if student_num_var.isdigit() or (
-                        student_num_var.startswith("-") and student_num_var[1:].isdigit()
-                        ):
+                        student_num_var.startswith("-")
+                        and student_num_var[1:].isdigit()
+                    ):
                         if contact_num_var.isdigit() or (
                             contact_num_var.startswith("-")
                             and contact_num_var[1:].isdigit()
                             and len(contact_num_var) == 11
+                        ):
+                            if (
+                                first_name_var.replace(" ", "").isalpha()
+                                and last_name_var.replace(" ", "").isalpha()
+                                and mid_name_var.replace(" ", "").isalpha()
+                                and program_var.replace(" ", "").isalpha()
                             ):
-                            if (first_name_var.replace(" ", "").isalpha() and 
-                                last_name_var.replace(" ", "").isalpha() and 
-                                program_var.replace(" ", "").isalpha()):
 
                                 if register == True:
                                     img_name = student_num_var
                                     path_check = self.img_path + "/000000000.jpg"
                                     if os.path.exists(path_check):
-                                        os.rename( path_check, 
-                                                self.img_path + "/" + img_name + ".jpg"
-                                                )
-                                    path_check = self.img_path  + "/" + img_name + ".jpg"
-                                    if  self.saveonly and os.path.exists(path_check) :
-                                        image = face_recognition.load_image_file(path_check)
-                                        face_locations = face_recognition.face_locations(image)
-                
+                                        os.rename(
+                                            path_check,
+                                            self.img_path + "/" + img_name + ".jpg",
+                                        )
+                                    path_check = self.img_path + "/" + img_name + ".jpg"
+                                    if self.saveonly and os.path.exists(path_check):
+                                        image = face_recognition.load_image_file(
+                                            path_check
+                                        )
+                                        face_locations = (
+                                            face_recognition.face_locations(image)
+                                        )
+
                                         if face_locations:
-                                            result = messbx.askokcancel("Confirm Action","Please review all the details you have inputted. Are you sure everything is final and correct?")
+                                            result = messbx.askokcancel(
+                                                "Confirm Action",
+                                                "Please review all the details you have inputted. Are you sure everything is final and correct?",
+                                            )
                                             if result:
                                                 self.sql_query.register_student(
                                                     student_num_var,
@@ -325,11 +335,16 @@ class RegisterStudentApp:
                                                 )
                                         else:
                                             messbx.showwarning(
-                                            "Warning",
-                                            "There is no face detected on the image.",
+                                                "Warning",
+                                                "There is no face detected on the image.",
+                                            )
+                                    elif (not self.saveonly) and (
+                                        not os.path.exists(path_check)
+                                    ):
+                                        result = messbx.askokcancel(
+                                            "Confirm Action",
+                                            "Please review all the details you have inputted. Are you sure everything is final and correct?",
                                         )
-                                    elif (not self.saveonly) and os.path.exists(path_check): 
-                                        result = messbx.askokcancel("Confirm Action","Please review all the details you have inputted. Are you sure everything is final and correct?")
                                         if result:
                                             self.sql_query.register_student(
                                                 student_num_var,
@@ -347,9 +362,9 @@ class RegisterStudentApp:
                                             )
                                     else:
                                         messbx.showwarning(
-                                        "Warning",
-                                        "No image was found in the directory matching the entered client number.",
-                                    )
+                                            "Warning",
+                                            "No image was found in the directory matching the entered client number.",
+                                        )
 
                             else:
                                 messbx.showwarning(
@@ -359,31 +374,30 @@ class RegisterStudentApp:
                         else:
                             messbx.showwarning(
                                 "Warning",
-                                "The provided input for the contact number is "+
-                                "invalid and does not correspond to a valid number.",
+                                "The provided input for the contact number is "
+                                + "invalid and does not correspond to a valid number.",
                             )
                     else:
                         messbx.showwarning(
                             "Warning",
-                            "The provided input for the student number is "+
-                            "invalid and does not correspond to a valid number.",
+                            "The provided input for the student number is "
+                            + "invalid and does not correspond to a valid number.",
                         )
                 else:
-                    messbx.showwarning("Warning", "The input contains special characters.")
+                    messbx.showwarning(
+                        "Warning", "The input contains special characters."
+                    )
             else:
                 messbx.showwarning(
-                    "Warning", "Kindly ensure all fields are filled by entering a value."
+                    "Warning",
+                    "Kindly ensure all fields are filled by entering a value.",
                 )
-        
-    
 
     def client_no_check(self, client_no):
         if self.sql_query.check_username(client_no):
             messbx.showwarning(
                 "Warning",
-                "The student number "
-                + client_no
-                + " has already been assigned/taken.",
+                "The student number " + client_no + " has already been assigned/taken.",
             )
             register = False
             return register
