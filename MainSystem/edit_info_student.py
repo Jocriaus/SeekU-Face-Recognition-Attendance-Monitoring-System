@@ -419,7 +419,7 @@ class EditStudentApp:
                         ):
                         if (student_firstname_var.replace(" ", "").isalpha() and 
                             ((not student_middlename_var.isdigit()) or (student_middlename_var.startswith("-") )
-                                     and student_middlename_var[1:].isdigit()) and
+                            and student_middlename_var[1:].isdigit()) and
                             student_lastname_var.replace(" ", "").isalpha() and 
                             student_program_var.replace(" ", "").isalpha()):
                             
