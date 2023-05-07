@@ -402,7 +402,7 @@ class CameraEditApp:
             cv2.imwrite(os.path.join(self.img_path ,("000000000.jpg")), cv2.cvtColor(resized, cv2.COLOR_RGB2BGR))
             
             image = image = face_recognition.load_image_file(self.img_path + "/000000000.jpg")
-            face_locations = face_recognition.face_locations(image, number_of_times_to_upsample=0, model="cnn")
+            face_locations = face_recognition.face_locations(image)
 
             if face_locations:
                 self.display_temp_pic()
