@@ -125,6 +125,7 @@ class CreateUserApp:
         self.mainwindow.protocol("WM_DELETE_WINDOW", self.exit_window)
         self.center(self.mainwindow)
         self.mainwindow.attributes("-topmost", True)
+        self.mainwindow.attributes("-topmost", False)
         self.mainwindow.grab_set()
 
     def exit_window(self):
@@ -204,7 +205,7 @@ class CreateUserApp:
 
     def password_check(self, password):
         limit = self.sql_query.get_password_length()
-        if len(password) > limit:
+        if len(password) < limit:
             messbx.showwarning(
                 "Warning", "The password should have " + str(limit) + " characters."
             )

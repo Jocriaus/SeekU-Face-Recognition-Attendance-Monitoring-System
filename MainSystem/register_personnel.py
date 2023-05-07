@@ -10,10 +10,10 @@ import re
 
 
 class RegisterPersonnelApp:
-    def __init__(self, cam_app, file_path, saveonly):
-        # build ui
+    def __init__(self, cam_app, admin_hom, file_path, saveonly):
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
-        self.admin_cam_window = cam_app
+        self.select_cam_window = cam_app
+        self.admin_home_window = admin_hom
         self.img_path = file_path
         self.sql_query = qry.dbQueries()
         self.saveonly = saveonly
@@ -223,7 +223,8 @@ class RegisterPersonnelApp:
         )
         # Contains-school-logo-------------------------------------------------------------------------------------------------------------------------------------
         # see the function for description
-        self.disp_pic()
+        if not self.saveonly:
+            self.disp_pic()
         # Main widget
         self.mainwindow = self.register_personnel_app
         self.mainwindow.wm_attributes("-fullscreen", "True")
@@ -237,9 +238,11 @@ class RegisterPersonnelApp:
     # this function will destroy the current window and return to camera app
     def back_cam_app_window(self):
         if self.saveonly:
-            self.admin_cam_window.show_add_select_window()
+            self.admin_home_window.deiconify()
+            self.select_cam_window.deiconify()
             self.register_personnel_app.destroy()
         else:
+            self.select_cam_window.deiconify()
             self.register_personnel_app.destroy()
 
     def register_personnel_function(self):
@@ -253,109 +256,123 @@ class RegisterPersonnelApp:
         personnel_type_var = self.personnel_type_entry.get()
         address_var = self.address_entry.get()
 
-        if (
-            len(personnel_num_var) != 0
-            and len(first_name_var) != 0
-            and len(last_name_var) != 0
-            and len(contact_num_var) != 0
-            and len(personnel_type_var) != 0
-            and len(address_var) != 0
-            ):
-            input_values = [
-                personnel_num_var,
-                first_name_var,
-                last_name_var,
-                mid_name_var,
-                contact_num_var,
-                address_var,
-                personnel_type_var,
-            ]
-            concatenated_inputs = "".join(input_values)
-            pattern = re.compile("[^a-zA-Z0-9 .,]")
+        if self.sql_query.check_student_no(personnel_num_var) == True:
+            messbx.showwarning(
+                "Warning", "Personnel number already exists."
+            )
+        else:
+            if (
+                len(personnel_num_var) != 0
+                and len(first_name_var) != 0
+                and len(last_name_var) != 0
+                and len(contact_num_var) != 0
+                and len(personnel_type_var) != 0
+                and len(address_var) != 0
+                ):
+                input_values = [
+                    personnel_num_var,
+                    first_name_var,
+                    last_name_var,
+                    mid_name_var,
+                    contact_num_var,
+                    address_var,
+                    personnel_type_var,
+                ]
+                concatenated_inputs = "".join(input_values)
+                pattern = re.compile("[^a-zA-Z0-9 .,]")
 
-            if not pattern.search(concatenated_inputs):
-                if personnel_num_var.isdigit() or (
-                    personnel_num_var.startswith("-")
-                    and personnel_num_var[1:].isdigit()
-                    ):
-                    if contact_num_var.isdigit() or (
-                        contact_num_var.startswith("-")
-                        and contact_num_var[1:].isdigit()
-                        and len(contact_num_var) == 11
+                if not pattern.search(concatenated_inputs):
+                    if personnel_num_var.isdigit() or (
+                        personnel_num_var.startswith("-")
+                        and personnel_num_var[1:].isdigit()
                         ):
-                        if (first_name_var.replace(" ", "").isalpha() and 
-                            last_name_var.replace(" ", "").isalpha() and 
-                            mid_name_var.replace(" ", "").isalpha() 
+                        if contact_num_var.isdigit() or (
+                            contact_num_var.startswith("-")
+                            and contact_num_var[1:].isdigit()
+                            and len(contact_num_var) == 11
                             ):
-                            if register == True:
-                                img_name = personnel_num_var
-                                path_check = self.img_path + "/000000000.jpg"
-                                if os.path.exists(path_check):
-                                    os.rename( path_check, 
-                                              self.img_path + "/" + img_name + ".jpg",
-                                    )
-                                path_check = self.img_path + img_name
-                                if os.path.exists(path_check) and self.saveonly:
-                                    image = face_recognition.load_image_file(path_check)
-                                    face_locations = face_recognition.face_locations(image, number_of_times_to_upsample=0, model="cnn")
-            
-                                    if face_locations:
-                                        self.sql_query.register_personnel(
-                                            personnel_num_var,
-                                            first_name_var,
-                                            last_name_var,
-                                            mid_name_var,
-                                            contact_num_var,
-                                            address_var,
-                                            personnel_type_var,
+                            if (first_name_var.replace(" ", "").isalpha() and 
+                                last_name_var.replace(" ", "").isalpha() and 
+                                mid_name_var.replace(" ", "").isalpha() 
+                                ):
+                                if register == True:
+                                    img_name = personnel_num_var
+                                    path_check = self.img_path + "/000000000.jpg"
+                                    if os.path.exists(path_check):
+                                        os.rename( path_check, 
+                                                self.img_path + "/" + img_name + ".jpg",
                                         )
-                                        messbx.showinfo(
-                                            "Success",
-                                            "The personnel's record has been registered successfully.",
+                                    path_check = self.img_path + img_name
+                                    if os.path.exists(path_check) and self.saveonly:
+                                        image = face_recognition.load_image_file(path_check)
+                                        face_locations = face_recognition.face_locations(image)
+                
+                                        if face_locations:
+                                            result = messbx.askokcancel("Confirm Action","Please review all the details you have inputted. Are you sure everything is final and correct?")
+                                            if result:
+                                                # User clicked OK      
+                                                self.sql_query.register_personnel(
+                                                    personnel_num_var,
+                                                    first_name_var,
+                                                    last_name_var,
+                                                    mid_name_var,
+                                                    contact_num_var,
+                                                    address_var,
+                                                    personnel_type_var,
+                                                )
+                                                messbx.showinfo(
+                                                    "Success",
+                                                    "The personnel's record has been registered successfully.",
+                                                )
+                                        else:
+                                            messbx.showerror("Error", 
+                                            "Face detection failed. There are no face detected on the image."
+                                            )
+                                    elif (not self.saveonly) and os.path.exists(path_check):
+                                        result = messbx.askokcancel("Confirm Action","Please review all the details you have inputted. Are you sure everything is final and correct?")
+                                        if result:
+                                            self.sql_query.register_personnel(
+                                                    personnel_num_var,
+                                                    first_name_var,
+                                                    last_name_var,
+                                                    mid_name_var,
+                                                    contact_num_var,
+                                                    address_var,
+                                                    personnel_type_var,
+                                            )
+                                            messbx.showinfo(
+                                                    "Success",
+                                                    "The personnel's record has been registered successfully.",
+                                            )
+                                
+                                    else:
+                                        messbx.showwarning(
+                                        "Warning",
+                                        "No image was found in the directory matching the entered client number.",
                                         )
-                                elif os.path.exists(path_check):
-                                    self.sql_query.register_personnel(
-                                            personnel_num_var,
-                                            first_name_var,
-                                            last_name_var,
-                                            mid_name_var,
-                                            contact_num_var,
-                                            address_var,
-                                            personnel_type_var,
-                                    )
-                                    messbx.showinfo(
-                                            "Success",
-                                            "The personnel's record has been registered successfully.",
-                                    )
-                            
-                                else:
-                                    messbx.showwarning(
+                            else:
+                                messbx.showwarning(
                                     "Warning",
-                                    "No image was found in the directory matching the entered client number.",
-                                    )
+                                    "There is an invalid character in the input for the name of the personnel.",
+                                )
                         else:
                             messbx.showwarning(
                                 "Warning",
-                                "There is an invalid character in the input for the name of the personnel.",
+                                "The provided input for the contact number is "+
+                                "invalid and does not correspond to a valid number.",
                             )
                     else:
                         messbx.showwarning(
                             "Warning",
-                            "The provided input for the contact number is "+
+                            "The provided input for the personnel number is "+
                             "invalid and does not correspond to a valid number.",
                         )
                 else:
-                    messbx.showwarning(
-                        "Warning",
-                        "The provided input for the personnel number is "+
-                        "invalid and does not correspond to a valid number.",
-                    )
+                    messbx.showwarning("Warning", "The input contains special characters.")
             else:
-                messbx.showwarning("Warning", "The input contains special characters.")
-        else:
-            messbx.showwarning(
-                "Warning", "Kindly ensure all fields are filled by entering a value."
-            )
+                messbx.showwarning(
+                    "Warning", "Kindly ensure all fields are filled by entering a value."
+                )
 
     def client_no_check(self, client_no):
         if self.sql_query.check_username(client_no):

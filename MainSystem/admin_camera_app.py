@@ -150,9 +150,6 @@ class CameraApp:
         self.mainwindow.wm_attributes('-fullscreen', 'True')
         # this protocol will do a function after pressing the close button.
         self.mainwindow.protocol("WM_DELETE_WINDOW", self.exit_program )
-        if self.saveonly:
-            self.hide_this_window()
-            self.pic_taken()
     #--------------------------------------------------------------------------------------------------------- 
 
     # this function will destroy the window and closes the system/program.
@@ -199,29 +196,20 @@ class CameraApp:
             cv2.imwrite(os.path.join(self.img_path ,("000000000.jpg")), cv2.cvtColor(resized, cv2.COLOR_RGB2BGR))
             # this will open the window that saves the info of the visitor.
             image = face_recognition.load_image_file(self.img_path + "/000000000.jpg")
-            face_locations = face_recognition.face_locations(image, number_of_times_to_upsample=0, model="cnn")
+            face_locations = face_recognition.face_locations(image)
             
             if face_locations:
                 if self.window_will_open == "Manage Students":
-                    rS.RegisterStudentApp(self.snapshot_app, self.img_path,self.saveonly)
+                    rS.RegisterStudentApp(self.snapshot_app,self.admin_home_window ,self.img_path,self.saveonly)
                 elif self.window_will_open == "Manage Personnels":
-                    rP.RegisterPersonnelApp(self.snapshot_app, self.img_path,self.saveonly)    
+                    rP.RegisterPersonnelApp(self.snapshot_app,self.admin_home_window, self.img_path,self.saveonly)    
                 elif self.window_will_open == "Manage Visitors":
-                    rV.RegisterVisitorApp( self.snapshot_app, self.img_path,self.saveonly)
+                    rV.RegisterVisitorApp( self.snapshot_app,self.admin_home_window, self.img_path,self.saveonly)
                 self.hide_this_window()
             else:
                  messbx.showerror(
                 "Error", "Face detection failed. Please adjust your posture and capture a clear image."
             )
-            
-    def pic_taken(self):
-        if self.window_will_open == "Manage Students":
-            rS.RegisterStudentApp(self.snapshot_app, self.img_path,self.saveonly)
-        elif self.window_will_open == "Manage Personnels":
-            rP.RegisterPersonnelApp(self.snapshot_app, self.img_path,self.saveonly)    
-        elif self.window_will_open == "Manage Visitors":
-            rV.RegisterVisitorApp( self.snapshot_app, self.img_path,self.saveonly)
-
 
 
     # this command will return to the home window

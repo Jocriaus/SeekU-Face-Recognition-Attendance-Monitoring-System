@@ -7,7 +7,7 @@ class dbQueries:
         # "DESKTOP-DG7AK17\SQLEXPRESS"
         # "STAR-PLATINUM\SQLEXPRESS01"
         # "DESKTOP-3MNAAKG\SQLEXPRESS"
-        self.server = "DESKTOP-DG7AK17\SQLEXPRESS"
+        self.server = "STAR-PLATINUM\SQLEXPRESS01"
         self.database = "seeku_database"
         self.username = ""
         self.password = ""
@@ -768,15 +768,18 @@ class dbQueries:
                 # create a list to store the values for this row
                 row_values = []
                 # iterate through the columns of the row
-                for col in row:
+                for i, col in enumerate(row):
                     # append the value to the row values list
-                    row_values.append(col)
+                    if i >= len(row) - 2:
+                        row_values.append(col[0:8])
+                    else:
+                        row_values.append(col)
                 # append the row values list to the selected values list
                 selected_values.append(row_values)
             print(len(selected_values))
             return selected_values, column
         else:
-            return False
+            return False, False
 
     def sort_student_report_bydate_docx(self, date1, date2):
         query = (
@@ -813,15 +816,18 @@ class dbQueries:
                 # create a list to store the values for this row
                 row_values = []
                 # iterate through the columns of the row
-                for col in row:
+                for i, col in enumerate(row):
                     # append the value to the row values list
-                    row_values.append(col)
+                    if i >= len(row) - 2:
+                        row_values.append(col[0:8])
+                    else:
+                        row_values.append(col)
                 # append the row values list to the selected values list
                 selected_values.append(row_values)
             print(len(selected_values))
             return selected_values, column
         else:
-            return False
+            return False, False
 
     def sort_personnel_report_bydate_docx(self, date1, date2):
         query = (
@@ -856,15 +862,18 @@ class dbQueries:
                 # create a list to store the values for this row
                 row_values = []
                 # iterate through the columns of the row
-                for col in row:
+                for i, col in enumerate(row):
                     # append the value to the row values list
-                    row_values.append(col)
+                    if i >= len(row) - 2:
+                        row_values.append(col[0:8])
+                    else:
+                        row_values.append(col)
                 # append the row values list to the selected values list
                 selected_values.append(row_values)
             print(len(selected_values))
             return selected_values, column
         else:
-            return False
+            return False, False
 
     def sort_visitor_report_bydate_docx(self, date1, date2):
         query = (

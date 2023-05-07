@@ -27,6 +27,7 @@ class EditStudentApp:
         img_path,
         select,
         refresh,
+        this_is_archive
     ):
 
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
@@ -48,6 +49,7 @@ class EditStudentApp:
         self.edit_bool = True
         self.client = select
         self.refresh_func = refresh
+        self.this_is_archived = this_is_archive
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         # build ui
         self.edit_student_app = tk.Toplevel()
@@ -322,7 +324,10 @@ class EditStudentApp:
     # this will return to the camera app
     def show_home_win(self):
         self.admin_home_window.deiconify()
-        self.refresh_func(self.client, self.first_stat)
+        if self.this_is_archived:
+            self.refresh_func(self.client, "IsArchived")
+        else:
+            self.refresh_func(self.client, "IsActive")
         self.edit_student_app.destroy()
 
     def hide_this_window(self):
@@ -418,27 +423,46 @@ class EditStudentApp:
                             student_middlename_var.replace(" ", "").isalpha() and 
                             student_program_var.replace(" ", "").isalpha()):
                             
-                            self.sql_query.update_student(
-                                student_num_var,
-                                student_firstname_var,
-                                student_lastname_var,
-                                student_middlename_var,
-                                student_program_var,
-                                student_section_var,
-                                student_contact_num_var,
-                                student_address_var,
-                                student_status_var,
-                            )
-                            if os.path.exists(self.img_path + "/000000000.jpg"):
-                                img_name = self.student_number
-                                os.rename(
-                                    self.img_path + "/" + img_name + ".jpg",
-                                    self.img_path + "/000000000.jpg",
-                                )
-                            messbx.showinfo(
-                                "Success",
-                                "The student's record has been successfully updated.",
-                            )
+                            path_check = self.img_path + "/000000000.jpg"
+                            result = messbx.askokcancel("Confirm Action","Please review all the details you have inputted. Are you sure everything is final and correct?")
+                            if result:
+                                if os.path.exists(path_check):
+                                    img_name = self.student_num_var
+                                    os.rename(
+                                        self.img_path + "/" + img_name + ".jpg",
+                                        self.img_path + "/000000000.jpg",
+                                    )
+                                    self.sql_query.update_student(
+                                        student_num_var,
+                                        student_firstname_var,
+                                        student_lastname_var,
+                                        student_middlename_var,
+                                        student_program_var,
+                                        student_section_var,
+                                        student_contact_num_var,
+                                        student_address_var,
+                                        student_status_var,
+                                    )
+                                    messbx.showinfo(
+                                        "Success",
+                                        "The student's record has been successfully updated.",
+                                    )
+                                else:
+                                    self.sql_query.update_student(
+                                        student_num_var,
+                                        student_firstname_var,
+                                        student_lastname_var,
+                                        student_middlename_var,
+                                        student_program_var,
+                                        student_section_var,
+                                        student_contact_num_var,
+                                        student_address_var,
+                                        student_status_var,
+                                    )
+                                    messbx.showinfo(
+                                        "Success",
+                                        "The student's record has been successfully updated.",
+                                    )
 
                         else:
                             messbx.showwarning(

@@ -2,7 +2,7 @@ import pyodbc as odbc
 import tkinter as tk
 import tkinter.ttk as ttk
 import query_mod as qry
-
+import tkinter.messagebox as messbx
 
 class TreeviewGUI:
     def __init__(self, master=None):
@@ -10,7 +10,7 @@ class TreeviewGUI:
         # "DESKTOP-DG7AK17\SQLEXPRESS"
         # "STAR-PLATINUM\SQLEXPRESS01"
         # "DESKTOP-3MNAAKG\SQLEXPRESS"
-        self.server = "DESKTOP-DG7AK17\SQLEXPRESS"
+        self.server = "STAR-PLATINUM\SQLEXPRESS01"
         self.database = "seeku_database"
         self.username = ""
         self.password = ""
@@ -957,6 +957,8 @@ class TreeviewGUI:
         )
 
         for row in self.cursor.fetchall():
+            timein= row[6] 
+            timeout= row[7]
             self.student_attendance_tree.insert(
                 "",
                 "end",
@@ -968,8 +970,8 @@ class TreeviewGUI:
                     row[3],
                     row[4],
                     row[5],
-                    row[6],
-                    row[7],
+                    timein[0:8],
+                    timeout[0:8],
                 ),
             )
 
@@ -979,6 +981,8 @@ class TreeviewGUI:
         )
 
         for row in self.cursor.fetchall():
+            timein= row[6] 
+            timeout= row[7]
             self.student_report_tree.insert(
                 "",
                 "end",
@@ -990,8 +994,8 @@ class TreeviewGUI:
                     row[3],
                     row[4],
                     row[5],
-                    row[6],
-                    row[7],
+                    timein[0:8],
+                    timeout[0:8],
                 ),
             )
 
@@ -1022,6 +1026,8 @@ class TreeviewGUI:
             "SELECT tbl_personnel.personnel_no, tbl_personnel.personnel_firstname, tbl_personnel.personnel_lastname, tbl_personnel.personnel_type, tbl_personnel_attendance.personnel_attendance_date, tbl_personnel_attendance.personnel_time_in, tbl_personnel_attendance.personnel_time_out FROM tbl_personnel RIGHT JOIN tbl_personnel_attendance ON tbl_personnel.personnel_no = tbl_personnel_attendance.personnel_no"
         )
         for row in self.cursor.fetchall():
+            timein= row[5] 
+            timeout= row[6]
             self.personnel_attendance_tree.insert(
                 "",
                 "end",
@@ -1032,8 +1038,8 @@ class TreeviewGUI:
                     row[2],
                     row[3],
                     row[4],
-                    row[5],
-                    row[6],
+                    timein[0:8],
+                    timeout[0:8],
                 ),
             )
 
@@ -1042,6 +1048,8 @@ class TreeviewGUI:
             "SELECT tbl_personnel.personnel_no, tbl_personnel.personnel_firstname, tbl_personnel.personnel_lastname, tbl_personnel.personnel_type, tbl_personnel_report.personnel_attendance_date, tbl_personnel_report.personnel_time_in, tbl_personnel_report.personnel_time_out FROM tbl_personnel RIGHT JOIN tbl_personnel_report ON tbl_personnel.personnel_no = tbl_personnel_report.personnel_no"
         )
         for row in self.cursor.fetchall():
+            timein= row[5] 
+            timeout= row[6]
             self.personnel_report_tree.insert(
                 "",
                 "end",
@@ -1052,8 +1060,8 @@ class TreeviewGUI:
                     row[2],
                     row[3],
                     row[4],
-                    row[5],
-                    row[6],
+                    timein[0:8],
+                    timeout[0:8],
                 ),
             )
 
@@ -1083,6 +1091,8 @@ class TreeviewGUI:
         )
 
         for row in self.cursor.fetchall():
+            timein= row[4] 
+            timeout= row[5]
             self.visitor_attendance_tree.insert(
                 "",
                 "end",
@@ -1092,8 +1102,8 @@ class TreeviewGUI:
                     row[1],
                     row[2],
                     row[3],
-                    row[4],
-                    row[5],
+                    timein[0:8],
+                    timeout[0:8],
                 ),
             )
 
@@ -1103,6 +1113,8 @@ class TreeviewGUI:
         )
 
         for row in self.cursor.fetchall():
+            timein= row[4] 
+            timeout= row[5]
             self.visitor_report_tree.insert(
                 "",
                 "end",
@@ -1112,8 +1124,8 @@ class TreeviewGUI:
                     row[1],
                     row[2],
                     row[3],
-                    row[4],
-                    row[5],
+                    timein[0:8],
+                    timeout[0:8],
                 ),
             )
 
@@ -1209,64 +1221,85 @@ class TreeviewGUI:
 
         # search_term = search_entry.get()
         result = self.sql_query.sort_student_report_bydate_docx(date1, date2)
-
-        for row in result:
-            self.student_report_tree.insert(
-                "",
-                "end",
-                text=row[0],
-                values=(
-                    row[0],
-                    row[1],
-                    row[2],
-                    row[3],
-                    row[4],
-                    row[5],
-                    row[6],
-                    row[7],
-                ),
+        
+        if result:
+            for row in result:
+                timein= row[6] 
+                timeout= row[7]
+                self.student_report_tree.insert(
+                    "",
+                    "end",
+                    text=row[0],
+                    values=(
+                        row[0],
+                        row[1],
+                        row[2],
+                        row[3],
+                        row[4],
+                        row[5],
+                        timein[0:8],
+                        timeout[0:8],
+                    ),
+                )
+        else:
+            messbx.showwarning(
+                "Warning", "There are no records of attendance for the selected date."
             )
+
 
     def populate_personnel_report_bydate(self, date1, date2):
 
         # search_term = search_entry.get()
         result = self.sql_query.sort_personnel_report_bydate_docx(date1, date2)
 
-        for row in result:
-            self.personnel_report_tree.insert(
-                "",
-                "end",
-                text=[0],
-                values=(
-                    row[0],
-                    row[1],
-                    row[2],
-                    row[3],
-                    row[4],
-                    row[5],
-                    row[6],
-                ),
+        if result:
+            for row in result:
+                timein= row[5] 
+                timeout= row[6]
+                self.personnel_report_tree.insert(
+                    "",
+                    "end",
+                    text=[0],
+                    values=(
+                        row[0],
+                        row[1],
+                        row[2],
+                        row[3],
+                        row[4],
+                        timein[0:8],
+                        timeout[0:8],
+                    ),
+                )
+        else:
+            messbx.showwarning(
+                "Warning", "There are no records of attendance for the selected date."
             )
 
     def populate_visitor_report_bydate(self, date1, date2):
         # search_term = search_entry.get()
         result = self.sql_query.sort_visitor_report_bydate_docx(date1, date2)
 
-        for row in result:
-            self.visitor_report_tree.insert(
-                "",
-                "end",
-                text=[0],
-                values=(
-                    row[0],
-                    row[1],
-                    row[2],
-                    row[3],
-                    row[4],
-                    row[5],
-                ),
+        if result:
+            for row in result:
+                timein= row[4] 
+                timeout= row[5]
+                self.visitor_report_tree.insert(
+                    "",
+                    "end",
+                    text=[0],
+                    values=(
+                        row[0],
+                        row[1],
+                        row[2],
+                        row[3],
+                        timein[0:8],
+                        timeout[0:8],
+                    ),
+                )
+        else:
+            messbx.showwarning(
+                "Warning", "There are no records of attendance for the selected date."
             )
-
     # JOCRIAUS--------------------------------------------------------------------------
 
     def do_search_student_attendance(self, search_term):
@@ -1278,6 +1311,8 @@ class TreeviewGUI:
         result = self.sql_query.search_student_attendance(search_term)
 
         for row in result:
+            timein= row[6] 
+            timeout= row[7]
             self.student_attendance_tree.insert(
                 "",
                 "end",
@@ -1289,8 +1324,8 @@ class TreeviewGUI:
                     row[3],
                     row[4],
                     row[5],
-                    row[6],
-                    row[7],
+                    timein[0:8],
+                    timeout[0:8],
                 ),
             )
 
@@ -1325,6 +1360,8 @@ class TreeviewGUI:
         result = self.sql_query.search_personnel_report(self.search_term)
 
         for row in result:
+            timein= row[5] 
+            timeout= row[6]
             self.personnel_report_tree.insert(
                 "",
                 "end",
@@ -1335,8 +1372,8 @@ class TreeviewGUI:
                     row[2],
                     row[3],
                     row[4],
-                    row[5],
-                    row[6],
+                    timein[0:8],
+                    timeout[0:8],
                 ),
             )
 
@@ -1348,6 +1385,8 @@ class TreeviewGUI:
         result = self.sql_query.search_personnel_attendance(self.search_term)
 
         for row in result:
+            timein= row[5] 
+            timeout= row[6]
             self.personnel_attendance_tree.insert(
                 "",
                 "end",
@@ -1358,8 +1397,8 @@ class TreeviewGUI:
                     row[2],
                     row[3],
                     row[4],
-                    row[5],
-                    row[6],
+                    timein[0:8],
+                    timeout[0:8],
                 ),
             )
 
@@ -1415,6 +1454,8 @@ class TreeviewGUI:
         result = self.sql_query.search_visitor_attendance(self.search_term)
 
         for row in result:
+            timein= row[4] 
+            timeout= row[5]
             self.visitor_attendance_tree.insert(
                 "",
                 "end",
@@ -1424,8 +1465,8 @@ class TreeviewGUI:
                     row[1],
                     row[2],
                     row[3],
-                    row[4],
-                    row[5],
+                    timein[0:8],
+                    timeout[0:8],
                 ),
             )
 

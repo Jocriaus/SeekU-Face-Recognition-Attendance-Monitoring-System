@@ -5,6 +5,7 @@ import tkinter.messagebox as messbx
 import query_mod as qry
 import admin_camera_app as aCA
 import PIL.Image, PIL.ImageTk
+import face_recognition
 import sys
 import os
 import re
@@ -26,6 +27,7 @@ class EditPersonnelApp:
         img_path,
         select,
         refresh,
+        this_is_archive
     ):
 
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
@@ -45,6 +47,7 @@ class EditPersonnelApp:
         self.edit_bool = True
         self.client = select
         self.refresh_func = refresh
+        self.this_is_archived = this_is_archive
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
 
         # build ui
@@ -66,6 +69,7 @@ class EditPersonnelApp:
         self.camera_canvas.place(
             anchor="center", relheight=1.0, relwidth=1.0, relx=0.5, rely=0.5, x=0, y=0
         )
+        self.camera_canvas.bind("<1>", self.change_pic, add="")
         self.edit_pers_frame4.place(
             anchor="center", relheight=0.50, relwidth=0.50, relx=0.65, rely=0.47
         )
@@ -314,7 +318,10 @@ class EditPersonnelApp:
     # this will return to the camera app
     def show_home_win(self):
         self.admin_home_window.deiconify()
-        self.refresh_func(self.client, self.personnel_status)
+        if self.this_is_archived:
+            self.refresh_func(self.client, "IsArchived")
+        else:
+            self.refresh_func(self.client, "IsActive")
         self.edit_personnel_app.destroy()
 
     def hide_this_window(self):
@@ -417,26 +424,45 @@ class EditPersonnelApp:
                             personnel_lastname_var.replace(" ", "").isalpha() and 
                             personnel_middlename_var.replace(" ", "").isalpha()
                             ):
-                            self.sql_query.update_personnel(
-                                personnel_num_var,
-                                personnel_firstname_var,
-                                personnel_lastname_var,
-                                personnel_middlename_var,
-                                personnel_contact_num_var,
-                                personnel_address_var,
-                                personnel_type_variable,
-                                pesonnel_status_var,
-                            )
-                            if os.path.exists(self.img_path + "/000000000.jpg"):
-                                img_name = self.personnel_num
-                                os.rename(
-                                    self.img_path + "/" + img_name + ".jpg",
-                                    self.img_path + "/000000000.jpg",
-                                )
-                            messbx.showinfo(
-                                "Success",
-                                "The personnel's record has been successfully updated.",
-                            )
+
+                            path_check = self.img_path + "/000000000.jpg"
+                            result = messbx.askokcancel("Confirm Action","Please review all the details you have inputted. Are you sure everything is final and correct?")
+                            if result:
+                                if os.path.exists(path_check):
+                                    img_name = self.personnel_num
+                                    os.rename(
+                                        self.img_path + "/" + img_name + ".jpg",
+                                        self.img_path + "/000000000.jpg",
+                                    )
+                                    self.sql_query.update_personnel(
+                                        personnel_num_var,
+                                        personnel_firstname_var,
+                                        personnel_lastname_var,
+                                        personnel_middlename_var,
+                                        personnel_contact_num_var,
+                                        personnel_address_var,
+                                        personnel_type_variable,
+                                        pesonnel_status_var,
+                                    )
+                                    messbx.showinfo(
+                                        "Success",
+                                        "The personnel's record has been successfully updated.",
+                                    )  
+                                else:
+                                    self.sql_query.update_personnel(
+                                        personnel_num_var,
+                                        personnel_firstname_var,
+                                        personnel_lastname_var,
+                                        personnel_middlename_var,
+                                        personnel_contact_num_var,
+                                        personnel_address_var,
+                                        personnel_type_variable,
+                                        pesonnel_status_var,
+                                    )
+                                    messbx.showinfo(
+                                        "Success",
+                                        "The personnel's record has been successfully updated.",
+                                    )
                         else:
                             messbx.showwarning(
                                 "Warning",

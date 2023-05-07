@@ -20,7 +20,7 @@ class ClientCameraSelectApp:
         # variable for the radiobuttons, to connect them
         self.cam_var = tk.IntVar()
         self.cam_var.set(0)
-
+        self.camera_app.bind('<Return>',lambda event:self.open_logic())
     #Contains-the-radiobuttons-entry-and-button---------------------------------------------------------------------------------------------- 
         self.camera_frame = tk.Frame(self.camera_app)
         self.camera_frame.configure(
@@ -153,7 +153,8 @@ class ClientCameraSelectApp:
 
         # Main widget
         self.mainwindow = self.camera_app
-
+        self.mainwindow.attributes("-topmost", True)
+        self.mainwindow.attributes("-topmost", False)
         # refer to the function's comments
         self.center(self.mainwindow)
 

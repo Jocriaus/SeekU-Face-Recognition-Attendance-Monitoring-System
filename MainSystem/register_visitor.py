@@ -9,10 +9,10 @@ import re
 
 
 class RegisterVisitorApp:
-    def __init__(self, cam_app, file_path, saveonly):
-        # build ui
+    def __init__(self, cam_app,admin_hom, file_path, saveonly):
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
-        self.client_cam_app = cam_app
+        self.select_cam_window = cam_app
+        self.admin_home_window = admin_hom
         self.img_path = file_path
         self.saveonly = saveonly
         self.sql_query = qry.dbQueries()
@@ -192,7 +192,7 @@ class RegisterVisitorApp:
 
     # this function will destroy the current window and return to camera app
     def back_cam_app_window(self):
-        self.client_cam_app.deiconify()
+        self.select_cam_window.deiconify()
         self.register_visitor_app.destroy()
 
     def register_visitor_function(self):
@@ -231,24 +231,26 @@ class RegisterVisitorApp:
                     if (first_name_var.replace(" ", "").isalpha() and 
                         last_name_var.replace(" ", "").isalpha()
                         ):
-                        self.sql_query.register_visitor(
-                            first_name_var,
-                            last_name_var,
-                            contact_num_var,
-                            address_var,
-                        )
-                        img_name = self.sql_query.capture_visitor_image(
-                            first_name_var,
-                            last_name_var,
-                            contact_num_var,
-                            address_var,
-                        )
-                        self.path_check = self.img_path + "/000000000.jpg"
-                        if os.path.exists(self.path_check):
-                            os.rename(
-                                self.path_check,
-                                self.img_path + "/" + str(img_name[0]) + ".jpg",
+                        result = messbx.askokcancel("Confirm Action","Please review all the details you have inputted. Are you sure everything is final and correct?")
+                        if result:
+                            self.sql_query.register_visitor(
+                                first_name_var,
+                                last_name_var,
+                                contact_num_var,
+                                address_var,
                             )
+                            img_name = self.sql_query.capture_visitor_image(
+                                first_name_var,
+                                last_name_var,
+                                contact_num_var,
+                                address_var,
+                            )
+                            self.path_check = self.img_path + "/000000000.jpg"
+                            if os.path.exists(self.path_check):
+                                os.rename(
+                                    self.path_check,
+                                    self.img_path + "/" + str(img_name[0]) + ".jpg",
+                                )
                         messbx.showinfo(
                             "Success",
                             "The visitor's record has been successfully updated.",

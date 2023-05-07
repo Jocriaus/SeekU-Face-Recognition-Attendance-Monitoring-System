@@ -262,6 +262,8 @@ class HomeApp:
         self.home_app.protocol("WM_DELETE_WINDOW", self.exit_program )
         # Main widget
         self.mainwindow = self.home_app
+        self.mainwindow.attributes("-topmost", True)
+        self.mainwindow.attributes("-topmost", False)
         # refer to the function's comments
         self.center(self.mainwindow)
 
@@ -440,11 +442,6 @@ class HomeApp:
             timeout_w_micros = self.sql_query.get_time_out_time() 
             # Format the datetime object as a string without microseconds
             timeout = timeout_w_micros[0:8]
-
-            print(str(self.tolerance_lvl_scale.get())+" tls vs "+" tlq "+ str(self.sql_query.get_tolerance_lvl()))
-            print(str(self.data_set_entry.get()) +" dse vs "+"dsq " + str(self.sql_query.get_data_set_fldr()))
-            print(str(self.default_time_out_entry.get()) +" toe vs "+"toq "+ str(timeout))
-            print(str(self.detection_time_entry.get()) +" dte vs "+ "dtq " + str(self.sql_query.get_detection_time()))
                   
             if  (str(self.tolerance_lvl_scale.get()) == str(self.sql_query.get_tolerance_lvl())
                 and str(self.data_set_entry.get()) == str(self.sql_query.get_data_set_fldr())

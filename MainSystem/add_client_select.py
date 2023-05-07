@@ -2,6 +2,9 @@
 import tkinter as tk
 from tkinter import filedialog
 import admin_camera_app as aCA
+import register_personnel as rP
+import register_student as rS
+import register_visitor as rV
 import os
 import sys
 
@@ -126,10 +129,11 @@ class AddSelectorApp:
     # this function will hide the window after logging in.
     def hide_this_window(self):
         self.add_select_app.withdraw()
-
+        self.admin_home_window.withdraw()
     # this function will return to the login window
     def show_home_window(self):
         self.add_select_app.grab_release()
+        self.admin_home_window.deiconify()
         self.add_select_app.destroy()
 
     def disable_save_only(self):
@@ -149,24 +153,22 @@ class AddSelectorApp:
                 self.refresh_func,
                 saveonly,
             )
-        self.add_select_app.grab_release()
-        self.hide_this_window()
+            self.add_select_app.grab_release()
+            self.hide_this_window()
 
     def save_clients_logic(self):
         saveonly = True
         folder = self.select_folder()
         if folder:
-            aCA.CameraApp(
-                self.video_source,
-                self.add_select_app,
-                self.admin_home_window,
-                folder,
-                self.window_will_open,
-                self.refresh_func,
-                saveonly,
-            )
-        self.add_select_app.grab_release()
-        self.hide_this_window()
+            if self.window_will_open == "Manage Students":
+                rS.RegisterStudentApp(self.add_select_app,self.admin_home_window, folder,saveonly)
+            elif self.window_will_open == "Manage Personnels":
+                rP.RegisterPersonnelApp(self.add_select_app,self.admin_home_window, folder,saveonly)    
+            elif self.window_will_open == "Manage Visitors":
+                rV.RegisterVisitorApp( self.add_select_app,self.admin_home_window, folder, saveonly)
+            self.add_select_app.grab_release()
+            self.hide_this_window()
+            
 
     def select_folder(self):
         self.mainwindow.attributes("-topmost", False)

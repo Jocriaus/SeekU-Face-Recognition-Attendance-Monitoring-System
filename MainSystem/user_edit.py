@@ -6,9 +6,10 @@ import re
 
 
 class EditUserApp:
-    def __init__(self, un, pw, ufn, uln, ut, us, admin_hom, refresh):
+    def __init__(self, un, pw, ufn, uln, ut, us, admin_hom, refresh, this_is_archive):
         # build ui
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
+        self.this_is_archived = this_is_archive
         self.admin_home_window = admin_hom
         self.username = un
         self.password = pw
@@ -20,6 +21,7 @@ class EditUserApp:
         self.sql_query = qry.dbQueries()
         self.edit_bool = True
         self.refresh_func = refresh
+        self.saved = False
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
 
         self.edit_user_app = tk.Toplevel()
@@ -179,13 +181,40 @@ class EditUserApp:
         self.mainwindow.protocol("WM_DELETE_WINDOW", self.destroy_this_window)
         self.center(self.mainwindow)
         self.mainwindow.attributes("-topmost", True)
+        self.mainwindow.attributes("-topmost", False)
         self.mainwindow.grab_set()
 
 
     def destroy_this_window(self):
-        self.edit_user_app.grab_release()
-        self.refresh_func(self.first_stat)
-        self.edit_user_app.destroy()
+        if ( str(self.username_entry.get()) == str(self.username) and
+            str(self.password_entry.get()) == str(self.password) and 
+            str(self.first_name_entry.get()) == str(self.firstname) and 
+            str(self.last_name_entry.get()) == str(self.lastname) and 
+            str(self.user_role_var.get()) == str(self.user_type) and 
+            str(self.stat_var.get()) == str(self.user_status)):
+            
+            self.edit_user_app.grab_release()
+            if self.this_is_archived:
+                self.refresh_func("IsArchived")
+            else:
+                self.refresh_func("IsActive")
+            self.edit_user_app.destroy()
+        elif self.saved:
+            self.edit_user_app.grab_release()
+            if self.this_is_archived:
+                self.refresh_func("IsArchived")
+            else:
+                self.refresh_func("IsActive")
+            self.edit_user_app.destroy()
+        else:
+            result = messbx.askokcancel("Confirm Action", "Do you wish to proceed without saving?")
+            if result:
+                self.edit_user_app.grab_release()
+                if self.this_is_archived:
+                    self.refresh_func("IsArchived")
+                else:
+                    self.refresh_func("IsActive")
+                self.edit_user_app.destroy()
 
     # disables entry widgets
     def disable_entry(self):
@@ -268,6 +297,7 @@ class EditUserApp:
                             user_role_variable,
                             user_status_var,
                         )
+                        self.saved = True
                         messbx.showinfo(
                             "Success",
                             "The user record has been registered successfully.",
@@ -286,7 +316,7 @@ class EditUserApp:
 
     def password_check(self, password):
         limit = self.sql_query.get_password_length()
-        if len(password) > limit:
+        if len(password) < limit:
             messbx.showwarning(
                 "Warning", "The password length limit is " + str(limit) + "."
             )

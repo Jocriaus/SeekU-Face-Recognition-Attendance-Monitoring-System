@@ -12,7 +12,7 @@ import user_create as uC
 import user_edit as uE
 import generate_report as gR
 import add_client_select as aCS
-import admin_camera_app as aCA
+import os
 import Treeview_table_mod as tbl
 
 
@@ -972,6 +972,8 @@ class AdminHomeApp:
         self.mainwindow = self.administrator_app
         self.mainwindow.protocol("WM_DELETE_WINDOW", self.exit_program)
         self.mainwindow.wm_attributes("-fullscreen", "True")
+        self.mainwindow.attributes("-topmost", True)
+        self.mainwindow.attributes("-topmost", False)
 
     # -------------------------------------------------------------------------------------------
 
@@ -1240,17 +1242,17 @@ class AdminHomeApp:
         if self.clients_man_var.get() == "Manage Students":
             folder = self.select_folder()
             if folder:
-                self.edit_student_function(folder, self.clients_man_var.get())
+                self.edit_student_function(folder, self.clients_man_var.get(), False)
 
         if self.clients_man_var.get() == "Manage Personnels":
             folder = self.select_folder()
             if folder:
-                self.edit_personnel_function(folder, self.clients_man_var.get())
+                self.edit_personnel_function(folder, self.clients_man_var.get(),False)
 
         if self.clients_man_var.get() == "Manage Visitors":
             folder = self.select_folder()
             if folder:
-                self.edit_visitor_function(folder, self.clients_man_var.get())
+                self.edit_visitor_function(folder, self.clients_man_var.get(),False)
 
     def search_clients_info_logic(self):
         if self.clients_man_var.get() == "Manage Students":
@@ -1263,7 +1265,7 @@ class AdminHomeApp:
             data = self.search_c_entry.get()
             self.treeview.do_search_visitor(data, "IsActive")
 
-    def edit_student_function(self, folder, types):
+    def edit_student_function(self, folder, types, this_is_archive):
 
         self.treeview.select_student_treeview_row()
         print(self.treeview.student_values)
@@ -1279,28 +1281,34 @@ class AdminHomeApp:
             student_address = self.treeview.student_values[7]
             student_status = self.treeview.student_values[8]
 
-            eIS.EditStudentApp(
-                student_num,
-                student_firstname,
-                student_lastname,
-                student_middlename,
-                student_program,
-                student_section,
-                student_contact_num,
-                student_address,
-                student_status,
-                self.video_source,
-                self.administrator_app,
-                folder,
-                types,
-                self.refresh_clients_logic,
-            )
-            self.hide_this_window()
-
+            path_check = self.img_path +f"/{student_num}.jpg"
+            if os.path.exists(path_check):
+                eIS.EditStudentApp(
+                    student_num,
+                    student_firstname,
+                    student_lastname,
+                    student_middlename,
+                    student_program,
+                    student_section,
+                    student_contact_num,
+                    student_address,
+                    student_status,
+                    self.video_source,
+                    self.administrator_app,
+                    folder,
+                    types,
+                    self.refresh_clients_logic,
+                    this_is_archive
+                )
+                self.hide_this_window()
+            else:
+                messbx.showwarning("Warning",
+                    "No image was found in the directory matching the entered client number.",
+                    )
         else:
             messbx.showwarning("Warning", "Please choose an item to modify.")
 
-    def edit_personnel_function(self, folder, types):
+    def edit_personnel_function(self, folder, types,this_is_archive):
         self.treeview.select_personnel_treeview_row()
         print(self.treeview.personnel_values)
 
@@ -1314,26 +1322,33 @@ class AdminHomeApp:
             personnel_type = self.treeview.personnel_values[6]
             personnel_status = self.treeview.personnel_values[7]
 
-            eIP.EditPersonnelApp(
-                personnel_number,
-                personnel_firstname,
-                personnel_lastname,
-                personnel_middlename,
-                personnel_contact_num,
-                personnel_address,
-                personnel_type,
-                personnel_status,
-                self.video_source,
-                self.administrator_app,
-                folder,
-                types,
-                self.refresh_clients_logic,
-            )
-            self.hide_this_window()
+            path_check = self.img_path +f"/{personnel_number}.jpg"
+            if os.path.exists(path_check):
+                eIP.EditPersonnelApp(
+                    personnel_number,
+                    personnel_firstname,
+                    personnel_lastname,
+                    personnel_middlename,
+                    personnel_contact_num,
+                    personnel_address,
+                    personnel_type,
+                    personnel_status,
+                    self.video_source,
+                    self.administrator_app,
+                    folder,
+                    types,
+                    self.refresh_clients_logic,
+                    this_is_archive
+                )
+                self.hide_this_window()
+            else:
+                messbx.showwarning("Warning",
+                    "No image was found in the directory matching the entered client number.",
+                    )
         else:
             messbx.showwarning("Warning", "Please choose an item to modify.")
 
-    def edit_visitor_function(self, folder, types):
+    def edit_visitor_function(self, folder, types,this_is_archive):
         self.treeview.select_visitor_treeview_row()
         print(self.treeview.visitor_values)
 
@@ -1346,20 +1361,27 @@ class AdminHomeApp:
             visitor_address = self.treeview.visitor_values[4]
             visitor_status = self.treeview.visitor_values[5]
 
-            eIV.EditVisitorApp(
-                visitor_number,
-                visitor_firstname,
-                visitor_lastname,
-                visitor_contact_num,
-                visitor_address,
-                visitor_status,
-                self.video_source,
-                self.administrator_app,
-                folder,
-                types,
-                self.refresh_clients_logic,
-            )
-            self.hide_this_window()
+            path_check = self.img_path +f"/{visitor_number}.jpg"
+            if os.path.exists(path_check):
+                eIV.EditVisitorApp(
+                    visitor_number,
+                    visitor_firstname,
+                    visitor_lastname,
+                    visitor_contact_num,
+                    visitor_address,
+                    visitor_status,
+                    self.video_source,
+                    self.administrator_app,
+                    folder,
+                    types,
+                    self.refresh_clients_logic,
+                    this_is_archive
+                )
+                self.hide_this_window()
+            else:
+                messbx.showwarning("Warning",
+                    "No image was found in the directory matching the entered client number.",
+                    )
         else:
             messbx.showwarning("Warning", "Please choose an item to modify.")
 
@@ -1444,7 +1466,7 @@ class AdminHomeApp:
 
     # REPORT-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
     # USERS-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
-    def edit_user_function(self):
+    def edit_user_function(self, this_is_archive):
         self.treeview.select_user_treeview_row()
 
         print(self.treeview.user_values)
@@ -1465,6 +1487,7 @@ class AdminHomeApp:
                 user_status,
                 self.administrator_app,
                 self.refresh_user_logic,
+                this_is_archive
             )
         else:
             messbx.showwarning("Warning", "Please choose an item to modify.")
@@ -1484,40 +1507,44 @@ class AdminHomeApp:
             self.edit_a_button.configure(text="Edit Students")
             self.archived_list.configure(text="Students List")
             self.treeview.student_treeview(self.admin_a_sec3_frame, "IsArchived")
+            self.refresh_clients_logic(self.archived_man_var.get(), "IsArchived")
 
         if self.archived_man_var.get() == "Archived Personnels":
             self.edit_a_button.configure(text="Edit Personnels")
             self.archived_list.configure(text="Personnels List")
             self.treeview.personnel_treeview(self.admin_a_sec3_frame, "IsArchived")
+            self.refresh_clients_logic(self.archived_man_var.get(), "IsArchived")
 
         if self.archived_man_var.get() == "Archived Visitors":
             self.edit_a_button.configure(text="Edit Visitors")
             self.archived_list.configure(text="Visitors List")
             self.treeview.visitor_treeview(self.admin_a_sec3_frame, "IsArchived")
+            self.refresh_clients_logic(self.archived_man_var.get(), "IsArchived")
 
         if self.archived_man_var.get() == "Archived User":
             self.edit_a_button.configure(text="Edit User")
             self.archived_list.configure(text="User List")
             self.treeview.user_treeview(self.admin_a_sec3_frame, "IsArchived")
+            self.refresh_clients_logic(self.archived_man_var.get(), "IsArchived")
 
     def edit_archived_logic(self):
         if self.archived_man_var.get() == "Archived Students":
             folder = self.select_folder()
             if folder:
-                self.edit_student_function(folder, self.archived_man_var.get())
+                self.edit_student_function(folder, self.archived_man_var.get(), True)
 
         if self.archived_man_var.get() == "Archived Personnels":
             folder = self.select_folder()
             if folder:
-                self.edit_personnel_function(folder, self.archived_man_var.get())
+                self.edit_personnel_function(folder, self.archived_man_var.get(), True)
 
         if self.archived_man_var.get() == "Archived Visitors":
             folder = self.select_folder()
             if folder:
-                self.edit_visitor_function(folder, self.archived_man_var.get())
+                self.edit_visitor_function(folder, self.archived_man_var.get(), True)
 
         if self.archived_man_var.get() == "Archived User":
-            self.edit_user_function()
+            self.edit_user_function(True)
 
     def search_archived_info_logic(self):
         if self.archived_man_var.get() == "Archived Students":
@@ -1610,7 +1637,7 @@ class AdminHomeApp:
 
     def attendance_appear(self, event=None):
         self.attendance_appear_logic()
-        self.refresh_attendance_treeviews()
+        self.refresh_attendance_treeviews("IsActive")
 
     def open_diff_attendance(self, event=None):
         self.change_layout_attendance()
@@ -1630,6 +1657,7 @@ class AdminHomeApp:
 
     def user_appear(self, event=None):
         self.users_appear_logic()
+        self.refresh_user_logic("IsActive")
 
     def user_hover(self, event=None):
         self.user_section_label.configure(foreground="#FFF200")
@@ -1642,7 +1670,7 @@ class AdminHomeApp:
         self.treeview.do_search_user(data, "IsActive")
 
     def edit_user_infos(self, event=None):
-        self.edit_user_function()
+        self.edit_user_function(False)
 
     def add_user_infos(self, event=None):
         self.register_user()

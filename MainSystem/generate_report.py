@@ -18,7 +18,8 @@ class SavePrintReportApp:
         self.today_month = self.today.month
         self.today_year = self.today.year
         # self.mindate =  min date is set as when the first attendance
-        self.maxdate = datetime.datetime.now()  # max date is today
+        
+        self.maxdate = self.today - datetime.timedelta(days = 1)  # max date is yesterday
         self.sql_query = qry.dbQueries()
         self.treeview = tbl.TreeviewGUI()
         self.excel_class = rM.excelClass()
@@ -184,6 +185,8 @@ class SavePrintReportApp:
 
         # Main widget
         self.mainwindow = self.generate_report_app
+        self.mainwindow.protocol("WM_DELETE_WINDOW", self.destroy_this_window)
+        self.mainwindow.grab_set()
 
     def select_folder(self):
             self.generate_report_app.attributes('-topmost', False)
@@ -193,6 +196,10 @@ class SavePrintReportApp:
                 return folder_select
             else:
                 return folder_select
+
+    def destroy_this_window(self):
+        self.generate_report_app.grab_release()
+        self.generate_report_app.destroy()
 
     def save_press(self, event=None):
         folder = self.select_folder()

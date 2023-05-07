@@ -23,6 +23,7 @@ class EditVisitorApp:
         file_path,
         select,
         refresh,
+        this_is_archive,
     ):
         # build ui
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
@@ -40,6 +41,7 @@ class EditVisitorApp:
         self.edit_bool = True
         self.client = select
         self.refresh_func = refresh
+        self.this_is_archived = this_is_archive
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.edit_visitor_app = tk.Toplevel()
         self.edit_visitor_app.configure(background="#F7FAE9", height=200, width=200)
@@ -255,7 +257,10 @@ class EditVisitorApp:
     # this will return to the camera app
     def show_home_win(self):
         self.admin_home_window.deiconify()
-        self.refresh_func(self.client, self.visitor_status)
+        if self.this_is_archived:
+            self.refresh_func(self.client, "IsArchived")
+        else:
+            self.refresh_func(self.client, "IsActive")
         self.edit_visitor_app.destroy()
 
     def hide_this_window(self):
@@ -337,24 +342,40 @@ class EditVisitorApp:
                     if (first_name_var.replace(" ", "").isalpha() and 
                         last_name_var.replace(" ", "").isalpha()
                         ):
-                        self.sql_query.update_visitor(
-                            self.visitor_number,
-                            first_name_var,
-                            last_name_var,
-                            contact_num_var,
-                            address_var,
-                            visitor_status_var,
-                        )
-                        if os.path.exists(self.img_path + "/000000000.jpg"):
-                            img_name = self.visitor_number
-                            os.rename(
-                                self.img_path + "/" + img_name + ".jpg",
-                                self.img_path + "/000000000.jpg",
-                            )
-                        messbx.showinfo(
-                            "Success",
-                            "The visitor's record has been successfully updated.",
-                        )
+                        path_check = self.img_path + "/000000000.jpg"
+                        result = messbx.askokcancel("Confirm Action","Please review all the details you have inputted. Are you sure everything is final and correct?")
+                        if result:
+                            if os.path.exists(path_check):
+                                img_name = self.personnel_num
+                                os.rename(
+                                    self.img_path + "/" + img_name + ".jpg",
+                                    self.img_path + "/000000000.jpg",
+                                )
+                                self.sql_query.update_visitor(
+                                    self.visitor_number,
+                                    first_name_var,
+                                    last_name_var,
+                                    contact_num_var,
+                                    address_var,
+                                    visitor_status_var,
+                                )
+                                messbx.showinfo(
+                                    "Success",
+                                    "The visitor's record has been successfully updated.",
+                                )
+                            else:
+                                self.sql_query.update_visitor(
+                                    self.visitor_number,
+                                    first_name_var,
+                                    last_name_var,
+                                    contact_num_var,
+                                    address_var,
+                                    visitor_status_var,
+                                )
+                                messbx.showinfo(
+                                    "Success",
+                                    "The visitor's record has been successfully updated.",
+                                )
                     else:
                         messbx.showwarning(
                             "Warning",
