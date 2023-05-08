@@ -1206,7 +1206,39 @@ class AdminHomeApp:
         )
 
     # APPEAR-LOGIC-------------------------------------------------------------------------------------------------------
-
+    #------------
+    def set_dashboard(self):
+        self.total_student = self.sql_query.get_student_count()
+        self.total_personnel = self.sql_query.get_personnel_count()
+        self.total_visitor = self.sql_query.get_visitor_count()
+        self.present_students = self.sql_query.get_student_attendance_count()
+        self.present_personnels = self.sql_query.get_personnel_attendance_count()
+        self.present_visitor = self.sql_query.get_visitor_attendance_count()
+        self.ol_visitor_no_label.configure(
+            background="#F7FAE9", font="{arial} 30 {bold}", text=self.present_visitor
+        )
+        self.ol_personnels_no_label.configure(
+            anchor="n",
+            background="#F7FAE9",
+            font="{arial} 30 {bold}",
+            text=self.present_personnels,
+        )
+        self.ol_students_no_label.configure(
+            background="#F7FAE9", font="{arial} 30 {bold}", text=self.present_students
+        )
+        self.ttl_students_no_label.configure(
+            background="#F7FAE9", font="{arial} 30 {bold}", text=self.total_student
+        )
+        self.ttl_personnels_no_label.configure(
+            anchor="n",
+            background="#F7FAE9",
+            font="{arial} 30 {bold}",
+            text=self.total_personnel,
+        )
+        self.ttl_visitor_no_label.configure(
+            background="#F7FAE9", font="{arial} 30 {bold}", text=self.total_visitor
+        )
+    #------------
     # CLIENT-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
     # this function will change the display according to the
     # selected option on the option menu for the clent section
@@ -1605,6 +1637,7 @@ class AdminHomeApp:
 
     # DASBOARD-COMMANDS---------------------------------------------------------------------------------------------------------------
     def dashboard_appear(self, event=None):
+        self.set_dashboard()
         self.db_appear_logic()
 
     def dashboard_hover(self, event=None):

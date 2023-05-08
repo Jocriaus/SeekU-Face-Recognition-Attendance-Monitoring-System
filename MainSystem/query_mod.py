@@ -23,7 +23,7 @@ class dbQueries:
         print("Connection closed")
 
     def login_entry(self, username, password):
-        query = f"SELECT * FROM tbl_user WHERE username COLLATE Latin1_General_CS_AS = ? AND password COLLATE Latin1_General_CS_AS = ?"
+        query = f"SELECT * FROM tbl_user WHERE username COLLATE Latin1_General_CS_AS = ? AND password COLLATE Latin1_General_CS_AS = ? AND user_status COLLATE Latin1_General_CS_AS = 'IsActive' "
         self.cursor.execute(query, (username, password))
         row = self.cursor.fetchone()
         if row:
@@ -1061,7 +1061,7 @@ class dbQueries:
                     "admin",
                     "default",
                     "user",
-                    "High Admin",
+                    "System Admin",
                 ),
             )
             self.connection.commit()
@@ -1133,7 +1133,7 @@ class dbQueries:
             query2 = (
                 f"INSERT INTO tbl_setting (setting_no, password_length, login_attempt,sem_end_setting,"
                 + "face_recog_file_path,face_recog_date,av_file_path,av_date, today_date, "
-                + "data_set_fldr,tolerance_lvl,timeout_time) VALUES (?,?, ?, ? ,?, ?, ?, ? ,? ,? ,? ,?,?)"
+                + "data_set_fldr,tolerance_lvl,timeout_time,detection_time) VALUES (?,?, ?, ? ,?, ?, ?, ? ,? ,? ,? ,?,?)"
             )
             self.cursor.execute(
                 query2,

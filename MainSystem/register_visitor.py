@@ -295,10 +295,11 @@ class RegisterVisitorApp:
 
     # this command will open the camera app
     def change_pic(self, event=None):
-        if self.saveonly:
-            self.back_cam_app_window()
-
-    def return_func(self, event=None):
-        self.back_cam_app_window()
         if os.path.exists(self.img_path + "/000000000.jpg"):
             os.remove(self.img_path + "/000000000.jpg")
+        self.back_cam_app_window()
+
+    def return_func(self, event=None):
+        if os.path.exists(self.img_path + "/000000000.jpg"):
+            os.remove(self.img_path + "/000000000.jpg")
+        self.back_cam_app_window()

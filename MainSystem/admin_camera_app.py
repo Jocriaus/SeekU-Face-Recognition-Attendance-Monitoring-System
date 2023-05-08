@@ -165,6 +165,7 @@ class CameraApp:
         self.refresh_func(self.window_will_open, "IsActive" )
         self.admin_home_window.deiconify()
         self.add_select_window.deiconify()
+        self.add_select_window.grab_set()
         self.snapshot_app.destroy()
 
 

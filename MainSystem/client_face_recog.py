@@ -290,7 +290,7 @@ class ClientFaceRecogApp:
         date_int = int(datetime.datetime.now().strftime("%y%m%d"))
         custom_no = date_int * 100000
 
-        if self.sql_query.check_student_no(int(self.fr_vid.name)):
+        if self.sql_query.check_student_no(self.fr_vid.name):
             self.sql_query.student_attendance_record(custom_no, str(self.fr_vid.name), current_date, self.current_time)
         elif self.sql_query.check_personnel_no(self.fr_vid.name):
             self.sql_query.personnel_attendance_record(custom_no, str(self.fr_vid.name), current_date, self.current_time)

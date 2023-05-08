@@ -427,10 +427,11 @@ class EditStudentApp:
                             result = messbx.askokcancel("Confirm Action","Please review all the details you have inputted. Are you sure everything is final and correct?")
                             if result:
                                 if os.path.exists(path_check):
-                                    img_name = self.student_num_var
+                                    img_name = student_num_var
+                                    os.remove(self.img_path + "/" + img_name + ".jpg")
                                     os.rename(
+                                        path_check,
                                         self.img_path + "/" + img_name + ".jpg",
-                                        self.img_path + "/000000000.jpg",
                                     )
                                     self.sql_query.update_student(
                                         student_num_var,

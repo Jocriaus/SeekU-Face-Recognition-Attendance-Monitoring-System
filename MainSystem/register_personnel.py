@@ -162,7 +162,7 @@ class RegisterPersonnelApp:
         self.contact_num_label.place(anchor="center", relx=0.33, rely=0.6, x=0, y=0)
 
         # option menu
-        self.personnel_type_entry = tk.StringVar(value="Choose Personnel Type")
+        self.personnel_type_entry = tk.StringVar(value="Professor")
         __values = ["Professor", "Non-Teaching Personnel"]
         self.personnel_optionmenu = tk.OptionMenu(
             self.register_pers_frame2, self.personnel_type_entry, *__values
@@ -243,6 +243,7 @@ class RegisterPersonnelApp:
             self.refresh_func(self.window_will_open, "IsActive" )
             self.admin_home_window.deiconify()
             self.select_cam_window.deiconify()
+            self.select_cam_window.grab_set()
             self.register_personnel_app.destroy()
         else:
             self.select_cam_window.deiconify()
@@ -321,7 +322,9 @@ class RegisterPersonnelApp:
                                                     contact_num_var,
                                                     address_var,
                                                     personnel_type_var,
+                                                    
                                                 )
+                                                self.register_button.config(state="disabled")
                                                 messbx.showinfo(
                                                     "Success",
                                                     "The personnel's record has been registered successfully.",

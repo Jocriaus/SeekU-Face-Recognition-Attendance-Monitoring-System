@@ -347,6 +347,7 @@ class EditVisitorApp:
                         if result:
                             if os.path.exists(path_check):
                                 img_name = self.personnel_num
+                                os.rmdir(self.img_path + "/" + img_name + ".jpg")
                                 os.rename(
                                     self.img_path + "/" + img_name + ".jpg",
                                     self.img_path + "/000000000.jpg",

@@ -202,7 +202,7 @@ class EditPersonnelApp:
         self.contact_num_label.place(anchor="center", relx=0.33, rely=0.6, x=0, y=0)
 
         # option menu
-        self.personnel_type_var = tk.StringVar(value="Choose Personnel Type")
+        self.personnel_type_var = tk.StringVar(value="Professor")
         __values = ["Professor", "Non-Teaching Personnel"]
         self.personnel_optionmenu = tk.OptionMenu(
             self.edit_pers_frame2, self.personnel_type_var, *__values
@@ -429,10 +429,11 @@ class EditPersonnelApp:
                             result = messbx.askokcancel("Confirm Action","Please review all the details you have inputted. Are you sure everything is final and correct?")
                             if result:
                                 if os.path.exists(path_check):
-                                    img_name = self.personnel_num
+                                    img_name = personnel_num_var
+                                    os.remove(self.img_path + "/" + img_name + ".jpg")
                                     os.rename(
+                                        path_check,
                                         self.img_path + "/" + img_name + ".jpg",
-                                        self.img_path + "/000000000.jpg",
                                     )
                                     self.sql_query.update_personnel(
                                         personnel_num_var,

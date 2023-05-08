@@ -78,7 +78,7 @@ class EditUserApp:
         self.last_name_entry.place(
             anchor="center", relwidth=0.4, relx=0.5, rely=0.58, x=0, y=0
         )
-        self.user_role_var = tk.StringVar(value="Choose User Type")
+        self.user_role_var = tk.StringVar(value="Staff")
         __values = ["Security Guard", "System Admin", "Staff"]
         self.user_role_optionmenu = tk.OptionMenu(
             self.edit_user_frame2, self.user_role_var, *__values, command=None

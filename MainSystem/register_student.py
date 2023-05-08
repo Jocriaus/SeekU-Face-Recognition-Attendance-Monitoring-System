@@ -241,6 +241,7 @@ class RegisterStudentApp:
             self.refresh_func(self.window_will_open, "IsActive" )
             self.admin_home_window.deiconify()
             self.select_cam_window.deiconify()
+            self.select_cam_window.grab_set()
             self.register_student_app.destroy()
         else:
             self.select_cam_window.deiconify()
@@ -325,6 +326,7 @@ class RegisterStudentApp:
                                                     contact_num_var,
                                                     address_var,
                                                 )
+                                                self.register_button.config(state="disabled")
                                                 messbx.showinfo(
                                                     "Success",
                                                     "The personnel's record has been registered successfully.",
