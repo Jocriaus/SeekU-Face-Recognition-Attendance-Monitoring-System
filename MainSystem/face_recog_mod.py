@@ -27,6 +27,7 @@ class FaceRecognition:
 
 
         self.TOLERANCE = tolerance
+        MODEL = "cnn"
 
         # array for images, image location, and image names
         self.images = []
@@ -77,7 +78,7 @@ class FaceRecognition:
                 # converts the color of img to RGB
                 img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
                 # face_recognition.face_encodings is a reserve word to encode the images
-                encode = face_recognition.face_encodings(img, )[0]
+                encode = face_recognition.face_encodings(img)[0]
                 # appends encodeList array
                 encodeList.append(encode)
             return encodeList
@@ -86,6 +87,7 @@ class FaceRecognition:
         self.encodeListKnownFaces = findEncodings(self.images)
 
         print("Encode Complete")
+
         # ENCODING FINISHES 
 
         # Open the video source
