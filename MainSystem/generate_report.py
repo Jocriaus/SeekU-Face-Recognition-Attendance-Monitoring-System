@@ -204,7 +204,7 @@ class SavePrintReportApp:
     def save_press(self, event=None):
         folder = self.select_folder()
         filename = self.file_name.get()
-        pattern = re.compile("[^a-zA-Z0-9 @]")
+        pattern = re.compile("[^a-zA-Z0-9 ]")
         if not pattern.search(filename):
             if len(filename) !=0:
                 if folder:    

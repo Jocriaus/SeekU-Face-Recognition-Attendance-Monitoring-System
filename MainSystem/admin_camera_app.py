@@ -87,12 +87,12 @@ class CameraApp:
             rely=0.21)
         self.snapshot_frame2 = tk.Frame(self.snapshot_app)
         self.snapshot_frame2.configure(
-            background="#fff000", height=200, width=200)
+            background="#FFF875", height=200, width=200)
         self.school_logo_label = tk.Label(self.snapshot_frame2)
         self.img_STICollegeBalagtasLogomedium = tk.PhotoImage(
             file=".\SeekU\STI College Balagtas Logo medium.png")
         self.school_logo_label.configure(
-            background="#fff000",
+            background="#FFF875",
             image=self.img_STICollegeBalagtasLogomedium,
             text='label1')
         self.school_logo_label.place(anchor="center", relx=.25, rely=0.5)
@@ -162,6 +162,7 @@ class CameraApp:
 
     # this will show the home window and destroy this window
     def show_add_select_window(self):
+        self.refresh_func(self.window_will_open, "IsActive" )
         self.admin_home_window.deiconify()
         self.add_select_window.deiconify()
         self.snapshot_app.destroy()
@@ -200,9 +201,9 @@ class CameraApp:
             
             if face_locations:
                 if self.window_will_open == "Manage Students":
-                    rS.RegisterStudentApp(self.snapshot_app,self.admin_home_window ,self.img_path,self.saveonly)
+                    rS.RegisterStudentApp(self.snapshot_app,self.admin_home_window ,self.img_path,self.saveonly, self.refresh_func, self.window_will_open)
                 elif self.window_will_open == "Manage Personnels":
-                    rP.RegisterPersonnelApp(self.snapshot_app,self.admin_home_window, self.img_path,self.saveonly)    
+                    rP.RegisterPersonnelApp(self.snapshot_app,self.admin_home_window, self.img_path,self.saveonly, self.refresh_func,self.window_will_open)    
                 elif self.window_will_open == "Manage Visitors":
                     rV.RegisterVisitorApp( self.snapshot_app,self.admin_home_window, self.img_path,self.saveonly)
                 self.hide_this_window()
@@ -215,7 +216,6 @@ class CameraApp:
     # this command will return to the home window
     def log_out_func(self, event=None):
         self.show_add_select_window()
-        self.refresh_func(self.window_will_open, "IsActive" )
         self.snapshot_app.destroy()
 
     # this command will take a picture
@@ -297,12 +297,12 @@ class CameraEditApp:
             rely=0.21)
         self.snapshot_frame2 = tk.Frame(self.snapshot_app)
         self.snapshot_frame2.configure(
-            background="#fff000", height=200, width=200)
+            background="#FFF875", height=200, width=200)
         self.school_logo_label = tk.Label(self.snapshot_frame2)
         self.img_STICollegeBalagtasLogomedium = tk.PhotoImage(
             file=".\SeekU\STI College Balagtas Logo medium.png")
         self.school_logo_label.configure(
-            background="#fff000",
+            background="#FFF875",
             image=self.img_STICollegeBalagtasLogomedium,
             text='label1')
         self.school_logo_label.place(anchor="center", relx=.25, rely=0.5)

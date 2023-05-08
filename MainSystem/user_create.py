@@ -104,13 +104,13 @@ class CreateUserApp:
         # Contains-the-logo-and-logotype---------------------------------------------------------------------------------------------------------
 
         self.register_user_frame1 = tk.Frame(self.register_user_app)
-        self.register_user_frame1.configure(background="#fff000", height=200, width=200)
+        self.register_user_frame1.configure(background="#FFF875", height=200, width=200)
         self.school_logo_label = tk.Label(self.register_user_frame1)
         self.img_STICollegeBalagtasLogomedium = tk.PhotoImage(
             file="./SeekU/STI College Balagtas Logo medium.png"
         )
         self.school_logo_label.configure(
-            background="#fff000",
+            background="#FFF875",
             image=self.img_STICollegeBalagtasLogomedium,
             text="label1",
         )
@@ -169,17 +169,19 @@ class CreateUserApp:
                     last_name_var.replace(" ", "").isalpha()
                     ):
                     if registeru and registerp:
-                        self.sql_query.register_user(
-                            username_var,
-                            password_var,
-                            first_name_var,
-                            last_name_var,
-                            user_role_var,
-                        )
-                        messbx.showinfo(
-                            "Success",
-                            "The user record has been registered successfully.",
-                        )
+                        result = messbx.askokcancel("Confirm Action", "Do you wish to proceed without saving?")
+                        if result:
+                            self.sql_query.register_user(
+                                username_var,
+                                password_var,
+                                first_name_var,
+                                last_name_var,
+                                user_role_var,
+                            )
+                            messbx.showinfo(
+                                "Success",
+                                "The user record has been registered successfully.",
+                            )
 
                 else:
                     messbx.showwarning(
