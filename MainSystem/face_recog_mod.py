@@ -27,7 +27,6 @@ class FaceRecognition:
 
 
         self.TOLERANCE = tolerance
-        MODEL = "cnn"
 
         # array for images, image location, and image names
         self.images = []
@@ -64,6 +63,22 @@ class FaceRecognition:
         print(self.classNames)
 
     #Getting-the-dataset-------------------------------------------------------------------------------------------
+
+        # function to encode images
+        def findEncodings(images):
+            encodeList = []
+            # for loop for every images in the folder
+            for img in images:
+                # converts the color of img to RGB
+                img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+                # face_recognition.face_encodings is a reserve word to encode the images
+                encode = face_recognition.face_encodings(img, )[0]
+                # appends encodeList array
+                encodeList.append(encode)
+            return encodeList
+
+        # after defining the functions we need to provide images by using images variable to findEncodings function and declares it to encodeListKnownFaces variable
+        self.encodeListKnownFaces = findEncodings(self.images)
 
         print("Encode Complete")
 
