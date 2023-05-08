@@ -61,7 +61,7 @@ class ClientFaceRecogApp:
             justify="left",
             text="Last name \nFirst Name",
         )
-        self.client_name_label.place(anchor="center", relx=0.12, rely=0.5)
+        self.client_name_label.place(anchor="center", relx=0.3, rely=0.5)
         self.attendance_label = tk.Label(self.face_recog_frame2)
         self.attendance_label.configure(
             anchor="center",

@@ -6,7 +6,7 @@ import os
 import math
 import time
 import mediapipe as mp
-
+import pickle
 class FaceRecognition:
     def __init__(self, video_source,tolerance,detection, file_path, xsize,ysize):    
     
@@ -27,12 +27,13 @@ class FaceRecognition:
 
 
         self.TOLERANCE = tolerance
+        MODEL = "cnn"
 
         # array for images, image location, and image names
         self.images = []
         self.paths_array = []
         self.classNames = []
-
+        self.encodeListKnownFaces = []
         # os.listdir is a reserve word to list all the folder inside path
         self.myList = os.listdir(self.path)
 
@@ -48,44 +49,24 @@ class FaceRecognition:
 
     #Getting-the-dataset-------------------------------------------------------------------------------------------
         print("getting data set")
-        # for loop to run through all subfolders of the root folders
-        for root, dirs, files in os.walk(self.path):
-            print("dirs: "+ str(dirs))
-            print("root: "+ str(root))
-            print("files: "+ str(files))
-            # for loop in every files on folders
-            for f in files:
-                # reads the images on root/files
-                currentImage = cv2.imread(f"{root}/{f}")
-                # appends currentImage through images array
-                self.images.append(currentImage)
-                file_path = os.path.join(root ,(f))
-                self.paths_array.append(file_path)
-                # get the className by appending the name of file and removes extension
-                self.classNames.append(os.path.splitext(f)[0])
+        
+        if os.path.exists("encodings.pickle"):
+            self.load_images()
+            with open("encodings.pickle", "rb") as f:
+                self.encodeListKnownFaces = pickle.load(f)
+        else:
+            self.load_images()
+            self.encode_images()
+            with open("encodings.pickle", "wb") as f:
+                pickle.dump(self.encodeListKnownFaces, f)
         
         print(self.paths_array)
         print(self.classNames)
 
     #Getting-the-dataset-------------------------------------------------------------------------------------------
 
-        # function to encode images
-        def findEncodings(images):
-            encodeList = []
-            # for loop for every images in the folder
-            for img in images:
-                # converts the color of img to RGB
-                img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-                # face_recognition.face_encodings is a reserve word to encode the images
-                encode = face_recognition.face_encodings(img, )[0]
-                # appends encodeList array
-                encodeList.append(encode)
-            return encodeList
-
-        # after defining the functions we need to provide images by using images variable to findEncodings function and declares it to encodeListKnownFaces variable
-        self.encodeListKnownFaces = findEncodings(self.images)
-
         print("Encode Complete")
+
         # ENCODING FINISHES 
 
         # Open the video source
@@ -238,8 +219,99 @@ class FaceRecognition:
         else:
             self.enter = False
 
+    def encode_only(self):
+        self.load_images()
+        self.encode_images()
+        with open("encodings.pickle", "wb") as f:
+            pickle.dump(self.encodeListKnownFaces, f)
+
+    def load_images(self):
+        print("getting data set")
+
+        # for loop to run through all subfolders of the root folders
+        for root, dirs, files in os.walk(self.path):
+            print("dirs: "+ str(dirs))
+            print("root: "+ str(root))
+            print("files: "+ str(files))
+            # for loop in every files on folders
+            for f in files:
+                # reads the images on root/files
+                currentImage = cv2.imread(f"{root}/{f}")
+                # appends currentImage through images array
+                self.images.append(currentImage)
+                file_path = os.path.join(root ,(f))
+                self.paths_array.append(file_path)
+                # get the className by appending the name of file and removes extension
+                self.classNames.append(os.path.splitext(f)[0])
 
 
+    def encode_images(self):
+        # function to encode images
+        def find_encodings(images):
+            encodeList = []
+            # for loop for every images in the folder
+            for img in images:
+                # converts the color of img to RGB
+                img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+                # face_recognition.face_encodings is a reserve word to encode the images
+                encode = face_recognition.face_encodings(img)[0]
+                # appends encodeList array
+                encodeList.append(encode)
+            return encodeList
+        # after defining the functions we need to provide images by using images variable to find_encodings function and declares it to encodeListKnownFaces variable
+        self.encodeListKnownFaces = find_encodings(self.images)
+
+
+class FaceEncoding:
+    def __init__(self, file_path):   
+        self.images = []
+        self.paths_array = []
+        self.classNames = []
+        self.encodeListKnownFaces = []
+        self.path = file_path
+        self.encode_only()
+
+    def encode_only(self):
+        self.load_images()
+        self.encode_images()
+        with open("encodings.pickle", "wb") as f:
+            pickle.dump(self.encodeListKnownFaces, f)
+
+    def load_images(self):
+        print("getting data set")
+
+        # for loop to run through all subfolders of the root folders
+        for root, dirs, files in os.walk(self.path):
+            print("dirs: "+ str(dirs))
+            print("root: "+ str(root))
+            print("files: "+ str(files))
+            # for loop in every files on folders
+            for f in files:
+                # reads the images on root/files
+                currentImage = cv2.imread(f"{root}/{f}")
+                # appends currentImage through images array
+                self.images.append(currentImage)
+                file_path = os.path.join(root ,(f))
+                self.paths_array.append(file_path)
+                # get the className by appending the name of file and removes extension
+                self.classNames.append(os.path.splitext(f)[0])
+
+
+    def encode_images(self):
+        # function to encode images
+        def find_encodings(images):
+            encodeList = []
+            # for loop for every images in the folder
+            for img in images:
+                # converts the color of img to RGB
+                img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+                # face_recognition.face_encodings is a reserve word to encode the images
+                encode = face_recognition.face_encodings(img)[0]
+                # appends encodeList array
+                encodeList.append(encode)
+            return encodeList
+        # after defining the functions we need to provide images by using images variable to find_encodings function and declares it to encodeListKnownFaces variable
+        self.encodeListKnownFaces = find_encodings(self.images)
 
 """
     def box(self, frame):

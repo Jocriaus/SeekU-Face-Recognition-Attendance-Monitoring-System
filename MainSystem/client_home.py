@@ -9,6 +9,7 @@ import datetime as datetime
 import sys
 import os
 import re
+import face_recog_mod as fr
 class HomeApp:
     def __init__(self,vid_source, login_mod, sel_cam):
         
@@ -65,11 +66,30 @@ class HomeApp:
         self.reset_button.place(
             anchor="center",
             relheight=0.09,
-            relwidth=0.15,
-            relx=.90,
-            rely=0.965)
+            relwidth=0.2,
+            relx=.875,
+            rely=0.85)
         self.reset_button.bind(
             "<ButtonPress>", self.reset_folder, add="")
+        
+        self.reencode_button = tk.Button(self.home_app_frame4)
+        self.reencode_button.configure(
+            background="#F7FAE9",
+            default="active",
+            font="{arial Black} 10 {}",
+            foreground="#0072bc",
+            justify="center",
+            relief="ridge",
+            text='Re-Encode',
+            width=10)
+        self.reencode_button.place(
+            anchor="center",
+            relheight=0.09,
+            relwidth=0.2,
+            relx=.875,
+            rely=0.965)
+        self.reencode_button.bind(
+            "<ButtonPress>", self.reencode, add="")
         
         self.tolerance_lvl_label = tk.Label(self.home_app_frame4)
         self.tolerance_lvl_label.configure(
@@ -191,6 +211,25 @@ class HomeApp:
             relx=.5,
             rely=0.6)
         self.add_visitor.bind("<ButtonPress>", self.add_visitors_press, add="")
+        self.encode_button = tk.Button(self.home_app_frame2)
+        self.encode_button.configure(
+            background="#F7FAE9",
+            default="active",
+            font="{arial Black} 14 {}",
+            foreground="#0072bc",
+            justify="center",
+            relief="ridge",
+            text='Encode',
+            width=10)
+        self.encode_button.place(
+            anchor="center",
+            relheight=0.1,
+            relwidth=0.2,
+            relx=.85,
+            rely=0.9)
+        self.encode_button.bind(
+            "<ButtonPress>", self.encode, add="")
+        
         self.home_app_frame2.place(
             anchor="center",
             relheight=.7,
@@ -492,6 +531,21 @@ class HomeApp:
             reset_date = "2020-01-01"
             self.sql_query.set_av_path_file_date(reset_date)
             self.sql_query.set_fr_path_file_date(reset_date)
+
+    def reencode(self, event=None):
+        if os.path.exists("encodings.pickle"):
+            result = messbx.askokcancel("Confirm Action", "Do you wish to reset all encoded images")
+            if result:
+                os.remove("encodings.pickle")
+        else:
+            messbx.showinfo("Not Encoded", "The data set is not currently encoded.")
+
+    def encode(self, event=None):
+        if os.path.exists("encodings.pickle"):
+             messbx.showwarning("Error", "The data set is already encoded. Delete the existing to proceed.")
+        else:
+            folder_selected = self.select_folder()
+            fr.FaceEncoding(folder_selected)
 
     def save_settings(self, event=None):
         tolerance = self.tolerance_lvl_scale.get()
