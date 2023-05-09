@@ -224,13 +224,13 @@ class EditVisitorApp:
         # Contains-edit-button-the-entry-widgets---------------------------------------------------------------------------------------------------------
         # Contains-school-logo-------------------------------------------------------------------------------------------------------------------------------------
         self.edit_visitor_frame1 = tk.Frame(self.edit_visitor_app)
-        self.edit_visitor_frame1.configure(background="#fff000", height=200, width=200)
+        self.edit_visitor_frame1.configure(background="#FFF875", height=200, width=200)
         self.school_logo_label = tk.Label(self.edit_visitor_frame1)
         self.img_STICollegeBalagtasLogomedium = tk.PhotoImage(
             file=".\SeekU\STI College Balagtas Logo medium.png"
         )
         self.school_logo_label.configure(
-            background="#fff000",
+            background="#FFF875",
             image=self.img_STICollegeBalagtasLogomedium,
             text="label1",
         )
@@ -331,7 +331,7 @@ class EditVisitorApp:
                 address_var,
             ]
             concatenated_inputs = "".join(input_values)
-            pattern = re.compile("[^a-zA-Z0-9 .,]")
+            pattern = re.compile("[^a-zA-Z0-9 ñÑ]")
 
             if not pattern.search(concatenated_inputs):
                 if contact_num_var.isdigit() or (

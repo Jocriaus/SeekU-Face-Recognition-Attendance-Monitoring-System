@@ -3,7 +3,6 @@ import tkinter as tk
 from datetime import datetime
 from tkinter import filedialog
 import tkinter.messagebox as messbx
-import sys
 import query_mod as qry
 import edit_info_personnel as eIP
 import edit_info_student as eIS
@@ -12,9 +11,10 @@ import user_create as uC
 import user_edit as uE
 import generate_report as gR
 import add_client_select as aCS
-import os
+import restore_data as rD
 import Treeview_table_mod as tbl
-
+import os
+import sys
 
 class AdminHomeApp:
     def __init__(self, user, vid_source, login_mod, sel_cam):
@@ -1772,18 +1772,14 @@ class AdminHomeApp:
 
     def export_database(self, event=None):
         folder = self.select_folder()
-        folder = self.fix_path(folder)
         if folder:
+            folder = self.fix_path(folder)
             path = folder
             file_name = datetime.now().strftime("%m-%d-%Y-%H-%M-%S")
             self.sql_query.backup_database(path, file_name)
 
     def import_database(self, event=None):
-        file = self.select_file()
-        if file.endswith(".bacpac"):
-            self.sql_query.restore_database(file)
-        else:
-            messbx.showerror("Error", "Kindly choose the correct file type.")
+        rD.RestoreApp()
 
     def save_dates(self, event=None):
         self.activation_settings_save()

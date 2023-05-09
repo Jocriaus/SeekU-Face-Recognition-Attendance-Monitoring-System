@@ -220,7 +220,7 @@ class RegisterVisitorApp:
                 address_var,
             ]
             concatenated_inputs = "".join(input_values)
-            pattern = re.compile("[^a-zA-Z0-9 .,]")
+            pattern = re.compile("[^a-zA-Z0-9 ñÑ]")
 
             if not pattern.search(concatenated_inputs):
                 if  contact_num_var.isdigit() or (

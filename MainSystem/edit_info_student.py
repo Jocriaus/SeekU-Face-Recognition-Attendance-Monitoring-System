@@ -285,13 +285,13 @@ class EditStudentApp:
         # Contains-register-button-the-entry-widgets---------------------------------------------------------------------------------------------------------
         # Contains-school-logo-------------------------------------------------------------------------------------------------------------------------------------
         self.edit_stud_frame1 = tk.Frame(self.edit_student_app)
-        self.edit_stud_frame1.configure(background="#fff000", height=200, width=200)
+        self.edit_stud_frame1.configure(background="#FFF875", height=200, width=200)
         self.school_logo_label = tk.Label(self.edit_stud_frame1)
         self.img_STICollegeBalagtasLogomedium = tk.PhotoImage(
             file=".\SeekU\STI College Balagtas Logo medium.png"
         )
         self.school_logo_label.configure(
-            background="#fff000",
+            background="#FFF875",
             image=self.img_STICollegeBalagtasLogomedium,
             text="label1",
         )
@@ -406,7 +406,7 @@ class EditStudentApp:
                 student_status_var,
             ]
             concatenated_inputs = "".join(input_values)
-            pattern = re.compile("[^a-zA-Z0-9 ]")
+            pattern = re.compile("[^a-zA-Z0-9 ñÑ]")
 
             if not pattern.search(concatenated_inputs):
                 if student_num_var.isdigit() or (
