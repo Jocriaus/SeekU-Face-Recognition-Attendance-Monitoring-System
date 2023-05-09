@@ -161,22 +161,25 @@ class AddSelectorApp:
         folder = self.select_folder()
         if folder:
             if self.window_will_open == "Manage Students":
-                rS.RegisterStudentApp(self.add_select_app,self.admin_home_window, folder,saveonly)
+                rS.RegisterStudentApp(self.add_select_app,self.admin_home_window, folder,saveonly,self.refresh_func, self.window_will_open)
             elif self.window_will_open == "Manage Personnels":
-                rP.RegisterPersonnelApp(self.add_select_app,self.admin_home_window, folder,saveonly)    
+                rP.RegisterPersonnelApp(self.add_select_app,self.admin_home_window, folder,saveonly,self.refresh_func, self.window_will_open)    
             elif self.window_will_open == "Manage Visitors":
-                rV.RegisterVisitorApp( self.add_select_app,self.admin_home_window, folder, saveonly)
+                rV.RegisterVisitorApp( self.add_select_app,self.admin_home_window, folder, saveonly,self.refresh_func, self.window_will_open)
             self.add_select_app.grab_release()
             self.hide_this_window()
             
 
     def select_folder(self):
         self.mainwindow.attributes("-topmost", False)
+        self.add_select_app.withdraw()
         folder_select = filedialog.askdirectory(title="Select Folder")
         if folder_select == "":
             folder_select = False
+            self.add_select_app.deiconify()
             return folder_select
         else:
+            self.add_select_app.deiconify()
             return folder_select
 
     # this function will center the window

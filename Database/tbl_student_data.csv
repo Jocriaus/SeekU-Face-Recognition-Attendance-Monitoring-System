@@ -1,0 +1,35 @@
+student_no,student_firstname,student_lastname,student_middlename,student_program,student_section,student_contact_no,student_address,student_status
+2000075402,Onetter,Dela Cruz,C,BSCpE,BSCpE4A,09569874236,Balagtas Bulacan,IsActive
+2000139272,Kenneth Carlos,Soguilon,Vicente,BSHM,BSHM3A,09690654502,Guiguinto Bulacan,IsActive
+2000163379,Raymund,Domagco,Oficiar,BSIT,BSIT4A,09998781074,Pandi Bulacan,IsActive
+2000177053,Justine,Belza,Lo,BSCS,BSCS4A,09568741236,Guiginto Bulacan,IsActive
+2000190730,Mary Joy,Arcilla,Mistulis,BSBA,BSBA4A,09554931217,Balagtas Bulacan,IsActive
+2000193325,Jethro,Arcigal,Dela Cruz,BSIT,BSIT4A,09563245895,Balagtas Bulacan,IsActive
+2000197691,Justin,San Pedro,J,BSIT,BSIT4A,09325879645,Balagtas Bulacan,IsActive
+2000219674,David John Christian,Nicolas,Mariano,BSHM,BSHM3B,09755444696,Balagtas Bulacan,IsActive
+2000221619,Ronald Jr,Llurag,,BSIT,BSIT3A,09692005395,Balagtas Bulacan,IsActive
+2000226128,Jane Niecky,De Guzman,Manuel,BSBA,BSBA3A,09530355335,Balagtas Bulacan,IsActive
+2000229866,Lourd Philip,Dela Cruz,Cipcon,BSIT,BSIT3A,09993251579,Balagtas Bulacan,IsActive
+2000236246,Niña Riccian,Manalo,Dela Peña,BMMA,BMMA3A,09568741368,Bulakan Bulacan,IsActive
+2000248030,Christian,Padua,Abasola,BSHM,BSHM2A,09776245311,Plaridel Bulacan,IsActive
+2000248257,Avie Jane ,Garcia,Ortiz,BSHM,BSHM2A,09456985468,Balagtas Bulacan,IsActive
+2000249713,Alyssa,Villarey,Lacandula,BSHM,BSHM2A,09612706566,Balagtas Bulacan,IsActive
+2000252145,Pamela Francine,Bonifacio,Madlangsakay,BSHM,BSHM2A,09169981655,Balagtas Bulacan,IsActive
+2000253604,Rex Nicholas,Sevilla,Cuasay,ICT,MAWD,09054879248,Guiguinto Bulacan,IsActive
+2000256448,Jean Mhel,Montes,Garcia,ICT,MAWD,09214561341,Balagtas Bulacan,IsActive
+2000261126,Jericho,Garcia,Prudente,BSIT,BSIT2A,09054190233,Balagtas Bulacan,IsActive
+2000263542,Ruwella,Baluyut,Libantino,BSHM,BSHM2A,09612631618,Balagtas Bulacan,IsActive
+2000263932,Gabriel,Bautista,Caesar,BSIT,BSIT2A,09655395841,Balagtas Bulacan,IsActive
+2000264903,Xyrelle,Herrera,A,BMMA,BMMA2A,09458741236,Balagtas Bulacan,IsActive
+2000265059,Marianne,Alcaraz,Jeramos,BSHM,BSHM2A,09653685391,Balagtas Bulacan,IsActive
+2000268647,Caesar Arles,Dapiton,Abancio,BSIT,BSIT2A,09212177262,Bocaue Bulacan,IsActive
+2000268749,Jomarie,Banares,Gonzales,BSHM,BSHM2A,09094942233,Guiguinto Bulacan,IsActive
+2000270237,Mark edsel,Asilum,Ventura,BSHM,BSHM2A,09616368174,Balagtas Bulacan,IsActive
+2000271848,Oasis,Magpayo,Garcia,BSBA,BSBA2B,09979100462,Balagtas Bulacan,IsActive
+2000271853,John Carlo,Medina,,BSHM,BSHM2A,09998166884,Balagtas Bulacan,IsActive
+2000276539,Freidrick Craig,Dorong,Samonte,BSIT,BSIT2A,09503554457,Bulakan Bulacan,IsActive
+2000313371,Jean,Flores,Royeras,BSIT,BSIT1B,09755411811,Balagtas Bulacan,IsActive
+2000318092,Kim Edward,Mendoza,Padilla,BSBA,BSBA2B,09639033233,Bocaue Bulacan,IsActive
+2000321457,Mark Anthony ,Roxas,Badillo,BSIT,BSIT2A,09614225994,Bulakan Bulacan,IsActive
+2000322922,Franz Adrian,Bernabe,Mendoza,BSIT,BSIT1B,09913486623,Marilao Bulacan,IsActive
+200082423,Kenneth,Molina,Gonzales,BSIT,BSIT3A,09207952732,Bulakan Bulacan,IsActive

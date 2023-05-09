@@ -1,13 +1,18 @@
 #!/usr/bin/python3
 import tkinter as tk
 import tkinter.filedialog as filedialog
+import tkinter.messagebox as messbx
+import backup_restore_mod as bR
 
 class RestoreApp:
     def __init__(self):
+
+        self.restore_database_query = bR.BackupRestore()
+
         # build ui
         self.restore_db = tk.Toplevel()
         self.restore_db.configure(background="#0072bc", height=200, width=200)
-        self.restore_db.geometry("500x700")
+        self.restore_db.geometry("700x350")
         self.restore_db.resizable(False, False)
         self.restore_db_frame2 = tk.Frame(self.restore_db)
         self.restore_db_frame2.configure(
@@ -17,8 +22,8 @@ class RestoreApp:
             background="#0072bc",
             font="{lucida} 20 {bold}",
             foreground="#F7FAE9",
-            text='Client Records')
-        self.section_rec_label.place(anchor="center", relx=0.5, rely=0.25)
+            text='Records')
+        self.section_rec_label.place(anchor="center", relx=0.45, rely=0.35)
         self.student_rec_button = tk.Button(self.restore_db_frame2)
         self.student_rec_button.configure(
             background="#F7FAE9",
@@ -31,10 +36,10 @@ class RestoreApp:
             width=10)
         self.student_rec_button.place(
             anchor="center",
-            relheight=0.06,
+            relheight=0.1,
             relwidth=0.20,
-            relx=0.75,
-            rely=0.325)
+            relx=0.45,
+            rely=0.475)
         self.student_rec_button.bind(
             "<ButtonPress>", self.import_s_records, add="")
         self.student_rec_label = tk.Label(self.restore_db_frame2)
@@ -43,7 +48,7 @@ class RestoreApp:
             font="{lucida} 20 {bold}",
             foreground="#F7FAE9",
             text='Students')
-        self.student_rec_label.place(anchor="center", relx=0.25, rely=0.325)
+        self.student_rec_label.place(anchor="center", relx=0.2, rely=0.475)
         self.personnel_rec_button = tk.Button(self.restore_db_frame2)
         self.personnel_rec_button.configure(
             background="#F7FAE9",
@@ -56,10 +61,10 @@ class RestoreApp:
             width=10)
         self.personnel_rec_button.place(
             anchor="center",
-            relheight=0.06,
+            relheight=0.1,
             relwidth=0.20,
-            relx=0.75,
-            rely=0.4)
+            relx=0.45,
+            rely=0.6)
         self.personnel_rec_button.bind(
             "<ButtonPress>", self.import_p_records, add="")
         self.personnel_rec_label = tk.Label(self.restore_db_frame2)
@@ -68,7 +73,7 @@ class RestoreApp:
             font="{lucida} 20 {bold}",
             foreground="#F7FAE9",
             text='Personnels')
-        self.personnel_rec_label.place(anchor="center", relx=0.25, rely=0.4)
+        self.personnel_rec_label.place(anchor="center", relx=0.2, rely=0.6)
         self.visitor_rec_button = tk.Button(self.restore_db_frame2)
         self.visitor_rec_button.configure(
             background="#F7FAE9",
@@ -81,10 +86,10 @@ class RestoreApp:
             width=10)
         self.visitor_rec_button.place(
             anchor="center",
-            relheight=0.06,
+            relheight=0.1,
             relwidth=0.20,
-            relx=0.75,
-            rely=0.475)
+            relx=0.45,
+            rely=0.725)
         self.visitor_rec_button.bind(
             "<ButtonPress>", self.import_v_records, add="")
         self.visitor_rec_label = tk.Label(self.restore_db_frame2)
@@ -93,14 +98,14 @@ class RestoreApp:
             font="{lucida} 20 {bold}",
             foreground="#F7FAE9",
             text='Visitors')
-        self.visitor_rec_label.place(anchor="center", relx=0.25, rely=0.475)
+        self.visitor_rec_label.place(anchor="center", relx=0.2, rely=0.725)
         self.section_rep_label = tk.Label(self.restore_db_frame2)
         self.section_rep_label.configure(
             background="#0072bc",
             font="{lucida} 20 {bold}",
             foreground="#F7FAE9",
-            text='Client Reports')
-        self.section_rep_label.place(anchor="center", relx=0.5, rely=0.675)
+            text='Reports')
+        self.section_rep_label.place(anchor="center", relx=0.75, rely=0.35)
         self.student_rep_button = tk.Button(self.restore_db_frame2)
         self.student_rep_button.configure(
             background="#F7FAE9",
@@ -113,19 +118,12 @@ class RestoreApp:
             width=10)
         self.student_rep_button.place(
             anchor="center",
-            relheight=0.06,
+            relheight=0.1,
             relwidth=0.20,
             relx=0.75,
-            rely=0.75)
+            rely=0.475)
         self.student_rep_button.bind(
             "<ButtonPress>", self.import_s_reports, add="")
-        self.student_rep_label = tk.Label(self.restore_db_frame2)
-        self.student_rep_label.configure(
-            background="#0072bc",
-            font="{lucida} 20 {bold}",
-            foreground="#F7FAE9",
-            text='Students')
-        self.student_rep_label.place(anchor="center", relx=0.25, rely=0.75)
         self.personnel_rep_button = tk.Button(self.restore_db_frame2)
         self.personnel_rep_button.configure(
             background="#F7FAE9",
@@ -138,19 +136,12 @@ class RestoreApp:
             width=10)
         self.personnel_rep_button.place(
             anchor="center",
-            relheight=0.06,
+            relheight=0.1,
             relwidth=0.20,
             relx=0.75,
-            rely=0.825)
+            rely=0.6)
         self.personnel_rep_button.bind(
             "<ButtonPress>", self.import_p_reports, add="")
-        self.personnel_rep_label = tk.Label(self.restore_db_frame2)
-        self.personnel_rep_label.configure(
-            background="#0072bc",
-            font="{lucida} 20 {bold}",
-            foreground="#F7FAE9",
-            text='Personnels')
-        self.personnel_rep_label.place(anchor="center", relx=0.25, rely=0.825)
         self.visitor_rep_button = tk.Button(self.restore_db_frame2)
         self.visitor_rep_button.configure(
             background="#F7FAE9",
@@ -163,26 +154,19 @@ class RestoreApp:
             width=10)
         self.visitor_rep_button.place(
             anchor="center",
-            relheight=0.06,
+            relheight=0.1,
             relwidth=0.20,
             relx=0.75,
-            rely=0.9)
+            rely=0.725)
         self.visitor_rep_button.bind(
             "<ButtonPress>", self.import_v_reports, add="")
-        self.visitor_rep_label = tk.Label(self.restore_db_frame2)
-        self.visitor_rep_label.configure(
-            background="#0072bc",
-            font="{lucida} 20 {bold}",
-            foreground="#F7FAE9",
-            text='Visitors')
-        self.visitor_rep_label.place(anchor="center", relx=0.25, rely=0.9)
         self.users_label = tk.Label(self.restore_db_frame2)
         self.users_label.configure(
             background="#0072bc",
             font="{lucida} 20 {bold}",
             foreground="#F7FAE9",
             text='Users')
-        self.users_label.place(anchor="center", relx=0.25, rely=0.55)
+        self.users_label.place(anchor="center", relx=0.2, rely=0.85)
         self.users_button = tk.Button(self.restore_db_frame2)
         self.users_button.configure(
             background="#F7FAE9",
@@ -195,10 +179,10 @@ class RestoreApp:
             width=10)
         self.users_button.place(
             anchor="center",
-            relheight=0.06,
+            relheight=0.1,
             relwidth=0.20,
-            relx=0.75,
-            rely=0.55)
+            relx=0.45,
+            rely=0.85)
         self.users_button.bind("<ButtonPress>", self.import_users, add="")
         self.restore_db_frame2.place(
             anchor="center",
@@ -250,33 +234,36 @@ class RestoreApp:
         self.restore_db.destroy()
 
     def select_file(self):
-        self.administrator_app.attributes("-topmost", False)
-        file_select = filedialog.askopenfilename()
+        self.restore_db.attributes("-topmost", False)
+        file_select = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")])
         if file_select == "":
-            file_select = False
-            return file_select
+            return False
+        elif not file_select.endswith(".csv"):
+            messbx.showerror("Error", "The selected file is not a CSV file.")
+            return False
         else:
             return file_select
 
     def import_students_rec_logic(self):
         selected_file = self.select_file()
         if selected_file:
-            pass
+            self.restore_database_query.restore_student(selected_file)
+            
 
     def import_personnels_rec_logic(self):
         selected_file = self.select_file()
         if selected_file:
-            pass
+            self.restore_database_query.restore_personnel(selected_file)
 
     def import_visitors_rec_logic(self):
         selected_file = self.select_file()
         if selected_file:
-            pass
+            self.restore_database_query.restore_visitor(selected_file)
 
     def import_students_rep_logic(self):
         selected_file = self.select_file()
         if selected_file:
-            pass
+            self.restore_database_query.restore_student_report(selected_file)
 
     def import_personnels_rep_logic(self):
         selected_file = self.select_file()
@@ -286,12 +273,12 @@ class RestoreApp:
     def import_visitors_rep_logic(self):
         selected_file = self.select_file()
         if selected_file:
-            pass
+            self.restore_database_query.restore_visitor_report(selected_file)
 
     def import_users_logic(self):
         selected_file = self.select_file()
         if selected_file:
-            pass
+            self.restore_database_query.restore_user(selected_file)
 
     # this function will center the window
     def center(self, win):

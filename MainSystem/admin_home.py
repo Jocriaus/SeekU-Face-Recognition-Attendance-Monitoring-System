@@ -12,6 +12,7 @@ import user_edit as uE
 import generate_report as gR
 import add_client_select as aCS
 import restore_data as rD
+import backup_restore_mod as bR
 import Treeview_table_mod as tbl
 import os
 import sys
@@ -27,6 +28,7 @@ class AdminHomeApp:
         self.sel_cam_window = sel_cam
         self.now = datetime.now()
         self.current_date_n_time = self.now.strftime("%d/%m/%Y %H:%M:%S")
+        self.backup = bR.BackupRestore()
         self.treeview = tbl.TreeviewGUI()
         self.sql_query = qry.dbQueries()
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
@@ -1015,13 +1017,12 @@ class AdminHomeApp:
         if self.user == "Staff":
             self.add_user_button.configure(state="disabled")
             self.edit_user_button.configure(state="disabled")
-            self.export_db_button.configure(state="disabled")
             self.import_db_button.configure(state="disabled")
             self.deactivation_date_entry.configure(state="disabled")
             self.login_attempt_entry.configure(state="disabled")
             self.pass_len_entry.configure(state="disabled")
-            self.save_dates_button.configure(state="disabled")
             self.save_settings_button.configure(state="disabled")
+
 
     # this function updates the time below the window
     def update_time(self):
@@ -1536,28 +1537,36 @@ class AdminHomeApp:
     # selected option on the option menu for the clent section
     def change_layout_archived(self):
         if self.archived_man_var.get() == "Archived Students":
-            self.edit_a_button.configure(text="Edit Students")
+            self.edit_a_button.configure(text="Edit Students", state = "normal")
             self.archived_list.configure(text="Students List")
             self.treeview.student_treeview(self.admin_a_sec3_frame, "IsArchived")
             self.refresh_clients_logic(self.archived_man_var.get(), "IsArchived")
+            
 
         if self.archived_man_var.get() == "Archived Personnels":
-            self.edit_a_button.configure(text="Edit Personnels")
+            self.edit_a_button.configure(text="Edit Personnels", state = "normal")
             self.archived_list.configure(text="Personnels List")
             self.treeview.personnel_treeview(self.admin_a_sec3_frame, "IsArchived")
             self.refresh_clients_logic(self.archived_man_var.get(), "IsArchived")
 
         if self.archived_man_var.get() == "Archived Visitors":
-            self.edit_a_button.configure(text="Edit Visitors")
+            self.edit_a_button.configure(text="Edit Visitors", state = "normal")
             self.archived_list.configure(text="Visitors List")
             self.treeview.visitor_treeview(self.admin_a_sec3_frame, "IsArchived")
             self.refresh_clients_logic(self.archived_man_var.get(), "IsArchived")
 
         if self.archived_man_var.get() == "Archived User":
-            self.edit_a_button.configure(text="Edit User")
-            self.archived_list.configure(text="User List")
-            self.treeview.user_treeview(self.admin_a_sec3_frame, "IsArchived")
-            self.refresh_clients_logic(self.archived_man_var.get(), "IsArchived")
+            if self.user == "Staff":
+                self.edit_a_button.configure(text="Edit User", state= "disabled")
+                self.archived_list.configure(text="User List")
+                self.treeview.user_treeview(self.admin_a_sec3_frame, "IsArchived")
+                self.refresh_clients_logic(self.archived_man_var.get(), "IsArchived")
+            else:
+                self.edit_a_button.configure(text="Edit User", state= "normal")
+                self.archived_list.configure(text="User List")
+                self.treeview.user_treeview(self.admin_a_sec3_frame, "IsArchived")
+                self.refresh_clients_logic(self.archived_man_var.get(), "IsArchived")
+                
 
     def edit_archived_logic(self):
         if self.archived_man_var.get() == "Archived Students":
@@ -1576,7 +1585,10 @@ class AdminHomeApp:
                 self.edit_visitor_function(folder, self.archived_man_var.get(), True)
 
         if self.archived_man_var.get() == "Archived User":
-            self.edit_user_function(True)
+            if self.edit_a_button.state() == "disabled":
+                pass
+            else:
+                self.edit_user_function(True)    
 
     def search_archived_info_logic(self):
         if self.archived_man_var.get() == "Archived Students":
@@ -1696,9 +1708,12 @@ class AdminHomeApp:
     # USER-COMMANDS---------------------------------------------------------------------------------------------------------------
 
     def user_appear(self, event=None):
-        self.treeview.user_treeview(self.admin_u_sec2_frame, "IsActive")
-        self.users_appear_logic()
-        self.refresh_user_logic("IsActive")
+        if self.user == "Staff":
+            pass
+        else:
+            self.treeview.user_treeview(self.admin_u_sec2_frame, "IsActive")
+            self.users_appear_logic()
+            self.refresh_user_logic("IsActive")
 
     def user_hover(self, event=None):
         self.user_section_label.configure(foreground="#FFF200")
@@ -1773,10 +1788,7 @@ class AdminHomeApp:
     def export_database(self, event=None):
         folder = self.select_folder()
         if folder:
-            folder = self.fix_path(folder)
-            path = folder
-            file_name = datetime.now().strftime("%m-%d-%Y-%H-%M-%S")
-            self.sql_query.backup_database(path, file_name)
+            self.backup.backup_data(folder)
 
     def import_database(self, event=None):
         rD.RestoreApp()

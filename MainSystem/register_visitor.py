@@ -251,9 +251,10 @@ class RegisterVisitorApp:
                                     self.path_check,
                                     self.img_path + "/" + str(img_name[0]) + ".jpg",
                                 )
+                            self.register_button.configure(state="disabled")
                         messbx.showinfo(
                             "Success",
-                            "The visitor's record has been successfully updated.",
+                            "The visitor's record has been successfully registered.",
                         )
                     else:
                         messbx.showwarning(

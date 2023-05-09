@@ -305,37 +305,42 @@ class RegisterStudentApp:
                                     img_name = student_num_var
                                     path_check = self.img_path + "/000000000.jpg"
                                     if self.saveonly and (not os.path.exists(path_check)):
-                                        result = messbx.askokcancel(
-                                            "Confirm Action",
-                                            "Please review all the details you have inputted. Are you sure everything is final and correct?",
-                                        )
-                                        if result:
-                                            path_check = self.img_path + "/" + img_name + ".jpg"
-                                            image = face_recognition.load_image_file(path_check)
-                                            face_locations = (
-                                                face_recognition.face_locations(image))
+                                        path_check = self.img_path + "/" + img_name + ".jpg"
+                                        if os.path.exists(path_check):
+                                            result = messbx.askokcancel(
+                                                "Confirm Action",
+                                                "Please review all the details you have inputted. Are you sure everything is final and correct?",
+                                            )
+                                            if result:
+                                                image = face_recognition.load_image_file(path_check)
+                                                face_locations = (
+                                                    face_recognition.face_locations(image))
 
-                                            if face_locations:
-                                                self.sql_query.register_student(
-                                                    student_num_var,
-                                                    first_name_var,
-                                                    last_name_var,
-                                                    mid_name_var,
-                                                    program_var,
-                                                    section_var,
-                                                    contact_num_var,
-                                                    address_var,
-                                                )
-                                                self.register_button.config(state="disabled")
-                                                messbx.showinfo(
-                                                    "Success",
-                                                    "The personnel's record has been registered successfully.",
-                                                )
-                                            else:
-                                                messbx.showerror(
-                                                    "Error",
-                                                    "Face detection failed. There are no face detected on the image.",
-                                                )
+                                                if face_locations:
+                                                    self.sql_query.register_student(
+                                                        student_num_var,
+                                                        first_name_var,
+                                                        last_name_var,
+                                                        mid_name_var,
+                                                        program_var,
+                                                        section_var,
+                                                        contact_num_var,
+                                                        address_var,
+                                                    )
+                                                    self.register_button.configure(state="disabled")
+                                                    messbx.showinfo(
+                                                        "Success",
+                                                        "The student's record has been registered successfully.",
+                                                    )
+                                                else:
+                                                    messbx.showerror(
+                                                        "Error",
+                                                        "Face detection failed. There are no face detected on the image.",
+                                                    )
+                                        else:
+                                            messbx.showwarning(
+                                            "Warning",
+                                            "No image was found in the directory matching the entered client number.")
                                     elif (not self.saveonly) and os.path.exists(path_check):
                                         result = messbx.askokcancel(
                                             "Confirm Action",
@@ -353,6 +358,7 @@ class RegisterStudentApp:
                                                 contact_num_var,
                                                 address_var,
                                             )
+                                            self.register_button.configure(state="disabled")
                                             messbx.showinfo(
                                                 "Success",
                                                 "The student's record has been registered successfully.",
