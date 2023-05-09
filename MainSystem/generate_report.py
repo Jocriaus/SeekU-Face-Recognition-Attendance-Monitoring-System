@@ -189,13 +189,20 @@ class SavePrintReportApp:
         self.mainwindow.grab_set()
 
     def select_folder(self):
-            self.generate_report_app.attributes('-topmost', False)
-            folder_select = filedialog.askdirectory(title = "Select Folder")
-            if folder_select == "":
-                folder_select = False
-                return folder_select
-            else:
-                return folder_select
+        self.mainwindow.attributes("-topmost", False)
+        dialog_parent = tk.Toplevel(self.mainwindow)
+        dialog_parent.withdraw()
+        dialog_parent.grab_set()
+        folder_select = filedialog.askdirectory(title="Select Folder")
+        if folder_select == "":
+            folder_select = False
+            dialog_parent.grab_release()
+            dialog_parent.destroy()
+            return folder_select
+        else:
+            dialog_parent.grab_release()
+            dialog_parent.destroy()
+            return folder_select
 
     def destroy_this_window(self):
         self.generate_report_app.grab_release()

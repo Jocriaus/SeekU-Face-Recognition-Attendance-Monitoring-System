@@ -996,12 +996,19 @@ class AdminHomeApp:
         return newpath
 
     def select_folder(self):
-        self.administrator_app.attributes("-topmost", False)
+        self.mainwindow.attributes("-topmost", False)
+        dialog_parent = tk.Toplevel(self.mainwindow)
+        dialog_parent.withdraw()
+        dialog_parent.grab_set()
         folder_select = filedialog.askdirectory(title="Select Folder")
         if folder_select == "":
             folder_select = False
+            dialog_parent.grab_release()
+            dialog_parent.destroy()
             return folder_select
         else:
+            dialog_parent.grab_release()
+            dialog_parent.destroy()
             return folder_select
 
     def select_file(self):

@@ -32,6 +32,7 @@ class CameraApp:
         self.snapshot_app.resizable(False, False)
         self.snapshot_app.title("SeekU - Admin Camera App")
         self.snapshot_app.iconbitmap(".\SeekU\SeekU.ico")
+        self.snapshot_app.bind('<Return>',lambda event:self.take_pic_func())
     #Contains-Camera-Canvas---------------------------------------------------------------------------------------------------
         self.snapshot_frame4 = tk.Frame(self.snapshot_app)
         self.snapshot_frame4.configure(
@@ -243,6 +244,7 @@ class CameraEditApp:
         self.snapshot_app.resizable(False, False)
         self.snapshot_app.title("SeekU - Admin Camera App")
         self.snapshot_app.iconbitmap(".\SeekU\SeekU.ico")
+        self.snapshot_app.bind('<Return>',lambda event:self.take_pic_func())
     #Contains-Camera-Canvas---------------------------------------------------------------------------------------------------
         self.snapshot_frame4 = tk.Frame(self.snapshot_app)
         self.snapshot_frame4.configure(

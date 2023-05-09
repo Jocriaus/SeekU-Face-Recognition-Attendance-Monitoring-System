@@ -314,6 +314,7 @@ class HomeApp:
             relx=.5,
             rely=.975)
         
+        print("this is video source" + str(self.video_source) )
     #Contains-the-logo-and-logotype--------------------------------------------------------------------------------------------------------- 
         self.show_home_frame()
         self.set_settings_data()
@@ -372,13 +373,20 @@ class HomeApp:
 
     # this function will let the user choose the folder according to what is needed
     def select_folder(self):
-            self.home_app.attributes('-topmost', False)
-            folder_select = filedialog.askdirectory(title = "Select Folder")
-            if folder_select == "":
-                folder_select = False
-                return folder_select
-            else:
-                return folder_select
+        self.mainwindow.attributes("-topmost", False)
+        dialog_parent = tk.Toplevel(self.mainwindow)
+        dialog_parent.withdraw()
+        dialog_parent.grab_set()
+        folder_select = filedialog.askdirectory(title="Select Folder")
+        if folder_select == "":
+            folder_select = False
+            dialog_parent.grab_release()
+            dialog_parent.destroy()
+            return folder_select
+        else:
+            dialog_parent.grab_release()
+            dialog_parent.destroy()
+            return folder_select
 
     # this command will open the attendance module
     def attendance_press(self, event=None):

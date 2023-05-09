@@ -1,5 +1,6 @@
 student_no,student_firstname,student_lastname,student_middlename,student_program,student_section,student_contact_no,student_address,student_status
 2000075402,Onetter,Dela Cruz,C,BSCpE,BSCpE4A,09569874236,Balagtas Bulacan,IsActive
+2000082423,Kenneth,Molina,Gonzales,BSIT,BSIT3A,09207952732,Bulakan Bulacan,IsActive
 2000139272,Kenneth Carlos,Soguilon,Vicente,BSHM,BSHM3A,09690654502,Guiguinto Bulacan,IsActive
 2000163379,Raymund,Domagco,Oficiar,BSIT,BSIT4A,09998781074,Pandi Bulacan,IsActive
 2000177053,Justine,Belza,Lo,BSCS,BSCS4A,09568741236,Guiginto Bulacan,IsActive
@@ -32,4 +33,3 @@ student_no,student_firstname,student_lastname,student_middlename,student_program
 2000318092,Kim Edward,Mendoza,Padilla,BSBA,BSBA2B,09639033233,Bocaue Bulacan,IsActive
 2000321457,Mark Anthony ,Roxas,Badillo,BSIT,BSIT2A,09614225994,Bulakan Bulacan,IsActive
 2000322922,Franz Adrian,Bernabe,Mendoza,BSIT,BSIT1B,09913486623,Marilao Bulacan,IsActive
-200082423,Kenneth,Molina,Gonzales,BSIT,BSIT3A,09207952732,Bulakan Bulacan,IsActive

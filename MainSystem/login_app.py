@@ -5,6 +5,7 @@ import client_cam as cC
 import time
 import datetime
 import sys
+import cv2
 
 # test for admin = jus    jus123
 # test for security guard = jc   123
@@ -164,13 +165,22 @@ class LoginApp:
                         self.sql_query.check_user_type(self.username_var, self.password_var)
                         == "Security Guard"
                     ):
+                        self.hide_this_window()
                         print("login")
                         # add message box
-                        self.hide_this_window()
+                        self.cams = []
+                        index = 0
+                        while True:
+                            cam = cv2.VideoCapture(index)
+                            if cam is None or not cam.isOpened():
+                                break
+                            self.cams.append(cam)
+                            index += 1
+                        print(self.cams)                            
                         self.clear_entry()
                         self.user = "Security Guard"
                         self.tries = self.sql_query.get_login_attempts()
-                        cC.ClientCameraSelectApp(self.user, self.log_in_app)
+                        cC.ClientCameraSelectApp(self.user, self.cams, self.log_in_app)
                     elif (
                         self.sql_query.check_user_type(self.username_var, self.password_var)
                         == "System Admin"
@@ -179,15 +189,23 @@ class LoginApp:
                         )
                         == "Staff"
                         ):
+                        self.hide_this_window()
                         print("login")
                         # add message box
-                        self.hide_this_window()
+                        self.cams = []
+                        index = 0
+                        while True:
+                            cam = cv2.VideoCapture(index)
+                            if not cam.isOpened():
+                                break
+                            self.cams.append(cam)
+                            index += 1
                         self.clear_entry()
                         self.user = self.sql_query.check_user_type(
                             self.username_var, self.password_var
                         )
                         self.tries = self.sql_query.get_login_attempts()
-                        cC.ClientCameraSelectApp(self.user, self.log_in_app)
+                        cC.ClientCameraSelectApp(self.user,self.cams, self.log_in_app)
 
                 elif (self.sql_query.login_entry(self.username_var, self.password_var) == False):
                     self.tries = self.tries-1

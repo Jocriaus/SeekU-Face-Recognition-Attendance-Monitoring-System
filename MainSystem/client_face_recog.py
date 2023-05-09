@@ -168,7 +168,7 @@ class ClientFaceRecogApp:
 
     # this function will show the name and the attendance widgets
     def show_name(self):
-        self.client_name_label.place(anchor="center", relx=0.2, rely=0.5)
+        self.client_name_label.place(anchor="center", relx=0.15, rely=0.5)
         self.attendance_label.place(anchor="center", relx=0.79, rely=0.5)
 
     # this function updates the canvas content - shows the camera
@@ -193,7 +193,7 @@ class ClientFaceRecogApp:
 
                 self.camera_canvas.create_image(0, 0, image=self.photo, anchor=tk.NW)
                 # self.detect_face()
-                print("cont2")
+                #print("cont2")
                 self.fr_vid.face_in_box(self.recognize_face)
                 # call again the same method after 15 millisecond
         self.face_recog_app.after(15, self.cam_update)

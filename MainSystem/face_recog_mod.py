@@ -194,7 +194,7 @@ class FaceRecognition:
             
     # this function detects if the face is inside the square within the time set.
     def face_in_box(self, recognize_face):
-        print(self.center)
+        #print(self.center)
         recognize_face_func = recognize_face
         if self.recognized:
             return

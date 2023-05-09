@@ -172,14 +172,18 @@ class AddSelectorApp:
 
     def select_folder(self):
         self.mainwindow.attributes("-topmost", False)
-        self.add_select_app.withdraw()
+        dialog_parent = tk.Toplevel(self.mainwindow)
+        dialog_parent.withdraw()
+        dialog_parent.grab_set()
         folder_select = filedialog.askdirectory(title="Select Folder")
         if folder_select == "":
             folder_select = False
-            self.add_select_app.deiconify()
+            dialog_parent.grab_release()
+            dialog_parent.destroy()
             return folder_select
         else:
-            self.add_select_app.deiconify()
+            dialog_parent.grab_release()
+            dialog_parent.destroy()
             return folder_select
 
     # this function will center the window

@@ -421,7 +421,8 @@ class RegisterPersonnelApp:
         self.camera_canvas.create_image(0, 0, image=self.student_image, anchor=tk.NW)
 
     def register_personnel(self, event=None):
-        self.register_personnel_function()
+        if self.register_button.state() != "disabled":
+            self.register_personnel_function()
 
     # this command will open the camera app
     def change_pic(self, event=None):

@@ -424,7 +424,8 @@ class RegisterStudentApp:
 
     # this command will open the camera app
     def change_pic(self, event=None):
-        self.back_cam_app_window()
+        if self.register_button.state() != "disabled":
+            self.back_cam_app_window()
 
     def return_func(self, event=None):
         self.back_cam_app_window()
