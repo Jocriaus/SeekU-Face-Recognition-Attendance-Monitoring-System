@@ -268,7 +268,7 @@ class RestoreApp:
     def import_personnels_rep_logic(self):
         selected_file = self.select_file()
         if selected_file:
-            pass
+            self.restore_database_query.restore_personnel_report(selected_file)
 
     def import_visitors_rep_logic(self):
         selected_file = self.select_file()

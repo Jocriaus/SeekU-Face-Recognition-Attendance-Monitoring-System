@@ -37,7 +37,7 @@ class BackupRestore:
                             ),
                         )
                         self.cursor.commit()
-                        messbx.showinfo("Success", "The records have been updated successfully!")
+                    messbx.showinfo("Success", "The records have been updated successfully!")
                 else:
                     messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Student Report.")
             else:        
@@ -64,7 +64,7 @@ class BackupRestore:
                             ),
                         )
                         self.cursor.commit()
-                        messbx.showinfo("Success", "The records have been updated successfully!")
+                    messbx.showinfo("Success", "The records have been updated successfully!")
                 else:
                     messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Personnel Report.")
             else:        
@@ -91,7 +91,7 @@ class BackupRestore:
                             ),
                         )
                         self.cursor.commit()
-                        messbx.showinfo("Success", "The records have been updated successfully!")
+                    messbx.showinfo("Success", "The records have been updated successfully!")
                 else:
                     messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Visitor Report.")
             else:        
@@ -122,7 +122,7 @@ class BackupRestore:
                             ),
                         )
                         self.cursor.commit()
-                        messbx.showinfo("Success", "The records have been updated successfully!")
+                    messbx.showinfo("Success", "The records have been updated successfully!")
                 else:
                     print("no student program")
                     messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Student Records.")
@@ -131,57 +131,64 @@ class BackupRestore:
         except:
             messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Student Records.")
 
+
     def restore_personnel(self, path):
         df = pd.read_csv(path)
-        try:
-            if not df.empty:
-                if 'personnel_type' in df.columns:
-                    self.delete_data("tbl_personnel")
-                    for index, row in df.iterrows():
-                        query = f"INSERT INTO tbl_personnel (personnel_no, personnel_firstname, personnel_lastname, personnel_middlename, personnel_contact_no, personnel_address, personnel_type, personnel_status) values (?, ?, ?, ?, ?, ?, ?, ?)"
-                        self.cursor.execute(
-                            query,
-                            (
-                                row.personnel_no,
-                                row.personnel_firstname,
-                                row.personnel_lastname,
-                                row.personnel_middlename,
-                                row.personnel_contact_no,
-                                row.personnel_address,
-                                row.personnel_type,
-                                row.personnel_status,
-                            ),
-                        )
-                        self.cursor.commit()
-                        messbx.showinfo("Success", "The records have been updated successfully!")
-                else:
-                    messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Personnel Records.")
-            else:        
-                messbx.showerror("Inappropriate  CSV File", "The CSV File you selected is empty.")
-        except:
-            messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Personnel Records.")
+        #try:
+        if not df.empty:
+            if 'personnel_type' in df.columns:
+                self.delete_data("tbl_personnel")
+                for index, row in df.iterrows():
+                    query = f"INSERT INTO tbl_personnel (personnel_no, personnel_firstname, personnel_lastname, personnel_middlename, personnel_contact_no, personnel_address, personnel_type, personnel_status) values (?, ?, ?, ?, ?, ?, ?, ?)"
+                    self.cursor.execute(
+                        query,
+                        (
+                            row.personnel_no,
+                            row.personnel_firstname,
+                            row.personnel_lastname,
+                            row.personnel_middlename,
+                            row.personnel_contact_no,
+                            row.personnel_address,
+                            row.personnel_type,
+                            row.personnel_status,
+                        ),
+                    )
+                    self.cursor.commit()
+                messbx.showinfo("Success", "The records have been updated successfully!")
+            else:
+                messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Personnel Records.")
+        else:        
+            messbx.showerror("Inappropriate  CSV File", "The CSV File you selected is empty.")
+        #except:
+        #    messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Personnel Records.")
 
     def restore_visitor(self, path):
         df = pd.read_csv(path)
         try:
             if not df.empty:
                 if 'visitor_status' in df.columns:
-                    self.delete_data("tbl_visitor")
                     for index, row in df.iterrows():
-                        query = f"INSERT INTO tbl_visitor (visitor_no, visitor_firstname, visitor_lastname, visitor_contact_no, visitor_address, visitor_status) values (?, ?, ?, ?, ?, ?)"
-                        self.cursor.execute(
-                            query,
-                            (
-                                row.visitor_no,
-                                row.visitor_firstname,
-                                row.visitor_lastname,
-                                row.visitor_contact_no,
-                                row.visitor_address,
-                                row.visitor_status,
-                            ),
-                        )
-                        self.cursor.commit()
-                        messbx.showinfo("Success", "The records have been updated successfully!")
+                        if not row.visitor_no:
+                            query = (f"SET IDENTITY_INSERT tbl_visitor ON " +
+                            "INSERT INTO tbl_visitor (visitor_no, visitor_firstname, visitor_lastname, visitor_contact_no, visitor_address, visitor_status) values (?, ?, ?, ?, ?, ?) "+
+                            "SET IDENTITY_INSERT tbl_visitor OFF")   
+                        else:         
+                            query = (f"UPDATE tbl_visitor SET visitor_firstname = ?, visitor_lastname = ?, visitor_contact_no = ?, "+
+                            "visitor_address = ?, visitor_status = ? WHERE visitor_no = ?")                                                                                                           
+                            self.cursor.execute(
+                                query,
+                                (
+                                    row.visitor_firstname,
+                                    row.visitor_lastname,
+                                    row.visitor_contact_no,
+                                    row.visitor_address,
+                                    row.visitor_status,
+                                    row.visitor_no,
+                                ),
+                            )
+                            self.cursor.commit()
+
+                    messbx.showinfo("Success", "The records have been updated successfully!")
                 else:
                     messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Visitor Records.")
             else:        
@@ -195,8 +202,23 @@ class BackupRestore:
             if not df.empty:
                 if 'user_no' in df.columns:
                     self.delete_data("tbl_user")
+                    reset_startingid_query = (
+                        f"DBCC CHECKIDENT ('tbl_user', RESEED, 0)"
+                    )
+                    self.cursor.execute(reset_startingid_query)
+                    self.connection.commit()
+
+                    set_startingid_query = (
+                        f"DBCC CHECKIDENT ('tbl_user', RESEED, 1)"
+                    )
+                    self.cursor.execute(set_startingid_query)
+                    self.connection.commit()
+
+
                     for index, row in df.iterrows():
-                        query = f"INSERT INTO tbl_user (user_no, username, password, user_firstname, user_lastname, user_type, user_status) values (?, ?, ?, ?, ?, ?, ?)"
+                        query = (f"SET IDENTITY_INSERT tbl_user ON " +
+                        "INSERT INTO tbl_user (user_no, username, password, user_firstname, user_lastname, user_type, user_status) values (?, ?, ?, ?, ?, ?, ?) sa"+
+                        "SET IDENTITY_INSERT tbl_user OFF")
                         self.cursor.execute(
                             query,
                             (
@@ -210,13 +232,13 @@ class BackupRestore:
                             ),
                         )
                         self.cursor.commit()
-                        messbx.showinfo("Success", "The records have been updated successfully!")
+                    messbx.showinfo("Success", "The records have been updated successfully!")
                 else:
                     messbx.showerror("Wrong CSV File", "The CSV File you selected is not for User Records.")
             else:        
                 messbx.showerror("Inappropriate  CSV File", "The CSV File you selected is empty.")
         except:
-            messbx.showerror("Wrong CSV File", "The CSV File you selected is not for User Records.")
+           messbx.showerror("Wrong CSV File", "The CSV File you selected is not for User Records.")
 
 
     def delete_data(self, table_name):
