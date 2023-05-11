@@ -1,4 +1,5 @@
 user_no,username,password,user_firstname,user_lastname,user_type,user_status
-1,user,admin,default,user,System Admin,IsActive
-2,jc,123,Jc,Austria,Security Guard,IsActive
-3,jus,123,Justine,Belza,Staff,IsActive
+4,user,admin,default,user,System Admin,IsActive
+5,jc,123,Jc,Austria,Security Guard,IsActive
+6,jus,123,Justine,Belza,Staff,IsActive
+7,Jerome,Jerome,Jerome,Mendoza,System Admin,IsActive

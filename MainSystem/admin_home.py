@@ -17,6 +17,7 @@ import Treeview_table_mod as tbl
 import os
 import sys
 
+
 class AdminHomeApp:
     def __init__(self, user, vid_source, login_mod, sel_cam):
 
@@ -122,7 +123,7 @@ class AdminHomeApp:
             self.administrator_client_frame,
             self.clients_man_var,
             *__values,
-            command=self.open_diff_client
+            command=self.open_diff_client,
         )
         self.manage_client_optionmenu.configure(font="{arial} 20 {bold}")
         self.manage_client_optionmenu.place(
@@ -191,7 +192,7 @@ class AdminHomeApp:
             self.administrator_attendance_frame,
             self.clients_at_var,
             *__values,
-            command=self.open_diff_attendance
+            command=self.open_diff_attendance,
         )
         self.client_attendance_optionmenu.place(
             anchor="center", relx=0.2, rely=0.09, x=0, y=0
@@ -344,7 +345,7 @@ class AdminHomeApp:
             self.administrator_report_frame,
             self.clients_rep_var,
             *__values,
-            command=self.open_diff_report
+            command=self.open_diff_report,
         )
         self.client_report_optionmenu.place(
             anchor="center", relx=0.17, rely=0.09, x=0, y=0
@@ -452,7 +453,7 @@ class AdminHomeApp:
             self.administrator_archived_frame,
             self.archived_man_var,
             *__values,
-            command=self.open_diff_archived
+            command=self.open_diff_archived,
         )
         self.manage_archived_optionmenu.configure(font="{arial} 20 {bold}")
         self.manage_archived_optionmenu.place(
@@ -1030,7 +1031,6 @@ class AdminHomeApp:
             self.pass_len_entry.configure(state="disabled")
             self.save_settings_button.configure(state="disabled")
 
-
     # this function updates the time below the window
     def update_time(self):
         self.now = datetime.now()
@@ -1214,7 +1214,7 @@ class AdminHomeApp:
         )
 
     # APPEAR-LOGIC-------------------------------------------------------------------------------------------------------
-    #------------
+    # ------------
     def set_dashboard(self):
         self.total_student = self.sql_query.get_student_count()
         self.total_personnel = self.sql_query.get_personnel_count()
@@ -1246,7 +1246,8 @@ class AdminHomeApp:
         self.ttl_visitor_no_label.configure(
             background="#F7FAE9", font="{arial} 30 {bold}", text=self.total_visitor
         )
-    #------------
+
+    # ------------
     # CLIENT-SECTION-FUNCTIONS-LOGIC-------------------------------------------------------------------------------------------------
     # this function will change the display according to the
     # selected option on the option menu for the clent section
@@ -1287,12 +1288,12 @@ class AdminHomeApp:
         if self.clients_man_var.get() == "Manage Personnels":
             folder = self.select_folder()
             if folder:
-                self.edit_personnel_function(folder, self.clients_man_var.get(),False)
+                self.edit_personnel_function(folder, self.clients_man_var.get(), False)
 
         if self.clients_man_var.get() == "Manage Visitors":
             folder = self.select_folder()
             if folder:
-                self.edit_visitor_function(folder, self.clients_man_var.get(),False)
+                self.edit_visitor_function(folder, self.clients_man_var.get(), False)
 
     def search_clients_info_logic(self):
         if self.clients_man_var.get() == "Manage Students":
@@ -1321,7 +1322,7 @@ class AdminHomeApp:
             student_address = self.treeview.student_values[7]
             student_status = self.treeview.student_values[8]
 
-            path_check = folder +f"/{student_num}.jpg"
+            path_check = folder + f"/{student_num}.jpg"
             if os.path.exists(path_check):
                 eIS.EditStudentApp(
                     student_num,
@@ -1338,17 +1339,18 @@ class AdminHomeApp:
                     folder,
                     types,
                     self.refresh_clients_logic,
-                    this_is_archive
+                    this_is_archive,
                 )
                 self.hide_this_window()
             else:
-                messbx.showwarning("Warning",
+                messbx.showwarning(
+                    "Warning",
                     "No image was found in the directory matching the entered client number.",
-                    )
+                )
         else:
             messbx.showwarning("Warning", "Please choose an item to modify.")
 
-    def edit_personnel_function(self, folder, types,this_is_archive):
+    def edit_personnel_function(self, folder, types, this_is_archive):
         self.treeview.select_personnel_treeview_row()
         print(self.treeview.personnel_values)
 
@@ -1362,7 +1364,7 @@ class AdminHomeApp:
             personnel_type = self.treeview.personnel_values[6]
             personnel_status = self.treeview.personnel_values[7]
 
-            path_check = folder +f"/{personnel_number}.jpg"
+            path_check = folder + f"/{personnel_number}.jpg"
             if os.path.exists(path_check):
                 eIP.EditPersonnelApp(
                     personnel_number,
@@ -1378,17 +1380,18 @@ class AdminHomeApp:
                     folder,
                     types,
                     self.refresh_clients_logic,
-                    this_is_archive
+                    this_is_archive,
                 )
                 self.hide_this_window()
             else:
-                messbx.showwarning("Warning",
+                messbx.showwarning(
+                    "Warning",
                     "No image was found in the directory matching the entered client number.",
-                    )
+                )
         else:
             messbx.showwarning("Warning", "Please choose an item to modify.")
 
-    def edit_visitor_function(self, folder, types,this_is_archive):
+    def edit_visitor_function(self, folder, types, this_is_archive):
         self.treeview.select_visitor_treeview_row()
         print(self.treeview.visitor_values)
 
@@ -1401,7 +1404,7 @@ class AdminHomeApp:
             visitor_address = self.treeview.visitor_values[4]
             visitor_status = self.treeview.visitor_values[5]
 
-            path_check = folder +f"/{visitor_number}.jpg"
+            path_check = folder + f"/{visitor_number}.jpg"
             if os.path.exists(path_check):
                 eIV.EditVisitorApp(
                     visitor_number,
@@ -1415,13 +1418,14 @@ class AdminHomeApp:
                     folder,
                     types,
                     self.refresh_clients_logic,
-                    this_is_archive
+                    this_is_archive,
                 )
                 self.hide_this_window()
             else:
-                messbx.showwarning("Warning",
+                messbx.showwarning(
+                    "Warning",
                     "No image was found in the directory matching the entered client number.",
-                    )
+                )
         else:
             messbx.showwarning("Warning", "Please choose an item to modify.")
 
@@ -1527,7 +1531,7 @@ class AdminHomeApp:
                 user_status,
                 self.administrator_app,
                 self.refresh_user_logic,
-                this_is_archive
+                this_is_archive,
             )
         else:
             messbx.showwarning("Warning", "Please choose an item to modify.")
@@ -1544,36 +1548,34 @@ class AdminHomeApp:
     # selected option on the option menu for the clent section
     def change_layout_archived(self):
         if self.archived_man_var.get() == "Archived Students":
-            self.edit_a_button.configure(text="Edit Students", state = "normal")
+            self.edit_a_button.configure(text="Edit Students", state="normal")
             self.archived_list.configure(text="Students List")
             self.treeview.student_treeview(self.admin_a_sec3_frame, "IsArchived")
             self.refresh_clients_logic(self.archived_man_var.get(), "IsArchived")
-            
 
         if self.archived_man_var.get() == "Archived Personnels":
-            self.edit_a_button.configure(text="Edit Personnels", state = "normal")
+            self.edit_a_button.configure(text="Edit Personnels", state="normal")
             self.archived_list.configure(text="Personnels List")
             self.treeview.personnel_treeview(self.admin_a_sec3_frame, "IsArchived")
             self.refresh_clients_logic(self.archived_man_var.get(), "IsArchived")
 
         if self.archived_man_var.get() == "Archived Visitors":
-            self.edit_a_button.configure(text="Edit Visitors", state = "normal")
+            self.edit_a_button.configure(text="Edit Visitors", state="normal")
             self.archived_list.configure(text="Visitors List")
             self.treeview.visitor_treeview(self.admin_a_sec3_frame, "IsArchived")
             self.refresh_clients_logic(self.archived_man_var.get(), "IsArchived")
 
         if self.archived_man_var.get() == "Archived User":
             if self.user == "Staff":
-                self.edit_a_button.configure(text="Edit User", state= "disabled")
+                self.edit_a_button.configure(text="Edit User", state="disabled")
                 self.archived_list.configure(text="User List")
                 self.treeview.user_treeview(self.admin_a_sec3_frame, "IsArchived")
                 self.refresh_clients_logic(self.archived_man_var.get(), "IsArchived")
             else:
-                self.edit_a_button.configure(text="Edit User", state= "normal")
+                self.edit_a_button.configure(text="Edit User", state="normal")
                 self.archived_list.configure(text="User List")
                 self.treeview.user_treeview(self.admin_a_sec3_frame, "IsArchived")
                 self.refresh_clients_logic(self.archived_man_var.get(), "IsArchived")
-                
 
     def edit_archived_logic(self):
         if self.archived_man_var.get() == "Archived Students":
@@ -1592,10 +1594,7 @@ class AdminHomeApp:
                 self.edit_visitor_function(folder, self.archived_man_var.get(), True)
 
         if self.archived_man_var.get() == "Archived User":
-            if self.edit_a_button.state() == "disabled":
-                pass
-            else:
-                self.edit_user_function(True)    
+            self.edit_user_function(True)
 
     def search_archived_info_logic(self):
         if self.archived_man_var.get() == "Archived Students":
