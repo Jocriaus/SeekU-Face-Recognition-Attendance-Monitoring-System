@@ -2,13 +2,13 @@ import tkinter as tk
 import client_home as cH
 import admin_home as aH
 import sys
+import cv2
 class ClientCameraSelectApp:
-    def __init__(self, user ,cameras,login_module):
+    def __init__(self, user ,login_module):
 
     #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.user = user
         self.login_window = login_module # this is the login window
-        self.cams = cameras
         self.on_radio = True
     #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         
@@ -25,57 +25,35 @@ class ClientCameraSelectApp:
         self.camera_frame = tk.Frame(self.camera_app)
         self.camera_frame.configure(
             background="#0072bc", height=200, width=200)   
-        print(self.cams)
 
-        self.cam_var = tk.IntVar()
 
-        if self.cams:
-            # Create radio buttons for each camera
-            for i, cam in enumerate(self.cams):
-                print(cam)
-                cam_name = f"Camera {i+1}"
-                cam_radiobutton = tk.Radiobutton(self.camera_frame)
-                cam_radiobutton.configure(
-                    background="#0072bc",
-                    font="Arial 24",
-                    foreground="#F7FAE9",
-                    text=cam_name,
-                    selectcolor="black",
-                    variable=self.cam_var,
-                    value=i, command=self.sel
-                    )
-                cam_radiobutton.place(anchor="center", relx=.5, rely=.42 + i*.08)
+        self.detecting_label = tk.Label(self.camera_frame)
+        self.detecting_label.configure(
+            background="#0072bc",
+            font="{Lucida} 24 {}",
+            foreground="#F7FAE9",
+            text='Detecting Camera...')
+        self.detecting_label.place(
+        anchor="center", relx=0.5, rely=0.5, x=0, y=0)
 
-            self.cam_var.set(0)
-        
-            self.open_button = tk.Button(self.camera_frame)
-            self.open_button.configure(
-                background="#F7FAE9",
-                default="active",
-                font="{arial Black} 20 {}",
-                foreground="#0072bc",
-                justify="center",
-                relief="ridge",
-                text='OPEN',
-                width=10)
-            self.open_button.place(
-                anchor="center",
-                relheight=0.09,
-                relwidth=0.4,
-                relx=0.5,
-                rely=0.8
-                )
-            self.open_button.bind("<ButtonPress>", self.open_press, add="")
-        else:
-            self.no_cameras_label = tk.Label(self.camera_frame)
-            self.no_cameras_label.configure(
-                background="#0072bc",
-                font="{Lucida} 24 {}",
-                foreground="#F7FAE9",
-                text='No Camera Found!')
-            self.no_cameras_label.place(
-            anchor="center", relx=0.5, rely=0.5, x=0, y=0)
-            
+        self.open_button = tk.Button(self.camera_frame)
+        self.open_button.configure(
+            background="#F7FAE9",
+            default="active",
+            font="{arial Black} 20 {}",
+            foreground="#0072bc",
+            justify="center",
+            relief="ridge",
+            text='OPEN',
+            width=10)
+        self.open_button.place(
+            anchor="center",
+            relheight=0.09,
+            relwidth=0.4,
+            relx=0.5,
+            rely=0.8
+            )
+        self.open_button.bind("<ButtonPress>", self.open_press, add="")
 
         self.camera_frame.place(
             anchor="center",
@@ -89,7 +67,6 @@ class ClientCameraSelectApp:
         self.camera_frame4 = tk.Frame(self.camera_app)
         self.camera_frame4.configure(
             background="#0072bc", height=200, width=200)   
-        print(self.cams)
         
         self.ip_camera_label = tk.Label(self.camera_frame4)
         self.ip_camera_label.configure(
@@ -209,6 +186,7 @@ class ClientCameraSelectApp:
         # refer to the function's comments
         self.center(self.mainwindow)
         self.show_radio_section()
+        self.camera_app.after(1000, self.detect_cam_func)
 
     #-----------------------------------------------------------------------------------------
     # this function will destroy the window and closes the system/program.
@@ -319,3 +297,48 @@ class ClientCameraSelectApp:
 
     def ip_hover_out(self, event=None):
         self.ip_label.configure(font="{arial} 12 {}")
+
+    def detect_cam_func(self):
+        cams = []
+        index = 0
+        while True:
+            cam = cv2.VideoCapture(index)
+            if (cam is None or not cam.isOpened()):
+                break
+            cams.append(cam)
+            index += 1
+        self.cams_detected(cams)     
+
+    def cams_detected(self, cams):
+        self.cam_var = tk.IntVar()
+
+        if cams:
+            # Create radio buttons for each camera
+            for i, cam in enumerate(cams):
+                print(cam)
+                cam_name = f"Camera {i+1}"
+                cam_radiobutton = tk.Radiobutton(self.camera_frame)
+                cam_radiobutton.configure(
+                    background="#0072bc",
+                    font="Arial 24",
+                    foreground="#F7FAE9",
+                    text=cam_name,
+                    selectcolor="black",
+                    variable=self.cam_var,
+                    value=i, command=self.sel
+                    )
+                cam_radiobutton.place(anchor="center", relx=.5, rely=.42 + i*.08)
+
+            self.cam_var.set(0)
+        
+        
+        else:
+            self.no_cameras_label = tk.Label(self.camera_frame)
+            self.no_cameras_label.configure(
+                background="#0072bc",
+                font="{Lucida} 24 {}",
+                foreground="#F7FAE9",
+                text='No Camera Found!')
+            self.no_cameras_label.place(
+            anchor="center", relx=0.5, rely=0.5, x=0, y=0)
+        self.detecting_label.place_forget()

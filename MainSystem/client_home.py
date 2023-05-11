@@ -555,6 +555,7 @@ class HomeApp:
         else:
             folder_selected = self.select_folder()
             fr.FaceEncoding(folder_selected)
+            messbx.showinfo("Encoded", "The data set has been encoded.")
 
     def save_settings(self, event=None):
         tolerance = self.tolerance_lvl_scale.get()
