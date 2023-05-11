@@ -261,7 +261,6 @@ class ClientFaceRecogApp:
             self.fr_vid.face_detected = False
             self.face_recog_app.after(3000, self.next_person)
         elif not self.fr_vid.face_detected:
-            print ("no face")
             # this will call the next person function if there is no face detected
             self.cancelled = True
             self.face_recog_app.after(1000, self.next_person)

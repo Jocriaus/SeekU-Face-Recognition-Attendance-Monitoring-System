@@ -115,6 +115,7 @@ class FaceRecognition:
         # for loop in order to encode every frame of the camera
         for encodeFace, faceLocation in zip(encodesCurrentFrame, facesCurrentFrame):
             print("entered face recognize")
+            print(self.TOLERANCE)
             if not self.face_detected:
                 # in order to compare the detected face to the training images we need to use face_recognition.compare_faces reserved word
                 matches = face_recognition.compare_faces(self.encodeListKnownFaces, encodeFace,self.TOLERANCE )
