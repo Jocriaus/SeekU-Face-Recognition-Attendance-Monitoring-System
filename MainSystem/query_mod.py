@@ -7,7 +7,7 @@ class dbQueries:
         # "DESKTOP-DG7AK17\SQLEXPRESS"
         # "STAR-PLATINUM\SQLEXPRESS01"
         # "DESKTOP-3MNAAKG\SQLEXPRESS"
-        self.server = "STAR-PLATINUM\SQLEXPRESS01"
+        self.server = "DESKTOP-DG7AK17\SQLEXPRESS"
         self.database = "seeku_database"
         self.username = ""
         self.password = ""
@@ -290,7 +290,6 @@ class dbQueries:
         query = f"SELECT * FROM tbl_student WHERE student_no = ?"
         self.cursor.execute(query, (student_number))
         row = self.cursor.fetchone()
-        
 
         if row:
             print("there is student")
@@ -355,7 +354,7 @@ class dbQueries:
                 self.connection.commit()
 
             # if the attendance table not empty and there is no record of the student with that student number
-            elif (not tbl_empty) and  (not have_time_in):
+            elif (not tbl_empty) and (not have_time_in):
                 """
                 print("time_in")
                 last_record = self.get_last_record()
@@ -508,7 +507,7 @@ class dbQueries:
                     (visitor_number, visitor_attendance_date, visitor_time),
                 )
                 self.connection.commit()
-                
+
             # if there is existing record with that visitor number
             elif have_time_in:
                 insert_query_att_exit = f"UPDATE tbl_visitor_attendance SET visitor_time_out = ? WHERE visitor_no = ?"
@@ -517,7 +516,7 @@ class dbQueries:
                     (visitor_time, visitor_number),
                 )
                 self.connection.commit()
-                
+
             # if the attendance table not empty and there is no record of the visitor with that visitor number
             elif not tbl_empty:
                 insert_query_attendance = f"INSERT INTO tbl_visitor_attendance (visitor_no, visitor_attendance_date, visitor_time_in) VALUES (?, ?, ?)"
@@ -526,7 +525,6 @@ class dbQueries:
                     (visitor_number, visitor_attendance_date, visitor_time),
                 )
                 self.connection.commit()
-                
 
             print("Attendance added successfully!")
         else:
@@ -1290,7 +1288,6 @@ class dbQueries:
             return False
         # get date
 
-
     def get_last_record(self):
         query = f"SELECT * FROM tbl_student_attendance WHERE student_attendance_no = (SELECT MAX(student_attendance_no) FROM tbl_student_attendance)"
         self.cursor.execute(query)
@@ -1299,6 +1296,7 @@ class dbQueries:
             return row[0]
         else:
             return False
+
     # AV-----------------------------------------
     def set_client_setting(
         self, tolerance_lvl, data_set_fldr, timeout_time, detection_time
@@ -1393,5 +1391,3 @@ class dbQueries:
 # print("Login successful")
 # else:
 # print("Invalid username or password")
-
-
