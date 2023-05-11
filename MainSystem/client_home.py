@@ -425,6 +425,7 @@ class HomeApp:
         folder_selected = ""
         current_date = datetime.date.today().strftime("%Y-%m-%d")
         setting = self.sql_query.get_av_path_file_date().strip()
+        self.hide_this_window()
         print("cd "+current_date)
         print("s "+setting)
         # if else condition if date setting is similar to current date

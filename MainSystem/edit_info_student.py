@@ -412,9 +412,9 @@ class EditStudentApp:
                 if student_num_var.isdigit() or (
                     student_num_var.startswith("-") and student_num_var[1:].isdigit()
                     ):
-                    if student_contact_num_var.isdigit() or (
+                    if ((student_contact_num_var.isdigit() or 
                         student_contact_num_var.startswith("-")
-                        and student_contact_num_var[1:].isdigit()
+                        and student_contact_num_var[1:].isdigit())
                         and len(student_contact_num_var) == 11
                         ):
                         if (student_firstname_var.replace(" ", "").isalpha() and 

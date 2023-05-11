@@ -414,9 +414,9 @@ class EditPersonnelApp:
                     personnel_num_var.startswith("-")
                     and personnel_num_var[1:].isdigit()
                     ):
-                    if personnel_contact_num_var.isdigit() or (
+                    if ((personnel_contact_num_var.isdigit() or 
                         personnel_contact_num_var.startswith("-")
-                        and personnel_contact_num_var[1:].isdigit()
+                        and personnel_contact_num_var[1:].isdigit())
                         and len(personnel_contact_num_var) == 11
                         ):
                         if (personnel_firstname_var.replace(" ", "").isalpha()

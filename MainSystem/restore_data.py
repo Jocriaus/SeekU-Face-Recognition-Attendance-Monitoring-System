@@ -235,13 +235,23 @@ class RestoreApp:
 
     def select_file(self):
         self.restore_db.attributes("-topmost", False)
+        dialog_parent = tk.Toplevel(self.mainwindow)
+        dialog_parent.withdraw()
+        dialog_parent.grab_set()
         file_select = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")])
+
         if file_select == "":
+            dialog_parent.grab_release()
+            dialog_parent.destroy()
             return False
         elif not file_select.endswith(".csv"):
+            dialog_parent.grab_release()
+            dialog_parent.destroy()
             messbx.showerror("Error", "The selected file is not a CSV file.")
             return False
         else:
+            dialog_parent.grab_release()
+            dialog_parent.destroy()
             return file_select
 
     def import_students_rec_logic(self):

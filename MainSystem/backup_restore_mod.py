@@ -2,6 +2,12 @@ import os
 import pyodbc as odbc
 import pandas as pd
 import tkinter.messagebox as messbx
+import datetime
+
+
+# REDO THE RESTORE USE UPDATE 
+# DELETE IF OK NA
+
 
 class BackupRestore:
     def __init__(self, master=None):
@@ -18,94 +24,34 @@ class BackupRestore:
         self.connection = odbc.connect(self.connection_string)
         self.cursor = self.connection.cursor()
 
-    def restore_student_report(self, path):
-        df = pd.read_csv(path)
-        try:
-            if not df.empty:
-                if 'student_report_no' in df.columns:
-                    self.delete_data("tbl_student_Report.")
-                    for index, row in df.iterrows():
-                        query = f"INSERT INTO tbl_student_report (student_report_no,student_no,student_attendance_date,student_time_in,student_time_out) values (?,?,?,?,?)"
-                        self.cursor.execute(
-                            query,
-                            (
-                                row.student_report_no,
-                                row.student_no,
-                                row.student_attendance_date,
-                                row.student_time_in,
-                                row.student_time_out,
-                            ),
-                        )
-                        self.cursor.commit()
-                    messbx.showinfo("Success", "The records have been updated successfully!")
-                else:
-                    messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Student Report.")
-            else:        
-                messbx.showerror("Inappropriate  CSV File", "The CSV File you selected is empty.")
-        except:
-            messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Student Report.")
-
-    def restore_personnel_report(self, path):
-        df = pd.read_csv(path)
-        try:
-            if not df.empty:
-                if 'personnel_report_no' in df.columns:
-                    for index, row in df.iterrows():
-                        self.delete_data("tbl_personnel_Report.")
-                        query = f"INSERT INTO tbl_personnel_report (personnel_report_no, personnel_no, personnel_attendance_date, personnel_time_in, personnel_time_out) values (?,?,?,?,?)"
-                        self.cursor.execute(
-                            query,
-                            (
-                                row.personnel_report_no,
-                                row.personnel_no,
-                                row.personnel_attendance_date,
-                                row.personnel_time_in,
-                                row.personnel_time_out,
-                            ),
-                        )
-                        self.cursor.commit()
-                    messbx.showinfo("Success", "The records have been updated successfully!")
-                else:
-                    messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Personnel Report.")
-            else:        
-                messbx.showerror("Inappropriate  CSV File", "The CSV File you selected is empty.")
-        except:
-            messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Personnel Report.")
-
-    def restore_visitor_report(self, path):
-        df = pd.read_csv(path)
-        try:
-            if not df.empty:
-                if 'visitor_report_no' in df.columns:
-                    self.delete_data("tbl_visitor_Report.")
-                    for index, row in df.iterrows():
-                        query = f"INSERT INTO tbl_visitor_report (visitor_report_no, visitor_no, visitor_attendance_date, visitor_time_in, visitor_time_out) values (?,?,?,?,?)"
-                        self.cursor.execute(
-                            query,
-                            (
-                                row.visitor_report_no,
-                                row.visitor_no,
-                                row.visitor_attendance_date,
-                                row.visitor_time_in,
-                                row.visitor_time_out,
-                            ),
-                        )
-                        self.cursor.commit()
-                    messbx.showinfo("Success", "The records have been updated successfully!")
-                else:
-                    messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Visitor Report.")
-            else:        
-                messbx.showerror("Inappropriate  CSV File", "The CSV File you selected is empty.")
-        except:
-            messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Visitor Report.")     
 
     def restore_student(self, path):
-        df = pd.read_csv(path)
+        df2 = pd.read_csv(path)
+        df = df2.fillna(value=0)
         try:
             if not df.empty:
+                print(df)
                 if 'student_program' in df.columns:
+
+                    """
+                    drop_query = (f"ALTER TABLE tbl_student_report "+
+                    "ADD CONSTRAINT FK_tbl_student_report_tbl_student "+
+                    "FOREIGN KEY (student_no) REFERENCES tbl_student(student_no)")
+                    self.cursor.execute(drop_query)
+                    self.cursor.commit()
+                    """
+                    
+                    table = self.reset_table("tbl_student_report")
+                    print(table)
+                    drop_query = f"ALTER TABLE tbl_student_report DROP CONSTRAINT FK_tbl_student_report_tbl_student"
+                    self.cursor.execute(drop_query)
+                    self.cursor.commit()
+                    self.delete_data("tbl_student_report")
                     self.delete_data("tbl_student")
+
+ 
                     for index, row in df.iterrows():
+                        print(row)
                         query = f"INSERT INTO tbl_student (student_no, student_firstname, student_lastname, student_middlename, student_program, student_section, student_contact_no, student_address, student_status) values (?,?,?,?,?,?, ?, ?, ?)"
                         self.cursor.execute(
                             query,
@@ -122,79 +68,253 @@ class BackupRestore:
                             ),
                         )
                         self.cursor.commit()
+                    print("recover time")
+                    drop_query = (f"ALTER TABLE tbl_student_report "+
+                    "ADD CONSTRAINT FK_tbl_student_report_tbl_student "+
+                    "FOREIGN KEY (student_no) REFERENCES tbl_student(student_no)")
+                    self.cursor.execute(drop_query)
+                    self.cursor.commit()
+                    self.recover_student_report_table(table)
                     messbx.showinfo("Success", "The records have been updated successfully!")
                 else:
                     print("no student program")
                     messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Student Records.")
             else:        
-                messbx.showerror("Inappropriate  CSV File", "The CSV File you selected is empty.")
-        except:
+                messbx.showerror("Inappropriate CSV File", "The CSV File you selected is empty.")
+        except Exception as error:
+            print(error)
             messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Student Records.")
 
 
-    def restore_personnel(self, path):
-        df = pd.read_csv(path)
-        #try:
-        if not df.empty:
-            if 'personnel_type' in df.columns:
-                self.delete_data("tbl_personnel")
-                for index, row in df.iterrows():
-                    query = f"INSERT INTO tbl_personnel (personnel_no, personnel_firstname, personnel_lastname, personnel_middlename, personnel_contact_no, personnel_address, personnel_type, personnel_status) values (?, ?, ?, ?, ?, ?, ?, ?)"
-                    self.cursor.execute(
-                        query,
-                        (
-                            row.personnel_no,
-                            row.personnel_firstname,
-                            row.personnel_lastname,
-                            row.personnel_middlename,
-                            row.personnel_contact_no,
-                            row.personnel_address,
-                            row.personnel_type,
-                            row.personnel_status,
-                        ),
-                    )
+    def restore_student_report(self, path):
+        df2 = pd.read_csv(path)
+        df = df2.fillna(value=0)
+        try:
+            if not df.empty:
+                if 'student_report_no' in df.columns:
+                    """
+                    drop_query = (f"ALTER TABLE tbl_student_report "+
+                    "ADD CONSTRAINT FK_tbl_student_report_tbl_student "+
+                    "FOREIGN KEY (student_no) REFERENCES tbl_student(student_no)")
+                    self.cursor.execute(drop_query)
                     self.cursor.commit()
-                messbx.showinfo("Success", "The records have been updated successfully!")
-            else:
-                messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Personnel Records.")
-        else:        
-            messbx.showerror("Inappropriate  CSV File", "The CSV File you selected is empty.")
-        #except:
-        #    messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Personnel Records.")
+                    """
+                    table = self.reset_table("tbl_student")
+                    drop_query = f"ALTER TABLE tbl_student_report DROP CONSTRAINT FK_tbl_student_report_tbl_student"
+                    self.cursor.execute(drop_query)
+                    self.cursor.commit()
+                    self.delete_data("tbl_student")
+                    self.delete_data("tbl_student_report")
+                    
 
-    def restore_visitor(self, path):
+                    for index, row in df.iterrows():
+                        date = datetime.datetime.strptime(row.student_attendance_date, '%d/%m/%Y').date()
+                        time_in = datetime.datetime.strptime(row.student_time_in, '%H:%M:%S').time()
+                        time_out = datetime.datetime.strptime(row.student_time_out, '%H:%M:%S').time()
+                        
+                        query = f"INSERT INTO tbl_student_report (student_report_no,student_no,student_attendance_date,student_time_in,student_time_out) values (?,?,?,?,?)"
+                        self.cursor.execute(
+                            query,
+                            (
+                                row.student_report_no,
+                                row.student_no,
+                                row.student_attendance_date,
+                                row.student_time_in,
+                                row.student_time_out,
+                            ),
+                        )
+                        self.cursor.commit()
+                    drop_query = (f"ALTER TABLE tbl_student_report "+
+                    "ADD CONSTRAINT FK_tbl_student_report_tbl_student "+
+                    "FOREIGN KEY (student_no) REFERENCES tbl_student(student_no)")
+                    self.cursor.execute(drop_query)
+                    self.cursor.commit()
+
+                    self.recover_student_records_table(table)
+                    messbx.showinfo("Success", "The records have been updated successfully!")
+                else:
+                    messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Student Report.")
+            else:        
+                messbx.showerror("Inappropriate  CSV File", "The CSV File you selected is empty.")
+        except Exception as error:
+            print(error)
+            messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Student Report.")
+
+    def restore_personnel(self, path):
         df = pd.read_csv(path)
         try:
             if not df.empty:
-                if 'visitor_status' in df.columns:
-                    for index, row in df.iterrows():
-                        if not row.visitor_no:
-                            query = (f"SET IDENTITY_INSERT tbl_visitor ON " +
-                            "INSERT INTO tbl_visitor (visitor_no, visitor_firstname, visitor_lastname, visitor_contact_no, visitor_address, visitor_status) values (?, ?, ?, ?, ?, ?) "+
-                            "SET IDENTITY_INSERT tbl_visitor OFF")   
-                        else:         
-                            query = (f"UPDATE tbl_visitor SET visitor_firstname = ?, visitor_lastname = ?, visitor_contact_no = ?, "+
-                            "visitor_address = ?, visitor_status = ? WHERE visitor_no = ?")                                                                                                           
-                            self.cursor.execute(
-                                query,
-                                (
-                                    row.visitor_firstname,
-                                    row.visitor_lastname,
-                                    row.visitor_contact_no,
-                                    row.visitor_address,
-                                    row.visitor_status,
-                                    row.visitor_no,
-                                ),
-                            )
-                            self.cursor.commit()
+                if 'personnel_type' in df.columns:
 
+                    drop_query = f"ALTER TABLE tbl_personnel_report DROP CONSTRAINT FK_tbl_personnel_report_tbl_personnel"
+                    self.cursor.execute(drop_query)
+                    self.cursor.commit()
+                    self.delete_data("tbl_personnel")
+                    for index, row in df.iterrows():
+                        query = f"INSERT INTO tbl_personnel (personnel_no, personnel_firstname, personnel_lastname, personnel_middlename, personnel_contact_no, personnel_address, personnel_type, personnel_status) values (?, ?, ?, ?, ?, ?, ?, ?)"
+                        self.cursor.execute(
+                            query,
+                            (
+                                row.personnel_no,
+                                row.personnel_firstname,
+                                row.personnel_lastname,
+                                row.personnel_middlename,
+                                row.personnel_contact_no,
+                                row.personnel_address,
+                                row.personnel_type,
+                                row.personnel_status,
+                            ),
+                        )
+                        self.cursor.commit()
+
+                    drop_query = (f"ALTER TABLE tbl_personnel_report "+
+                    "ADD CONSTRAINT FK_tbl_personnel_report_tbl_personnel "+
+                    "FOREIGN KEY (personnel_no) REFERENCES tbl_personnel(personnel_no)")
+                    self.cursor.execute(drop_query)
+                    self.cursor.commit()
                     messbx.showinfo("Success", "The records have been updated successfully!")
                 else:
-                    messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Visitor Records.")
+                    messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Personnel Records.")
             else:        
                 messbx.showerror("Inappropriate  CSV File", "The CSV File you selected is empty.")
         except:
-            messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Visitor Records.")
+            messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Personnel Records.")
+
+    def restore_personnel_report(self, path):
+        df = pd.read_csv(path)
+        try:
+            if not df.empty:
+                if 'personnel_report_no' in df.columns:
+                    
+                    drop_query = f"ALTER TABLE tbl_personnel_report DROP CONSTRAINT FK_tbl_personnel_report_tbl_personnel"
+                    self.cursor.execute(drop_query)
+                    self.cursor.commit()
+                    self.delete_data("tbl_personnel_report")
+                    for index, row in df.iterrows():
+
+                        query = f"INSERT INTO tbl_personnel_report (personnel_report_no, personnel_no, personnel_attendance_date, personnel_time_in, personnel_time_out) values (?,?,?,?,?)"
+                        self.cursor.execute(
+                            query,
+                            (
+                                row.personnel_report_no,
+                                row.personnel_no,
+                                row.personnel_attendance_date,
+                                row.personnel_time_in,
+                                row.personnel_time_out,
+                            ),
+                        )
+                        self.cursor.commit()
+                    drop_query = (f"ALTER TABLE tbl_personnel_report "+
+                    "ADD CONSTRAINT FK_tbl_personnel_report_tbl_personnel "+
+                    "FOREIGN KEY (personnel_no) REFERENCES tbl_personnel(personnel_no)")
+                    self.cursor.execute(drop_query)
+                    self.cursor.commit()
+                    messbx.showinfo("Success", "The records have been updated successfully!")
+                else:
+                    messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Personnel Report.")
+            else:        
+                messbx.showerror("Inappropriate  CSV File", "The CSV File you selected is empty.")
+        except:
+            messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Personnel Report.")
+
+    def restore_visitor(self, path):
+        df = pd.read_csv(path)
+        #try:
+        if not df.empty:
+            if 'visitor_status' in df.columns:
+                """
+                drop_query = (f"ALTER TABLE tbl_visitor_report "+
+                "ADD CONSTRAINT FK_tbl_visitor_report_tbl_visitor "+
+                "FOREIGN KEY (visitor_no) REFERENCES tbl_visitor(visitor_no)")
+                self.cursor.execute(drop_query)
+                self.cursor.commit()
+                """
+                drop_query = f"ALTER TABLE tbl_visitor_report DROP CONSTRAINT FK_tbl_visitor_report_tbl_visitor"
+                self.cursor.execute(drop_query)
+                self.cursor.commit()
+                self.delete_data("tbl_visitor") 
+                for index, row in df.iterrows():
+                    """                       
+                    if not row.visitor_no:
+                        query = (f"SET IDENTITY_INSERT tbl_visitor ON " +
+                        "INSERT INTO tbl_visitor (visitor_no, visitor_firstname, visitor_lastname, visitor_contact_no, visitor_address, visitor_status) values (?, ?, ?, ?, ?, ?) "+
+                        "SET IDENTITY_INSERT tbl_visitor OFF")   
+                    else:       
+                    """ 
+                    """                     
+                    query = (f"UPDATE tbl_visitor SET visitor_firstname = ?, visitor_lastname = ?, visitor_contact_no = ?, "+
+                    "visitor_address = ?, visitor_status = ? WHERE visitor_no = ?")   
+                    """             
+                    query = (f"SET IDENTITY_INSERT tbl_visitor ON " +
+                    "INSERT INTO tbl_visitor (visitor_no, visitor_firstname, visitor_lastname, visitor_contact_no, visitor_address, visitor_status) values (?, ?, ?, ?, ?, ?) "+
+                    "SET IDENTITY_INSERT tbl_visitor OFF")                                                                                    
+                    self.cursor.execute(
+                        query,
+                        (
+                            row.visitor_no,
+                            row.visitor_firstname,
+                            row.visitor_lastname,
+                            row.visitor_contact_no,
+                            row.visitor_address,
+                            row.visitor_status,
+                        ),
+                    )
+                    self.cursor.commit()
+                drop_query = (f"ALTER TABLE tbl_visitor_report "+
+                "ADD CONSTRAINT FK_tbl_visitor_report_tbl_visitor "+
+                "FOREIGN KEY (visitor_no) REFERENCES tbl_visitor(visitor_no)")
+                self.cursor.execute(drop_query)
+                self.cursor.commit()
+
+                messbx.showinfo("Success", "The records have been updated successfully!")
+            else:
+                messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Visitor Records.")
+        else:        
+            messbx.showerror("Inappropriate  CSV File", "The CSV File you selected is empty.")
+        #except:
+        #    messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Visitor Records.")
+
+
+    def restore_visitor_report(self, path):
+        df = pd.read_csv(path)
+        try:
+            if not df.empty:
+                if 'visitor_report_no' in df.columns:
+                    drop_query = f"ALTER TABLE tbl_visitor_report DROP CONSTRAINT FK_tbl_visitor_report_tbl_visitor"
+                    self.cursor.execute(drop_query)
+                    self.cursor.commit()
+                    self.delete_data("tbl_visitor_report")
+                    for index, row in df.iterrows():
+                        query = f"INSERT INTO tbl_visitor_report (visitor_report_no, visitor_no, visitor_attendance_date, visitor_time_in, visitor_time_out) values (?,?,?,?,?)"
+                        self.cursor.execute(
+                            query,
+                            (
+                                row.visitor_report_no,
+                                row.visitor_no,
+                                row.visitor_attendance_date,
+                                row.visitor_time_in,
+                                row.visitor_time_out,
+                            ),
+                        )
+                        self.cursor.commit()
+                    drop_query = (f"ALTER TABLE tbl_visitor_report "+
+                    "ADD CONSTRAINT FK_tbl_visitor_report_tbl_visitor "+
+                    "FOREIGN KEY (visitor_no) REFERENCES tbl_visitor(visitor_no)")
+                    self.cursor.execute(drop_query)
+                    self.cursor.commit()
+                    messbx.showinfo("Success", "The records have been updated successfully!")
+                else:
+                    messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Visitor Report.")
+            else:        
+                messbx.showerror("Inappropriate  CSV File", "The CSV File you selected is empty.")
+        except:
+            messbx.showerror("Wrong CSV File", "The CSV File you selected is not for Visitor Report.")     
+
+
+
+
+
+
 
     def restore_user(self, path):
         df = pd.read_csv(path)
@@ -240,6 +360,53 @@ class BackupRestore:
         except:
            messbx.showerror("Wrong CSV File", "The CSV File you selected is not for User Records.")
 
+
+    def reset_table(self, table_name):
+        reset_query = f"SELECT * FROM {table_name}"
+        self.cursor.execute(reset_query)
+        rows = self.cursor.fetchall()
+        print("reset table")
+        print(rows)
+        return rows
+
+    def recover_student_records_table(self, rows):
+        if not len(rows) == 0 :
+            print ("pumnasok sa if")
+            for row in rows:
+                print("pumasok sa for")
+                query = "INSERT INTO tbl_student (student_no, student_firstname, student_lastname, student_middlename, student_program, student_section, student_contact_no, student_address, student_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+                self.cursor.execute(query, row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8])
+                self.cursor.commit()
+        print("done")
+
+    def recover_student_report_table(self, rows):
+        if not len(rows) == 0 :
+            print ("pumnasok sa if")
+            for row in rows:
+                print("pumasok sa for")
+                print(rows)
+                print("------------")
+                print(row)
+                print("rows printed")
+                query = "INSERT INTO tbl_student_report (student_report_no, student_no, student_attendance_date, student_time_in, student_time_out) VALUES (?, ?, ?, ?, ?)"
+                self.cursor.execute(query, row)
+                self.cursor.commit()
+        print("done")
+        
+
+    def recover_personnel_table(self, rows):
+        if not rows.empty:
+            for row in rows:
+                query = "INSERT INTO tbl_personnel_report (personnel_report_no, personnel_no, personnel_attendance_date, personnel_time_in, personnel_time_out) VALUES (?, ?, ?, ?, ?)"
+                self.cursor.execute(query, row)
+                self.cursor.commit()
+
+    def recover_visitor_table(self, rows):
+        if not rows.empty:
+            for row in rows:
+                query = "INSERT INTO tbl_visitor_report (visitor_report_no, visitor_no, visitor_attendance_date, visitor_time_in, visitor_time_out) VALUES (?, ?, ?, ?, ?)"
+                self.cursor.execute(query, row)
+                self.cursor.commit()
 
     def delete_data(self, table_name):
         delete_query = f"DELETE FROM {table_name}"

@@ -334,9 +334,9 @@ class EditVisitorApp:
             pattern = re.compile("[^a-zA-Z0-9 ñÑ]")
 
             if not pattern.search(concatenated_inputs):
-                if contact_num_var.isdigit() or (
+                if ((contact_num_var.isdigit() or 
                     contact_num_var.startswith("-")
-                    and contact_num_var[1:].isdigit()
+                    and contact_num_var[1:].isdigit())
                     and len(contact_num_var) == 11
                     ):
                     if (first_name_var.replace(" ", "").isalpha() and 

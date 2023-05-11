@@ -288,9 +288,9 @@ class RegisterStudentApp:
                         student_num_var.startswith("-")
                         and student_num_var[1:].isdigit()
                     ):
-                        if contact_num_var.isdigit() or (
+                        if ((contact_num_var.isdigit() or 
                             contact_num_var.startswith("-")
-                            and contact_num_var[1:].isdigit()
+                            and contact_num_var[1:].isdigit())
                             and len(contact_num_var) == 11
                         ):
                             if (

@@ -129,10 +129,10 @@ class CameraApp:
             text='Return')
         self.return_button.place(
             anchor="center",
-            relheight=0.3,
+            relheight=0.35,
             relwidth=0.11,
             relx=0.93,
-            rely=0.8)
+            rely=0.775)
         self.return_button.bind("<ButtonPress>", self.log_out_func, add="")
         self.snapshot_frame1.place(
             anchor="center",
@@ -341,10 +341,10 @@ class CameraEditApp:
             text='Return')
         self.return_button.place(
             anchor="center",
-            relheight=0.3,
+            relheight=0.35,
             relwidth=0.11,
             relx=0.93,
-            rely=0.8)
+            rely=0.775)
         self.return_button.bind("<ButtonPress>", self.log_out_func, add="")
         self.snapshot_frame1.place(
             anchor="center",

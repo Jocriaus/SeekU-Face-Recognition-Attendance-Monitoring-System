@@ -122,13 +122,13 @@ class CameraApp:
             background="#0072bc",
             font="{arial black} 20 {}",
             foreground="#F7FAE9",
-            text='Log out')
+            text='Return')
         self.return_button.place(
             anchor="center",
-            relheight=0.3,
+            relheight=0.35,
             relwidth=0.11,
             relx=0.93,
-            rely=0.8)
+            rely=0.775)
         self.return_button.bind("<ButtonPress>", self.return_func, add="")
         self.snapshot_frame1.place(
             anchor="center",

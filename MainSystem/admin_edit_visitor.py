@@ -6,9 +6,6 @@ import PIL.Image, PIL.ImageTk
 import os
 import sys
 
-# DI PA TO NAGAGAWA 
-
-
 class EditVisitorApp:
     def __init__(self, cam_app, file_path):
 

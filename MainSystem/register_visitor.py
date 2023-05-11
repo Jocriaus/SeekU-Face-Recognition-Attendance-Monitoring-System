@@ -223,9 +223,9 @@ class RegisterVisitorApp:
             pattern = re.compile("[^a-zA-Z0-9 ñÑ]")
 
             if not pattern.search(concatenated_inputs):
-                if  contact_num_var.isdigit() or (
+                if  ((contact_num_var.isdigit() or 
                     contact_num_var.startswith("-") 
-                    and contact_num_var[1:].isdigit()
+                    and contact_num_var[1:].isdigit())
                     and len(contact_num_var) == 11
                     ):
                     if (first_name_var.replace(" ", "").isalpha() and 
@@ -252,10 +252,10 @@ class RegisterVisitorApp:
                                     self.img_path + "/" + str(img_name[0]) + ".jpg",
                                 )
                             self.register_button.configure(state="disabled")
-                        messbx.showinfo(
-                            "Success",
-                            "The visitor's record has been successfully registered.",
-                        )
+                            messbx.showinfo(
+                                "Success",
+                                "The visitor's record has been successfully registered.",
+                            )
                     else:
                         messbx.showwarning(
                             "Warning",
