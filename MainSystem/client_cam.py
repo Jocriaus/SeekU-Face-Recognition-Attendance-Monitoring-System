@@ -303,7 +303,7 @@ class ClientCameraSelectApp:
         index = 0
         while True:
             cam = cv2.VideoCapture(index)
-            if (cam is None or not cam.isOpened()):
+            if (cam is None or not cam.isOpened()) or index == 4 :
                 break
             cams.append(cam)
             index += 1
