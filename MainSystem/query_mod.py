@@ -769,7 +769,7 @@ class dbQueries:
         query = (
             f"SELECT tbl_visitor.visitor_no, tbl_visitor.visitor_firstname, tbl_visitor.visitor_lastname, "
             + "tbl_visitor_report.visitor_attendance_date, tbl_visitor_report.visitor_time_in, tbl_visitor_report.visitor_time_out "
-            + "FROM  tbl_visitor RIGHT JOIN tbl_visitor_report ON tbl_visitor.visitor_no = tbl_visitor_report.visitor_no"
+            + "FROM  tbl_visitor RIGHT JOIN tbl_visitor_report ON tbl_visitor.visitor_no = tbl_visitor_report.visitor_no "
             + "WHERE visitor_attendance_date BETWEEN ? AND ?"
         )
         self.cursor.execute(query, (date1, date2))
