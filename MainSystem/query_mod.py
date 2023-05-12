@@ -7,7 +7,7 @@ class dbQueries:
         # "DESKTOP-DG7AK17\SQLEXPRESS"
         # "STAR-PLATINUM\SQLEXPRESS01"
         # "DESKTOP-3MNAAKG\SQLEXPRESS"
-        self.server = "DESKTOP-DG7AK17\SQLEXPRESS"
+        self.server = "STAR-PLATINUM\SQLEXPRESS01"
         self.database = "seeku_database"
         self.username = ""
         self.password = ""
@@ -281,7 +281,6 @@ class dbQueries:
 
     def student_attendance_record(
         self,
-        custom_no,
         student_number,
         student_attendance_date,
         student_time,
@@ -293,17 +292,6 @@ class dbQueries:
 
         if row:
             print("there is student")
-            query2 = f"SELECT * FROM tbl_student_attendance"
-            self.cursor.execute(query2)
-            student_att_tbl = self.cursor.fetchall()
-            print(student_att_tbl)
-
-            if student_att_tbl:
-                tbl_empty = False
-                print("Table is not empty")
-            else:
-                tbl_empty = True
-                print("Table is empty")
 
             query3 = f"SELECT * FROM tbl_student_attendance WHERE student_no = ?"
             self.cursor.execute(query3, (student_number))
@@ -311,40 +299,7 @@ class dbQueries:
             print(student_no_att_row)
 
             if student_no_att_row:
-                have_time_in = True
-                print("Have record")
-            else:
-                have_time_in = False
-                print("No record")
-
-            # if attendance table is empty, first attendance will have a custom primary key
-            if tbl_empty:
-                print("first entry")
-                reset_startingid_query = (
-                    f"DBCC CHECKIDENT ('tbl_student_attendance', RESEED, 0)"
-                )
-                self.cursor.execute(reset_startingid_query)
-                self.connection.commit()
-
-                set_startingid_query = (
-                    f"DBCC CHECKIDENT ('tbl_student_attendance', RESEED, ?)"
-                )
-                self.cursor.execute(set_startingid_query, (custom_no))
-                self.connection.commit()
-                print(custom_no)
-                insert_query_attendance = f"INSERT INTO tbl_student_attendance (student_no, student_attendance_date, student_time_in) VALUES ( ?, ?, ?)"
-                self.cursor.execute(
-                    insert_query_attendance,
-                    (
-                        student_number,
-                        student_attendance_date,
-                        student_time,
-                    ),
-                )
-                self.connection.commit()
-
             # if there is existing record with that student number
-            elif have_time_in:
                 print("time_out")
                 insert_query_att_exit = f"UPDATE tbl_student_attendance SET student_time_out = ? WHERE student_no = ?"
                 self.cursor.execute(
@@ -352,173 +307,91 @@ class dbQueries:
                     (student_time, student_number),
                 )
                 self.connection.commit()
-
-            # if the attendance table not empty and there is no record of the student with that student number
-            elif (not tbl_empty) and (not have_time_in):
-                """
+                print("Have record")
+            else:
                 print("time_in")
-                last_record = self.get_last_record()
-                reset_startingid_query = (
-                    f"DBCC CHECKIDENT ('tbl_student_attendance', RESEED, 0)"
-                )
-                self.cursor.execute(reset_startingid_query)
-                self.connection.commit()
-
-                set_startingid_query = (
-                    f"DBCC CHECKIDENT ('tbl_student_attendance', RESEED, ?)"
-                )
-                self.cursor.execute(set_startingid_query, (last_record))
-                self.connection.commit()
-                """
                 insert_query_attendance = f"INSERT INTO tbl_student_attendance (student_no, student_attendance_date, student_time_in) VALUES (?, ?, ?)"
                 self.cursor.execute(
                     insert_query_attendance,
                     (student_number, student_attendance_date, student_time),
                 )
                 self.connection.commit()
+
+                print("No record")
+
             print("Attendance added successfully!")
         else:
             print("Student not found.")
 
     def personnel_attendance_record(
-        self, custom_no, personnel_number, personnel_attendance_date, personnel_time
+        self, personnel_number, personnel_attendance_date, personnel_time
     ):
+
         query = f"SELECT * FROM tbl_personnel WHERE personnel_no = ?"
         self.cursor.execute(query, (personnel_number))
         row = self.cursor.fetchone()
 
         if row:
-            query2 = f"SELECT * FROM tbl_personnel_attendance"
-            self.cursor.execute(query2)
-            personnel_att_row = self.cursor.fetchone()
-
-            if personnel_att_row:
-                tbl_empty = False
-                print(tbl_empty)
-            else:
-                tbl_empty = True
-                print(tbl_empty)
+            print("there is personnel")
 
             query3 = f"SELECT * FROM tbl_personnel_attendance WHERE personnel_no = ?"
             self.cursor.execute(query3, (personnel_number))
-            personnel_no_att_row = self.cursor.fetchall()
+            personnel_no_att_row = self.cursor.fetchone()
+            print(personnel_no_att_row)
 
             if personnel_no_att_row:
-                have_time_in = True
-                print(tbl_empty)
-            else:
-                have_time_in = False
-                print(tbl_empty)
-
-            # if attendance table is empty, first attendance will have a custom primary key
-            if tbl_empty:
-
-                reset_startingid_query = (
-                    f"DBCC CHECKIDENT ('tbl_personnel_attendance', RESEED, 0)"
-                )
-                self.cursor.execute(reset_startingid_query)
-                self.connection.commit()
-
-                set_startingid_query = (
-                    f"DBCC CHECKIDENT ('tbl_personnel_attendance', RESEED, ?)"
-                )
-                self.cursor.execute(set_startingid_query, (custom_no))
-                self.connection.commit()
-
-                insert_query_attendance = f"INSERT INTO tbl_personnel_attendance ( personnel_no, personnel_attendance_date, personnel_time_in) VALUES ( ?, ?, ?)"
-                self.cursor.execute(
-                    insert_query_attendance,
-                    (
-                        personnel_number,
-                        personnel_attendance_date,
-                        personnel_time,
-                    ),
-                )
-                self.connection.commit()
-                print("Attendance added successfully!")
             # if there is existing record with that personnel number
-            elif have_time_in:
+                print("time_out")
                 insert_query_att_exit = f"UPDATE tbl_personnel_attendance SET personnel_time_out = ? WHERE personnel_no = ?"
                 self.cursor.execute(
-                    insert_query_att_exit, (personnel_time, personnel_number)
+                    insert_query_att_exit,
+                    (personnel_time, personnel_number),
                 )
                 self.connection.commit()
-                print("Attendance added successfully!")
-            # if the attendance table not empty and there is no record of
-            elif not tbl_empty:
+                print("Have record")
+            else:
+                print("time_in")
                 insert_query_attendance = f"INSERT INTO tbl_personnel_attendance (personnel_no, personnel_attendance_date, personnel_time_in) VALUES (?, ?, ?)"
                 self.cursor.execute(
                     insert_query_attendance,
                     (personnel_number, personnel_attendance_date, personnel_time),
                 )
                 self.connection.commit()
-                print("Attendance added successfully!")
+
+                print("No record")
+
+            print("Attendance added successfully!")
         else:
-            print("Personnel not found.")
+            print("personnel not found.")
 
     def visitor_attendance_record(
-        self, custom_no, visitor_number, visitor_attendance_date, visitor_time
+        self, visitor_number, visitor_attendance_date, visitor_time
     ):
+
         query = f"SELECT * FROM tbl_visitor WHERE visitor_no = ?"
         self.cursor.execute(query, (visitor_number))
         row = self.cursor.fetchone()
 
         if row:
-
-            query2 = f"SELECT * FROM tbl_visitor_attendance"
-            self.cursor.execute(query2)
-            visitor_att_row = self.cursor.fetchone()
-
-            if visitor_att_row:
-                tbl_empty = False
-                print(tbl_empty)
-            else:
-                tbl_empty = True
+            print("there is visitor")
 
             query3 = f"SELECT * FROM tbl_visitor_attendance WHERE visitor_no = ?"
             self.cursor.execute(query3, (visitor_number))
-            visitor_no_att_row = self.cursor.fetchall()
+            visitor_no_att_row = self.cursor.fetchone()
+            print(visitor_no_att_row)
 
             if visitor_no_att_row:
-                have_time_in = True
-                print(tbl_empty)
-            else:
-                have_time_in = False
-                print(tbl_empty)
-
-            # if attendance table is empty, first attendance will have a custom primary key
-            if tbl_empty:
-
-                reset_startingid_query = (
-                    f"DBCC CHECKIDENT ('tbl_visitor_attendance', RESEED, 0)"
-                )
-                self.cursor.execute(reset_startingid_query)
-                self.connection.commit()
-
-                set_startingid_query = (
-                    f"DBCC CHECKIDENT ('tbl_visitor_attendance', RESEED, ?)"
-                )
-                self.cursor.execute(set_startingid_query, (custom_no))
-                self.connection.commit()
-
-                insert_query_attendance = f"INSERT INTO tbl_visitor_attendance (visitor_no, visitor_attendance_date, visitor_time_in) VALUES ( ?, ?, ?)"
-                self.cursor.execute(
-                    insert_query_attendance,
-                    (visitor_number, visitor_attendance_date, visitor_time),
-                )
-                self.connection.commit()
-
             # if there is existing record with that visitor number
-            elif have_time_in:
+                print("time_out")
                 insert_query_att_exit = f"UPDATE tbl_visitor_attendance SET visitor_time_out = ? WHERE visitor_no = ?"
                 self.cursor.execute(
                     insert_query_att_exit,
                     (visitor_time, visitor_number),
                 )
                 self.connection.commit()
-
-            # if the attendance table not empty and there is no record of the visitor with that visitor number
-            elif not tbl_empty:
+                print("Have record")
+            else:
+                print("time_in")
                 insert_query_attendance = f"INSERT INTO tbl_visitor_attendance (visitor_no, visitor_attendance_date, visitor_time_in) VALUES (?, ?, ?)"
                 self.cursor.execute(
                     insert_query_attendance,
@@ -526,9 +399,11 @@ class dbQueries:
                 )
                 self.connection.commit()
 
+                print("No record")
+
             print("Attendance added successfully!")
         else:
-            print("Visitor not found.")
+            print("visitor not found.")
 
     def search_student(self, search_term, status):
         query = (
@@ -622,7 +497,7 @@ class dbQueries:
                 "%" + search_term + "%",
                 "%" + search_term + "%",
                 status,
-            ),
+            ),                
         )
         results = self.cursor.fetchall()
         return results
@@ -1049,16 +924,10 @@ class dbQueries:
 
     # USER-TABLE-QUERY--------------------------------------------------------------------------------------------------------------
     def default_user_if_not_exist(self):
-        reset_startingid_query = (
-            f"DBCC CHECKIDENT ('tbl_student_attendance', RESEED, 0)"
-        )
-        self.cursor.execute(reset_startingid_query)
-        self.connection.commit()
-
+        condition = True
         query = f"SELECT * FROM tbl_user"
         self.cursor.execute(query)
         row = self.cursor.fetchone()
-        condition = False
         if row:
             condition = True
             print(condition)
@@ -1067,6 +936,15 @@ class dbQueries:
             print(condition)
 
         if not condition:
+            table_name = "tbl_user"
+            self.cursor.execute(f"SET IDENTITY_INSERT {table_name} ON")
+            self.connection.commit()
+            
+            reset_startingid_query = (
+                f"DBCC CHECKIDENT ('tbl_user', RESEED, 0)"
+            )
+            self.cursor.execute(reset_startingid_query)
+            self.connection.commit()
             query2 = f"INSERT INTO tbl_user (username, password, user_firstname, user_lastname, user_type) VALUES (?, ?, ?, ?, ?)"
             self.cursor.execute(
                 query2,
@@ -1079,35 +957,109 @@ class dbQueries:
                 ),
             )
             self.connection.commit()
+            self.cursor.execute(f"SET IDENTITY_INSERT {table_name} OFF")
+            self.connection.commit()
 
     def create_personnel_report(self):
-        query = (
-            f"INSERT INTO tbl_personnel_report SELECT * FROM tbl_personnel_attendance"
+        self.today = datetime.date.today()
+        self.yesterday = self.today - datetime.timedelta(days = 1)
+        date_int = int(self.yesterday.strftime("%y%m%d"))
+        custom_no = date_int * 100000
+
+        query = f"SELECT * FROM tbl_personnel_attendance"
+        self.cursor.execute(query)
+        rows = self.cursor.fetchall()
+
+        modified_rows = []
+
+        for row in rows:
+            personnel_attendance_no = row.personnel_attendance_no + custom_no
+            modified_rows.append((personnel_attendance_no, *row[1:]))
+
+        insert_query_attendance = f"INSERT INTO tbl_personnel_attendance (personnel_report_no, personnel_no, personnel_attendance_date, personnel_time_in,personnel_time_out) VALUES ( ?, ?, ?, ?, ?)"
+        self.cursor.executemany(insert_query_attendance,modified_rows)
+        self.connection.commit()
+
+        query2 = f"TRUNCATE TABLE tbl_personnel_attendance"
+        self.cursor.execute(query2)
+        self.connection.commit()
+        
+        print("reset")
+        reset_startingid_query = (
+            f"DBCC CHECKIDENT ('tbl_personnel_attendance', RESEED, 0)"
         )
-        self.cursor.execute(query)
+        self.cursor.execute(reset_startingid_query)
         self.connection.commit()
-
-        query2 = f"Delete FROM tbl_personnel_attendance"
-        self.cursor.execute(query2)
-        self.connection.commit()
-
+        print("Table is empty")
+        
+        
     def create_visitor_report(self):
-        query = f"INSERT INTO tbl_visitor_report SELECT * FROM tbl_visitor_attendance"
+        self.today = datetime.date.today()
+        self.yesterday = self.today - datetime.timedelta(days = 1)
+        date_int = int(self.yesterday.strftime("%y%m%d"))
+        custom_no = date_int * 100000
+
+        query = f"SELECT * FROM tbl_visitor_attendance"
         self.cursor.execute(query)
+        rows = self.cursor.fetchall()
+
+        modified_rows = []
+
+        for row in rows:
+            visitor_attendance_no = row.visitor_attendance_no + custom_no
+            modified_rows.append((visitor_attendance_no, *row[1:]))
+
+        insert_query_attendance = f"INSERT INTO tbl_visitor_attendance (visitor_report_no, visitor_no, visitor_attendance_date, visitor_time_in,visitor_time_out) VALUES ( ?, ?, ?, ?, ?)"
+        self.cursor.executemany(insert_query_attendance,modified_rows)
         self.connection.commit()
 
-        query2 = f"Delete FROM tbl_visitor_attendance"
+        query2 = f"TRUNCATE TABLE tbl_visitor_attendance"
         self.cursor.execute(query2)
         self.connection.commit()
-
+        
+        print("reset")
+        reset_startingid_query = (
+            f"DBCC CHECKIDENT ('tbl_visitor_attendance', RESEED, 0)"
+        )
+        self.cursor.execute(reset_startingid_query)
+        self.connection.commit()
+        print("Table is empty")
+        
+        
     def create_student_report(self):
-        query = f"INSERT INTO tbl_student_report SELECT * FROM tbl_student_attendance"
+
+        self.today = datetime.date.today()
+        self.yesterday = self.today - datetime.timedelta(days = 1)
+        date_int = int(self.yesterday.strftime("%y%m%d"))
+        custom_no = date_int * 100000
+
+        query = f"SELECT * FROM tbl_student_attendance"
         self.cursor.execute(query)
+        rows = self.cursor.fetchall()
+
+        modified_rows = []
+
+        for row in rows:
+            student_attendance_no = row.student_attendance_no + custom_no
+            modified_rows.append((student_attendance_no, *row[1:]))
+
+        insert_query_attendance = f"INSERT INTO tbl_student_report (student_report_no, student_no, student_attendance_date, student_time_in, student_time_out) VALUES (?,?,?, ?, ?)"
+        self.cursor.executemany(insert_query_attendance,modified_rows)
         self.connection.commit()
 
-        query2 = f"Delete FROM tbl_student_attendance"
+        query2 = f"TRUNCATE TABLE tbl_student_attendance"
         self.cursor.execute(query2)
         self.connection.commit()
+
+        print("reset")
+        
+        reset_startingid_query = (
+            f"DBCC CHECKIDENT ('tbl_student_attendance', RESEED, 0)"
+        )
+        self.cursor.execute(reset_startingid_query)
+        self.connection.commit()
+        print("Table is empty")
+        
 
     # SETTINGS-TABLE-QUERY--------------------------------------------------------------------------------------------------------------
 

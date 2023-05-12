@@ -61,7 +61,7 @@ class ClientFaceRecogApp:
             justify="left",
             text="Last name \nFirst Name",
         )
-        self.client_name_label.place(anchor="w", relx=0.3, rely=0.5)
+        self.client_name_label.place(anchor="w", relx=0.035, rely=0.5)
         self.attendance_label = tk.Label(self.face_recog_frame2)
         self.attendance_label.configure(
             anchor="center",
@@ -168,7 +168,7 @@ class ClientFaceRecogApp:
 
     # this function will show the name and the attendance widgets
     def show_name(self):
-        self.client_name_label.place(anchor="center", relx=0.15, rely=0.5)
+        self.client_name_label.place(anchor="w", relx=0.035, rely=0.5)
         self.attendance_label.place(anchor="center", relx=0.79, rely=0.5)
 
     # this function updates the canvas content - shows the camera
@@ -286,15 +286,13 @@ class ClientFaceRecogApp:
     # this will save the attendance of the student
     def save_attendance_func(self):
         current_date = datetime.datetime.now().strftime("%Y-%m-%d")
-        date_int = int(datetime.datetime.now().strftime("%y%m%d"))
-        custom_no = date_int * 100000
 
         if self.sql_query.check_student_no(self.fr_vid.name):
-            self.sql_query.student_attendance_record(custom_no, str(self.fr_vid.name), current_date, self.current_time)
+            self.sql_query.student_attendance_record(str(self.fr_vid.name), current_date, self.current_time)
         elif self.sql_query.check_personnel_no(self.fr_vid.name):
-            self.sql_query.personnel_attendance_record(custom_no, str(self.fr_vid.name), current_date, self.current_time)
+            self.sql_query.personnel_attendance_record(str(self.fr_vid.name), current_date, self.current_time)
         elif self.sql_query.check_visitor_no(self.fr_vid.name):
-            self.sql_query.visitor_attendance_record(custom_no, str(self.fr_vid.name), current_date, self.current_time)
+            self.sql_query.visitor_attendance_record(str(self.fr_vid.name), current_date, self.current_time)
         
     # this command will return to the home window
     def return_func(self, event=None):
