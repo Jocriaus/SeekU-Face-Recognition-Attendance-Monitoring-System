@@ -322,7 +322,7 @@ class docxClass:
                 "Time In",
                 "Time Out",
             ]
-            table = doc.add_table(rows=1, cols=2)
+            table = doc.add_table(rows=1, cols=len(column_names))
             table.style = "Table Grid"
             hdr_cells = table.rows[0].cells
 
@@ -362,7 +362,7 @@ class docxClass:
                 "Time In",
                 "Time Out",
             ]
-            table = doc.add_table(rows=1, cols=2)
+            table = doc.add_table(rows=1, cols=len(column_names))
             table.style = "Table Grid"
             hdr_cells = table.rows[0].cells
 
@@ -401,7 +401,7 @@ class docxClass:
                 "Time Out",
             ]
 
-            table = doc.add_table(rows=1, cols=2)
+            table = doc.add_table(rows=1, cols=len(column_names))
             table.style = "Table Grid"
             hdr_cells = table.rows[0].cells
 
@@ -441,7 +441,7 @@ class docxClass:
                 "Time Out",
             ]
 
-            table = doc.add_table(rows=1, cols=2)
+            table = doc.add_table(rows=1, cols=len(column_names))
             table.style = "Table Grid"
             hdr_cells = table.rows[0].cells
 
@@ -579,7 +579,7 @@ class docxClass:
                 "Time In",
                 "Time Out",
             ]
-            table = doc.add_table(rows=1, cols=2)
+            table = doc.add_table(rows=1, cols=len(column_names))
             table.style = "Table Grid"
             hdr_cells = table.rows[0].cells
 
@@ -625,7 +625,7 @@ class docxClass:
                 "Time In",
                 "Time Out",
             ]
-            table = doc.add_table(rows=1, cols=2)
+            table = doc.add_table(rows=1, cols=len(column_names))
             table.style = "Table Grid"
             hdr_cells = table.rows[0].cells
 
@@ -670,7 +670,7 @@ class docxClass:
                 "Time Out",
             ]
 
-            table = doc.add_table(rows=1, cols=2)
+            table = doc.add_table(rows=1, cols=len(column_names))
             table.style = "Table Grid"
             hdr_cells = table.rows[0].cells
 
@@ -716,7 +716,7 @@ class docxClass:
                 "Time Out",
             ]
 
-            table = doc.add_table(rows=1, cols=2)
+            table = doc.add_table(rows=1, cols=len(column_names))
             table.style = "Table Grid"
             hdr_cells = table.rows[0].cells
 
