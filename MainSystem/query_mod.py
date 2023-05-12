@@ -976,7 +976,7 @@ class dbQueries:
             personnel_attendance_no = row.personnel_attendance_no + custom_no
             modified_rows.append((personnel_attendance_no, *row[1:]))
 
-        insert_query_attendance = f"INSERT INTO tbl_personnel_report (personnel_attendance_no, personnel_no, personnel_attendance_date, personnel_time_in,personnel_time_out) VALUES ( ?, ?, ?, ?, ?)"
+        insert_query_attendance = f"INSERT INTO tbl_personnel_report (personnel_report_no, personnel_no, personnel_attendance_date, personnel_time_in,personnel_time_out) VALUES ( ?, ?, ?, ?, ?)"
         self.cursor.executemany(insert_query_attendance,modified_rows)
         self.connection.commit()
 
@@ -1009,7 +1009,7 @@ class dbQueries:
             visitor_attendance_no = row.visitor_attendance_no + custom_no
             modified_rows.append((visitor_attendance_no, *row[1:]))
 
-        insert_query_attendance = f"INSERT INTO tbl_visitor_report (visitor_attendance_no, visitor_no, visitor_attendance_date, visitor_time_in,visitor_time_out) VALUES ( ?, ?, ?, ?, ?)"
+        insert_query_attendance = f"INSERT INTO tbl_visitor_report (visitor_report_no, visitor_no, visitor_attendance_date, visitor_time_in,visitor_time_out) VALUES ( ?, ?, ?, ?, ?)"
         self.cursor.executemany(insert_query_attendance,modified_rows)
         self.connection.commit()
 
