@@ -551,7 +551,7 @@ class HomeApp:
 
     def encode(self, event=None):
         if os.path.exists("encodings.pickle"):
-             messbx.showwarning("Error", "The data set is already encoded. Delete the existing to proceed.")
+             messbx.showwarning("Warning", "The data set is already encoded. Delete the existing to proceed.")
         else:
             folder_selected = self.select_folder()
             fr.FaceEncoding(folder_selected)

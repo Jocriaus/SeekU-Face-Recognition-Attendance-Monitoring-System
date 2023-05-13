@@ -975,10 +975,10 @@ class dbQueries:
         for row in rows:
             personnel_attendance_no = row.personnel_attendance_no + custom_no
             modified_rows.append((personnel_attendance_no, *row[1:]))
-
-        insert_query_attendance = f"INSERT INTO tbl_personnel_report (personnel_report_no, personnel_no, personnel_attendance_date, personnel_time_in,personnel_time_out) VALUES ( ?, ?, ?, ?, ?)"
-        self.cursor.executemany(insert_query_attendance,modified_rows)
-        self.connection.commit()
+        if modified_rows:
+            insert_query_attendance = f"INSERT INTO tbl_personnel_report (personnel_report_no, personnel_no, personnel_attendance_date, personnel_time_in,personnel_time_out) VALUES ( ?, ?, ?, ?, ?)"
+            self.cursor.executemany(insert_query_attendance,modified_rows)
+            self.connection.commit()
 
         query2 = f"TRUNCATE TABLE tbl_personnel_attendance"
         self.cursor.execute(query2)
@@ -1008,10 +1008,10 @@ class dbQueries:
         for row in rows:
             visitor_attendance_no = row.visitor_attendance_no + custom_no
             modified_rows.append((visitor_attendance_no, *row[1:]))
-
-        insert_query_attendance = f"INSERT INTO tbl_visitor_report (visitor_report_no, visitor_no, visitor_attendance_date, visitor_time_in,visitor_time_out) VALUES ( ?, ?, ?, ?, ?)"
-        self.cursor.executemany(insert_query_attendance,modified_rows)
-        self.connection.commit()
+        if modified_rows:
+            insert_query_attendance = f"INSERT INTO tbl_visitor_report (visitor_report_no, visitor_no, visitor_attendance_date, visitor_time_in,visitor_time_out) VALUES ( ?, ?, ?, ?, ?)"
+            self.cursor.executemany(insert_query_attendance,modified_rows)
+            self.connection.commit()
 
         query2 = f"TRUNCATE TABLE tbl_visitor_attendance"
         self.cursor.execute(query2)
@@ -1042,10 +1042,11 @@ class dbQueries:
         for row in rows:
             student_attendance_no = row.student_attendance_no + custom_no
             modified_rows.append((student_attendance_no, *row[1:]))
-
-        insert_query_attendance = f"INSERT INTO tbl_student_report (student_report_no, student_no, student_attendance_date, student_time_in, student_time_out) VALUES (?,?,?, ?, ?)"
-        self.cursor.executemany(insert_query_attendance,modified_rows)
-        self.connection.commit()
+            
+        if modified_rows:
+            insert_query_attendance = f"INSERT INTO tbl_student_report (student_report_no, student_no, student_attendance_date, student_time_in, student_time_out) VALUES (?,?,?, ?, ?)"
+            self.cursor.executemany(insert_query_attendance,modified_rows)
+            self.connection.commit()
 
         query2 = f"TRUNCATE TABLE tbl_student_attendance"
         self.cursor.execute(query2)

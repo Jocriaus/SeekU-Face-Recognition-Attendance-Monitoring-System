@@ -36,25 +36,6 @@ class ClientCameraSelectApp:
         self.detecting_label.place(
         anchor="center", relx=0.5, rely=0.5, x=0, y=0)
 
-        self.open_button = tk.Button(self.camera_frame)
-        self.open_button.configure(
-            background="#F7FAE9",
-            default="active",
-            font="{arial Black} 20 {}",
-            foreground="#0072bc",
-            justify="center",
-            relief="ridge",
-            text='OPEN',
-            width=10)
-        self.open_button.place(
-            anchor="center",
-            relheight=0.09,
-            relwidth=0.4,
-            relx=0.5,
-            rely=0.8
-            )
-        self.open_button.bind("<ButtonPress>", self.open_press, add="")
-
         self.camera_frame.place(
             anchor="center",
             relheight=1,
@@ -342,3 +323,21 @@ class ClientCameraSelectApp:
             self.no_cameras_label.place(
             anchor="center", relx=0.5, rely=0.5, x=0, y=0)
         self.detecting_label.place_forget()
+        self.open_button = tk.Button(self.camera_frame)
+        self.open_button.configure(
+            background="#F7FAE9",
+            default="active",
+            font="{arial Black} 20 {}",
+            foreground="#0072bc",
+            justify="center",
+            relief="ridge",
+            text='OPEN',
+            width=10)
+        self.open_button.place(
+            anchor="center",
+            relheight=0.09,
+            relwidth=0.4,
+            relx=0.5,
+            rely=0.8
+            )
+        self.open_button.bind("<ButtonPress>", self.open_press, add="")
