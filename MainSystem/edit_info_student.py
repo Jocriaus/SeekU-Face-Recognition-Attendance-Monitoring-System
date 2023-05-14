@@ -406,7 +406,7 @@ class EditStudentApp:
                 student_status_var,
             ]
             concatenated_inputs = "".join(input_values)
-            pattern = re.compile("[^a-zA-Z0-9 ñÑ]")
+            pattern = re.compile("[^a-zA-Z0-9 .,-ñÑ]")
 
             if not pattern.search(concatenated_inputs):
                 if student_num_var.isdigit() or (
@@ -415,13 +415,12 @@ class EditStudentApp:
                     if ((student_contact_num_var.isdigit() or 
                         student_contact_num_var.startswith("-")
                         and student_contact_num_var[1:].isdigit())
-                        and len(student_contact_num_var) == 11
+                        and len(student_contact_num_var) == 10
                         ):
-                        if (student_firstname_var.replace(" ", "").isalpha() and 
-                            ((not student_middlename_var.isdigit()) or (student_middlename_var.startswith("-") )
-                            and student_middlename_var[1:].isdigit()) and
-                            student_lastname_var.replace(" ", "").isalpha() and 
-                            student_program_var.replace(" ", "").isalpha()):
+                        if ((student_firstname_var.replace(" ", "").isalpha()  or "-" in student_firstname_var) 
+                            and( student_middlename_var.replace(" ", "").isalpha()or "-" in student_middlename_var) 
+                            and (student_lastname_var.replace(" ", "").isalpha() or "-" in student_lastname_var)
+                            and (student_program_var.replace(" ", "").isalpha() or "-" in student_program_var)):
                             
                             path_check = self.img_path + "/000000000.jpg"
                             result = messbx.askokcancel("Confirm Action","Please review all the details you have inputted. Are you sure everything is final and correct?")

@@ -407,7 +407,7 @@ class EditPersonnelApp:
                 pesonnel_status_var,
             ]
             concatenated_inputs = "".join(input_values)
-            pattern = re.compile("[^a-zA-Z0-9 ñÑ]")
+            pattern = re.compile("[^a-zA-Z0-9 .,-ñÑ]")
 
             if not pattern.search(concatenated_inputs):
                 if personnel_num_var.isdigit() or (
@@ -417,12 +417,11 @@ class EditPersonnelApp:
                     if ((personnel_contact_num_var.isdigit() or 
                         personnel_contact_num_var.startswith("-")
                         and personnel_contact_num_var[1:].isdigit())
-                        and len(personnel_contact_num_var) == 11
+                        and len(personnel_contact_num_var) == 10
                         ):
-                        if (personnel_firstname_var.replace(" ", "").isalpha()
-                            and ((not personnel_middlename_var.isdigit()) or (personnel_middlename_var.startswith("-") )
-                            and personnel_middlename_var[1:].isdigit()) 
-                            and personnel_lastname_var.replace(" ", "").isalpha()
+                        if ((personnel_firstname_var.replace(" ", "").isalpha() or "-" in personnel_firstname_var)
+                            and (personnel_middlename_var.replace(" ", "").isalpha() or "-" in personnel_middlename_var)
+                            and (personnel_lastname_var.replace(" ", "").isalpha() or "-" in personnel_lastname_var)
                             ):
 
                             path_check = self.img_path + "/000000000.jpg"

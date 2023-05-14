@@ -212,7 +212,7 @@ class RegisterVisitorApp:
             and len(first_name_var) != 0
             and len(contact_num_var) != 0
             and len(address_var) != 0
-            ):
+        ):
             input_values = [
                 first_name_var,
                 last_name_var,
@@ -220,18 +220,22 @@ class RegisterVisitorApp:
                 address_var,
             ]
             concatenated_inputs = "".join(input_values)
-            pattern = re.compile("[^a-zA-Z0-9 ñÑ]")
+            pattern = re.compile("[^a-zA-Z0-9 .,-ñÑ]")
 
             if not pattern.search(concatenated_inputs):
-                if  ((contact_num_var.isdigit() or 
-                    contact_num_var.startswith("-") 
-                    and contact_num_var[1:].isdigit())
-                    and len(contact_num_var) == 11
+                if (
+                    (contact_num_var.isdigit() or
+                    contact_num_var.startswith("-") and contact_num_var[1:].isdigit())
+                    and len(contact_num_var) == 10
+                ):
+                    if (
+                        (first_name_var.replace(" ", "").isalpha() or "-" in first_name_var)
+                        and (last_name_var.replace(" ", "").isalpha() or "-" in last_name_var)
                     ):
-                    if (first_name_var.replace(" ", "").isalpha() and 
-                        last_name_var.replace(" ", "").isalpha()
-                        ):
-                        result = messbx.askokcancel("Confirm Action","Please review all the details you have inputted. Are you sure everything is final and correct?")
+                        result = messbx.askokcancel(
+                            "Confirm Action",
+                            "Please review all the details you have inputted. Are you sure everything is final and correct?",
+                        )
                         if result:
                             self.sql_query.register_visitor(
                                 first_name_var,
@@ -264,8 +268,7 @@ class RegisterVisitorApp:
                 else:
                     messbx.showwarning(
                         "Warning",
-                        "The provided input for the contact number is "+
-                        "invalid and does not correspond to a valid number.",
+                        "The provided input for the contact number is invalid and does not correspond to a valid number.",
                     )
             else:
                 messbx.showwarning("Warning", "The input contains special characters.")

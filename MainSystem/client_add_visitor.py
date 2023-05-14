@@ -216,14 +216,14 @@ class AddVisitorApp:
                     address_var,
                 ]
                 concatenated_inputs = "".join(input_values)
-                pattern = re.compile("[^a-zA-Z0-9 .,]")
+                pattern = re.compile("[^a-zA-Z0-9 .,-ñÑ]")
 
                 if not pattern.search(concatenated_inputs):
                     if  ((contact_num_var.isdigit() or 
-                        contact_num_var.startswith("-") and contact_num_var[1:].isdigit() )and len(contact_num_var) == 11
+                        contact_num_var.startswith("-") and contact_num_var[1:].isdigit() )and len(contact_num_var) == 10
                         ):
-                        if (first_name_var.replace(" ", "").isalpha() and 
-                            last_name_var.replace(" ", "").isalpha()
+                        if ((first_name_var.replace(" ", "").isalpha()or "-" in first_name_var) and 
+                            (last_name_var.replace(" ", "").isalpha()or "-" in last_name_var)
                             ):
                             result = messbx.askokcancel("Confirm Action", "Please review all the details you have inputted. Are you sure everything is final and correct?")
                             if result:

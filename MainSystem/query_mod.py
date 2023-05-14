@@ -984,13 +984,13 @@ class dbQueries:
         self.cursor.execute(query2)
         self.connection.commit()
         
-        print("reset")
+        print("tbl_personnel_attendance reset")
         reset_startingid_query = (
             f"DBCC CHECKIDENT ('tbl_personnel_attendance', RESEED, 0)"
         )
         self.cursor.execute(reset_startingid_query)
         self.connection.commit()
-        print("Table is empty")
+        print("tbl_personnel_attendance is empty")
         
         
     def create_visitor_report(self):
@@ -1017,13 +1017,13 @@ class dbQueries:
         self.cursor.execute(query2)
         self.connection.commit()
         
-        print("reset")
+        print("tbl_visitor_attendance reset")
         reset_startingid_query = (
             f"DBCC CHECKIDENT ('tbl_visitor_attendance', RESEED, 0)"
         )
         self.cursor.execute(reset_startingid_query)
         self.connection.commit()
-        print("Table is empty")
+        print("tbl_visitor_attendance is empty")
         
         
     def create_student_report(self):
@@ -1042,7 +1042,7 @@ class dbQueries:
         for row in rows:
             student_attendance_no = row.student_attendance_no + custom_no
             modified_rows.append((student_attendance_no, *row[1:]))
-            
+
         if modified_rows:
             insert_query_attendance = f"INSERT INTO tbl_student_report (student_report_no, student_no, student_attendance_date, student_time_in, student_time_out) VALUES (?,?,?, ?, ?)"
             self.cursor.executemany(insert_query_attendance,modified_rows)
@@ -1052,14 +1052,14 @@ class dbQueries:
         self.cursor.execute(query2)
         self.connection.commit()
 
-        print("reset")
+        print("tbl_student_attendance reset")
         
         reset_startingid_query = (
             f"DBCC CHECKIDENT ('tbl_student_attendance', RESEED, 0)"
         )
         self.cursor.execute(reset_startingid_query)
         self.connection.commit()
-        print("Table is empty")
+        print("tbl_student_attendance is empty")
         
 
     # SETTINGS-TABLE-QUERY--------------------------------------------------------------------------------------------------------------
