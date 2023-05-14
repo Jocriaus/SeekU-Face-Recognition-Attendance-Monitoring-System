@@ -64,7 +64,9 @@ class BackupRestore:
                                 ),
                             )
                         self.cursor.commit()                 
-
+                        messbx.showinfo(
+                            "Success", "The records have been updated successfully!"
+                        )
                 else:
                     print("No Student Status")
                     messbx.showerror(
@@ -128,7 +130,7 @@ class BackupRestore:
                                 ),
                             )
                         self.cursor.commit()                 
-
+                    messbx.showinfo("Success", "The records have been updated successfully!")
                 else:
                     print("No Student Report no.")
                     messbx.showerror(
@@ -257,7 +259,7 @@ class BackupRestore:
                                 ),
                             )
                         self.cursor.commit()                 
-
+                    messbx.showinfo("Success", "The records have been updated successfully!")
                 else:
                     print("No Personnel report no.")
                     messbx.showerror(
@@ -313,7 +315,7 @@ class BackupRestore:
                                 ),
                             )
                         self.cursor.commit()                 
-
+                    messbx.showinfo("Success", "The records have been updated successfully!")
                 else:
                     print("No Visitor Status")
                     messbx.showerror(
@@ -377,7 +379,7 @@ class BackupRestore:
                                 ),
                             )
                         self.cursor.commit()                 
-
+                    messbx.showinfo("Success", "The records have been updated successfully!")
                 else:
                     print("No visitor report no.")
                     messbx.showerror(

@@ -1,0 +1,3 @@
+user_no,username,password,user_firstname,user_lastname,user_type,user_status
+2,user,admin,default,user,System Admin,IsActive
+3,jc,123,JC,Austria,Security Guard,IsActive
