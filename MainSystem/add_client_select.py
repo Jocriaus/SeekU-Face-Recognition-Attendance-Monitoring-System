@@ -180,10 +180,12 @@ class AddSelectorApp:
             folder_select = False
             dialog_parent.grab_release()
             dialog_parent.destroy()
+            self.mainwindow.grab_set()
             return folder_select
         else:
             dialog_parent.grab_release()
             dialog_parent.destroy()
+            self.mainwindow.grab_set()
             return folder_select
 
     # this function will center the window

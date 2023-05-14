@@ -937,6 +937,7 @@ class dbQueries:
 
         if not condition:
             table_name = "tbl_user"
+            
             self.cursor.execute(f"SET IDENTITY_INSERT {table_name} ON")
             self.connection.commit()
             

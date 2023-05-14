@@ -198,10 +198,12 @@ class SavePrintReportApp:
             folder_select = False
             dialog_parent.grab_release()
             dialog_parent.destroy()
+            self.mainwindow.grab_set()
             return folder_select
         else:
             dialog_parent.grab_release()
             dialog_parent.destroy()
+            self.mainwindow.grab_set()
             return folder_select
 
     def destroy_this_window(self):

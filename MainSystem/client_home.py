@@ -382,10 +382,12 @@ class HomeApp:
             folder_select = False
             dialog_parent.grab_release()
             dialog_parent.destroy()
+            self.mainwindow.grab_set()
             return folder_select
         else:
             dialog_parent.grab_release()
             dialog_parent.destroy()
+            self.mainwindow.grab_set()
             return folder_select
 
     # this command will open the attendance module

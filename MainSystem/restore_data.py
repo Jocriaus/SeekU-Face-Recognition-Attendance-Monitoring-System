@@ -14,6 +14,7 @@ class RestoreApp:
         self.restore_db.configure(background="#0072bc", height=200, width=200)
         self.restore_db.geometry("700x350")
         self.restore_db.resizable(False, False)
+        self.restore_db.title("SeekU - Restore data")
         self.restore_db_frame2 = tk.Frame(self.restore_db)
         self.restore_db_frame2.configure(
             background="#0072bc", height=200, width=200)
@@ -243,15 +244,18 @@ class RestoreApp:
         if file_select == "":
             dialog_parent.grab_release()
             dialog_parent.destroy()
+            self.restore_db.grab_set()
             return False
         elif not file_select.endswith(".csv"):
             dialog_parent.grab_release()
             dialog_parent.destroy()
+            self.restore_db.grab_set()
             messbx.showerror("Error", "The selected file is not a CSV file.")
             return False
         else:
             dialog_parent.grab_release()
             dialog_parent.destroy()
+            self.restore_db.grab_set()
             return file_select
 
     def import_students_rec_logic(self):

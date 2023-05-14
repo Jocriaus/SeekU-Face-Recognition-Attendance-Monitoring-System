@@ -15,7 +15,7 @@ class TreeviewGUI:
         self.database = "seeku_database"
         self.username = ""
         self.password = ""
-
+        # self.connection_string = f"Driver={{ODBC Driver 18 for SQL Server}};Server={self.server};Database={self.database};UID={self.username};PWD={self.password};TrustServerCertificate=yes"
         self.connection_string = f"Driver={{SQL Server}};Server={self.server};Database={self.database};UID={self.username};PWD={self.password}"
 
         self.connection = odbc.connect(self.connection_string)
