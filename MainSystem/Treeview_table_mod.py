@@ -954,7 +954,7 @@ class TreeviewGUI:
 
     def populate_student_attendance_treeview(self):
         self.cursor.execute(
-            "SELECT tbl_student.student_no, tbl_student.student_firstname, tbl_student.student_lastname, tbl_student.student_program, tbl_student.student_section, tbl_student_attendance.student_attendance_date, tbl_student_attendance.student_time_in, tbl_student_attendance.student_time_out FROM tbl_student RIGHT JOIN tbl_student_attendance ON tbl_student.student_no = tbl_student_attendance.student_no "
+            "SELECT tbl_student.student_no, tbl_student.student_firstname, tbl_student.student_lastname, tbl_student.student_program, tbl_student.student_section, tbl_student_attendance.student_attendance_date, tbl_student_attendance.student_time_in, tbl_student_attendance.student_time_out FROM tbl_student RIGHT JOIN tbl_student_attendance ON tbl_student.student_no = tbl_student_attendance.student_no ORDER BY student_attendance_no"
         )
 
         for row in self.cursor.fetchall():
@@ -997,7 +997,7 @@ class TreeviewGUI:
 
     def populate_student_report_treeview(self):
         self.cursor.execute(
-            "SELECT tbl_student.student_no, tbl_student.student_firstname, tbl_student.student_lastname, tbl_student.student_program, tbl_student.student_section, tbl_student_report.student_attendance_date, tbl_student_report.student_time_in, tbl_student_report.student_time_out FROM tbl_student RIGHT JOIN tbl_student_report ON tbl_student.student_no = tbl_student_report.student_no"
+            "SELECT tbl_student.student_no, tbl_student.student_firstname, tbl_student.student_lastname, tbl_student.student_program, tbl_student.student_section, tbl_student_report.student_attendance_date, tbl_student_report.student_time_in, tbl_student_report.student_time_out FROM tbl_student RIGHT JOIN tbl_student_report ON tbl_student.student_no = tbl_student_report.student_no ORDER BY student_report_no"
         )
 
         for row in self.cursor.fetchall():
@@ -1063,7 +1063,7 @@ class TreeviewGUI:
 
     def populate_personnel_attendance_treeview(self):
         self.cursor.execute(
-            "SELECT tbl_personnel.personnel_no, tbl_personnel.personnel_firstname, tbl_personnel.personnel_lastname, tbl_personnel.personnel_type, tbl_personnel_attendance.personnel_attendance_date, tbl_personnel_attendance.personnel_time_in, tbl_personnel_attendance.personnel_time_out FROM tbl_personnel RIGHT JOIN tbl_personnel_attendance ON tbl_personnel.personnel_no = tbl_personnel_attendance.personnel_no"
+            "SELECT tbl_personnel.personnel_no, tbl_personnel.personnel_firstname, tbl_personnel.personnel_lastname, tbl_personnel.personnel_type, tbl_personnel_attendance.personnel_attendance_date, tbl_personnel_attendance.personnel_time_in, tbl_personnel_attendance.personnel_time_out FROM tbl_personnel RIGHT JOIN tbl_personnel_attendance ON tbl_personnel.personnel_no = tbl_personnel_attendance.personnel_no ORDER BY personnel_attendance_no"
         )
         for row in self.cursor.fetchall():
             if row[6] is None:
@@ -1103,7 +1103,7 @@ class TreeviewGUI:
 
     def populate_personnel_report_treeview(self):
         self.cursor.execute(
-            "SELECT tbl_personnel.personnel_no, tbl_personnel.personnel_firstname, tbl_personnel.personnel_lastname, tbl_personnel.personnel_type, tbl_personnel_report.personnel_attendance_date, tbl_personnel_report.personnel_time_in, tbl_personnel_report.personnel_time_out FROM tbl_personnel RIGHT JOIN tbl_personnel_report ON tbl_personnel.personnel_no = tbl_personnel_report.personnel_no"
+            "SELECT tbl_personnel.personnel_no, tbl_personnel.personnel_firstname, tbl_personnel.personnel_lastname, tbl_personnel.personnel_type, tbl_personnel_report.personnel_attendance_date, tbl_personnel_report.personnel_time_in, tbl_personnel_report.personnel_time_out FROM tbl_personnel RIGHT JOIN tbl_personnel_report ON tbl_personnel.personnel_no = tbl_personnel_report.personnel_no ORDER BY personnel_report_no"
         )
         for row in self.cursor.fetchall():
             if row[6] is None:
@@ -1163,7 +1163,7 @@ class TreeviewGUI:
 
     def populate_visitor_attendance_treeview(self):
         self.cursor.execute(
-            "SELECT tbl_visitor.visitor_no, tbl_visitor.visitor_firstname, tbl_visitor.visitor_lastname, tbl_visitor_attendance.visitor_attendance_date, tbl_visitor_attendance.visitor_time_in, tbl_visitor_attendance.visitor_time_out FROM  tbl_visitor RIGHT JOIN tbl_visitor_attendance ON tbl_visitor.visitor_no = tbl_visitor_attendance.visitor_no"
+            "SELECT tbl_visitor.visitor_no, tbl_visitor.visitor_firstname, tbl_visitor.visitor_lastname, tbl_visitor_attendance.visitor_attendance_date, tbl_visitor_attendance.visitor_time_in, tbl_visitor_attendance.visitor_time_out FROM  tbl_visitor RIGHT JOIN tbl_visitor_attendance ON tbl_visitor.visitor_no = tbl_visitor_attendance.visitor_no ORDER BY visitor_attendance_no"
         )
 
         for row in self.cursor.fetchall():
@@ -1202,7 +1202,7 @@ class TreeviewGUI:
 
     def populate_visitor_report_treeview(self):
         self.cursor.execute(
-            "SELECT tbl_visitor.visitor_no, tbl_visitor.visitor_firstname, tbl_visitor.visitor_lastname, tbl_visitor_report.visitor_attendance_date, tbl_visitor_report.visitor_time_in, tbl_visitor_report.visitor_time_out FROM  tbl_visitor RIGHT JOIN tbl_visitor_report ON tbl_visitor.visitor_no = tbl_visitor_report.visitor_no"
+            "SELECT tbl_visitor.visitor_no, tbl_visitor.visitor_firstname, tbl_visitor.visitor_lastname, tbl_visitor_report.visitor_attendance_date, tbl_visitor_report.visitor_time_in, tbl_visitor_report.visitor_time_out FROM  tbl_visitor RIGHT JOIN tbl_visitor_report ON tbl_visitor.visitor_no = tbl_visitor_report.visitor_no ORDER BY visitor_report_no"
         )
 
         for row in self.cursor.fetchall():
