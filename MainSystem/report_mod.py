@@ -14,6 +14,7 @@ class excelClass:
 
     def save_student(self, filepath, filename, date1, date2):
         data, columns = self.sql_query.sort_student_report_bydate_excel(date1, date2)
+        columns = ['Student No.', 'First Name', 'Last Name','Program' ,'Section' ,'Attendance Date', 'Time in', 'Time out' ]
         if data and columns:
             df = pd.DataFrame(data=data, columns=columns)
             writer = pd.ExcelWriter(
@@ -29,10 +30,16 @@ class excelClass:
                 index=False,
                 na_rep="NaN",
             )
+            starting_date = str(date1)[0:10]
+            end_date = str(date2)[0:10]
+ 
             worksheet = writer.sheets["Sheet1"]
-            worksheet.insert_image("A1", ".\SeekU\STI College Balagtas Logo medium.png")
-            worksheet.insert_image("F1", ".\SeekU\SeekU Logotype micro.png")
-            worksheet.insert_image("L1", ".\SeekU\SeekU small.png")
+            worksheet.write('F9', starting_date)
+            worksheet.write('G9', end_date)  
+            worksheet.insert_image("C1", ".\SeekU\STI College Balagtas Logo medium.png")
+            worksheet.insert_image("E1", ".\SeekU\Student Report.png")
+            worksheet.insert_image("E6", ".\SeekU\Dates.png")
+            worksheet.insert_image("I1", ".\SeekU\SeekU small.png")
             for column in df:
                 column_length = max(df[column].astype(str).map(len).max(), len(column))
                 col_idx = df.columns.get_loc(column)
@@ -47,6 +54,7 @@ class excelClass:
 
     def save_personnel(self, filepath, filename, date1, date2):
         data, columns = self.sql_query.sort_personnel_report_bydate_excel(date1, date2)
+        columns = ['Personnel No.', 'First Name', 'Last Name','Personnel Type' ,'Attendance Date', 'Time in', 'Time out' ]
         if data and columns:
             df = pd.DataFrame(data=data, columns=columns)
             writer = pd.ExcelWriter(
@@ -62,10 +70,16 @@ class excelClass:
                 index=False,
                 na_rep="NaN",
             )
+            starting_date = str(date1)[0:10]
+            end_date = str(date2)[0:10]
+ 
             worksheet = writer.sheets["Sheet1"]
-            worksheet.insert_image("A1", ".\SeekU\STI College Balagtas Logo medium.png")
-            worksheet.insert_image("F1", ".\SeekU\SeekU Logotype micro.png")
-            worksheet.insert_image("L1", ".\SeekU\SeekU small.png")
+            worksheet.write('E9', starting_date)
+            worksheet.write('G9', end_date)  
+            worksheet.insert_image("C1", ".\SeekU\STI College Balagtas Logo medium.png")
+            worksheet.insert_image("E1", ".\SeekU\Personnel Report.png")
+            worksheet.insert_image("E6", ".\SeekU\Dates.png")
+            worksheet.insert_image("J1", ".\SeekU\SeekU small.png")
             for column in df:
                 column_length = max(df[column].astype(str).map(len).max(), len(column))
                 col_idx = df.columns.get_loc(column)
@@ -80,12 +94,13 @@ class excelClass:
 
     def save_visitor(self, filepath, filename, date1, date2):
         data, columns = self.sql_query.sort_visitor_report_bydate_excel(date1, date2)
+        columns = ['Visitor No.', 'First Name', 'Last Name','Attendance Date', 'Time in', 'Time out' ]
         if data and columns:
             df = pd.DataFrame(data=data, columns=columns)
             writer = pd.ExcelWriter(
                 filepath + "/" + filename + ".xlsx", engine="xlsxwriter"
             )
-            start_column = 4
+            start_column = 3
             df.to_excel(
                 writer,
                 sheet_name="Sheet1",
@@ -95,10 +110,16 @@ class excelClass:
                 index=False,
                 na_rep="NaN",
             )
+            starting_date = str(date1)[0:10]
+            end_date = str(date2)[0:10]
+ 
             worksheet = writer.sheets["Sheet1"]
-            worksheet.insert_image("A1", ".\SeekU\STI College Balagtas Logo medium.png")
-            worksheet.insert_image("F1", ".\SeekU\SeekU Logotype micro.png")
-            worksheet.insert_image("L1", ".\SeekU\SeekU small.png")
+            worksheet.write('F9', starting_date)
+            worksheet.write('H9', end_date)  
+            worksheet.insert_image("C1", ".\SeekU\STI College Balagtas Logo medium.png")
+            worksheet.insert_image("F1", ".\SeekU\Visitor Report.png")
+            worksheet.insert_image("F6", ".\SeekU\Dates.png")
+            worksheet.insert_image("I1", ".\SeekU\SeekU small.png")
             for column in df:
                 column_length = max(df[column].astype(str).map(len).max(), len(column))
                 col_idx = df.columns.get_loc(column)
@@ -113,6 +134,7 @@ class excelClass:
 
     def print_student(self, filepath, filename, date1, date2):
         data, columns = self.sql_query.sort_student_report_bydate_excel(date1, date2)
+        columns = ['Student No.', 'First Name', 'Last Name','Program' ,'Section' ,'Attendance Date', 'Time in', 'Time out' ]
         if data and columns:
             df = pd.DataFrame(data=data, columns=columns)
             writer = pd.ExcelWriter(
@@ -128,10 +150,16 @@ class excelClass:
                 index=False,
                 na_rep="NaN",
             )
+            starting_date = str(date1)[0:10]
+            end_date = str(date2)[0:10]
+ 
             worksheet = writer.sheets["Sheet1"]
-            worksheet.insert_image("A1", ".\SeekU\STI College Balagtas Logo medium.png")
-            worksheet.insert_image("F1", ".\SeekU\SeekU Logotype micro.png")
-            worksheet.insert_image("L1", ".\SeekU\SeekU small.png")
+            worksheet.write('F9', starting_date)
+            worksheet.write('G9', end_date)  
+            worksheet.insert_image("C1", ".\SeekU\STI College Balagtas Logo medium.png")
+            worksheet.insert_image("E1", ".\SeekU\Student Report.png")
+            worksheet.insert_image("E6", ".\SeekU\Dates.png")
+            worksheet.insert_image("I1", ".\SeekU\SeekU small.png")
             for column in df:
                 column_length = max(df[column].astype(str).map(len).max(), len(column))
                 col_idx = df.columns.get_loc(column)
@@ -147,6 +175,7 @@ class excelClass:
 
     def print_personnel(self, filepath, filename, date1, date2):
         data, columns = self.sql_query.sort_personnel_report_bydate_excel(date1, date2)
+        columns = ['Personnel No.', 'First Name', 'Last Name','Personnel Type' ,'Attendance Date', 'Time in', 'Time out' ]
         if data and columns:
             df = pd.DataFrame(data=data, columns=columns)
             writer = pd.ExcelWriter(
@@ -162,10 +191,16 @@ class excelClass:
                 index=False,
                 na_rep="NaN",
             )
+            starting_date = str(date1)[0:10]
+            end_date = str(date2)[0:10]
+ 
             worksheet = writer.sheets["Sheet1"]
-            worksheet.insert_image("A1", ".\SeekU\STI College Balagtas Logo medium.png")
-            worksheet.insert_image("F1", ".\SeekU\SeekU Logotype micro.png")
-            worksheet.insert_image("L1", ".\SeekU\SeekU small.png")
+            worksheet.write('F9', starting_date)
+            worksheet.write('G9', end_date)  
+            worksheet.insert_image("C1", ".\SeekU\STI College Balagtas Logo medium.png")
+            worksheet.insert_image("F1", ".\SeekU\Personnel Report.png")
+            worksheet.insert_image("F6", ".\SeekU\Dates.png")
+            worksheet.insert_image("J1", ".\SeekU\SeekU small.png")
             for column in df:
                 column_length = max(df[column].astype(str).map(len).max(), len(column))
                 col_idx = df.columns.get_loc(column)
@@ -179,12 +214,13 @@ class excelClass:
 
     def print_visitor(self, filepath, filename, date1, date2):
         data, columns = self.sql_query.sort_visitor_report_bydate_excel(date1, date2)
+        columns = ['Visitor No.', 'First Name', 'Last Name','Attendance Date', 'Time in', 'Time out' ]
         if data and columns:
             df = pd.DataFrame(data=data, columns=columns)
             writer = pd.ExcelWriter(
                 filepath + "/" + filename + ".xlsx", engine="xlsxwriter"
             )
-            start_column = 4
+            start_column = 3
             df.to_excel(
                 writer,
                 sheet_name="Sheet1",
@@ -194,10 +230,16 @@ class excelClass:
                 index=False,
                 na_rep="NaN",
             )
+            starting_date = str(date1)[0:10]
+            end_date = str(date2)[0:10]
+ 
             worksheet = writer.sheets["Sheet1"]
-            worksheet.insert_image("A1", ".\SeekU\STI College Balagtas Logo medium.png")
-            worksheet.insert_image("F1", ".\SeekU\SeekU Logotype micro.png")
-            worksheet.insert_image("L1", ".\SeekU\SeekU small.png")
+            worksheet.write('F9', starting_date)
+            worksheet.write('H9', end_date)  
+            worksheet.insert_image("C1", ".\SeekU\STI College Balagtas Logo medium.png")
+            worksheet.insert_image("F1", ".\SeekU\Visitor Report.png")
+            worksheet.insert_image("F6", ".\SeekU\Dates.png")
+            worksheet.insert_image("I1", ".\SeekU\SeekU small.png")
             for column in df:
                 column_length = max(df[column].astype(str).map(len).max(), len(column))
                 col_idx = df.columns.get_loc(column)
@@ -226,7 +268,7 @@ class docxClass:
         cont_inue = self.treeview.populate_student_report_bydate(date1, date2)
         # open an existing Word document
         if cont_inue:
-            doc = docx.Document(".\Documents\Document_temp\Report Template.docx")
+            doc = docx.Document(".\Documents\Student Report Template.docx")
 
             column_names = [
                 "Student_No",
@@ -268,7 +310,7 @@ class docxClass:
         cont_inue = self.treeview.populate_student_report_bydate(date1, date2)
         if cont_inue:
             # open an existing Word document
-            doc = docx.Document(".\Documents\Document_temp\Report Template.docx")
+            doc = docx.Document(".\Documents\Student Report Template.docx")
 
             column_names = [
                 "Student_No",
@@ -311,7 +353,7 @@ class docxClass:
         cont_inue = self.treeview.populate_personnel_report_bydate(date1, date2)
         if cont_inue:
             # open an existing Word document
-            doc = docx.Document(".\Documents\Document_temp\Report Template.docx")
+            doc = docx.Document(".\Documents\Personnel Report Template.docx")
 
             column_names = [
                 "Personnel Number",
@@ -351,7 +393,7 @@ class docxClass:
         cont_inue = self.treeview.populate_personnel_report_bydate(date1, date2)
         if cont_inue:
             # open an existing Word document
-            doc = docx.Document(".\Documents\Document_temp\Report Template.docx")
+            doc = docx.Document(".\Documents\Personnel Report Template.docx")
 
             column_names = [
                 "Personnel Number",
@@ -390,7 +432,7 @@ class docxClass:
         cont_inue = self.treeview.populate_visitor_report_bydate(date1, date2)
         if cont_inue:
             # open an existing Word document
-            doc = docx.Document(".\Documents\Document_temp\Report Template.docx")
+            doc = docx.Document(".\Documents\Visitor Report Template.docx")
 
             column_names = [
                 "Visitor Number",
@@ -430,7 +472,7 @@ class docxClass:
         cont_inue = self.treeview.populate_visitor_report_bydate(date1, date2)
         if cont_inue:
             # open an existing Word document
-            doc = docx.Document(".\Documents\Document_temp\Report Template.docx")
+            doc = docx.Document(".\Documents\Visitor Report Template.docx")
 
             column_names = [
                 "Visitor Number",
@@ -469,7 +511,7 @@ class docxClass:
         cont_inue = self.treeview.populate_student_report_bydate(date1, date2)
         if cont_inue:
             # open an existing Word document
-            doc = docx.Document(".\Documents\Document_temp\Report Template.docx")
+            doc = docx.Document(".\Documents\Student Report Template.docx")
 
             column_names = [
                 "Student_No",
@@ -519,7 +561,7 @@ class docxClass:
         cont_inue = self.treeview.populate_student_report_bydate(date1, date2)
         if cont_inue:
             # open an existing Word document
-            doc = docx.Document(".\Documents\Document_temp\Report Template.docx")
+            doc = docx.Document(".\Documents\Student Report Template.docx")
 
             column_names = [
                 "Student_No",
@@ -568,7 +610,7 @@ class docxClass:
         cont_inue = self.treeview.populate_personnel_report_bydate(date1, date2)
         if cont_inue:
             # open an existing Word document
-            doc = docx.Document(".\Documents\Document_temp\Report Template.docx")
+            doc = docx.Document(".\Documents\Personnel Report Template.docx")
 
             column_names = [
                 "Personnel Number",
@@ -614,7 +656,7 @@ class docxClass:
         cont_inue = self.treeview.populate_personnel_report_bydate(date1, date2)
         if cont_inue:
             # open an existing Word document
-            doc = docx.Document(".\Documents\Document_temp\Report Template.docx")
+            doc = docx.Document(".\Documents\Personnel Report Template.docx")
 
             column_names = [
                 "Personnel Number",
@@ -659,7 +701,7 @@ class docxClass:
         cont_inue = self.treeview.populate_visitor_report_bydate(date1, date2)
         if cont_inue:
             # open an existing Word document
-            doc = docx.Document(".\Documents\Document_temp\Report Template.docx")
+            doc = docx.Document(".\Documents\Visitor Report Template.docx")
 
             column_names = [
                 "Visitor Number",
@@ -705,7 +747,7 @@ class docxClass:
         cont_inue =self.treeview.populate_visitor_report_bydate(date1, date2)
         if cont_inue:
             # open an existing Word document
-            doc = docx.Document(".\Documents\Document_temp\Report Template.docx")
+            doc = docx.Document(".\Documents\Visitor Report Template.docx")
 
             column_names = [
                 "Visitor Number",
