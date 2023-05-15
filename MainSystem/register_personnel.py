@@ -12,6 +12,14 @@ import re
 class RegisterPersonnelApp:
     def __init__(self, cam_app, admin_hom, file_path, saveonly, refresh, condition):
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
+        # Color ------------
+        self.sub_complimentary_color = "#808080" #gray
+        self.main_color = "#0072bc" #Blue
+        self.sub_color = "#FFF875" #light Yellow
+        self.complimentary_color_1 = "#E7E7E7" #light  gray
+        self.complimentary_color_2 = "#F7FAE9" #Cream Color
+        self.hover_color = "#FFF200" #pure Yellow
+        # Color ------------
         self.select_cam_window = cam_app
         self.admin_home_window = admin_hom
         self.img_path = file_path
@@ -22,7 +30,7 @@ class RegisterPersonnelApp:
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.register_personnel_app = tk.Toplevel()
         self.register_personnel_app.configure(
-            background="#F7FAE9", height=200, width=200
+            background=self.complimentary_color_2, height=200, width=200
         )
         width = self.register_personnel_app.winfo_screenwidth()
         height = self.register_personnel_app.winfo_screenheight()
@@ -32,10 +40,10 @@ class RegisterPersonnelApp:
         self.register_personnel_app.iconbitmap(".\SeekU\SeekU.ico")
         # Contains-the-camera-canvas---------------------------------------------------------------------------------------------------------
         self.register_pers_frame4 = tk.Frame(self.register_personnel_app)
-        self.register_pers_frame4.configure(background="#0072bc", height=200, width=200)
+        self.register_pers_frame4.configure(background=self.main_color, height=200, width=200)
         self.camera_canvas = tk.Canvas(self.register_pers_frame4)
         self.camera_canvas.configure(
-            background="#0072bc", highlightbackground="#0072bc"
+            background=self.main_color, highlightbackground=self.main_color
         )
         self.camera_canvas.place(
             anchor="center", relheight=1.0, relwidth=1.0, relx=0.5, rely=0.5, x=0, y=0
@@ -47,16 +55,16 @@ class RegisterPersonnelApp:
         # Contains-the-camera-canvas---------------------------------------------------------------------------------------------------------
         # Contains-return-button-the-app-name-logotype-and-app-logo---------------------------------------------------------------------------------------------------------
         self.register_pers_frame3 = tk.Frame(self.register_personnel_app)
-        self.register_pers_frame3.configure(background="#F7FAE9", height=200, width=200)
+        self.register_pers_frame3.configure(background=self.complimentary_color_2, height=200, width=200)
         self.app_name_logo = tk.Label(self.register_pers_frame3)
         self.img_SeekULogotypesmall = tk.PhotoImage(
             file=".\SeekU\SeekU Logotype small.png"
         )
         self.app_name_logo.configure(
             anchor="w",
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             font="{arial black} 100 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             image=self.img_SeekULogotypesmall,
             justify="left",
             text="SEEK",
@@ -65,12 +73,12 @@ class RegisterPersonnelApp:
         self.app_logo_label = tk.Label(self.register_pers_frame3)
         self.img_SeekUlarge = tk.PhotoImage(file=".\SeekU\SeekU large.png")
         self.app_logo_label.configure(
-            background="#F7FAE9", image=self.img_SeekUlarge, text="label1"
+            background=self.complimentary_color_2, image=self.img_SeekUlarge, text="label1"
         )
         self.app_logo_label.place(anchor="center", relx=0.32, rely=0.5)
         self.return_button = tk.Button(self.register_pers_frame3)
         self.return_button.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial} 20 {bold}",
             foreground="#ffffff",
             text="Return",
@@ -83,15 +91,15 @@ class RegisterPersonnelApp:
         # Contains-return-button-the-app-name-logotype-and-app-logo---------------------------------------------------------------------------------------------------------
         # Contains-register-button-the-entry-widgets---------------------------------------------------------------------------------------------------------
         self.register_pers_frame2 = tk.Frame(self.register_personnel_app)
-        self.register_pers_frame2.configure(background="#F7FAE9", height=200, width=200)
+        self.register_pers_frame2.configure(background=self.complimentary_color_2, height=200, width=200)
         self.register_pers_label = tk.Label(self.register_pers_frame2)
         self.register_pers_label.configure(
-            background="#F7FAE9", font="{arial} 28 {bold}", text="Register Personnel"
+            background=self.complimentary_color_2, font="{arial} 28 {bold}", text="Register Personnel"
         )
         self.register_pers_label.place(anchor="center", relx=0.5, rely=0.05, x=0, y=0)
         self.personnel_num_label = tk.Label(self.register_pers_frame2)
         self.personnel_num_label.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             cursor="arrow",
             font="{arial} 20 {bold}",
             text="Personnel No.",
@@ -104,7 +112,7 @@ class RegisterPersonnelApp:
         )
         self.first_name_label = tk.Label(self.register_pers_frame2)
         self.first_name_label.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             cursor="arrow",
             font="{arial} 20 {bold}",
             text="First Name",
@@ -117,7 +125,7 @@ class RegisterPersonnelApp:
         )
         self.mid_name_label = tk.Label(self.register_pers_frame2)
         self.mid_name_label.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             cursor="arrow",
             font="{arial} 20 {bold}",
             text="Middle Name",
@@ -130,7 +138,7 @@ class RegisterPersonnelApp:
         )
         self.last_name_label = tk.Label(self.register_pers_frame2)
         self.last_name_label.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             cursor="arrow",
             font="{arial} 20 {bold}",
             text="Last Name",
@@ -143,7 +151,7 @@ class RegisterPersonnelApp:
         )
         self.personnel_type_label = tk.Label(self.register_pers_frame2)
         self.personnel_type_label.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             cursor="arrow",
             font="{arial} 20 {bold}",
             text="Personnel Type",
@@ -154,7 +162,7 @@ class RegisterPersonnelApp:
 
         self.contact_num_label = tk.Label(self.register_pers_frame2)
         self.contact_num_label.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             cursor="arrow",
             font="{arial} 20 {bold}",
             text="Contact No.",
@@ -183,7 +191,7 @@ class RegisterPersonnelApp:
         )
         self.address_label = tk.Label(self.register_pers_frame2)
         self.address_label.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             cursor="arrow",
             font="{arial} 20 {bold}",
             text="Address",
@@ -196,7 +204,7 @@ class RegisterPersonnelApp:
         )
         self.register_button = tk.Button(self.register_pers_frame2)
         self.register_button.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial} 20 {bold}",
             foreground="#ffffff",
             text="Register",
@@ -209,13 +217,13 @@ class RegisterPersonnelApp:
         # Contains-register-button-the-entry-widgets---------------------------------------------------------------------------------------------------------
         # Contains-school-logo-------------------------------------------------------------------------------------------------------------------------------------
         self.register_pers_frame1 = tk.Frame(self.register_personnel_app)
-        self.register_pers_frame1.configure(background="#FFF875", height=200, width=200)
+        self.register_pers_frame1.configure(background=self.sub_color, height=200, width=200)
         self.school_logo_label = tk.Label(self.register_pers_frame1)
         self.img_STICollegeBalagtasLogomedium = tk.PhotoImage(
             file=".\SeekU\STI College Balagtas Logo medium.png"
         )
         self.school_logo_label.configure(
-            background="#FFF875",
+            background=self.sub_color,
             image=self.img_STICollegeBalagtasLogomedium,
             text="label1",
         )
