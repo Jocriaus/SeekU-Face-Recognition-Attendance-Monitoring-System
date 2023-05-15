@@ -4,12 +4,13 @@ import pandas as pd
 import tkinter.messagebox as messbx
 import datetime
 
+
 class BackupRestore:
     def __init__(self, master=None):
         # "DESKTOP-DG7AK17\SQLEXPRESS"
         # "STAR-PLATINUM\SQLEXPRESS01"
         # "DESKTOP-3MNAAKG\SQLEXPRESS"
-        self.server = "STAR-PLATINUM\SQLEXPRESS01"
+        self.server = "DESKTOP-DG7AK17\SQLEXPRESS"
         self.database = "seeku_database"
         self.username = ""
         self.password = ""
@@ -25,16 +26,18 @@ class BackupRestore:
             df = df2.fillna(value=0)
             if "student_status" in df.columns:
                 for index, row in df.iterrows():
-                    student_no_row = ''
+                    student_no_row = ""
                     query3 = f"SELECT * FROM tbl_student WHERE student_no = ?"
                     self.cursor.execute(query3, (row.student_no))
                     student_no_row = self.cursor.fetchone()
                     print(student_no_row)
 
                     if student_no_row:
-                        query = (f"UPDATE tbl_student SET student_firstname = ?, student_lastname = ?, student_middlename = ?, "+
-                        "student_program = ?, student_section = ?, student_contact_no = ?, student_address = ?, student_status = ? "+
-                        "WHERE student_no = ?")
+                        query = (
+                            f"UPDATE tbl_student SET student_firstname = ?, student_lastname = ?, student_middlename = ?, "
+                            + "student_program = ?, student_section = ?, student_contact_no = ?, student_address = ?, student_status = ? "
+                            + "WHERE student_no = ?"
+                        )
                         self.cursor.execute(
                             query,
                             (
@@ -49,10 +52,12 @@ class BackupRestore:
                                 row.student_no,
                             ),
                         )
-                    else:    
-                        query = (f"SET IDENTITY_INSERT tbl_student ON " +
-                        "INSERT INTO tbl_student (student_no, student_firstname, student_lastname, student_lastname, student_middlename, student_program,student_section,student_contact_no,student_address,student_status ) values (?, ?, ?, ?, ?, ?,?,?,?) "+
-                        "SET IDENTITY_INSERT tbl_student OFF")
+                    else:
+                        query = (
+                            f"SET IDENTITY_INSERT tbl_student ON "
+                            + "INSERT INTO tbl_student (student_no, student_firstname, student_lastname, student_lastname, student_middlename, student_program,student_section,student_contact_no,student_address,student_status ) values (?, ?, ?, ?, ?, ?,?,?,?) "
+                            + "SET IDENTITY_INSERT tbl_student OFF"
+                        )
                         self.cursor.execute(
                             query,
                             (
@@ -67,7 +72,7 @@ class BackupRestore:
                                 row.student_status,
                             ),
                         )
-                    self.cursor.commit()                 
+                    self.cursor.commit()
                 messbx.showinfo(
                     "Success", "The records have been updated successfully!"
                 )
@@ -91,23 +96,29 @@ class BackupRestore:
             print(df)
             if "student_report_no" in df.columns:
                 for index, row in df.iterrows():
-                    student_report_no_row = ''
-                    date = datetime.datetime.strptime(row.student_attendance_date, '%Y-%m-%d').date()
+                    student_report_no_row = ""
+                    date = datetime.datetime.strptime(
+                        row.student_attendance_date, "%Y-%m-%d"
+                    ).date()
                     time_in_str = row.student_time_in.split(".")[0]
                     time_out_str = row.student_time_out.split(".")[0]
                     time_in_str = time_in_str
                     time_out_str = time_out_str
                     correct_date = date.strftime("%Y-%m-%d")
 
-                    query3 = f"SELECT * FROM tbl_student_report WHERE student_report_no = ?"
+                    query3 = (
+                        f"SELECT * FROM tbl_student_report WHERE student_report_no = ?"
+                    )
                     self.cursor.execute(query3, (row.student_report_no))
                     student_report_no_row = self.cursor.fetchone()
                     print(student_report_no_row)
 
                     if student_report_no_row:
                         print("update")
-                        query = (f"UPDATE tbl_student_report SET student_no = ?, student_attendance_date = ?, "+
-                        "student_time_in = ?, student_time_out = ? WHERE student_report_no = ?")
+                        query = (
+                            f"UPDATE tbl_student_report SET student_no = ?, student_attendance_date = ?, "
+                            + "student_time_in = ?, student_time_out = ? WHERE student_report_no = ?"
+                        )
                         self.cursor.execute(
                             query,
                             (
@@ -115,15 +126,17 @@ class BackupRestore:
                                 correct_date,
                                 time_in_str,
                                 time_out_str,
-                                row.student_report_no
+                                row.student_report_no,
                             ),
                         )
-                        
-                    else:    
+
+                    else:
                         print("insert")
-                        query = (f"SET IDENTITY_INSERT tbl_student_report ON " +
-                        "INSERT INTO tbl_student_report (student_report_no,student_no,student_attendance_date,student_time_in,student_time_out) values (?,?,?,?,?) "+
-                        "SET IDENTITY_INSERT tbl_student_report OFF")
+                        query = (
+                            f"SET IDENTITY_INSERT tbl_student_report ON "
+                            + "INSERT INTO tbl_student_report (student_report_no,student_no,student_attendance_date,student_time_in,student_time_out) values (?,?,?,?,?) "
+                            + "SET IDENTITY_INSERT tbl_student_report OFF"
+                        )
                         self.cursor.execute(
                             query,
                             (
@@ -134,9 +147,11 @@ class BackupRestore:
                                 time_out_str,
                             ),
                         )
-                        
-                    self.cursor.commit()                 
-                messbx.showinfo("Success", "The records have been updated successfully!")
+
+                    self.cursor.commit()
+                messbx.showinfo(
+                    "Success", "The records have been updated successfully!"
+                )
             else:
                 print("No Student Report no.")
                 messbx.showerror(
@@ -150,7 +165,6 @@ class BackupRestore:
                 "The CSV file is empty or could not be read.",
             )
 
-
     def restore_personnel(self, path):
         try:
             df2 = pd.read_csv(path)
@@ -158,18 +172,20 @@ class BackupRestore:
             print(df)
             if "personnel_status" in df.columns:
                 for index, row in df.iterrows():
-                    personnel_no_row = ''
+                    personnel_no_row = ""
                     personnel_no_str = str(row.personnel_no)
                     query3 = f"SELECT * FROM tbl_personnel WHERE personnel_no = ?"
                     self.cursor.execute(query3, (personnel_no_str))
                     personnel_no_row = self.cursor.fetchone()
                     print(personnel_no_row)
-                    print(personnel_no_str+ "the number")
+                    print(personnel_no_str + "the number")
                     if personnel_no_row:
                         print("update")
-                        query = (f"UPDATE tbl_personnel SET personnel_firstname = ?, personnel_lastname = ?, personnel_middlename = ?, "+
-                        "personnel_contact_no = ?, personnel_address = ?, personnel_type = ?, personnel_status = ? "+
-                        "WHERE personnel_no = ?")
+                        query = (
+                            f"UPDATE tbl_personnel SET personnel_firstname = ?, personnel_lastname = ?, personnel_middlename = ?, "
+                            + "personnel_contact_no = ?, personnel_address = ?, personnel_type = ?, personnel_status = ? "
+                            + "WHERE personnel_no = ?"
+                        )
                         self.cursor.execute(
                             query,
                             (
@@ -183,11 +199,13 @@ class BackupRestore:
                                 personnel_no_str,
                             ),
                         )
-                    else:    
+                    else:
                         print("insert")
-                        query = (f"SET IDENTITY_INSERT tbl_personnel ON " +
-                        "INSERT INTO tbl_personnel (personnel_no, personnel_firstname, personnel_lastname, personnel_middlename, personnel_contact_no, personnel_address,personnel_type,personnel_status ) values (?, ?, ?, ?, ?, ?,?,?,?) "+
-                        "SET IDENTITY_INSERT tbl_personnel OFF")
+                        query = (
+                            f"SET IDENTITY_INSERT tbl_personnel ON "
+                            + "INSERT INTO tbl_personnel (personnel_no, personnel_firstname, personnel_lastname, personnel_middlename, personnel_contact_no, personnel_address,personnel_type,personnel_status ) values (?, ?, ?, ?, ?, ?,?,?,?) "
+                            + "SET IDENTITY_INSERT tbl_personnel OFF"
+                        )
                         self.cursor.execute(
                             query,
                             (
@@ -201,8 +219,8 @@ class BackupRestore:
                                 row.personnel_status,
                             ),
                         )
-                    print(personnel_no_str  + " committed")
-                    self.cursor.commit()                 
+                    print(personnel_no_str + " committed")
+                    self.cursor.commit()
 
                 messbx.showinfo(
                     "Success", "The records have been updated successfully!"
@@ -227,8 +245,10 @@ class BackupRestore:
             print(df)
             if "personnel_report_no" in df.columns:
                 for index, row in df.iterrows():
-                    personnel_report_no_row = ''
-                    date = datetime.datetime.strptime(row.personnel_attendance_date, '%Y-%m-%d').date()
+                    personnel_report_no_row = ""
+                    date = datetime.datetime.strptime(
+                        row.personnel_attendance_date, "%Y-%m-%d"
+                    ).date()
                     time_in_str = row.personnel_time_in.split(".")[0]
                     time_out_str = row.personnel_time_out.split(".")[0]
                     time_in_str = time_in_str
@@ -241,8 +261,10 @@ class BackupRestore:
                     print(personnel_report_no_row)
 
                     if personnel_report_no_row:
-                        query = (f"UPDATE tbl_personnel_report SET personnel_no = ?, personnel_attendance_date = ?, "+
-                        "personnel_time_in = ?, personnel_time_out = ? WHERE personnel_report_no = ?")
+                        query = (
+                            f"UPDATE tbl_personnel_report SET personnel_no = ?, personnel_attendance_date = ?, "
+                            + "personnel_time_in = ?, personnel_time_out = ? WHERE personnel_report_no = ?"
+                        )
                         self.cursor.execute(
                             query,
                             (
@@ -253,10 +275,12 @@ class BackupRestore:
                                 row.personnel_report_no,
                             ),
                         )
-                    else:    
-                        query = (f"SET IDENTITY_INSERT tbl_personnel_report ON " +
-                        "INSERT INTO tbl_personnel_report (personnel_report_no,personnel_no,personnel_attendance_date,personnel_time_in,personnel_time_out) values (?,?,?,?,?) "+
-                        "SET IDENTITY_INSERT tbl_personnel_report OFF")
+                    else:
+                        query = (
+                            f"SET IDENTITY_INSERT tbl_personnel_report ON "
+                            + "INSERT INTO tbl_personnel_report (personnel_report_no,personnel_no,personnel_attendance_date,personnel_time_in,personnel_time_out) values (?,?,?,?,?) "
+                            + "SET IDENTITY_INSERT tbl_personnel_report OFF"
+                        )
                         self.cursor.execute(
                             query,
                             (
@@ -267,8 +291,10 @@ class BackupRestore:
                                 time_out_str,
                             ),
                         )
-                    self.cursor.commit()                 
-                messbx.showinfo("Success", "The records have been updated successfully!")
+                    self.cursor.commit()
+                messbx.showinfo(
+                    "Success", "The records have been updated successfully!"
+                )
             else:
                 print("No Personnel report no.")
                 messbx.showerror(
@@ -289,15 +315,17 @@ class BackupRestore:
             print(df)
             if "visitor_status" in df.columns:
                 for index, row in df.iterrows():
-                    visitor_no_row = ''
+                    visitor_no_row = ""
                     query3 = f"SELECT * FROM tbl_visitor WHERE visitor_no = ?"
                     self.cursor.execute(query3, (row.visitor_no))
                     visitor_no_row = self.cursor.fetchone()
                     print(visitor_no_row)
 
                     if visitor_no_row:
-                        query = (f"UPDATE tbl_visitor SET visitor_firstname = ?, visitor_lastname = ?, visitor_contact_no = ?, "+
-                        "visitor_address = ?, visitor_status = ? WHERE visitor_no = ?")         
+                        query = (
+                            f"UPDATE tbl_visitor SET visitor_firstname = ?, visitor_lastname = ?, visitor_contact_no = ?, "
+                            + "visitor_address = ?, visitor_status = ? WHERE visitor_no = ?"
+                        )
                         self.cursor.execute(
                             query,
                             (
@@ -309,10 +337,12 @@ class BackupRestore:
                                 str(row.visitor_no),
                             ),
                         )
-                    else:    
-                        query = (f"SET IDENTITY_INSERT tbl_visitor ON " +
-                        "INSERT INTO tbl_visitor (visitor_no, visitor_firstname, visitor_lastname, visitor_contact_no, visitor_address, visitor_status) values (?, ?, ?, ?, ?, ?) "+
-                        "SET IDENTITY_INSERT tbl_visitor OFF") 
+                    else:
+                        query = (
+                            f"SET IDENTITY_INSERT tbl_visitor ON "
+                            + "INSERT INTO tbl_visitor (visitor_no, visitor_firstname, visitor_lastname, visitor_contact_no, visitor_address, visitor_status) values (?, ?, ?, ?, ?, ?) "
+                            + "SET IDENTITY_INSERT tbl_visitor OFF"
+                        )
                         self.cursor.execute(
                             query,
                             (
@@ -324,8 +354,10 @@ class BackupRestore:
                                 str(row.visitor_no),
                             ),
                         )
-                    self.cursor.commit()                 
-                messbx.showinfo("Success", "The records have been updated successfully!")
+                    self.cursor.commit()
+                messbx.showinfo(
+                    "Success", "The records have been updated successfully!"
+                )
             else:
                 print("No Visitor Status")
                 messbx.showerror(
@@ -346,23 +378,28 @@ class BackupRestore:
             print(df)
             if "visitor_report_no" in df.columns:
                 for index, row in df.iterrows():
-                    visitor_report_no_row = ''
-                    date = datetime.datetime.strptime(row.visitor_attendance_date, '%Y-%m-%d').date()
+                    visitor_report_no_row = ""
+                    date = datetime.datetime.strptime(
+                        row.visitor_attendance_date, "%Y-%m-%d"
+                    ).date()
                     time_in_str = row.visitor_time_in.split(".")[0]
                     time_out_str = row.visitor_time_out.split(".")[0]
                     time_in_str = time_in_str
                     time_out_str = time_out_str
                     correct_date = date.strftime("%Y-%m-%d")
 
-                    
-                    query3 = f"SELECT * FROM tbl_visitor_report WHERE visitor_report_no = ?"
+                    query3 = (
+                        f"SELECT * FROM tbl_visitor_report WHERE visitor_report_no = ?"
+                    )
                     self.cursor.execute(query3, (row.visitor_report_no))
                     visitor_report_no_row = self.cursor.fetchone()
                     print(visitor_report_no_row)
 
                     if visitor_report_no_row:
-                        query = (f"UPDATE tbl_visitor_report SET visitor_no = ?, visitor_attendance_date = ?, "+
-                        "visitor_time_in = ?, visitor_time_out = ? WHERE visitor_report_no = ?")
+                        query = (
+                            f"UPDATE tbl_visitor_report SET visitor_no = ?, visitor_attendance_date = ?, "
+                            + "visitor_time_in = ?, visitor_time_out = ? WHERE visitor_report_no = ?"
+                        )
                         self.cursor.execute(
                             query,
                             (
@@ -373,10 +410,12 @@ class BackupRestore:
                                 row.visitor_report_no,
                             ),
                         )
-                    else:    
-                        query = (f"SET IDENTITY_INSERT tbl_visitor_report ON " +
-                        "INSERT INTO tbl_visitor_report (visitor_report_no,visitor_no,visitor_attendance_date,visitor_time_in,visitor_time_out) values (?,?,?,?,?) "+
-                        "SET IDENTITY_INSERT tbl_visitor_report OFF")
+                    else:
+                        query = (
+                            f"SET IDENTITY_INSERT tbl_visitor_report ON "
+                            + "INSERT INTO tbl_visitor_report (visitor_report_no,visitor_no,visitor_attendance_date,visitor_time_in,visitor_time_out) values (?,?,?,?,?) "
+                            + "SET IDENTITY_INSERT tbl_visitor_report OFF"
+                        )
                         self.cursor.execute(
                             query,
                             (
@@ -387,8 +426,10 @@ class BackupRestore:
                                 time_out_str,
                             ),
                         )
-                    self.cursor.commit()                 
-                messbx.showinfo("Success", "The records have been updated successfully!")
+                    self.cursor.commit()
+                messbx.showinfo(
+                    "Success", "The records have been updated successfully!"
+                )
             else:
                 print("No visitor report no.")
                 messbx.showerror(
@@ -396,12 +437,11 @@ class BackupRestore:
                     "The CSV File you selected is not for Visitor Reports.",
                 )
         except Exception as error:
-            print (error)
+            print(error)
             messbx.showerror(
                 "Wrong CSV File",
                 "The CSV file is empty or could not be read.",
             )
-
 
     def restore_user(self, path):
         try:
@@ -410,15 +450,17 @@ class BackupRestore:
 
                 for index, row in df.iterrows():
                     print(row)
-                    user_no_row =''
+                    user_no_row = ""
                     query3 = f"SELECT * FROM tbl_user WHERE user_no = ?"
                     self.cursor.execute(query3, (row.user_no))
                     user_no_row = self.cursor.fetchone()
                     print(user_no_row)
 
                     if user_no_row:
-                        query = (f"UPDATE tbl_user SET username = ?, password = ?, user_firstname = ?, "+
-                        "user_lastname = ?, user_type = ?, user_status = ? WHERE user_no = ?")
+                        query = (
+                            f"UPDATE tbl_user SET username = ?, password = ?, user_firstname = ?, "
+                            + "user_lastname = ?, user_type = ?, user_status = ? WHERE user_no = ?"
+                        )
                         self.cursor.execute(
                             query,
                             (
@@ -459,15 +501,11 @@ class BackupRestore:
                     "The CSV File you selected is not for User Records.",
                 )
         except Exception as error:
-            print (error)
+            print(error)
             messbx.showerror(
                 "Wrong CSV File",
                 "The CSV file is empty or could not be read.",
             )
-
-
-
-
 
     def backup_data(self, path):
         query = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_CATALOG='seeku_database'"

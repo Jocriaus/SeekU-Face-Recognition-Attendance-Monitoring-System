@@ -3,9 +3,11 @@ import pandas as pd
 import query_mod as qry
 import os
 import docx
+import docx.shared
 import docx2pdf
 import Treeview_table_mod as tbl
 import tkinter.messagebox as messbx
+
 
 class excelClass:
     def __init__(self, master=None):
@@ -14,7 +16,16 @@ class excelClass:
 
     def save_student(self, filepath, filename, date1, date2):
         data, columns = self.sql_query.sort_student_report_bydate_excel(date1, date2)
-        columns = ['Student No.', 'First Name', 'Last Name','Program' ,'Section' ,'Attendance Date', 'Time in', 'Time out' ]
+        columns = [
+            "Student No.",
+            "First Name",
+            "Last Name",
+            "Program",
+            "Section",
+            "Attendance Date",
+            "Time in",
+            "Time out",
+        ]
         if data and columns:
             df = pd.DataFrame(data=data, columns=columns)
             writer = pd.ExcelWriter(
@@ -32,10 +43,10 @@ class excelClass:
             )
             starting_date = str(date1)[0:10]
             end_date = str(date2)[0:10]
- 
+
             worksheet = writer.sheets["Sheet1"]
-            worksheet.write('E9', starting_date)
-            worksheet.write('G9', end_date)  
+            worksheet.write("E9", starting_date)
+            worksheet.write("G9", end_date)
             worksheet.insert_image("C1", ".\SeekU\STI College Balagtas Logo medium.png")
             worksheet.insert_image("E1", ".\SeekU\Student Report.png")
             worksheet.insert_image("E6", ".\SeekU\Dates.png")
@@ -54,7 +65,15 @@ class excelClass:
 
     def save_personnel(self, filepath, filename, date1, date2):
         data, columns = self.sql_query.sort_personnel_report_bydate_excel(date1, date2)
-        columns = ['Personnel No.', 'First Name', 'Last Name','Personnel Type' ,'Attendance Date', 'Time in', 'Time out' ]
+        columns = [
+            "Personnel No.",
+            "First Name",
+            "Last Name",
+            "Personnel Type",
+            "Attendance Date",
+            "Time in",
+            "Time out",
+        ]
         if data and columns:
             df = pd.DataFrame(data=data, columns=columns)
             writer = pd.ExcelWriter(
@@ -72,10 +91,10 @@ class excelClass:
             )
             starting_date = str(date1)[0:10]
             end_date = str(date2)[0:10]
- 
+
             worksheet = writer.sheets["Sheet1"]
-            worksheet.write('E9', starting_date)
-            worksheet.write('G9', end_date)  
+            worksheet.write("E9", starting_date)
+            worksheet.write("G9", end_date)
             worksheet.insert_image("C1", ".\SeekU\STI College Balagtas Logo medium.png")
             worksheet.insert_image("E1", ".\SeekU\Personnel Report.png")
             worksheet.insert_image("E6", ".\SeekU\Dates.png")
@@ -91,10 +110,16 @@ class excelClass:
                 "Warning", "There are no records of attendance for the selected date."
             )
 
-
     def save_visitor(self, filepath, filename, date1, date2):
         data, columns = self.sql_query.sort_visitor_report_bydate_excel(date1, date2)
-        columns = ['Visitor No.', 'First Name', 'Last Name','Attendance Date', 'Time in', 'Time out' ]
+        columns = [
+            "Visitor No.",
+            "First Name",
+            "Last Name",
+            "Attendance Date",
+            "Time in",
+            "Time out",
+        ]
         if data and columns:
             df = pd.DataFrame(data=data, columns=columns)
             writer = pd.ExcelWriter(
@@ -112,10 +137,10 @@ class excelClass:
             )
             starting_date = str(date1)[0:10]
             end_date = str(date2)[0:10]
- 
+
             worksheet = writer.sheets["Sheet1"]
-            worksheet.write('E9', starting_date)
-            worksheet.write('H9', end_date)  
+            worksheet.write("E9", starting_date)
+            worksheet.write("H9", end_date)
             worksheet.insert_image("C1", ".\SeekU\STI College Balagtas Logo medium.png")
             worksheet.insert_image("E1", ".\SeekU\Visitor Report.png")
             worksheet.insert_image("E6", ".\SeekU\Dates.png")
@@ -131,10 +156,18 @@ class excelClass:
                 "Warning", "There are no records of attendance for the selected date."
             )
 
-
     def print_student(self, filepath, filename, date1, date2):
         data, columns = self.sql_query.sort_student_report_bydate_excel(date1, date2)
-        columns = ['Student No.', 'First Name', 'Last Name','Program' ,'Section' ,'Attendance Date', 'Time in', 'Time out' ]
+        columns = [
+            "Student No.",
+            "First Name",
+            "Last Name",
+            "Program",
+            "Section",
+            "Attendance Date",
+            "Time in",
+            "Time out",
+        ]
         if data and columns:
             df = pd.DataFrame(data=data, columns=columns)
             writer = pd.ExcelWriter(
@@ -152,10 +185,10 @@ class excelClass:
             )
             starting_date = str(date1)[0:10]
             end_date = str(date2)[0:10]
- 
+
             worksheet = writer.sheets["Sheet1"]
-            worksheet.write('E9', starting_date)
-            worksheet.write('G9', end_date)  
+            worksheet.write("E9", starting_date)
+            worksheet.write("G9", end_date)
             worksheet.insert_image("C1", ".\SeekU\STI College Balagtas Logo medium.png")
             worksheet.insert_image("E1", ".\SeekU\Student Report.png")
             worksheet.insert_image("E6", ".\SeekU\Dates.png")
@@ -175,7 +208,15 @@ class excelClass:
 
     def print_personnel(self, filepath, filename, date1, date2):
         data, columns = self.sql_query.sort_personnel_report_bydate_excel(date1, date2)
-        columns = ['Personnel No.', 'First Name', 'Last Name','Personnel Type' ,'Attendance Date', 'Time in', 'Time out' ]
+        columns = [
+            "Personnel No.",
+            "First Name",
+            "Last Name",
+            "Personnel Type",
+            "Attendance Date",
+            "Time in",
+            "Time out",
+        ]
         if data and columns:
             df = pd.DataFrame(data=data, columns=columns)
             writer = pd.ExcelWriter(
@@ -193,10 +234,10 @@ class excelClass:
             )
             starting_date = str(date1)[0:10]
             end_date = str(date2)[0:10]
- 
+
             worksheet = writer.sheets["Sheet1"]
-            worksheet.write('F9', starting_date)
-            worksheet.write('G9', end_date)  
+            worksheet.write("F9", starting_date)
+            worksheet.write("G9", end_date)
             worksheet.insert_image("C1", ".\SeekU\STI College Balagtas Logo medium.png")
             worksheet.insert_image("F1", ".\SeekU\Personnel Report.png")
             worksheet.insert_image("F6", ".\SeekU\Dates.png")
@@ -214,7 +255,14 @@ class excelClass:
 
     def print_visitor(self, filepath, filename, date1, date2):
         data, columns = self.sql_query.sort_visitor_report_bydate_excel(date1, date2)
-        columns = ['Visitor No.', 'First Name', 'Last Name','Attendance Date', 'Time in', 'Time out' ]
+        columns = [
+            "Visitor No.",
+            "First Name",
+            "Last Name",
+            "Attendance Date",
+            "Time in",
+            "Time out",
+        ]
         if data and columns:
             df = pd.DataFrame(data=data, columns=columns)
             writer = pd.ExcelWriter(
@@ -232,10 +280,10 @@ class excelClass:
             )
             starting_date = str(date1)[0:10]
             end_date = str(date2)[0:10]
- 
+
             worksheet = writer.sheets["Sheet1"]
-            worksheet.write('E9', starting_date)
-            worksheet.write('H9', end_date)  
+            worksheet.write("E9", starting_date)
+            worksheet.write("H9", end_date)
             worksheet.insert_image("C1", ".\SeekU\STI College Balagtas Logo medium.png")
             worksheet.insert_image("E1", ".\SeekU\Visitor Report.png")
             worksheet.insert_image("E6", ".\SeekU\Dates.png")
@@ -269,7 +317,14 @@ class docxClass:
         # open an existing Word document
         if cont_inue:
             doc = docx.Document(".\Documents\Student Report Template.docx")
+            start_date = str(date1)[0:10]
+            end_date = str(date2)[0:10]
+            text = str(start_date) + " to " + str(end_date)
+            date_time = doc.add_paragraph(text)
+            date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
 
+            font = date_time.runs[0].font
+            font.size = docx.shared.Pt(15)
             column_names = [
                 "Student_No",
                 "Firstname",
@@ -311,6 +366,14 @@ class docxClass:
         if cont_inue:
             # open an existing Word document
             doc = docx.Document(".\Documents\Student Report Template.docx")
+            start_date = str(date1)[0:10]
+            end_date = str(date2)[0:10]
+            text = str(start_date) + " to " + str(end_date)
+            date_time = doc.add_paragraph(text)
+            date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+
+            font = date_time.runs[0].font
+            font.size = docx.shared.Pt(15)
 
             column_names = [
                 "Student_No",
@@ -354,7 +417,14 @@ class docxClass:
         if cont_inue:
             # open an existing Word document
             doc = docx.Document(".\Documents\Personnel Report Template.docx")
+            start_date = str(date1)[0:10]
+            end_date = str(date2)[0:10]
+            text = str(start_date) + " to " + str(end_date)
+            date_time = doc.add_paragraph(text)
+            date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
 
+            font = date_time.runs[0].font
+            font.size = docx.shared.Pt(15)
             column_names = [
                 "Personnel Number",
                 "First Name",
@@ -394,7 +464,14 @@ class docxClass:
         if cont_inue:
             # open an existing Word document
             doc = docx.Document(".\Documents\Personnel Report Template.docx")
+            start_date = str(date1)[0:10]
+            end_date = str(date2)[0:10]
+            text = str(start_date) + " to " + str(end_date)
+            date_time = doc.add_paragraph(text)
+            date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
 
+            font = date_time.runs[0].font
+            font.size = docx.shared.Pt(15)
             column_names = [
                 "Personnel Number",
                 "First Name",
@@ -433,7 +510,14 @@ class docxClass:
         if cont_inue:
             # open an existing Word document
             doc = docx.Document(".\Documents\Visitor Report Template.docx")
+            start_date = str(date1)[0:10]
+            end_date = str(date2)[0:10]
+            text = str(start_date) + " to " + str(end_date)
+            date_time = doc.add_paragraph(text)
+            date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
 
+            font = date_time.runs[0].font
+            font.size = docx.shared.Pt(15)
             column_names = [
                 "Visitor Number",
                 "First Name",
@@ -473,7 +557,14 @@ class docxClass:
         if cont_inue:
             # open an existing Word document
             doc = docx.Document(".\Documents\Visitor Report Template.docx")
+            start_date = str(date1)[0:10]
+            end_date = str(date2)[0:10]
+            text = str(start_date) + " to " + str(end_date)
+            date_time = doc.add_paragraph(text)
+            date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
 
+            font = date_time.runs[0].font
+            font.size = docx.shared.Pt(15)
             column_names = [
                 "Visitor Number",
                 "First Name",
@@ -512,7 +603,14 @@ class docxClass:
         if cont_inue:
             # open an existing Word document
             doc = docx.Document(".\Documents\Student Report Template.docx")
+            start_date = str(date1)[0:10]
+            end_date = str(date2)[0:10]
+            text = str(start_date) + " to " + str(end_date)
+            date_time = doc.add_paragraph(text)
+            date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
 
+            font = date_time.runs[0].font
+            font.size = docx.shared.Pt(15)
             column_names = [
                 "Student_No",
                 "Firstname",
@@ -562,7 +660,14 @@ class docxClass:
         if cont_inue:
             # open an existing Word document
             doc = docx.Document(".\Documents\Student Report Template.docx")
+            start_date = str(date1)[0:10]
+            end_date = str(date2)[0:10]
+            text = str(start_date) + " to " + str(end_date)
+            date_time = doc.add_paragraph(text)
+            date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
 
+            font = date_time.runs[0].font
+            font.size = docx.shared.Pt(15)
             column_names = [
                 "Student_No",
                 "Firstname",
@@ -611,7 +716,14 @@ class docxClass:
         if cont_inue:
             # open an existing Word document
             doc = docx.Document(".\Documents\Personnel Report Template.docx")
+            start_date = str(date1)[0:10]
+            end_date = str(date2)[0:10]
+            text = str(start_date) + " to " + str(end_date)
+            date_time = doc.add_paragraph(text)
+            date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
 
+            font = date_time.runs[0].font
+            font.size = docx.shared.Pt(15)
             column_names = [
                 "Personnel Number",
                 "First Name",
@@ -657,7 +769,14 @@ class docxClass:
         if cont_inue:
             # open an existing Word document
             doc = docx.Document(".\Documents\Personnel Report Template.docx")
+            start_date = str(date1)[0:10]
+            end_date = str(date2)[0:10]
+            text = str(start_date) + " to " + str(end_date)
+            date_time = doc.add_paragraph(text)
+            date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
 
+            font = date_time.runs[0].font
+            font.size = docx.shared.Pt(15)
             column_names = [
                 "Personnel Number",
                 "First Name",
@@ -702,7 +821,14 @@ class docxClass:
         if cont_inue:
             # open an existing Word document
             doc = docx.Document(".\Documents\Visitor Report Template.docx")
+            start_date = str(date1)[0:10]
+            end_date = str(date2)[0:10]
+            text = str(start_date) + " to " + str(end_date)
+            date_time = doc.add_paragraph(text)
+            date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
 
+            font = date_time.runs[0].font
+            font.size = docx.shared.Pt(15)
             column_names = [
                 "Visitor Number",
                 "First Name",
@@ -744,11 +870,18 @@ class docxClass:
 
     def save_pdf_visitor(self, filepath, filename, date1, date2):
         # populate the report tree
-        cont_inue =self.treeview.populate_visitor_report_bydate(date1, date2)
+        cont_inue = self.treeview.populate_visitor_report_bydate(date1, date2)
         if cont_inue:
             # open an existing Word document
             doc = docx.Document(".\Documents\Visitor Report Template.docx")
+            start_date = str(date1)[0:10]
+            end_date = str(date2)[0:10]
+            text = str(start_date) + " to " + str(end_date)
+            date_time = doc.add_paragraph(text)
+            date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
 
+            font = date_time.runs[0].font
+            font.size = docx.shared.Pt(15)
             column_names = [
                 "Visitor Number",
                 "First Name",

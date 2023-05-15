@@ -11,7 +11,7 @@ class TreeviewGUI:
         # "DESKTOP-DG7AK17\SQLEXPRESS"
         # "STAR-PLATINUM\SQLEXPRESS01"
         # "DESKTOP-3MNAAKG\SQLEXPRESS"
-        self.server = "STAR-PLATINUM\SQLEXPRESS01"
+        self.server = "DESKTOP-DG7AK17\SQLEXPRESS"
         self.database = "seeku_database"
         self.username = ""
         self.password = ""
@@ -1038,7 +1038,6 @@ class TreeviewGUI:
                     ),
                 )
 
-
     def populate_personnel_treeview(self, status):
         self.cursor.execute(
             "SELECT * FROM tbl_personnel WHERE personnel_status = '" + status + "'"
@@ -1348,7 +1347,6 @@ class TreeviewGUI:
                     ),
                 )
 
-
     def populate_student_report_bydate(self, date1, date2):
         for child in self.student_report_tree.get_children():
             self.student_report_tree.delete(child)
@@ -1541,7 +1539,6 @@ class TreeviewGUI:
                         timeout[0:8],
                     ),
                 )
-
 
     def do_search_personnel(self, search_term, status):
         self.search_term = search_term

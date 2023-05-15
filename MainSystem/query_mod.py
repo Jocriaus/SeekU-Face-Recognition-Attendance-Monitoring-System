@@ -7,7 +7,7 @@ class dbQueries:
         # "DESKTOP-DG7AK17\SQLEXPRESS"
         # "STAR-PLATINUM\SQLEXPRESS01"
         # "DESKTOP-3MNAAKG\SQLEXPRESS"
-        self.server = "STAR-PLATINUM\SQLEXPRESS01"
+        self.server = "DESKTOP-DG7AK17\SQLEXPRESS"
         self.database = "seeku_database"
         self.username = ""
         self.password = ""
@@ -299,7 +299,7 @@ class dbQueries:
             print(student_no_att_row)
 
             if student_no_att_row:
-            # if there is existing record with that student number
+                # if there is existing record with that student number
                 print("time_out")
                 insert_query_att_exit = f"UPDATE tbl_student_attendance SET student_time_out = ? WHERE student_no = ?"
                 self.cursor.execute(
@@ -340,7 +340,7 @@ class dbQueries:
             print(personnel_no_att_row)
 
             if personnel_no_att_row:
-            # if there is existing record with that personnel number
+                # if there is existing record with that personnel number
                 print("time_out")
                 insert_query_att_exit = f"UPDATE tbl_personnel_attendance SET personnel_time_out = ? WHERE personnel_no = ?"
                 self.cursor.execute(
@@ -381,7 +381,7 @@ class dbQueries:
             print(visitor_no_att_row)
 
             if visitor_no_att_row:
-            # if there is existing record with that visitor number
+                # if there is existing record with that visitor number
                 print("time_out")
                 insert_query_att_exit = f"UPDATE tbl_visitor_attendance SET visitor_time_out = ? WHERE visitor_no = ?"
                 self.cursor.execute(
@@ -497,7 +497,7 @@ class dbQueries:
                 "%" + search_term + "%",
                 "%" + search_term + "%",
                 status,
-            ),                
+            ),
         )
         results = self.cursor.fetchall()
         return results
@@ -937,13 +937,11 @@ class dbQueries:
 
         if not condition:
             table_name = "tbl_user"
-            
+
             self.cursor.execute(f"SET IDENTITY_INSERT {table_name} ON")
             self.connection.commit()
-            
-            reset_startingid_query = (
-                f"DBCC CHECKIDENT ('tbl_user', RESEED, 0)"
-            )
+
+            reset_startingid_query = f"DBCC CHECKIDENT ('tbl_user', RESEED, 0)"
             self.cursor.execute(reset_startingid_query)
             self.connection.commit()
             query2 = f"INSERT INTO tbl_user (username, password, user_firstname, user_lastname, user_type) VALUES (?, ?, ?, ?, ?)"
@@ -963,7 +961,7 @@ class dbQueries:
 
     def create_personnel_report(self):
         self.today = datetime.date.today()
-        self.yesterday = self.today - datetime.timedelta(days = 1)
+        self.yesterday = self.today - datetime.timedelta(days=1)
         date_int = int(self.yesterday.strftime("%y%m%d"))
         custom_no = date_int * 100000
 
@@ -978,13 +976,13 @@ class dbQueries:
             modified_rows.append((personnel_attendance_no, *row[1:]))
         if modified_rows:
             insert_query_attendance = f"INSERT INTO tbl_personnel_report (personnel_report_no, personnel_no, personnel_attendance_date, personnel_time_in,personnel_time_out) VALUES ( ?, ?, ?, ?, ?)"
-            self.cursor.executemany(insert_query_attendance,modified_rows)
+            self.cursor.executemany(insert_query_attendance, modified_rows)
             self.connection.commit()
 
         query2 = f"TRUNCATE TABLE tbl_personnel_attendance"
         self.cursor.execute(query2)
         self.connection.commit()
-        
+
         print("tbl_personnel_attendance reset")
         reset_startingid_query = (
             f"DBCC CHECKIDENT ('tbl_personnel_attendance', RESEED, 0)"
@@ -992,11 +990,10 @@ class dbQueries:
         self.cursor.execute(reset_startingid_query)
         self.connection.commit()
         print("tbl_personnel_attendance is empty")
-        
-        
+
     def create_visitor_report(self):
         self.today = datetime.date.today()
-        self.yesterday = self.today - datetime.timedelta(days = 1)
+        self.yesterday = self.today - datetime.timedelta(days=1)
         date_int = int(self.yesterday.strftime("%y%m%d"))
         custom_no = date_int * 100000
 
@@ -1011,13 +1008,13 @@ class dbQueries:
             modified_rows.append((visitor_attendance_no, *row[1:]))
         if modified_rows:
             insert_query_attendance = f"INSERT INTO tbl_visitor_report (visitor_report_no, visitor_no, visitor_attendance_date, visitor_time_in,visitor_time_out) VALUES ( ?, ?, ?, ?, ?)"
-            self.cursor.executemany(insert_query_attendance,modified_rows)
+            self.cursor.executemany(insert_query_attendance, modified_rows)
             self.connection.commit()
 
         query2 = f"TRUNCATE TABLE tbl_visitor_attendance"
         self.cursor.execute(query2)
         self.connection.commit()
-        
+
         print("tbl_visitor_attendance reset")
         reset_startingid_query = (
             f"DBCC CHECKIDENT ('tbl_visitor_attendance', RESEED, 0)"
@@ -1025,12 +1022,11 @@ class dbQueries:
         self.cursor.execute(reset_startingid_query)
         self.connection.commit()
         print("tbl_visitor_attendance is empty")
-        
-        
+
     def create_student_report(self):
 
         self.today = datetime.date.today()
-        self.yesterday = self.today - datetime.timedelta(days = 1)
+        self.yesterday = self.today - datetime.timedelta(days=1)
         date_int = int(self.yesterday.strftime("%y%m%d"))
         custom_no = date_int * 100000
 
@@ -1046,7 +1042,7 @@ class dbQueries:
 
         if modified_rows:
             insert_query_attendance = f"INSERT INTO tbl_student_report (student_report_no, student_no, student_attendance_date, student_time_in, student_time_out) VALUES (?,?,?, ?, ?)"
-            self.cursor.executemany(insert_query_attendance,modified_rows)
+            self.cursor.executemany(insert_query_attendance, modified_rows)
             self.connection.commit()
 
         query2 = f"TRUNCATE TABLE tbl_student_attendance"
@@ -1054,14 +1050,13 @@ class dbQueries:
         self.connection.commit()
 
         print("tbl_student_attendance reset")
-        
+
         reset_startingid_query = (
             f"DBCC CHECKIDENT ('tbl_student_attendance', RESEED, 0)"
         )
         self.cursor.execute(reset_startingid_query)
         self.connection.commit()
         print("tbl_student_attendance is empty")
-        
 
     # SETTINGS-TABLE-QUERY--------------------------------------------------------------------------------------------------------------
 
