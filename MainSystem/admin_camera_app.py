@@ -14,6 +14,15 @@ class CameraApp:
     def __init__(self, vid_source, add_select, admin_home, file_path, condition, refresh, saveonly):
 
     #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
+        # Color ------------
+        self.sub_complimentary_color = "#808080" #gray
+        self.main_color = "#0072bc" #Blue
+        self.sub_color = "#FFF875" #light Yellow
+        self.complimentary_color_1 = "#E7E7E7" #light  gray
+        self.complimentary_color_2 = "#F7FAE9" #Cream Color
+        self.hover_color = "#FFF200" #pure Yellow
+        # Color ------------
+    
         self.video_source = vid_source
         self.add_select_window = add_select
         self.admin_home_window = admin_home
@@ -25,7 +34,7 @@ class CameraApp:
         # build ui
         self.snapshot_app = tk.Toplevel()
         self.snapshot_app.configure(
-            background="#F7FAE9", height=200, width=200)
+            background=self.complimentary_color_2, height=200, width=200)
         width= self.snapshot_app.winfo_screenwidth()               
         height= self.snapshot_app.winfo_screenheight()               
         self.snapshot_app.geometry("%dx%d" % (width, height))
@@ -36,11 +45,11 @@ class CameraApp:
     #Contains-Camera-Canvas---------------------------------------------------------------------------------------------------
         self.snapshot_frame4 = tk.Frame(self.snapshot_app)
         self.snapshot_frame4.configure(
-            background="#0072bc", height=200, width=200)
+            background=self.main_color, height=200, width=200)
         self.camera_canvas = tk.Canvas(self.snapshot_frame4)
         self.camera_canvas.configure(
-            background="#0072bc",
-            highlightbackground="#0072bc")
+            background=self.main_color,
+            highlightbackground=self.main_color)
         self.camera_canvas.place(
             anchor="center",
             relheight=1.0,
@@ -60,15 +69,15 @@ class CameraApp:
     #Contains-the-logo-and-logotype--------------------------------------------------------------------------------------------------------- 
         self.snapshot_frame3 = tk.Frame(self.snapshot_app)
         self.snapshot_frame3.configure(
-            background="#F7FAE9", height=200, width=200)
+            background=self.complimentary_color_2, height=200, width=200)
         self.app_name_logo = tk.Label(self.snapshot_frame3)
         self.img_SeekULogotypesmall = tk.PhotoImage(
             file=".\SeekU\SeekU Logotype large.png")
         self.app_name_logo.configure(
             anchor="w",
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             font="{arial black} 100 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             image=self.img_SeekULogotypesmall,
             justify="left",
             text='SEEK')
@@ -76,7 +85,7 @@ class CameraApp:
         self.app_logo_label = tk.Label(self.snapshot_frame3)
         self.img_SeekUlarge = tk.PhotoImage(file=".\SeekU\SeekU large.png")
         self.app_logo_label.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             image=self.img_SeekUlarge,
             text='label1')
         self.app_logo_label.place(anchor="center", relx=0.35, rely=0.5)
@@ -88,12 +97,12 @@ class CameraApp:
             rely=0.21)
         self.snapshot_frame2 = tk.Frame(self.snapshot_app)
         self.snapshot_frame2.configure(
-            background="#FFF875", height=200, width=200)
+            background=self.sub_color, height=200, width=200)
         self.school_logo_label = tk.Label(self.snapshot_frame2)
         self.img_STICollegeBalagtasLogomedium = tk.PhotoImage(
             file=".\SeekU\STI College Balagtas Logo medium.png")
         self.school_logo_label.configure(
-            background="#FFF875",
+            background=self.sub_color,
             image=self.img_STICollegeBalagtasLogomedium,
             text='label1')
         self.school_logo_label.place(anchor="center", relx=.25, rely=0.5)
@@ -107,12 +116,12 @@ class CameraApp:
             rely=0.065)
         self.snapshot_frame1 = tk.Frame(self.snapshot_app)
         self.snapshot_frame1.configure(
-            background="#F7FAE9", height=200, width=200)
+            background=self.complimentary_color_2, height=200, width=200)
         self.snapshot_button = tk.Button(self.snapshot_frame1)
         self.snapshot_button.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial black} 36 {}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             text='Snapshot')
         self.snapshot_button.place(
             anchor="center",
@@ -123,9 +132,9 @@ class CameraApp:
         self.snapshot_button.bind("<ButtonPress>", self.take_picture, add="")
         self.return_button = tk.Button(self.snapshot_frame1)
         self.return_button.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial black} 20 {}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             text='Return')
         self.return_button.place(
             anchor="center",
@@ -237,7 +246,7 @@ class CameraEditApp:
         # build ui
         self.snapshot_app = tk.Toplevel()
         self.snapshot_app.configure(
-            background="#F7FAE9", height=200, width=200)
+            background=self.complimentary_color_2, height=200, width=200)
         width= self.snapshot_app.winfo_screenwidth()               
         height= self.snapshot_app.winfo_screenheight()               
         self.snapshot_app.geometry("%dx%d" % (width, height))
@@ -248,11 +257,11 @@ class CameraEditApp:
     #Contains-Camera-Canvas---------------------------------------------------------------------------------------------------
         self.snapshot_frame4 = tk.Frame(self.snapshot_app)
         self.snapshot_frame4.configure(
-            background="#0072bc", height=200, width=200)
+            background=self.main_color, height=200, width=200)
         self.camera_canvas = tk.Canvas(self.snapshot_frame4)
         self.camera_canvas.configure(
-            background="#0072bc",
-            highlightbackground="#0072bc")
+            background=self.main_color,
+            highlightbackground=self.main_color)
         self.camera_canvas.place(
             anchor="center",
             relheight=1.0,
@@ -272,15 +281,15 @@ class CameraEditApp:
     #Contains-the-logo-and-logotype--------------------------------------------------------------------------------------------------------- 
         self.snapshot_frame3 = tk.Frame(self.snapshot_app)
         self.snapshot_frame3.configure(
-            background="#F7FAE9", height=200, width=200)
+            background=self.complimentary_color_2, height=200, width=200)
         self.app_name_logo = tk.Label(self.snapshot_frame3)
         self.img_SeekULogotypesmall = tk.PhotoImage(
             file=".\SeekU\SeekU Logotype large.png")
         self.app_name_logo.configure(
             anchor="w",
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             font="{arial black} 100 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             image=self.img_SeekULogotypesmall,
             justify="left",
             text='SEEK')
@@ -288,7 +297,7 @@ class CameraEditApp:
         self.app_logo_label = tk.Label(self.snapshot_frame3)
         self.img_SeekUlarge = tk.PhotoImage(file=".\SeekU\SeekU large.png")
         self.app_logo_label.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             image=self.img_SeekUlarge,
             text='label1')
         self.app_logo_label.place(anchor="center", relx=0.35, rely=0.5)
@@ -300,12 +309,12 @@ class CameraEditApp:
             rely=0.21)
         self.snapshot_frame2 = tk.Frame(self.snapshot_app)
         self.snapshot_frame2.configure(
-            background="#FFF875", height=200, width=200)
+            background=self.sub_color, height=200, width=200)
         self.school_logo_label = tk.Label(self.snapshot_frame2)
         self.img_STICollegeBalagtasLogomedium = tk.PhotoImage(
             file=".\SeekU\STI College Balagtas Logo medium.png")
         self.school_logo_label.configure(
-            background="#FFF875",
+            background=self.sub_color,
             image=self.img_STICollegeBalagtasLogomedium,
             text='label1')
         self.school_logo_label.place(anchor="center", relx=.25, rely=0.5)
@@ -319,12 +328,12 @@ class CameraEditApp:
             rely=0.065)
         self.snapshot_frame1 = tk.Frame(self.snapshot_app)
         self.snapshot_frame1.configure(
-            background="#F7FAE9", height=200, width=200)
+            background=self.complimentary_color_2, height=200, width=200)
         self.snapshot_button = tk.Button(self.snapshot_frame1)
         self.snapshot_button.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial black} 36 {}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             text='Snapshot')
         self.snapshot_button.place(
             anchor="center",
@@ -335,9 +344,9 @@ class CameraEditApp:
         self.snapshot_button.bind("<ButtonPress>", self.take_picture, add="")
         self.return_button = tk.Button(self.snapshot_frame1)
         self.return_button.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial black} 20 {}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             text='Return')
         self.return_button.place(
             anchor="center",

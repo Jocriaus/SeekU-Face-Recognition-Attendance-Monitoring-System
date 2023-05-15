@@ -6,31 +6,40 @@ import backup_restore_mod as bR
 
 class RestoreApp:
     def __init__(self):
+        # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
+        # Color ------------
+        self.sub_complimentary_color = "#808080" #gray
+        self.main_color = "#0072bc" #Blue
+        self.sub_color = "#FFF875" #light Yellow
+        self.complimentary_color_1 = "#E7E7E7" #light  gray
+        self.complimentary_color_2 = "#F7FAE9" #Cream Color
+        self.hover_color = "#FFF200" #pure Yellow
+        # Color ------------
 
         self.restore_database_query = bR.BackupRestore()
-
+        # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         # build ui
         self.restore_db = tk.Toplevel()
-        self.restore_db.configure(background="#0072bc", height=200, width=200)
+        self.restore_db.configure(background=self.main_color, height=200, width=200)
         self.restore_db.geometry("700x350")
         self.restore_db.resizable(False, False)
         self.restore_db.title("SeekU - Restore data")
         self.restore_db_frame2 = tk.Frame(self.restore_db)
         self.restore_db_frame2.configure(
-            background="#0072bc", height=200, width=200)
+            background=self.main_color, height=200, width=200)
         self.section_rec_label = tk.Label(self.restore_db_frame2)
         self.section_rec_label.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{lucida} 20 {bold}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             text='Records')
         self.section_rec_label.place(anchor="center", relx=0.45, rely=0.35)
         self.student_rec_button = tk.Button(self.restore_db_frame2)
         self.student_rec_button.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             default="active",
             font="{arial Black} 14 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             justify="center",
             relief="ridge",
             text='Import',
@@ -45,17 +54,17 @@ class RestoreApp:
             "<ButtonPress>", self.import_s_records, add="")
         self.student_rec_label = tk.Label(self.restore_db_frame2)
         self.student_rec_label.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{lucida} 20 {bold}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             text='Students')
         self.student_rec_label.place(anchor="center", relx=0.2, rely=0.475)
         self.personnel_rec_button = tk.Button(self.restore_db_frame2)
         self.personnel_rec_button.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             default="active",
             font="{arial Black} 14 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             justify="center",
             relief="ridge",
             text='Import',
@@ -70,17 +79,17 @@ class RestoreApp:
             "<ButtonPress>", self.import_p_records, add="")
         self.personnel_rec_label = tk.Label(self.restore_db_frame2)
         self.personnel_rec_label.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{lucida} 20 {bold}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             text='Personnels')
         self.personnel_rec_label.place(anchor="center", relx=0.2, rely=0.6)
         self.visitor_rec_button = tk.Button(self.restore_db_frame2)
         self.visitor_rec_button.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             default="active",
             font="{arial Black} 14 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             justify="center",
             relief="ridge",
             text='Import',
@@ -95,24 +104,24 @@ class RestoreApp:
             "<ButtonPress>", self.import_v_records, add="")
         self.visitor_rec_label = tk.Label(self.restore_db_frame2)
         self.visitor_rec_label.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{lucida} 20 {bold}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             text='Visitors')
         self.visitor_rec_label.place(anchor="center", relx=0.2, rely=0.725)
         self.section_rep_label = tk.Label(self.restore_db_frame2)
         self.section_rep_label.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{lucida} 20 {bold}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             text='Reports')
         self.section_rep_label.place(anchor="center", relx=0.75, rely=0.35)
         self.student_rep_button = tk.Button(self.restore_db_frame2)
         self.student_rep_button.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             default="active",
             font="{arial Black} 14 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             justify="center",
             relief="ridge",
             text='Import',
@@ -127,10 +136,10 @@ class RestoreApp:
             "<ButtonPress>", self.import_s_reports, add="")
         self.personnel_rep_button = tk.Button(self.restore_db_frame2)
         self.personnel_rep_button.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             default="active",
             font="{arial Black} 14 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             justify="center",
             relief="ridge",
             text='Import',
@@ -145,10 +154,10 @@ class RestoreApp:
             "<ButtonPress>", self.import_p_reports, add="")
         self.visitor_rep_button = tk.Button(self.restore_db_frame2)
         self.visitor_rep_button.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             default="active",
             font="{arial Black} 14 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             justify="center",
             relief="ridge",
             text='Import',
@@ -163,17 +172,17 @@ class RestoreApp:
             "<ButtonPress>", self.import_v_reports, add="")
         self.users_label = tk.Label(self.restore_db_frame2)
         self.users_label.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{lucida} 20 {bold}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             text='Users')
         self.users_label.place(anchor="center", relx=0.2, rely=0.85)
         self.users_button = tk.Button(self.restore_db_frame2)
         self.users_button.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             default="active",
             font="{arial Black} 14 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             justify="center",
             relief="ridge",
             text='Import',
@@ -193,11 +202,11 @@ class RestoreApp:
             rely=0.5)
         self.restore_db_frame = tk.Frame(self.restore_db)
         self.restore_db_frame.configure(
-            background="#F7FAE9", height=200, width=200)
+            background=self.complimentary_color_2, height=200, width=200)
         self.seeku_logo = tk.Label(self.restore_db_frame)
         self.img_SeekUsmall = tk.PhotoImage(file="./SeekU/SeekU small.png")
         self.seeku_logo.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             image=self.img_SeekUsmall,
             text='label1')
         self.seeku_logo.place(anchor="center", relx=0.3, rely=0.5)
@@ -205,9 +214,9 @@ class RestoreApp:
         self.img_SeekULogotypemicro = tk.PhotoImage(
             file="./SeekU/SeekU Logotype micro.png")
         self.app_name_label.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             font="{arial black} 40 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             image=self.img_SeekULogotypemicro,
             relief="flat",
             text='SEEK')

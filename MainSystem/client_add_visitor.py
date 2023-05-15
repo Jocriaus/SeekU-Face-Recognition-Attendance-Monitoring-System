@@ -12,6 +12,14 @@ class AddVisitorApp:
     def __init__(self, home_mod, cam_app, file_path):
 
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
+        # Color ------------
+        self.sub_complimentary_color = "#808080" #gray
+        self.main_color = "#0072bc" #Blue
+        self.sub_color = "#FFF875" #light Yellow
+        self.complimentary_color_1 = "#E7E7E7" #light  gray
+        self.complimentary_color_2 = "#F7FAE9" #Cream Color
+        self.hover_color = "#FFF200" #pure Yellow
+        # Color ------------
         self.client_cam_app = cam_app
         self.home_window = home_mod
         self.img_path = file_path
@@ -21,7 +29,7 @@ class AddVisitorApp:
 
         # build ui
         self.add_visitor_app = tk.Toplevel()
-        self.add_visitor_app.configure(background="#F7FAE9", height=200, width=200)
+        self.add_visitor_app.configure(background=self.complimentary_color_2, height=200, width=200)
         width = self.add_visitor_app.winfo_screenwidth()
         height = self.add_visitor_app.winfo_screenheight()
         self.add_visitor_app.geometry("%dx%d" % (width, height))
@@ -31,10 +39,10 @@ class AddVisitorApp:
 
         # Contains-Camera-Canvas---------------------------------------------------------------------------------------------------
         self.add_visitor_frame3 = tk.Frame(self.add_visitor_app)
-        self.add_visitor_frame3.configure(background="#0072bc", height=200, width=200)
+        self.add_visitor_frame3.configure(background=self.main_color, height=200, width=200)
         self.camera_canvas = tk.Canvas(self.add_visitor_frame3)
         self.camera_canvas.configure(
-            background="#0072bc", highlightbackground="#0072bc"
+            background=self.main_color, highlightbackground=self.main_color
         )
         self.camera_canvas.place(
             anchor="center",
@@ -50,16 +58,16 @@ class AddVisitorApp:
         # Contains-Camera-Canvas---------------------------------------------------------------------------------------------------
         # Contains-the-returnbutton-logo-and-logotype---------------------------------------------------------------------------------------------------------
         self.add_visitor_frame2 = tk.Frame(self.add_visitor_app)
-        self.add_visitor_frame2.configure(background="#F7FAE9", height=200, width=200)
+        self.add_visitor_frame2.configure(background=self.complimentary_color_2, height=200, width=200)
         self.app_name_logo = tk.Label(self.add_visitor_frame2)
         self.img_SeekULogotypesmall = tk.PhotoImage(
             file=".\SeekU\SeekU Logotype medium.png"
         )
         self.app_name_logo.configure(
             anchor="w",
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             font="{arial black} 100 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             image=self.img_SeekULogotypesmall,
             justify="left",
             text="SEEK",
@@ -68,12 +76,12 @@ class AddVisitorApp:
         self.app_logo_label = tk.Label(self.add_visitor_frame2)
         self.img_SeekUmedium = tk.PhotoImage(file=".\SeekU\SeekU large.png")
         self.app_logo_label.configure(
-            background="#F7FAE9", image=self.img_SeekUmedium, text="label1"
+            background=self.complimentary_color_2, image=self.img_SeekUmedium, text="label1"
         )
         self.app_logo_label.place(anchor="center", relx=0.47, rely=0.50)
         self.return_button = tk.Button(self.add_visitor_frame2)
         self.return_button.configure(
-            font="{arial black} 20 {}", foreground="#0072bc", text="Return"
+            font="{arial black} 20 {}", foreground=self.main_color, text="Return"
         )
         self.return_button.place(
             anchor="center", relheight=0.15, relwidth=0.1, relx=0.93, rely=0.85
@@ -86,10 +94,10 @@ class AddVisitorApp:
         # Contains-save-info-button-and-diff-entry--------------------------------------------------------------------------------------------------------
 
         self.add_visitor_frame = tk.Frame(self.add_visitor_app)
-        self.add_visitor_frame.configure(background="#F7FAE9", height=200, width=200)
+        self.add_visitor_frame.configure(background=self.complimentary_color_2, height=200, width=200)
         self.save_info_button = tk.Button(self.add_visitor_frame)
         self.save_info_button.configure(
-            font="{arial black} 30 {}",background="#0072bc", foreground="#F7FAE9", text="Register"
+            font="{arial black} 30 {}",background=self.main_color, foreground=self.complimentary_color_2, text="Register"
         )
         self.save_info_button.place(
             anchor="center", relheight=0.1, relwidth=0.50, relx=0.5, rely=0.90
@@ -100,12 +108,12 @@ class AddVisitorApp:
             file=".\SeekU\STI College Balagtas Logo large.png"
         )
         self.school_logo_label.configure(
-            background="#F7FAE9", image=self.img_STICollegeBalagtasLogo, text="label1"
+            background=self.complimentary_color_2, image=self.img_STICollegeBalagtasLogo, text="label1"
         )
         self.school_logo_label.place(anchor="center", relx=0.5, rely=0.12)
         self.last_name_label = tk.Label(self.add_visitor_frame)
         self.last_name_label.configure(
-            background="#F7FAE9", font="{arial} 36 {}", text="Last Name"
+            background=self.complimentary_color_2, font="{arial} 36 {}", text="Last Name"
         )
         self.last_name_label.place(anchor="center", relx=0.34, rely=0.25, x=0, y=0)
         self.last_name_entry = tk.Entry(self.add_visitor_frame)
@@ -118,7 +126,7 @@ class AddVisitorApp:
         self.last_name_entry.place(anchor="center", relx=0.55, rely=0.31, x=0, y=0)
         self.first_name_label = tk.Label(self.add_visitor_frame)
         self.first_name_label.configure(
-            background="#F7FAE9", font="{arial} 36 {}", text="First Name"
+            background=self.complimentary_color_2, font="{arial} 36 {}", text="First Name"
         )
         self.first_name_label.place(anchor="center", relx=0.34, rely=0.40, x=0, y=0)
         self.first_name_entry = tk.Entry(self.add_visitor_frame)
@@ -131,7 +139,7 @@ class AddVisitorApp:
         self.first_name_entry.place(anchor="center", relx=0.55, rely=0.46, x=0, y=0)
         self.contact_no_label = tk.Label(self.add_visitor_frame)
         self.contact_no_label.configure(
-            background="#F7FAE9", font="{arial} 36 {}", text="Contact No."
+            background=self.complimentary_color_2, font="{arial} 36 {}", text="Contact No."
         )
         self.contact_no_label.place(anchor="center", relx=0.36, rely=0.55, x=0, y=0)
         self.contact_no_entry = tk.Entry(self.add_visitor_frame)
@@ -144,7 +152,7 @@ class AddVisitorApp:
         self.contact_no_entry.place(anchor="center", relx=0.55, rely=0.61, x=0, y=0)
         self.address_label = tk.Label(self.add_visitor_frame)
         self.address_label.configure(
-            background="#F7FAE9", font="{arial} 36 {}", text="Address"
+            background=self.complimentary_color_2, font="{arial} 36 {}", text="Address"
         )
         self.address_label.place(anchor="center", relx=0.29, rely=0.70, x=0, y=0)
         self.address_entry = tk.Entry(self.add_visitor_frame)

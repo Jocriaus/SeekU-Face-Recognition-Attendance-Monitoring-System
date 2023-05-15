@@ -9,6 +9,14 @@ class CreateUserApp:
     def __init__(self, admin_hom, refresh):
 
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
+        # Color ------------
+        self.sub_complimentary_color = "#808080" #gray
+        self.main_color = "#0072bc" #Blue
+        self.sub_color = "#FFF875" #light Yellow
+        self.complimentary_color_1 = "#E7E7E7" #light  gray
+        self.complimentary_color_2 = "#F7FAE9" #Cream Color
+        self.hover_color = "#FFF200" #pure Yellow
+        # Color ------------
         self.admin_home_window = admin_hom
         self.sql_query = qry.dbQueries()
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------

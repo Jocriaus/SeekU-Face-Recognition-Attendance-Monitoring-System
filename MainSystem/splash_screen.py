@@ -4,7 +4,17 @@ import client_face_recog as cFG
 
 class SplashScreenWin:
     def __init__(self,vid_source, login_mod, sel_cam, home_mod,detection,tolerance, file_path):
-            
+        # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
+        # Color ------------
+        self.sub_complimentary_color = "#808080" #gray
+        self.main_color = "#0072bc" #Blue
+        self.sub_color = "#FFF875" #light Yellow
+        self.complimentary_color_1 = "#E7E7E7" #light  gray
+        self.complimentary_color_2 = "#F7FAE9" #Cream Color
+        self.hover_color = "#FFF200" #pure Yellow
+        # Color ------------
+        # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
+
         self.vid_source = vid_source
         self.file_path = file_path
         self.login_mod = login_mod
@@ -13,14 +23,14 @@ class SplashScreenWin:
         self.detection_time = detection
         self.tolerance = tolerance
         self.splashscreen_app = tk.Toplevel()
-        self.splashscreen_app.configure(background="#0072bc",height=200, width=200)
+        self.splashscreen_app.configure(background=self.main_color,height=200, width=200)
         self.splashscreen_app.geometry("1000x700")
         self.splashscreen_app.resizable(False, False)
         self.splashscreen_app.overrideredirect(True)
         self.splashscreen = tk.Label(self.splashscreen_app)
         self.img_splashscreen = tk.PhotoImage(file=".\SeekU\SeekU Splash Screen.png")
         self.splashscreen.configure(
-            background="#F7FAE9", image=self.img_splashscreen, text="label1"
+            background=self.complimentary_color_2, image=self.img_splashscreen, text="label1"
         )
         self.splashscreen.place(
             anchor="center", relheight=1, relwidth=1, relx=0.50, rely=0.5
@@ -29,7 +39,7 @@ class SplashScreenWin:
         self.message = tk.Label(self.splashscreen_app)
         self.message.configure(
             anchor="center",
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             font="{lucida} 10 {}",
             foreground="#000000",
             justify="left",

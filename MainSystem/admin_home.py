@@ -22,6 +22,14 @@ class AdminHomeApp:
     def __init__(self, user, vid_source, login_mod, sel_cam):
 
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
+        # Color ------------
+        self.sub_complimentary_color = "#808080" #gray
+        self.main_color = "#0072bc" #Blue
+        self.sub_color = "#FFF875" #light Yellow
+        self.complimentary_color_1 = "#E7E7E7" #light  gray
+        self.complimentary_color_2 = "#F7FAE9" #Cream Color
+        self.hover_color = "#FFF200" #pure Yellow
+        # Color ------------
         self.user = user
         # add a condition if the user is high admin or low admin to restrict some access
         self.video_source = vid_source
@@ -35,7 +43,7 @@ class AdminHomeApp:
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         # build ui
         self.administrator_app = tk.Toplevel()
-        self.administrator_app.configure(background="#E7E7E7", height=200, width=200)
+        self.administrator_app.configure(background=self.complimentary_color_1, height=200, width=200)
         width = self.administrator_app.winfo_screenwidth()
         height = self.administrator_app.winfo_screenheight()
         self.administrator_app.geometry("%dx%d" % (width, height))
@@ -45,35 +53,35 @@ class AdminHomeApp:
         # CLIENT-------------------------------------------------------------------------------------------------------
         self.administrator_client_frame = tk.Frame(self.administrator_app)
         self.administrator_client_frame.configure(
-            background="#E7E7E7", height=200, width=200
+            background=self.complimentary_color_1, height=200, width=200
         )
         self.time_and_date_label_c = tk.Label(self.administrator_client_frame)
         self.time_and_date_label_c.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             compound="top",
             font="{arial} 30 {bold}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             text=self.current_date_n_time,
         )
         self.time_and_date_label_c.place(
             anchor="center", relwidth=1, relx=0.5, rely=0.975, x=0, y=0
         )
         self.admin_c_sec1_frame = tk.Frame(self.administrator_client_frame)
-        self.admin_c_sec1_frame.configure(background="#E7E7E7", height=200, width=200)
+        self.admin_c_sec1_frame.configure(background=self.complimentary_color_1, height=200, width=200)
         self.add_c_button = tk.Button(self.admin_c_sec1_frame)
         self.add_c_button.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial} 20 {bold}",
-            foreground="#f7fae9",
+            foreground=self.complimentary_color_2,
             text="Add Students",
         )
         self.add_c_button.place(anchor="center", relx=0.85, rely=0.5, x=0, y=0)
         self.add_c_button.bind("<Button>", self.add_clients, add="")
         self.edit_c_button = tk.Button(self.admin_c_sec1_frame)
         self.edit_c_button.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial} 20 {bold}",
-            foreground="#f7fae9",
+            foreground=self.complimentary_color_2,
             text="Edit Students",
         )
         self.edit_c_button.place(anchor="center", relx=0.65, rely=0.5, x=0, y=0)
@@ -82,12 +90,12 @@ class AdminHomeApp:
             anchor="center", relheight=0.1, relwidth=1.0, relx=0.5, rely=0.09
         )
         self.admin_c_sec2_frame = tk.Frame(self.administrator_client_frame)
-        self.admin_c_sec2_frame.configure(background="#F7FAE9", height=200, width=200)
+        self.admin_c_sec2_frame.configure(background=self.complimentary_color_2, height=200, width=200)
         self.search_c_button = tk.Button(self.admin_c_sec2_frame)
         self.search_c_button.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial} 20 {bold}",
-            foreground="#f7fae9",
+            foreground=self.complimentary_color_2,
             text="Search",
         )
         self.search_c_button.place(
@@ -98,12 +106,12 @@ class AdminHomeApp:
         )
         self.search_c_button.bind("<Button>", self.search_clients_info, add="")
         self.search_c_entry = tk.Entry(self.admin_c_sec2_frame)
-        self.search_c_entry.configure(background="#E7E7E7", font="{arial} 24 {}")
+        self.search_c_entry.configure(background=self.complimentary_color_1, font="{arial} 24 {}")
         self.search_c_entry.place(anchor="center", relx=0.63, rely=0.5, x=0, y=0)
         self.clients_list = tk.Label(self.admin_c_sec2_frame)
         self.clients_list.configure(
             anchor="n",
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             font="{arial} 24 {bold}",
             text="Students List",
         )
@@ -112,7 +120,7 @@ class AdminHomeApp:
             anchor="center", relheight=0.1, relwidth=0.90, relx=0.5, rely=0.22
         )
         self.admin_c_sec3_frame = tk.Frame(self.administrator_client_frame)
-        self.admin_c_sec3_frame.configure(background="#F7FAE9", height=200, width=200)
+        self.admin_c_sec3_frame.configure(background=self.complimentary_color_2, height=200, width=200)
         self.treeview.student_treeview(self.admin_c_sec3_frame, "IsActive")
         self.admin_c_sec3_frame.place(
             anchor="center", relheight=0.6, relwidth=0.9, relx=0.5, rely=0.6, x=0, y=0
@@ -140,26 +148,26 @@ class AdminHomeApp:
         # ATTENDANCE-------------------------------------------------------------------------------------------------------
         self.administrator_attendance_frame = tk.Frame(self.administrator_app)
         self.administrator_attendance_frame.configure(
-            background="#E7E7E7", height=200, width=200
+            background=self.complimentary_color_1, height=200, width=200
         )
         self.time_and_date_label_at = tk.Label(self.administrator_attendance_frame)
         self.time_and_date_label_at.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             compound="top",
             font="{arial} 30 {bold}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             text=self.current_date_n_time,
         )
         self.time_and_date_label_at.place(
             anchor="center", relwidth=1, relx=0.5, rely=0.975, x=0, y=0
         )
         self.admin_at_sec1_frame = tk.Frame(self.administrator_attendance_frame)
-        self.admin_at_sec1_frame.configure(background="#E7E7E7", height=200, width=200)
+        self.admin_at_sec1_frame.configure(background=self.complimentary_color_1, height=200, width=200)
         self.search_clients_attendance = tk.Button(self.admin_at_sec1_frame)
         self.search_clients_attendance.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial} 20 {bold}",
-            foreground="#f7fae9",
+            foreground=self.complimentary_color_2,
             text="Search",
         )
         self.search_clients_attendance.place(
@@ -169,13 +177,13 @@ class AdminHomeApp:
             "<Button>", self.search_client_attendance, add=""
         )
         self.search_at_entry = tk.Entry(self.admin_at_sec1_frame)
-        self.search_at_entry.configure(background="#F7FAE9", font="{arial} 24 {}")
+        self.search_at_entry.configure(background=self.complimentary_color_2, font="{arial} 24 {}")
         self.search_at_entry.place(anchor="center", relx=0.63, rely=0.5, x=0, y=0)
         self.admin_at_sec1_frame.place(
             anchor="center", relheight=0.1, relwidth=0.90, relx=0.5, rely=0.09
         )
         self.admin_at_sec2_frame = tk.Frame(self.administrator_attendance_frame)
-        self.admin_at_sec2_frame.configure(background="#F7FAE9", height=200, width=200)
+        self.admin_at_sec2_frame.configure(background=self.complimentary_color_2, height=200, width=200)
         self.treeview.visitor_attendance_treeview(self.admin_at_sec2_frame)
         self.treeview.personnel_attendance_treeview(self.admin_at_sec2_frame)
         self.treeview.student_attendance_treeview(self.admin_at_sec2_frame)
@@ -209,26 +217,26 @@ class AdminHomeApp:
         # USERS-------------------------------------------------------------------------------------------------------
         self.administrator_users_frame = tk.Frame(self.administrator_app)
         self.administrator_users_frame.configure(
-            background="#E7E7E7", height=200, width=200
+            background=self.complimentary_color_1, height=200, width=200
         )
         self.time_and_date_label_u = tk.Label(self.administrator_users_frame)
         self.time_and_date_label_u.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             compound="top",
             font="{arial} 30 {bold}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             text="Time and Date",
         )
         self.time_and_date_label_u.place(
             anchor="center", relwidth=1, relx=0.5, rely=0.975, x=0, y=0
         )
         self.admin_u_sec1_frame = tk.Frame(self.administrator_users_frame)
-        self.admin_u_sec1_frame.configure(background="#E7E7E7", height=200, width=200)
+        self.admin_u_sec1_frame.configure(background=self.complimentary_color_1, height=200, width=200)
         self.search_user_info = tk.Button(self.admin_u_sec1_frame)
         self.search_user_info.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial} 20 {bold}",
-            foreground="#f7fae9",
+            foreground=self.complimentary_color_2,
             text="Search",
         )
         self.search_user_info.place(
@@ -236,20 +244,20 @@ class AdminHomeApp:
         )
         self.search_user_info.bind("<Button>", self.search_user_infos, add="")
         self.search_u_entry = tk.Entry(self.admin_u_sec1_frame)
-        self.search_u_entry.configure(background="#F7FAE9", font="{arial} 24 {}")
+        self.search_u_entry.configure(background=self.complimentary_color_2, font="{arial} 24 {}")
         self.search_u_entry.place(anchor="center", relx=0.63, rely=0.5, x=0, y=0)
         self.admin_u_sec1_frame.place(
             anchor="center", relheight=0.1, relwidth=0.90, relx=0.5, rely=0.09
         )
         self.admin_u_sec2_frame = tk.Frame(self.administrator_users_frame)
-        self.admin_u_sec2_frame.configure(background="#F7FAE9", height=200, width=200)
+        self.admin_u_sec2_frame.configure(background=self.complimentary_color_2, height=200, width=200)
         self.treeview.user_treeview(self.admin_u_sec2_frame, "IsActive")
         self.admin_u_sec2_frame.place(
             anchor="center", relheight=0.65, relwidth=0.88, relx=0.5, rely=0.5, x=0, y=0
         )
         self.user_info_label = tk.Label(self.administrator_users_frame)
         self.user_info_label.configure(
-            background="#E7E7E7",
+            background=self.complimentary_color_1,
             font="{arial} 20 {bold}",
             foreground="#000000",
             text="Users Information",
@@ -258,9 +266,9 @@ class AdminHomeApp:
 
         self.edit_user_button = tk.Button(self.administrator_users_frame)
         self.edit_user_button.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial} 20 {bold}",
-            foreground="#f7fae9",
+            foreground=self.complimentary_color_2,
             text="Edit",
         )
         self.edit_user_button.place(
@@ -275,9 +283,9 @@ class AdminHomeApp:
         self.edit_user_button.bind("<Button>", self.edit_user_infos, add="")
         self.add_user_button = tk.Button(self.administrator_users_frame)
         self.add_user_button.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial} 20 {bold}",
-            foreground="#f7fae9",
+            foreground=self.complimentary_color_2,
             text="Add",
         )
         self.add_user_button.place(
@@ -298,26 +306,26 @@ class AdminHomeApp:
         # REPORT-------------------------------------------------------------------------------------------------------
         self.administrator_report_frame = tk.Frame(self.administrator_app)
         self.administrator_report_frame.configure(
-            background="#E7E7E7", height=200, width=200
+            background=self.complimentary_color_1, height=200, width=200
         )
         self.time_and_date_label_r = tk.Label(self.administrator_report_frame)
         self.time_and_date_label_r.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             compound="top",
             font="{arial} 30 {bold}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             text=self.current_date_n_time,
         )
         self.time_and_date_label_r.place(
             anchor="center", relwidth=1, relx=0.5, rely=0.975, x=0, y=0
         )
         self.admin_r_sec1_frame = tk.Frame(self.administrator_report_frame)
-        self.admin_r_sec1_frame.configure(background="#E7E7E7", height=200, width=200)
+        self.admin_r_sec1_frame.configure(background=self.complimentary_color_1, height=200, width=200)
         self.search_clients_report = tk.Button(self.admin_r_sec1_frame)
         self.search_clients_report.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial} 20 {bold}",
-            foreground="#f7fae9",
+            foreground=self.complimentary_color_2,
             text="Search",
         )
         self.search_clients_report.place(
@@ -325,13 +333,13 @@ class AdminHomeApp:
         )
         self.search_clients_report.bind("<Button>", self.search_clients_reports, add="")
         self.search_r_entry = tk.Entry(self.admin_r_sec1_frame)
-        self.search_r_entry.configure(background="#F7FAE9", font="{arial} 24 {}")
+        self.search_r_entry.configure(background=self.complimentary_color_2, font="{arial} 24 {}")
         self.search_r_entry.place(anchor="center", relx=0.63, rely=0.5, x=0, y=0)
         self.admin_r_sec1_frame.place(
             anchor="center", relheight=0.1, relwidth=0.90, relx=0.5, rely=0.09
         )
         self.admin_r_sec2_frame = tk.Frame(self.administrator_report_frame)
-        self.admin_r_sec2_frame.configure(background="#F7FAE9", height=200, width=200)
+        self.admin_r_sec2_frame.configure(background=self.complimentary_color_2, height=200, width=200)
         self.treeview.visitor_report_treeview(self.admin_r_sec2_frame)
         self.treeview.personnel_report_treeview(self.admin_r_sec2_frame)
         self.treeview.student_report_treeview(self.admin_r_sec2_frame)
@@ -357,9 +365,9 @@ class AdminHomeApp:
         self.client_report_options.config(font="{arial} 16")
         self.generate_report = tk.Button(self.administrator_report_frame)
         self.generate_report.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial} 20 {bold}",
-            foreground="#f7fae9",
+            foreground=self.complimentary_color_2,
             text="Generate Report",
         )
         self.generate_report.place(
@@ -379,26 +387,26 @@ class AdminHomeApp:
         # ARCHIVED-------------------------------------------------------------------------------------------------------
         self.administrator_archived_frame = tk.Frame(self.administrator_app)
         self.administrator_archived_frame.configure(
-            background="#E7E7E7", height=200, width=200
+            background=self.complimentary_color_1, height=200, width=200
         )
         self.time_and_date_label_a = tk.Label(self.administrator_archived_frame)
         self.time_and_date_label_a.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             compound="top",
             font="{arial} 30 {bold}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             text=self.current_date_n_time,
         )
         self.time_and_date_label_a.place(
             anchor="center", relwidth=1, relx=0.5, rely=0.975, x=0, y=0
         )
         self.admin_a_sec1_frame = tk.Frame(self.administrator_archived_frame)
-        self.admin_a_sec1_frame.configure(background="#E7E7E7", height=200, width=200)
+        self.admin_a_sec1_frame.configure(background=self.complimentary_color_1, height=200, width=200)
         self.edit_a_button = tk.Button(self.admin_a_sec1_frame)
         self.edit_a_button.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial} 20 {bold}",
-            foreground="#f7fae9",
+            foreground=self.complimentary_color_2,
             text="Edit Students",
         )
         self.edit_a_button.place(anchor="center", relx=0.85, rely=0.5, x=0, y=0)
@@ -407,12 +415,12 @@ class AdminHomeApp:
             anchor="center", relheight=0.1, relwidth=1.0, relx=0.5, rely=0.09
         )
         self.admin_a_sec2_frame = tk.Frame(self.administrator_archived_frame)
-        self.admin_a_sec2_frame.configure(background="#F7FAE9", height=200, width=200)
+        self.admin_a_sec2_frame.configure(background=self.complimentary_color_2, height=200, width=200)
         self.search_a_button = tk.Button(self.admin_a_sec2_frame)
         self.search_a_button.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial} 20 {bold}",
-            foreground="#f7fae9",
+            foreground=self.complimentary_color_2,
             text="Search",
         )
         self.search_a_button.place(
@@ -423,12 +431,12 @@ class AdminHomeApp:
         )
         self.search_a_button.bind("<Button>", self.search_archived_info, add="")
         self.search_a_entry = tk.Entry(self.admin_a_sec2_frame)
-        self.search_a_entry.configure(background="#E7E7E7", font="{arial} 24 {}")
+        self.search_a_entry.configure(background=self.complimentary_color_1, font="{arial} 24 {}")
         self.search_a_entry.place(anchor="center", relx=0.63, rely=0.5, x=0, y=0)
         self.archived_list = tk.Label(self.admin_a_sec2_frame)
         self.archived_list.configure(
             anchor="n",
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             font="{arial} 24 {bold}",
             text="Students List",
         )
@@ -437,7 +445,7 @@ class AdminHomeApp:
             anchor="center", relheight=0.1, relwidth=0.90, relx=0.5, rely=0.22
         )
         self.admin_a_sec3_frame = tk.Frame(self.administrator_archived_frame)
-        self.admin_a_sec3_frame.configure(background="#F7FAE9", height=200, width=200)
+        self.admin_a_sec3_frame.configure(background=self.complimentary_color_2, height=200, width=200)
         self.treeview.student_treeview(self.admin_a_sec3_frame, "IsArchived")
         self.admin_a_sec3_frame.place(
             anchor="center", relheight=0.6, relwidth=0.9, relx=0.5, rely=0.6, x=0, y=0
@@ -471,26 +479,26 @@ class AdminHomeApp:
         # SETTINGS-------------------------------------------------------------------------------------------------------
         self.administrator_settings_frame = tk.Frame(self.administrator_app)
         self.administrator_settings_frame.configure(
-            background="#E7E7E7", height=200, width=200
+            background=self.complimentary_color_1, height=200, width=200
         )
         self.time_and_date_label_s = tk.Label(self.administrator_settings_frame)
         self.time_and_date_label_s.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             compound="top",
             font="{arial} 30 {bold}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             text="Time and Date",
         )
         self.time_and_date_label_s.place(
             anchor="center", relwidth=1, relx=0.5, rely=0.975, x=0, y=0
         )
         self.admin_s_sec1_frame = tk.Frame(self.administrator_settings_frame)
-        self.admin_s_sec1_frame.configure(background="#F7FAE9", height=200, width=200)
+        self.admin_s_sec1_frame.configure(background=self.complimentary_color_2, height=200, width=200)
         self.export_db_button = tk.Button(self.admin_s_sec1_frame)
         self.export_db_button.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial} 20 {bold}",
-            foreground="#f7fae9",
+            foreground=self.complimentary_color_2,
             text="Export",
         )
         self.export_db_button.place(
@@ -505,9 +513,9 @@ class AdminHomeApp:
         self.export_db_button.bind("<Button>", self.export_database, add="")
         self.import_db_button = tk.Button(self.admin_s_sec1_frame)
         self.import_db_button.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial} 20 {bold}",
-            foreground="#f7fae9",
+            foreground=self.complimentary_color_2,
             text="Import",
         )
         self.import_db_button.place(
@@ -516,27 +524,27 @@ class AdminHomeApp:
         self.import_db_button.bind("<Button>", self.import_database, add="")
         self.gen_settings_label = tk.Label(self.admin_s_sec1_frame)
         self.gen_settings_label.configure(
-            background="#F7FAE9", font="{arial} 20 {bold}", text="General Settings"
+            background=self.complimentary_color_2, font="{arial} 20 {bold}", text="General Settings"
         )
         self.gen_settings_label.place(anchor="center", relx=0.5, rely=0.1, x=0, y=0)
         self.backup_db_label = tk.Label(self.admin_s_sec1_frame)
         self.backup_db_label.configure(
-            background="#F7FAE9", font="{arial} 14 {bold}", text="Backup Database"
+            background=self.complimentary_color_2, font="{arial} 14 {bold}", text="Backup Database"
         )
         self.backup_db_label.place(anchor="center", relx=0.25, rely=0.19, x=0, y=0)
         self.restore_db_label = tk.Label(self.admin_s_sec1_frame)
         self.restore_db_label.configure(
-            background="#F7FAE9", font="{arial} 14 {bold}", text="Restore Database"
+            background=self.complimentary_color_2, font="{arial} 14 {bold}", text="Restore Database"
         )
         self.restore_db_label.place(anchor="center", relx=0.25, rely=0.38, x=0, y=0)
         self.student_stat_label = tk.Label(self.admin_s_sec1_frame)
         self.student_stat_label.configure(
-            background="#F7FAE9", font="{arial} 14 {bold}", text="Student Status"
+            background=self.complimentary_color_2, font="{arial} 14 {bold}", text="Student Status"
         )
         self.student_stat_label.place(anchor="center", relx=0.22, rely=0.6, x=0, y=0)
         self.stud_stat_rem_label = tk.Label(self.admin_s_sec1_frame)
         self.stud_stat_rem_label.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             font="{arial} 12 {}",
             justify="left",
             text="Student Informations will be\ndeactivated on selected date\nFormat = YYYY-MM-DD",
@@ -560,7 +568,7 @@ class AdminHomeApp:
         )
         self.deactivation_date_label = tk.Label(self.admin_s_sec1_frame)
         self.deactivation_date_label.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             font="{arial} 11 {bold}",
             text="Account Deactivation Date",
         )
@@ -569,9 +577,9 @@ class AdminHomeApp:
         )
         self.save_dates_button = tk.Button(self.admin_s_sec1_frame)
         self.save_dates_button.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial} 20 {bold}",
-            foreground="#f7fae9",
+            foreground=self.complimentary_color_2,
             text="Save Dates",
         )
         self.save_dates_button.place(
@@ -594,15 +602,15 @@ class AdminHomeApp:
             y=0,
         )
         self.admin_s_sec2_frame = tk.Frame(self.administrator_settings_frame)
-        self.admin_s_sec2_frame.configure(background="#F7FAE9", height=200, width=200)
+        self.admin_s_sec2_frame.configure(background=self.complimentary_color_2, height=200, width=200)
         self.secu_settings_label = tk.Label(self.admin_s_sec2_frame)
         self.secu_settings_label.configure(
-            background="#F7FAE9", font="{arial} 20 {bold}", text="Security Settings"
+            background=self.complimentary_color_2, font="{arial} 20 {bold}", text="Security Settings"
         )
         self.secu_settings_label.place(anchor="center", relx=0.5, rely=0.1)
         self.min_pass_req_label = tk.Label(self.admin_s_sec2_frame)
         self.min_pass_req_label.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             font="{arial} 16 {bold}",
             text="Minimum Password Requirements",
         )
@@ -625,12 +633,12 @@ class AdminHomeApp:
         )
         self.pass_len_label = tk.Label(self.admin_s_sec2_frame)
         self.pass_len_label.configure(
-            background="#F7FAE9", font="{arial} 14 {bold}", text="Password Length"
+            background=self.complimentary_color_2, font="{arial} 14 {bold}", text="Password Length"
         )
         self.pass_len_label.place(anchor="center", relx=0.35, rely=0.28)
         self.account_lockout_label = tk.Label(self.admin_s_sec2_frame)
         self.account_lockout_label.configure(
-            background="#F7FAE9", font="{arial} 16 {bold}", text="Account Lockout"
+            background=self.complimentary_color_2, font="{arial} 16 {bold}", text="Account Lockout"
         )
         self.account_lockout_label.place(anchor="center", relx=0.26, rely=0.4)
         self.login_attempt_entry = tk.Entry(self.admin_s_sec2_frame)
@@ -651,12 +659,12 @@ class AdminHomeApp:
         )
         self.login_attem_label = tk.Label(self.admin_s_sec2_frame)
         self.login_attem_label.configure(
-            background="#F7FAE9", font="{arial} 14 {bold}", text="Login Attempts"
+            background=self.complimentary_color_2, font="{arial} 14 {bold}", text="Login Attempts"
         )
         self.login_attem_label.place(anchor="center", relx=0.35, rely=0.49, x=0, y=0)
         self.acc_lockout_rem_label = tk.Label(self.admin_s_sec2_frame)
         self.acc_lockout_rem_label.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             font="{arial} 12 {}",
             justify="left",
             text="Consecutive failed log in attempts will \nresult of a locked account ",
@@ -664,9 +672,9 @@ class AdminHomeApp:
         self.acc_lockout_rem_label.place(anchor="center", relx=0.3, rely=0.57, x=0, y=0)
         self.save_settings_button = tk.Button(self.admin_s_sec2_frame)
         self.save_settings_button.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial} 20 {bold}",
-            foreground="#f7fae9",
+            foreground=self.complimentary_color_2,
             text="Save Settings",
         )
         self.save_settings_button.place(
@@ -684,7 +692,7 @@ class AdminHomeApp:
         )
         self.settings_label = tk.Label(self.administrator_settings_frame)
         self.settings_label.configure(
-            background="#E7E7E7",
+            background=self.complimentary_color_1,
             font="{arial} 24 {bold}",
             foreground="#000000",
             text="Settings",
@@ -699,14 +707,14 @@ class AdminHomeApp:
         # DB-SECTION--------------------------------------------------------------------------------------
         self.administrator_db_frame = tk.Frame(self.administrator_app)
         self.administrator_db_frame.configure(
-            background="#E7E7E7", height=200, width=200
+            background=self.complimentary_color_1, height=200, width=200
         )
         self.time_and_date_label_db = tk.Label(self.administrator_db_frame)
         self.time_and_date_label_db.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             compound="top",
             font="{arial} 30 {bold}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             text=self.current_date_n_time,
         )
         self.time_and_date_label_db.place(
@@ -714,17 +722,17 @@ class AdminHomeApp:
         )
         self.administrator_db_ttl_frame = tk.Frame(self.administrator_db_frame)
         self.administrator_db_ttl_frame.configure(
-            background="#F7FAE9", height=200, width=200
+            background=self.complimentary_color_2, height=200, width=200
         )
         self.ttl_students_label = tk.Label(self.administrator_db_ttl_frame)
         self.ttl_students_label.configure(
-            background="#F7FAE9", font="{arial} 24 {bold}", text="Total Students"
+            background=self.complimentary_color_2, font="{arial} 24 {bold}", text="Total Students"
         )
         self.ttl_students_label.place(anchor="center", relx=0.16, rely=0.25, x=0, y=0)
         self.total_student = self.sql_query.get_student_count()
         self.ttl_students_no_label = tk.Label(self.administrator_db_ttl_frame)
         self.ttl_students_no_label.configure(
-            background="#F7FAE9", font="{arial} 30 {bold}", text=self.total_student
+            background=self.complimentary_color_2, font="{arial} 30 {bold}", text=self.total_student
         )
         self.ttl_students_no_label.place(
             anchor="center", relx=0.16, rely=0.65, x=0, y=0
@@ -732,7 +740,7 @@ class AdminHomeApp:
         self.ttl_personnels_label = tk.Label(self.administrator_db_ttl_frame)
         self.ttl_personnels_label.configure(
             anchor="n",
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             font="{arial} 24 {bold}",
             text="Total Personnels",
         )
@@ -741,7 +749,7 @@ class AdminHomeApp:
         self.ttl_personnels_no_label = tk.Label(self.administrator_db_ttl_frame)
         self.ttl_personnels_no_label.configure(
             anchor="n",
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             font="{arial} 30 {bold}",
             text=self.total_personnel,
         )
@@ -750,13 +758,13 @@ class AdminHomeApp:
         )
         self.ttl_visitor_label = tk.Label(self.administrator_db_ttl_frame)
         self.ttl_visitor_label.configure(
-            background="#F7FAE9", font="{arial} 24 {bold}", text="Total Visitors"
+            background=self.complimentary_color_2, font="{arial} 24 {bold}", text="Total Visitors"
         )
         self.ttl_visitor_label.place(anchor="center", relx=0.84, rely=0.25, x=0, y=0)
         self.total_visitor = self.sql_query.get_visitor_count()
         self.ttl_visitor_no_label = tk.Label(self.administrator_db_ttl_frame)
         self.ttl_visitor_no_label.configure(
-            background="#F7FAE9", font="{arial} 30 {bold}", text=self.total_visitor
+            background=self.complimentary_color_2, font="{arial} 30 {bold}", text=self.total_visitor
         )
         self.ttl_visitor_no_label.place(anchor="center", relx=0.84, rely=0.65, x=0, y=0)
         self.administrator_db_ttl_frame.place(
@@ -764,11 +772,11 @@ class AdminHomeApp:
         )
         self.administrator_db_ol_frame = tk.Frame(self.administrator_db_frame)
         self.administrator_db_ol_frame.configure(
-            background="#F7FAE9", height=200, width=200
+            background=self.complimentary_color_2, height=200, width=200
         )
         self.ol_students_label = tk.Label(self.administrator_db_ol_frame)
         self.ol_students_label.configure(
-            background="#F7FAE9", font="{arial} 24 {bold}", text="Present Students"
+            background=self.complimentary_color_2, font="{arial} 24 {bold}", text="Present Students"
         )
         self.ol_students_label.place(anchor="center", relx=0.16, rely=0.25, x=0, y=0)
 
@@ -776,13 +784,13 @@ class AdminHomeApp:
 
         self.ol_students_no_label = tk.Label(self.administrator_db_ol_frame)
         self.ol_students_no_label.configure(
-            background="#F7FAE9", font="{arial} 30 {bold}", text=self.present_students
+            background=self.complimentary_color_2, font="{arial} 30 {bold}", text=self.present_students
         )
         self.ol_students_no_label.place(anchor="center", relx=0.16, rely=0.65, x=0, y=0)
         self.ol_personnels_label = tk.Label(self.administrator_db_ol_frame)
         self.ol_personnels_label.configure(
             anchor="n",
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             font="{arial} 24 {bold}",
             text="Present Personnels",
         )
@@ -793,7 +801,7 @@ class AdminHomeApp:
         self.ol_personnels_no_label = tk.Label(self.administrator_db_ol_frame)
         self.ol_personnels_no_label.configure(
             anchor="n",
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             font="{arial} 30 {bold}",
             text=self.present_personnels,
         )
@@ -803,7 +811,7 @@ class AdminHomeApp:
 
         self.ol_visitor_label = tk.Label(self.administrator_db_ol_frame)
         self.ol_visitor_label.configure(
-            background="#F7FAE9", font="{arial} 24 {bold}", text="Present Visitors"
+            background=self.complimentary_color_2, font="{arial} 24 {bold}", text="Present Visitors"
         )
         self.ol_visitor_label.place(anchor="center", relx=0.84, rely=0.25, x=0, y=0)
 
@@ -811,7 +819,7 @@ class AdminHomeApp:
 
         self.ol_visitor_no_label = tk.Label(self.administrator_db_ol_frame)
         self.ol_visitor_no_label.configure(
-            background="#F7FAE9", font="{arial} 30 {bold}", text=self.present_visitor
+            background=self.complimentary_color_2, font="{arial} 30 {bold}", text=self.present_visitor
         )
         self.ol_visitor_no_label.place(anchor="center", relx=0.84, rely=0.65, x=0, y=0)
 
@@ -820,7 +828,7 @@ class AdminHomeApp:
         )
         self.dashboard_label = tk.Label(self.administrator_db_frame)
         self.dashboard_label.configure(
-            background="#E7E7E7", font="{arial black} 48 {}", text="Dashboard"
+            background=self.complimentary_color_1, font="{arial black} 48 {}", text="Dashboard"
         )
         self.dashboard_label.place(
             anchor="center",
@@ -837,12 +845,12 @@ class AdminHomeApp:
         self.db_appear_logic()
         # HIDE-OTHER--------------------------------------------------------------------------------
         self.administrator_frame3 = tk.Frame(self.administrator_app)
-        self.administrator_frame3.configure(background="#0072bc", height=200, width=200)
+        self.administrator_frame3.configure(background=self.main_color, height=200, width=200)
         self.dashboard_section_label = tk.Label(self.administrator_frame3)
         self.dashboard_section_label.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial } 19 {bold}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             justify="center",
             relief="flat",
             text="Dashboard",
@@ -853,9 +861,9 @@ class AdminHomeApp:
         self.dashboard_section_label.bind("<Leave>", self.dashboard_hover_out, add="")
         self.client_section_label = tk.Label(self.administrator_frame3)
         self.client_section_label.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial } 19 {bold}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             justify="center",
             relief="flat",
             text="Client",
@@ -866,9 +874,9 @@ class AdminHomeApp:
         self.client_section_label.bind("<Leave>", self.client_hover_out, add="")
         self.attendance_section_label = tk.Label(self.administrator_frame3)
         self.attendance_section_label.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial } 19 {bold}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             justify="center",
             relief="flat",
             text="Attendance",
@@ -880,9 +888,9 @@ class AdminHomeApp:
 
         self.user_section_label = tk.Label(self.administrator_frame3)
         self.user_section_label.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial } 19 {bold}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             justify="center",
             relief="flat",
             text="User",
@@ -893,9 +901,9 @@ class AdminHomeApp:
         self.user_section_label.bind("<Leave>", self.user_hover_out, add="")
         self.report_section_label = tk.Label(self.administrator_frame3)
         self.report_section_label.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial } 19 {bold}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             justify="center",
             relief="flat",
             text="Report",
@@ -906,9 +914,9 @@ class AdminHomeApp:
         self.report_section_label.bind("<Leave>", self.report_hover_out, add="")
         self.archived_section_label = tk.Label(self.administrator_frame3)
         self.archived_section_label.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial } 19 {bold}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             justify="center",
             relief="flat",
             text="Archived",
@@ -920,9 +928,9 @@ class AdminHomeApp:
 
         self.settings_section_label = tk.Label(self.administrator_frame3)
         self.settings_section_label.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial } 19 {bold}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             justify="center",
             relief="flat",
             text="Settings",
@@ -933,9 +941,9 @@ class AdminHomeApp:
         self.settings_section_label.bind("<Leave>", self.settings_hover_out, add="")
         self.logout_label = tk.Label(self.administrator_frame3)
         self.logout_label.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial} 19 {bold}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             justify="center",
             relief="flat",
             text="Log Out",
@@ -949,19 +957,19 @@ class AdminHomeApp:
         )
         # ----------------------------------------------------------------------------------
         self.administrator_frame2 = tk.Frame(self.administrator_app)
-        self.administrator_frame2.configure(background="#F7FAE9", height=200, width=200)
+        self.administrator_frame2.configure(background=self.complimentary_color_2, height=200, width=200)
         self.app_name_logo = tk.Label(self.administrator_frame2)
         self.img_SeekULogotypemicro = tk.PhotoImage(
             file=".\SeekU\SeekU Logotype micro.png"
         )
         self.app_name_logo.configure(
-            background="#F7FAE9", image=self.img_SeekULogotypemicro, text="label1"
+            background=self.complimentary_color_2, image=self.img_SeekULogotypemicro, text="label1"
         )
         self.app_name_logo.place(anchor="center", relx=0.15, rely=0.55, x=0, y=0)
         self.app_logo_label = tk.Label(self.administrator_frame2)
         self.img_SeekUmicro = tk.PhotoImage(file=".\SeekU\SeekU micro.png")
         self.app_logo_label.configure(
-            background="#F7FAE9", image=self.img_SeekUmicro, text="label1"
+            background=self.complimentary_color_2, image=self.img_SeekUmicro, text="label1"
         )
         self.app_logo_label.place(anchor="center", relx=0.05, rely=0.5)
         self.administrator_frame2.place(
@@ -1032,7 +1040,7 @@ class AdminHomeApp:
             self.login_attempt_entry.configure(state="disabled")
             self.pass_len_entry.configure(state="disabled")
             self.save_settings_button.configure(state="disabled")
-
+            self.user_section_label.config(foreground=self.sub_complimentary_color)
     # this function updates the time below the window
     def update_time(self):
         self.now = datetime.now()
@@ -1225,28 +1233,28 @@ class AdminHomeApp:
         self.present_personnels = self.sql_query.get_personnel_attendance_count()
         self.present_visitor = self.sql_query.get_visitor_attendance_count()
         self.ol_visitor_no_label.configure(
-            background="#F7FAE9", font="{arial} 30 {bold}", text=self.present_visitor
+            background=self.complimentary_color_2, font="{arial} 30 {bold}", text=self.present_visitor
         )
         self.ol_personnels_no_label.configure(
             anchor="n",
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             font="{arial} 30 {bold}",
             text=self.present_personnels,
         )
         self.ol_students_no_label.configure(
-            background="#F7FAE9", font="{arial} 30 {bold}", text=self.present_students
+            background=self.complimentary_color_2, font="{arial} 30 {bold}", text=self.present_students
         )
         self.ttl_students_no_label.configure(
-            background="#F7FAE9", font="{arial} 30 {bold}", text=self.total_student
+            background=self.complimentary_color_2, font="{arial} 30 {bold}", text=self.total_student
         )
         self.ttl_personnels_no_label.configure(
             anchor="n",
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             font="{arial} 30 {bold}",
             text=self.total_personnel,
         )
         self.ttl_visitor_no_label.configure(
-            background="#F7FAE9", font="{arial} 30 {bold}", text=self.total_visitor
+            background=self.complimentary_color_2, font="{arial} 30 {bold}", text=self.total_visitor
         )
 
     # ------------
@@ -1661,10 +1669,10 @@ class AdminHomeApp:
         self.db_appear_logic()
 
     def dashboard_hover(self, event=None):
-        self.dashboard_section_label.configure(foreground="#FFF200")
+        self.dashboard_section_label.configure(foreground=self.hover_color)
 
     def dashboard_hover_out(self, event=None):
-        self.dashboard_section_label.configure(foreground="#F7FAE9")
+        self.dashboard_section_label.configure(foreground=self.complimentary_color_2)
 
     # DASBOARD-COMMANDS---------------------------------------------------------------------------------------------------------------
 
@@ -1674,10 +1682,10 @@ class AdminHomeApp:
         self.change_layout_client()
 
     def client_hover(self, event=None):
-        self.client_section_label.configure(foreground="#FFF200")
+        self.client_section_label.configure(foreground=self.hover_color)
 
     def client_hover_out(self, event=None):
-        self.client_section_label.configure(foreground="#F7FAE9")
+        self.client_section_label.configure(foreground=self.complimentary_color_2)
 
     def open_diff_client(self, event=None):
         self.change_layout_client()
@@ -1703,10 +1711,10 @@ class AdminHomeApp:
         self.change_layout_attendance()
 
     def attendance_hover(self, event=None):
-        self.attendance_section_label.configure(foreground="#FFF200")
+        self.attendance_section_label.configure(foreground=self.hover_color)
 
     def attendance_hover_out(self, event=None):
-        self.attendance_section_label.configure(foreground="#F7FAE9")
+        self.attendance_section_label.configure(foreground=self.complimentary_color_2)
 
     def search_client_attendance(self, event=None):
         self.search_attendance_info_logic()
@@ -1724,10 +1732,10 @@ class AdminHomeApp:
             self.refresh_user_logic("IsActive")
 
     def user_hover(self, event=None):
-        self.user_section_label.configure(foreground="#FFF200")
+        self.user_section_label.configure(foreground=self.hover_color)
 
     def user_hover_out(self, event=None):
-        self.user_section_label.configure(foreground="#F7FAE9")
+        self.user_section_label.configure(foreground=self.complimentary_color_2)
 
     def search_user_infos(self, event=None):
         data = self.search_u_entry.get()
@@ -1746,10 +1754,10 @@ class AdminHomeApp:
         self.report_appear_logic()
 
     def report_hover(self, event=None):
-        self.report_section_label.configure(foreground="#FFF200")
+        self.report_section_label.configure(foreground=self.hover_color)
 
     def report_hover_out(self, event=None):
-        self.report_section_label.configure(foreground="#F7FAE9")
+        self.report_section_label.configure(foreground=self.complimentary_color_2)
 
     def open_diff_report(self, event=None):
         self.change_layout_reports()
@@ -1767,10 +1775,10 @@ class AdminHomeApp:
         self.change_layout_archived()
 
     def archived_hover(self, event=None):
-        self.archived_section_label.configure(foreground="#FFF200")
+        self.archived_section_label.configure(foreground=self.hover_color)
 
     def archived_hover_out(self, event=None):
-        self.archived_section_label.configure(foreground="#F7FAE9")
+        self.archived_section_label.configure(foreground=self.complimentary_color_2)
 
     def open_diff_archived(self, event=None):
         self.change_layout_archived()
@@ -1788,10 +1796,10 @@ class AdminHomeApp:
         self.settings_appear_logic()
 
     def settings_hover(self, event=None):
-        self.settings_section_label.configure(foreground="#FFF200")
+        self.settings_section_label.configure(foreground=self.hover_color)
 
     def settings_hover_out(self, event=None):
-        self.settings_section_label.configure(foreground="#F7FAE9")
+        self.settings_section_label.configure(foreground=self.complimentary_color_2)
 
     def export_database(self, event=None):
         folder = self.select_folder()
@@ -1815,10 +1823,10 @@ class AdminHomeApp:
         self.administrator_app.destroy()
 
     def logout_hover(self, event=None):
-        self.logout_label.configure(foreground="#FFF200")
+        self.logout_label.configure(foreground=self.hover_color)
 
     def logout_hover_out(self, event=None):
-        self.logout_label.configure(foreground="#F7FAE9")
+        self.logout_label.configure(foreground=self.complimentary_color_2)
 
 
 # LOGOUT-COMMANDS---------------------------------------------------------------------------------------------------------------

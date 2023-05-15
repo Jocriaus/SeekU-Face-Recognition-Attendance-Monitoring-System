@@ -12,6 +12,14 @@ import re
 class SavePrintReportApp:
     def __init__(self, optionmenu):
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
+        # Color ------------
+        self.sub_complimentary_color = "#808080" #gray
+        self.main_color = "#0072bc" #Blue
+        self.sub_color = "#FFF875" #light Yellow
+        self.complimentary_color_1 = "#E7E7E7" #light  gray
+        self.complimentary_color_2 = "#F7FAE9" #Cream Color
+        self.hover_color = "#FFF200" #pure Yellow
+        # Color ------------
         self.client_type = optionmenu
         self.today = datetime.date.today()
         self.today_day = self.today.day
@@ -26,18 +34,18 @@ class SavePrintReportApp:
         self.docx_class = rM.docxClass()
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.generate_report_app = tk.Toplevel()
-        self.generate_report_app.configure(background="#0072bc", height=200, width=200)
+        self.generate_report_app.configure(background=self.main_color, height=200, width=200)
         self.generate_report_app.geometry("640x700")
         self.generate_report_app.resizable(False, False)
         self.generate_report_app.title("SeekU-Save & Print-Report")
         self.generate_report_app.iconbitmap(".\SeekU\SeekU.ico")
         self.gen_report_frame2 = tk.Frame(self.generate_report_app)
-        self.gen_report_frame2.configure(background="#0072bc", height=200, width=200)
+        self.gen_report_frame2.configure(background=self.main_color, height=200, width=200)
         self.from_label = tk.Label(self.gen_report_frame2)
         self.from_label.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial} 20 {}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             text="From",
         )
         self.from_label.place(anchor="center", relx=0.20, rely=0.23)
@@ -64,19 +72,19 @@ class SavePrintReportApp:
 
         self.to_label = tk.Label(self.gen_report_frame2)
         self.to_label.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial} 20 {}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             justify="left",
             text="To",
         )
         self.to_label.place(anchor="center", relx=0.65, rely=0.23)
         self.save_button = tk.Button(self.gen_report_frame2)
         self.save_button.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             default="active",
             font="{arial Black} 20 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             justify="center",
             relief="ridge",
             text="Save",
@@ -88,10 +96,10 @@ class SavePrintReportApp:
         self.save_button.bind("<ButtonPress>", self.save_press, add="")
         self.print_button = tk.Button(self.gen_report_frame2)
         self.print_button.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             default="active",
             font="{arial Black} 20 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             justify="center",
             relief="ridge",
             text="Print",
@@ -104,9 +112,9 @@ class SavePrintReportApp:
         self.pdf_radiobutton = tk.Radiobutton(self.gen_report_frame2)
         self.file_type_var = tk.StringVar(value="Pdf")
         self.pdf_radiobutton.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial} 24 {}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             text="Pdf",
             selectcolor="black",
             value="Pdf",
@@ -117,9 +125,9 @@ class SavePrintReportApp:
         )
         self.docx_radiobutton = tk.Radiobutton(self.gen_report_frame2)
         self.docx_radiobutton.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial} 24 {}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             selectcolor="black",
             text="Docx",
             value="Docx",
@@ -130,9 +138,9 @@ class SavePrintReportApp:
         )
         self.excel_radiobutton = tk.Radiobutton(self.gen_report_frame2)
         self.excel_radiobutton.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial} 24 {}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             selectcolor="black",
             text="Excel",
             value="Excel",
@@ -143,9 +151,9 @@ class SavePrintReportApp:
         )
         self.file_name_label = tk.Label(self.gen_report_frame2)
         self.file_name_label.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial} 20 {}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             text="File Name",
         )
         self.file_name_label.place(anchor="center", relx=0.28, rely=0.8)
@@ -158,11 +166,11 @@ class SavePrintReportApp:
             anchor="center", relheight=1.0, relwidth=1.0, relx=0.5, rely=0.5
         )
         self.gen_report_frame = tk.Frame(self.generate_report_app)
-        self.gen_report_frame.configure(background="#F7FAE9", height=200, width=200)
+        self.gen_report_frame.configure(background=self.complimentary_color_2, height=200, width=200)
         self.sti_logo = tk.Label(self.gen_report_frame)
         self.img_SeekUsmall = tk.PhotoImage(file=".\SeekU\SeekU small.png")
         self.sti_logo.configure(
-            background="#F7FAE9", font="TkDefaultFont", image=self.img_SeekUsmall
+            background=self.complimentary_color_2, font="TkDefaultFont", image=self.img_SeekUsmall
         )
         self.sti_logo.place(anchor="center", relx=0.30, rely=0.5)
         self.app_name_logo = tk.Label(self.gen_report_frame)
@@ -170,8 +178,8 @@ class SavePrintReportApp:
             file=".\SeekU\SeekU Logotype micro.png"
         )
         self.app_name_logo.configure(
-            background="#F7FAE9",
-            foreground="#0072bc",
+            background=self.complimentary_color_2,
+            foreground=self.main_color,
             image=self.img_SeekULogotypemicro,
             relief="flat",
             text="SEEK",

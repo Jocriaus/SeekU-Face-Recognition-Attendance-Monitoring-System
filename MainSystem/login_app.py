@@ -7,14 +7,20 @@ import datetime
 import sys
 
 
-# test for admin = jus    jus123
-# test for security guard = jc   123
-# coe data set = 
-# user type = staff ' low admin, admin ' high admin
-# user template = changes
+# test for system admin = user        admin
+# test for security guard = jc      123
+# test for staff = jus      123
 class LoginApp:
     def __init__(self, master=None):
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
+        # Color ------------
+        self.sub_complimentary_color = "#808080" #gray
+        self.main_color = "#0072bc" #Blue
+        self.sub_color = "#FFF875" #light Yellow
+        self.complimentary_color_1 = "#E7E7E7" #light  gray
+        self.complimentary_color_2 = "#F7FAE9" #Cream Color
+        self.hover_color = "#FFF200" #pure Yellow
+        # Color ------------
         self.sql_query = qry.dbQueries()
         self.sql_query.default_settings_if_not_exist()
         self.sql_query.default_user_if_not_exist()
@@ -31,7 +37,7 @@ class LoginApp:
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         # build ui
         self.log_in_app = tk.Tk() if master is None else tk.Toplevel(master)
-        self.log_in_app.configure(background="#0072bc", height=200, width=200)
+        self.log_in_app.configure(background=self.main_color, height=200, width=200)
         self.log_in_app.geometry("500x500")
         self.log_in_app.resizable(False, False)
         self.log_in_app.title("SeekU - Login")
@@ -39,44 +45,44 @@ class LoginApp:
         self.log_in_app.bind('<Return>',lambda event:self.login_logic())
         # Contains-the-entry-and-button---------------------------------------------------------------------------------------------------------
         self.log_in_frame2 = tk.Frame(self.log_in_app)
-        self.log_in_frame2.configure(background="#0072bc", height=200, width=200)
+        self.log_in_frame2.configure(background=self.main_color, height=200, width=200)
         self.un_label = tk.Label(self.log_in_frame2)
         self.un_label.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial} 20 {}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             text="Username",
         )
         self.un_label.place(anchor="center",relx=0.3, rely=0.375)
         self.un_entry = tk.Entry(self.log_in_frame2)
         self.un_entry.configure(
-            background="#F7FAE9", font="{arial} 18 {}", foreground="#010303"
+            background=self.complimentary_color_2, font="{arial} 18 {}", foreground="#010303"
         )
         self.un_entry.place(
             anchor="center", relheight=0.08, relwidth=0.64, relx=0.5, rely=0.45
         )
         self.pw_label = tk.Label(self.log_in_frame2)
         self.pw_label.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial} 20 {}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             justify="left",
             text="Password",
         )
         self.pw_label.place(anchor="center", relx=0.3, rely=0.57,)
         self.pw_entry = tk.Entry(self.log_in_frame2)
         self.pw_entry.configure(
-            background="#F7FAE9", font="{arial} 18 {}", foreground="#010303", show="•"
+            background=self.complimentary_color_2, font="{arial} 18 {}", foreground="#010303", show="•"
         )
         self.pw_entry.place(
             anchor="center", relheight=.08, relwidth=0.64, relx=0.5, rely=0.64
         )
         self.login_button = tk.Button(self.log_in_frame2)
         self.login_button.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             default="active",
             font="{arial Black} 20 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             justify="center",
             relief="ridge",
             text="Login",
@@ -95,10 +101,10 @@ class LoginApp:
         # Contains-the-logo-and-logotype---------------------------------------------------------------------------------------------------------
 
         self.log_in_frame = tk.Frame(self.log_in_app)
-        self.log_in_frame.configure(background="#F7FAE9", height=200, width=200)
+        self.log_in_frame.configure(background=self.complimentary_color_2, height=200, width=200)
         self.sti_logo = tk.Label(self.log_in_frame)
         self.img_SeekU = tk.PhotoImage(file=".\SeekU\SeekU small.png")
-        self.sti_logo.configure(background="#F7FAE9", image=self.img_SeekU)
+        self.sti_logo.configure(background=self.complimentary_color_2, image=self.img_SeekU)
         self.sti_logo.place(anchor="center", relx=0.0, rely=0.0, x=150, y=80)
         self.app_name_logo = tk.Label(self.log_in_frame)
         
@@ -106,8 +112,8 @@ class LoginApp:
             file=".\SeekU\SeekU Logotype micro.png"
         )
         self.app_name_logo.configure(
-            background="#F7FAE9",
-            foreground="#0072bc",
+            background=self.complimentary_color_2,
+            foreground=self.main_color,
             image=self.img_SeekULogotypemicro,
             relief="flat",
             text="SEEK",

@@ -7,6 +7,14 @@ class ClientCameraSelectApp:
     def __init__(self, user ,login_module):
 
     #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
+        # Color ------------
+        self.sub_complimentary_color = "#808080" #gray
+        self.main_color = "#0072bc" #Blue
+        self.sub_color = "#FFF875" #light Yellow
+        self.complimentary_color_1 = "#E7E7E7" #light  gray
+        self.complimentary_color_2 = "#F7FAE9" #Cream Color
+        self.hover_color = "#FFF200" #pure Yellow
+        # Color ------------
         self.user = user
         self.login_window = login_module # this is the login window
         self.on_radio = True
@@ -14,7 +22,7 @@ class ClientCameraSelectApp:
         
         # build ui
         self.camera_app = tk.Toplevel()
-        self.camera_app.configure(background="#0072bc", height=200, width=200)
+        self.camera_app.configure(background=self.main_color, height=200, width=200)
         self.camera_app.geometry("500x600")
         self.camera_app.resizable(False, False)
         self.camera_app.title("SeekU - Camera")
@@ -24,14 +32,14 @@ class ClientCameraSelectApp:
     #Contains-the-radiobuttons-entry-and-button---------------------------------------------------------------------------------------------- 
         self.camera_frame = tk.Frame(self.camera_app)
         self.camera_frame.configure(
-            background="#0072bc", height=200, width=200)   
+            background=self.main_color, height=200, width=200)   
 
 
         self.detecting_label = tk.Label(self.camera_frame)
         self.detecting_label.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{Lucida} 24 {}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             text='Detecting Camera...')
         self.detecting_label.place(
         anchor="center", relx=0.5, rely=0.5, x=0, y=0)
@@ -47,19 +55,19 @@ class ClientCameraSelectApp:
     #Contains-the-IP SECTION----------------------------------------------------------------------------------------------------------------
         self.camera_frame4 = tk.Frame(self.camera_app)
         self.camera_frame4.configure(
-            background="#0072bc", height=200, width=200)   
+            background=self.main_color, height=200, width=200)   
         
         self.ip_camera_label = tk.Label(self.camera_frame4)
         self.ip_camera_label.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{Lucida} 20 {}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             text='IP Camera')
         self.ip_camera_label.place(
             anchor="center", relx=0.5, rely=0.5, x=0, y=0)
         self.ip_cam_entry = tk.Entry(self.camera_frame4)
         self.ip_cam_entry.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             font="{arial} 18 {}",
             foreground="#010303",
             state='normal')
@@ -72,10 +80,10 @@ class ClientCameraSelectApp:
             )
         self.open_button2 = tk.Button(self.camera_frame4)
         self.open_button2.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             default="active",
             font="{arial Black} 20 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             justify="center",
             relief="ridge",
             text='OPEN',
@@ -99,11 +107,11 @@ class ClientCameraSelectApp:
     #Contains-the-logo-and-logotype--------------------------------------------------------------------------------------------------------- 
         self.camera_frame2 = tk.Frame(self.camera_app)
         self.camera_frame2.configure(
-            background="#F7FAE9", height=200, width=200)
+            background=self.complimentary_color_2, height=200, width=200)
         self.seeku_logo = tk.Label(self.camera_frame2)
         self.img_SeekUsmall = tk.PhotoImage(file=".\SeekU\SeekU small.png")
         self.seeku_logo.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             image=self.img_SeekUsmall,
             text='label1')
         self.seeku_logo.place(anchor="center", relx=0.3, rely=0.5)
@@ -111,9 +119,9 @@ class ClientCameraSelectApp:
         self.img_SeekULogotypemicro = tk.PhotoImage(
             file=".\SeekU\SeekU Logotype micro.png")
         self.app_name_label.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             font="{arial black} 40 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             image=self.img_SeekULogotypemicro,
             relief="flat",
             text='SEEK')
@@ -126,12 +134,12 @@ class ClientCameraSelectApp:
             rely=.12)
         self.camera_frame3 = tk.Frame(self.camera_app)
         self.camera_frame3.configure(
-            background="#F7FAE9", height=200, width=200)        
+            background=self.complimentary_color_2, height=200, width=200)        
         self.logout_label = tk.Label(self.camera_frame3)
         self.logout_label.config(            
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             font="{arial} 12 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             relief="flat",
             text='Log out')
         self.logout_label.place(anchor="center", relx=0.9, rely=0.5)
@@ -140,9 +148,9 @@ class ClientCameraSelectApp:
         self.logout_label.bind("<Leave>", self.logout_hover_out, add="")
         self.ip_label = tk.Label(self.camera_frame3)
         self.ip_label.config(            
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             font="{arial} 11 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             relief="flat",
             text='IP Camera')
         self.ip_label.place(anchor="center", relx=0.7, rely=0.5)
@@ -300,9 +308,9 @@ class ClientCameraSelectApp:
                 cam_name = f"Camera {i+1}"
                 cam_radiobutton = tk.Radiobutton(self.camera_frame)
                 cam_radiobutton.configure(
-                    background="#0072bc",
+                    background=self.main_color,
                     font="Arial 24",
-                    foreground="#F7FAE9",
+                    foreground=self.complimentary_color_2,
                     text=cam_name,
                     selectcolor="black",
                     variable=self.cam_var,
@@ -316,19 +324,19 @@ class ClientCameraSelectApp:
         else:
             self.no_cameras_label = tk.Label(self.camera_frame)
             self.no_cameras_label.configure(
-                background="#0072bc",
+                background=self.main_color,
                 font="{Lucida} 24 {}",
-                foreground="#F7FAE9",
+                foreground=self.complimentary_color_2,
                 text='No Camera Found!')
             self.no_cameras_label.place(
             anchor="center", relx=0.5, rely=0.5, x=0, y=0)
         self.detecting_label.place_forget()
         self.open_button = tk.Button(self.camera_frame)
         self.open_button.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             default="active",
             font="{arial Black} 20 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             justify="center",
             relief="ridge",
             text='OPEN',

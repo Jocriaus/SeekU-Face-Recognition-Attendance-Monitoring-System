@@ -14,6 +14,14 @@ class HomeApp:
     def __init__(self,vid_source, login_mod, sel_cam):
         
     #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
+        # Color ------------
+        self.sub_complimentary_color = "#808080" #gray
+        self.main_color = "#0072bc" #Blue
+        self.sub_color = "#FFF875" #light Yellow
+        self.complimentary_color_1 = "#E7E7E7" #light  gray
+        self.complimentary_color_2 = "#F7FAE9" #Cream Color
+        self.hover_color = "#FFF200" #pure Yellow
+        # Color ------------
         self.video_source = vid_source
         self.login_window = login_mod
         self.sel_cam_window = sel_cam
@@ -24,7 +32,7 @@ class HomeApp:
 
         # build ui
         self.home_app = tk.Toplevel()
-        self.home_app.configure(background="#0072bc", height=200, width=200)
+        self.home_app.configure(background=self.main_color, height=200, width=200)
         self.home_app.geometry("500x600")
         self.home_app.resizable(False, False)
         self.home_app.title("SeekU - Home")
@@ -33,13 +41,13 @@ class HomeApp:
     #contains the settings --------------------------------------------------------------------------------------------
         self.home_app_frame4 = tk.Frame(self.home_app)
         self.home_app_frame4.configure(
-            background="#0072bc", height=200, width=200)
+            background=self.main_color, height=200, width=200)
         self.save_button = tk.Button(self.home_app_frame4)
         self.save_button.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             default="active",
             font="{arial Black} 20 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             justify="center",
             relief="ridge",
             text='Save',
@@ -55,10 +63,10 @@ class HomeApp:
         
         self.reset_button = tk.Button(self.home_app_frame4)
         self.reset_button.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             default="active",
             font="{arial Black} 12 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             justify="center",
             relief="ridge",
             text='Reset',
@@ -74,10 +82,10 @@ class HomeApp:
         
         self.reencode_button = tk.Button(self.home_app_frame4)
         self.reencode_button.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             default="active",
             font="{arial Black} 10 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             justify="center",
             relief="ridge",
             text='Re-Encode',
@@ -93,18 +101,18 @@ class HomeApp:
         
         self.tolerance_lvl_label = tk.Label(self.home_app_frame4)
         self.tolerance_lvl_label.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial} 16 {bold}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             text='Camera Tolerance')
         self.tolerance_lvl_label.place(anchor="center", relx=0.325, rely=0.15)
         self.tolerance_lvl_scale = tk.Scale(self.home_app_frame4)
         self.tolerance_lvl_scale.configure(
-            background="#0072bc",
+            background=self.main_color,
             borderwidth=0,
             digits=3,
             font="{arial } 12 {}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             from_=0,
             highlightthickness=0,
             orient="horizontal",
@@ -116,9 +124,9 @@ class HomeApp:
             anchor="center", relwidth=0.725, relx=0.5, rely=0.23)
         self.data_set_label = tk.Label(self.home_app_frame4)
         self.data_set_label.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial} 16 {bold}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             text='Data Set Folder Name')
         self.data_set_label.place(anchor="center", relx=0.36, rely=0.35)
         self.data_set_entry = tk.Entry(self.home_app_frame4)
@@ -133,9 +141,9 @@ class HomeApp:
             y=0)
         self.detection_time_lbl = tk.Label(self.home_app_frame4)
         self.detection_time_lbl.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial} 16 {bold}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             text='Detection Time (seconds)')
         self.detection_time_lbl.place(anchor="center", relx=0.4, rely=0.525)
         self.detection_time_entry = tk.Entry(self.home_app_frame4)
@@ -150,9 +158,9 @@ class HomeApp:
             y=0)
         self.default_time_out_lbl = tk.Label(self.home_app_frame4)
         self.default_time_out_lbl.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial} 16 {bold}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             text='Default Time out (HH:MM:SS)')
         self.default_time_out_lbl.place(anchor="center", relx=0.425, rely=0.69)
         self.default_time_out_entry = tk.Entry(self.home_app_frame4)
@@ -175,13 +183,13 @@ class HomeApp:
     #Contains-the-buttons----------------------------------------------------------------------------------------------------- 
         self.home_app_frame2 = tk.Frame(self.home_app)
         self.home_app_frame2.configure(
-            background="#0072bc", height=200, width=200)
+            background=self.main_color, height=200, width=200)
         self.attendance_button = tk.Button(self.home_app_frame2)
         self.attendance_button.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             default="active",
             font="{arial Black} 24 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             justify="center",
             relief="ridge",
             text='Attendance',
@@ -196,10 +204,10 @@ class HomeApp:
             "<ButtonPress>", self.attendance_press, add="")
         self.add_visitor = tk.Button(self.home_app_frame2)
         self.add_visitor.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             default="active",
             font="{arial Black} 24 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             justify="center",
             relief="ridge",
             text='Add Visitors',
@@ -213,10 +221,10 @@ class HomeApp:
         self.add_visitor.bind("<ButtonPress>", self.add_visitors_press, add="")
         self.encode_button = tk.Button(self.home_app_frame2)
         self.encode_button.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             default="active",
             font="{arial Black} 14 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             justify="center",
             relief="ridge",
             text='Encode',
@@ -242,11 +250,11 @@ class HomeApp:
     #Contains-the-logo-and-logotype--------------------------------------------------------------------------------------------------------- 
         self.home_app_frame = tk.Frame(self.home_app)
         self.home_app_frame.configure(
-            background="#F7FAE9", height=200, width=200)
+            background=self.complimentary_color_2, height=200, width=200)
         self.seeku_logo = tk.Label(self.home_app_frame)
         self.img_SeekUsmall = tk.PhotoImage(file=".\SeekU\SeekU small.png")
         self.seeku_logo.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             image=self.img_SeekUsmall,
             text='label1')
         self.seeku_logo.place(anchor="center", relx=0.3, rely=0.5)
@@ -254,9 +262,9 @@ class HomeApp:
         self.img_SeekULogotypemicro = tk.PhotoImage(
             file=".\SeekU\SeekU Logotype micro.png")
         self.app_name_label.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             font="{arial black} 40 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             image=self.img_SeekULogotypemicro,
             relief="flat",
             text='SEEK')
@@ -270,12 +278,12 @@ class HomeApp:
         #Contains logout and settings --------------------------------------------
         self.home_app_frame3 = tk.Frame(self.home_app)
         self.home_app_frame3.configure(
-            background="#F7FAE9", height=200, width=200)       
+            background=self.complimentary_color_2, height=200, width=200)       
         self.return_label = tk.Label(self.home_app_frame3)
         self.return_label.config(            
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             font="{arial} 12 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             relief="flat",
             text='Return')
         self.return_label.place(anchor="center", relx=0.1, rely=0.5)
@@ -285,9 +293,9 @@ class HomeApp:
 
         self.logout_label = tk.Label(self.home_app_frame3)
         self.logout_label.config(            
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             font="{arial} 12 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             relief="flat",
             text='Log out')
         self.logout_label.place(anchor="center", relx=0.9, rely=0.5)
@@ -297,9 +305,9 @@ class HomeApp:
 
         self.settings_label = tk.Label(self.home_app_frame3)
         self.settings_label.config(            
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             font="{arial} 12 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             relief="flat",
             text='Settings')
         self.settings_label.place(anchor="center", relx=0.7, rely=0.5)

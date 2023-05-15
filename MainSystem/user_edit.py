@@ -9,6 +9,14 @@ class EditUserApp:
     def __init__(self, un, pw, ufn, uln, ut, us, admin_hom, refresh, this_is_archive):
         # build ui
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
+        # Color ------------
+        self.sub_complimentary_color = "#808080" #gray
+        self.main_color = "#0072bc" #Blue
+        self.sub_color = "#FFF875" #light Yellow
+        self.complimentary_color_1 = "#E7E7E7" #light  gray
+        self.complimentary_color_2 = "#F7FAE9" #Cream Color
+        self.hover_color = "#FFF200" #pure Yellow
+        # Color ------------
         self.this_is_archived = this_is_archive
         self.admin_home_window = admin_hom
         self.username = un
@@ -25,22 +33,22 @@ class EditUserApp:
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
 
         self.edit_user_app = tk.Toplevel()
-        self.edit_user_app.configure(background="#F7FAE9", height=200, width=200)
+        self.edit_user_app.configure(background=self.complimentary_color_2, height=200, width=200)
         self.edit_user_app.geometry("600x700")
         self.edit_user_app.resizable(False, False)
         self.edit_user_app.title("SeekU - Edit User")
         self.edit_user_app.iconbitmap(".\SeekU\SeekU.ico")
         # Contains-the-edit-label-and-entry-widgets---------------------------------------------------------------------------------------------------------
         self.edit_user_frame2 = tk.Frame(self.edit_user_app)
-        self.edit_user_frame2.configure(background="#F7FAE9", height=200, width=200)
+        self.edit_user_frame2.configure(background=self.complimentary_color_2, height=200, width=200)
         self.edit_user_label = tk.Label(self.edit_user_frame2)
         self.edit_user_label.configure(
-            background="#F7FAE9", font="{arial} 24 {bold}", text="Edit User"
+            background=self.complimentary_color_2, font="{arial} 24 {bold}", text="Edit User"
         )
         self.edit_user_label.place(anchor="center", relx=0.5, rely=0.05, x=0, y=0)
         self.username_label = tk.Label(self.edit_user_frame2)
         self.username_label.configure(
-            background="#F7FAE9", font="{arial} 16 {bold}", text="Username"
+            background=self.complimentary_color_2, font="{arial} 16 {bold}", text="Username"
         )
         self.username_label.place(anchor="center", relx=0.385, rely=0.14, x=0, y=0)
         self.username_entry = tk.Entry(self.edit_user_frame2)
@@ -50,7 +58,7 @@ class EditUserApp:
         )
         self.password_label = tk.Label(self.edit_user_frame2)
         self.password_label.configure(
-            background="#F7FAE9", font="{arial} 16 {bold}", text="Password"
+            background=self.complimentary_color_2, font="{arial} 16 {bold}", text="Password"
         )
         self.password_label.place(anchor="center", relx=0.385, rely=0.26, x=0, y=0)
         self.password_entry = tk.Entry(self.edit_user_frame2)
@@ -60,7 +68,7 @@ class EditUserApp:
         )
         self.first_name_label = tk.Label(self.edit_user_frame2)
         self.first_name_label.configure(
-            background="#F7FAE9", font="{arial} 16 {bold}", text="First Name"
+            background=self.complimentary_color_2, font="{arial} 16 {bold}", text="First Name"
         )
         self.first_name_label.place(anchor="center", relx=0.39, rely=0.39, x=0, y=0)
         self.first_name_entry = tk.Entry(self.edit_user_frame2)
@@ -70,7 +78,7 @@ class EditUserApp:
         )
         self.last_name_label = tk.Label(self.edit_user_frame2)
         self.last_name_label.configure(
-            background="#F7FAE9", font="{arial} 16 {bold}", text="Last Name"
+            background=self.complimentary_color_2, font="{arial} 16 {bold}", text="Last Name"
         )
         self.last_name_label.place(anchor="center", relx=0.39, rely=0.52, x=0, y=0)
         self.last_name_entry = tk.Entry(self.edit_user_frame2)
@@ -93,12 +101,12 @@ class EditUserApp:
         self.user_role_options.config(font="{arial} 16")
         self.user_role_label = tk.Label(self.edit_user_frame2)
         self.user_role_label.configure(
-            background="#F7FAE9", font="{arial} 16 {bold}", text="User Role"
+            background=self.complimentary_color_2, font="{arial} 16 {bold}", text="User Role"
         )
         self.user_role_label.place(anchor="center", relx=0.38, rely=0.64, x=0, y=0)
         self.user_status_label = tk.Label(self.edit_user_frame2)
         self.user_status_label.configure(
-            background="#F7FAE9", font="{arial} 16 {bold}", text="User Status"
+            background=self.complimentary_color_2, font="{arial} 16 {bold}", text="User Status"
         )
         self.user_status_label.place(anchor="center", relx=0.395, rely=0.76, x=0, y=0)
 
@@ -107,7 +115,7 @@ class EditUserApp:
         self.stat_var.set("Active")
         self.active_radiobutton = tk.Radiobutton(self.edit_user_frame2)
         self.active_radiobutton.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             font="{arial} 14 {}",
             text="Active",
             variable=self.stat_var,
@@ -116,7 +124,7 @@ class EditUserApp:
         self.active_radiobutton.place(anchor="center", relx=0.4, rely=0.82, x=0, y=0)
         self.inactive_radiobutton = tk.Radiobutton(self.edit_user_frame2)
         self.inactive_radiobutton.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             font="{arial} 14 {}",
             text="Archive",
             variable=self.stat_var,
@@ -126,9 +134,9 @@ class EditUserApp:
 
         self.edit_user_button = tk.Button(self.edit_user_frame2)
         self.edit_user_button.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial black} 20 {}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             text="Edit",
         )
         self.edit_user_button.place(
@@ -138,9 +146,9 @@ class EditUserApp:
 
         self.save_user_button = tk.Button(self.edit_user_frame2)
         self.save_user_button.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{arial black} 20 {}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             text="Save",
         )
         self.save_user_button.place(
@@ -158,13 +166,13 @@ class EditUserApp:
         # Contains-the-logo-and-logotype---------------------------------------------------------------------------------------------------------
 
         self.edit_user_frame1 = tk.Frame(self.edit_user_app)
-        self.edit_user_frame1.configure(background="#FFF875", height=200, width=200)
+        self.edit_user_frame1.configure(background=self.sub_color, height=200, width=200)
         self.school_logo_label = tk.Label(self.edit_user_frame1)
         self.img_STICollegeBalagtasLogomedium = tk.PhotoImage(
             file="./SeekU/STI College Balagtas Logo medium.png"
         )
         self.school_logo_label.configure(
-            background="#FFF875",
+            background=self.sub_color,
             image=self.img_STICollegeBalagtasLogomedium,
             text="label1",
         )

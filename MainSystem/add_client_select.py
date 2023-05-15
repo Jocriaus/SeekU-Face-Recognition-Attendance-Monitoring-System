@@ -13,6 +13,14 @@ class AddSelectorApp:
     def __init__(self, vid_source, admin_hom, condition, refresh):
 
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
+        # Color ------------
+        self.sub_complimentary_color = "#808080" #gray
+        self.main_color = "#0072bc" #Blue
+        self.sub_color = "#FFF875" #light Yellow
+        self.complimentary_color_1 = "#E7E7E7" #light  gray
+        self.complimentary_color_2 = "#F7FAE9" #Cream Color
+        self.hover_color = "#FFF200" #pure Yellow
+        # Color ------------
         self.video_source = vid_source
         self.admin_home_window = admin_hom
         self.window_will_open = condition
@@ -20,20 +28,20 @@ class AddSelectorApp:
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         # build ui
         self.add_select_app = tk.Toplevel()
-        self.add_select_app.configure(background="#0072bc", height=200, width=200)
+        self.add_select_app.configure(background=self.main_color, height=200, width=200)
         self.add_select_app.geometry("500x400")
         self.add_select_app.resizable(False, False)
         self.add_select_app.title("SeekU - Camera")
         self.add_select_app.iconbitmap(".\SeekU\SeekU.ico")
 
         self.add_select_frame2 = tk.Frame(self.add_select_app)
-        self.add_select_frame2.configure(background="#0072bc", height=200, width=200)
+        self.add_select_frame2.configure(background=self.main_color, height=200, width=200)
         self.capture_n_save_button = tk.Button(self.add_select_frame2)
         self.capture_n_save_button.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             default="active",
             font="{arial Black} 20 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             justify="center",
             relief="ridge",
             text="Capture and Save",
@@ -47,10 +55,10 @@ class AddSelectorApp:
         )
         self.save_button = tk.Button(self.add_select_frame2)
         self.save_button.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             default="active",
             font="{arial Black} 24 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             justify="center",
             relief="ridge",
             text="Save",
@@ -62,9 +70,9 @@ class AddSelectorApp:
         self.save_button.bind("<ButtonPress>", self.save_press, add="")
         self.reminder_label = tk.Label(self.add_select_frame2)
         self.reminder_label.configure(
-            background="#0072bc",
+            background=self.main_color,
             font="{lucida} 10 {}",
-            foreground="#F7FAE9",
+            foreground=self.complimentary_color_2,
             text="client should already have a photo on the data set.",
         )
         self.reminder_label.place(anchor="center", relx=0.5, rely=0.825)
@@ -72,11 +80,11 @@ class AddSelectorApp:
             anchor="center", relheight=1.0, relwidth=1.0, relx=0.5, rely=0.5
         )
         self.add_select_frame = tk.Frame(self.add_select_app)
-        self.add_select_frame.configure(background="#F7FAE9", height=200, width=200)
+        self.add_select_frame.configure(background=self.complimentary_color_2, height=200, width=200)
         self.seeku_logo = tk.Label(self.add_select_frame)
         self.img_SeekUsmall = tk.PhotoImage(file=".\SeekU\SeekU small.png")
         self.seeku_logo.configure(
-            background="#F7FAE9", image=self.img_SeekUsmall, text="label1"
+            background=self.complimentary_color_2, image=self.img_SeekUsmall, text="label1"
         )
         self.seeku_logo.place(anchor="center", relx=0.3, rely=0.5)
         self.app_name_label = tk.Label(self.add_select_frame)
@@ -84,9 +92,9 @@ class AddSelectorApp:
             file=".\SeekU\SeekU Logotype micro.png"
         )
         self.app_name_label.configure(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             font="{arial black} 40 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             image=self.img_SeekULogotypemicro,
             relief="flat",
             text="SEEK",
@@ -96,12 +104,12 @@ class AddSelectorApp:
             anchor="center", relheight=0.25, relwidth=1, relx=0.5, rely=0.125
         )
         self.add_select_frame3 = tk.Frame(self.add_select_app)
-        self.add_select_frame3.configure(background="#F7FAE9", height=200, width=200)
+        self.add_select_frame3.configure(background=self.complimentary_color_2, height=200, width=200)
         self.return_label = tk.Label(self.add_select_frame3)
         self.return_label.config(
-            background="#F7FAE9",
+            background=self.complimentary_color_2,
             font="{arial} 12 {}",
-            foreground="#0072bc",
+            foreground=self.main_color,
             relief="flat",
             text="Return",
         )
