@@ -1040,6 +1040,7 @@ class AdminHomeApp:
             self.login_attempt_entry.configure(state="disabled")
             self.pass_len_entry.configure(state="disabled")
             self.save_settings_button.configure(state="disabled")
+            self.save_dates_button.configure(state="disabled")
             self.user_section_label.config(foreground=self.sub_complimentary_color)
     # this function updates the time below the window
     def update_time(self):
@@ -1604,7 +1605,10 @@ class AdminHomeApp:
                 self.edit_visitor_function(folder, self.archived_man_var.get(), True)
 
         if self.archived_man_var.get() == "Archived User":
-            self.edit_user_function(True)
+            if self.user == "Staff":
+                pass
+            else:
+                self.edit_user_function(True)
 
     def search_archived_info_logic(self):
         if self.archived_man_var.get() == "Archived Students":
@@ -1732,20 +1736,32 @@ class AdminHomeApp:
             self.refresh_user_logic("IsActive")
 
     def user_hover(self, event=None):
-        self.user_section_label.configure(foreground=self.hover_color)
+        if self.user == "Staff":
+            pass
+        else:
+            self.user_section_label.configure(foreground=self.hover_color)
 
     def user_hover_out(self, event=None):
-        self.user_section_label.configure(foreground=self.complimentary_color_2)
+        if self.user == "Staff":
+            pass
+        else:
+            self.user_section_label.configure(foreground=self.complimentary_color_2)
 
     def search_user_infos(self, event=None):
         data = self.search_u_entry.get()
         self.treeview.do_search_user(data, "IsActive")
 
     def edit_user_infos(self, event=None):
-        self.edit_user_function(False)
+        if self.user == "Staff":
+            pass
+        else:
+            self.edit_user_function(False)
 
     def add_user_infos(self, event=None):
-        self.register_user()
+        if self.user == "Staff":
+            pass
+        else:
+            self.register_user()
 
     # USER-COMMANDS---------------------------------------------------------------------------------------------------------------
     # REPORTS-COMMANDS---------------------------------------------------------------------------------------------------------------
@@ -1807,13 +1823,22 @@ class AdminHomeApp:
             self.backup.backup_data(folder)
 
     def import_database(self, event=None):
-        rD.RestoreApp()
+        if self.user == "Staff":
+            pass
+        else:
+            rD.RestoreApp()
 
     def save_dates(self, event=None):
-        self.activation_settings_save()
+        if self.user == "Staff":
+            pass
+        else:
+            self.activation_settings_save()
 
     def save_security(self, event=None):
-        self.security_settings_save()
+        if self.user == "Staff":
+            pass
+        else:
+            self.security_settings_save()
 
     # SETTINGS-COMMANDS---------------------------------------------------------------------------------------------------------------
     # LOGOUT-COMMANDS---------------------------------------------------------------------------------------------------------------
