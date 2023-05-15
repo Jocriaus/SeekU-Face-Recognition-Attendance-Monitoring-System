@@ -34,7 +34,7 @@ class excelClass:
             end_date = str(date2)[0:10]
  
             worksheet = writer.sheets["Sheet1"]
-            worksheet.write('F9', starting_date)
+            worksheet.write('E9', starting_date)
             worksheet.write('G9', end_date)  
             worksheet.insert_image("C1", ".\SeekU\STI College Balagtas Logo medium.png")
             worksheet.insert_image("E1", ".\SeekU\Student Report.png")
@@ -114,11 +114,11 @@ class excelClass:
             end_date = str(date2)[0:10]
  
             worksheet = writer.sheets["Sheet1"]
-            worksheet.write('F9', starting_date)
+            worksheet.write('E9', starting_date)
             worksheet.write('H9', end_date)  
             worksheet.insert_image("C1", ".\SeekU\STI College Balagtas Logo medium.png")
-            worksheet.insert_image("F1", ".\SeekU\Visitor Report.png")
-            worksheet.insert_image("F6", ".\SeekU\Dates.png")
+            worksheet.insert_image("E1", ".\SeekU\Visitor Report.png")
+            worksheet.insert_image("E6", ".\SeekU\Dates.png")
             worksheet.insert_image("I1", ".\SeekU\SeekU small.png")
             for column in df:
                 column_length = max(df[column].astype(str).map(len).max(), len(column))
@@ -154,7 +154,7 @@ class excelClass:
             end_date = str(date2)[0:10]
  
             worksheet = writer.sheets["Sheet1"]
-            worksheet.write('F9', starting_date)
+            worksheet.write('E9', starting_date)
             worksheet.write('G9', end_date)  
             worksheet.insert_image("C1", ".\SeekU\STI College Balagtas Logo medium.png")
             worksheet.insert_image("E1", ".\SeekU\Student Report.png")
@@ -234,11 +234,11 @@ class excelClass:
             end_date = str(date2)[0:10]
  
             worksheet = writer.sheets["Sheet1"]
-            worksheet.write('F9', starting_date)
+            worksheet.write('E9', starting_date)
             worksheet.write('H9', end_date)  
             worksheet.insert_image("C1", ".\SeekU\STI College Balagtas Logo medium.png")
-            worksheet.insert_image("F1", ".\SeekU\Visitor Report.png")
-            worksheet.insert_image("F6", ".\SeekU\Dates.png")
+            worksheet.insert_image("E1", ".\SeekU\Visitor Report.png")
+            worksheet.insert_image("E6", ".\SeekU\Dates.png")
             worksheet.insert_image("I1", ".\SeekU\SeekU small.png")
             for column in df:
                 column_length = max(df[column].astype(str).map(len).max(), len(column))
