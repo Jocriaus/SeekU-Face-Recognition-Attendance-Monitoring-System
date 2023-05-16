@@ -301,7 +301,7 @@ class RegisterPersonnelApp:
                             and len(contact_num_var) == 10
                         ):
                             if ((first_name_var.replace(" ", "").isalpha() or "-" in first_name_var)
-                                and (mid_name_var.replace(" ", "").isalpha() or "-" in mid_name_var)
+                                and (mid_name_var.replace(" ", "").isalpha() or mid_name_var == "" or "-" in mid_name_var)
                                 and (last_name_var.replace(" ", "").isalpha()  or "-" in last_name_var)
                                 ):
                                 if register == True:

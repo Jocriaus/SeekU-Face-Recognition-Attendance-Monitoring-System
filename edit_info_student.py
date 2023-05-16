@@ -426,7 +426,7 @@ class EditStudentApp:
                         and len(student_contact_num_var) == 10
                         ):
                         if ((student_firstname_var.replace(" ", "").isalpha()  or "-" in student_firstname_var) 
-                            and( student_middlename_var.replace(" ", "").isalpha()or "-" in student_middlename_var) 
+                            and( student_middlename_var.replace(" ", "").isalpha()or student_middlename_var == "" or "-" in student_middlename_var) 
                             and (student_lastname_var.replace(" ", "").isalpha() or "-" in student_lastname_var)
                             and (student_program_var.replace(" ", "").isalpha() or "-" in student_program_var)):
                             

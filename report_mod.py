@@ -58,6 +58,9 @@ class excelClass:
                 worksheet.set_column(col_idx, col_idx, column_length)
 
             writer.close()
+            messbx.showinfo(
+                "Generated", "The reports have been successfully generated."
+            )
         else:
             messbx.showwarning(
                 "Warning", "There are no records of attendance for the selected date."
@@ -105,6 +108,9 @@ class excelClass:
                 col_idx = col_idx + start_column
                 worksheet.set_column(col_idx, col_idx, column_length)
             writer.close()
+            messbx.showinfo(
+                "Generated", "The reports have been successfully generated."
+            )
         else:
             messbx.showwarning(
                 "Warning", "There are no records of attendance for the selected date."
@@ -151,6 +157,9 @@ class excelClass:
                 col_idx = col_idx + start_column
                 worksheet.set_column(col_idx, col_idx, column_length)
             writer.close()
+            messbx.showinfo(
+                "Generated", "The reports have been successfully generated."
+            )
         else:
             messbx.showwarning(
                 "Warning", "There are no records of attendance for the selected date."
@@ -201,6 +210,9 @@ class excelClass:
 
             writer.close()
             os.startfile(filepath + "/" + filename + ".xlsx")
+            messbx.showinfo(
+                "Generated", "The reports have been successfully generated."
+            )
         else:
             messbx.showwarning(
                 "Warning", "There are no records of attendance for the selected date."
@@ -247,7 +259,11 @@ class excelClass:
                 col_idx = df.columns.get_loc(column)
                 col_idx = col_idx + start_column
                 worksheet.set_column(col_idx, col_idx, column_length)
+            writer.close()  
             os.startfile(filepath + "/" + filename + ".xlsx")
+            messbx.showinfo(
+                "Generated", "The reports have been successfully generated."
+            )
         else:
             messbx.showwarning(
                 "Warning", "There are no records of attendance for the selected date."
@@ -293,7 +309,11 @@ class excelClass:
                 col_idx = df.columns.get_loc(column)
                 col_idx = col_idx + start_column
                 worksheet.set_column(col_idx, col_idx, column_length)
+            writer.close()   
             os.startfile(filepath + "/" + filename + ".xlsx")
+            messbx.showinfo(
+                "Generated", "The reports have been successfully generated."
+            )
         else:
             messbx.showwarning(
                 "Warning", "There are no records of attendance for the selected date."
@@ -359,6 +379,9 @@ class docxClass:
             # saves the doc to a new file path
             doc.save(filepath + "/" + filename + ".docx")
             os.startfile(filepath + "/" + filename + ".docx")
+            messbx.showinfo(
+                "Generated", "The reports have been successfully generated."
+            )
 
     def save_doc_student(self, filepath, filename, date1, date2):
         # populate the report tree
@@ -408,6 +431,9 @@ class docxClass:
 
             # saves the doc to a new file path
             doc.save(filepath + "/" + filename + ".docx")
+            messbx.showinfo(
+                "Generated", "The reports have been successfully generated."
+            )
 
     # JOCRIAUS--------------------------------------------------------------------------
 
@@ -457,6 +483,9 @@ class docxClass:
             # saves the doc to a new file path
             doc.save(filepath + "/" + filename + ".docx")
             os.startfile(filepath + "/" + filename + ".docx")
+            messbx.showinfo(
+                "Generated", "The reports have been successfully generated."
+            )
 
     def save_doc_personnel(self, filepath, filename, date1, date2):
         # populate the report tree
@@ -503,6 +532,9 @@ class docxClass:
 
             # saves the doc to a new file path
             doc.save(filepath + "/" + filename + ".docx")
+            messbx.showinfo(
+                "Generated", "The reports have been successfully generated."
+            )
 
     def print_doc_visitor(self, filepath, filename, date1, date2):
         # populate the report tree
@@ -550,6 +582,9 @@ class docxClass:
             # saves the doc to a new file path
             doc.save(filepath + "/" + filename + ".docx")
             os.startfile(filepath + "/" + filename + ".docx")
+            messbx.showinfo(
+                "Generated", "The reports have been successfully generated."
+            )
 
     def save_doc_visitor(self, filepath, filename, date1, date2):
         # populate the report tree
@@ -596,6 +631,9 @@ class docxClass:
 
             # saves the doc to a new file path
             doc.save(filepath + "/" + filename + ".docx")
+            messbx.showinfo(
+                "Generated", "The reports have been successfully generated."
+            )
 
     def print_pdf_student(self, filepath, filename, date1, date2):
         # populate the report tree
@@ -651,6 +689,9 @@ class docxClass:
             docx2pdf.convert(docx_file, pdf_file)
             os.remove(docx_file)
             os.startfile(filepath + "/" + filename + ".pdf")
+            messbx.showinfo(
+                "Generated", "The reports have been successfully generated."
+            )
 
     # JOCRIAUS-23/04/2023-------------------------------------------------------------------------------------
     # yung 12 na other functions gawin mong parepareho, eto yung gawin mong basis
@@ -707,6 +748,9 @@ class docxClass:
 
             docx2pdf.convert(docx_file, pdf_file)
             os.remove(docx_file)
+            messbx.showinfo(
+                "Generated", "The reports have been successfully generated."
+            )
 
     # JOCRIAUS-23/04/2023-------------------------------------------------------------------------------------
 
@@ -762,6 +806,9 @@ class docxClass:
             docx2pdf.convert(docx_file, pdf_file)
             os.remove(docx_file)
             os.startfile(filepath + "/" + filename + ".pdf")
+            messbx.showinfo(
+                "Generated", "The reports have been successfully generated."
+            )
 
     def save_pdf_personnel(self, filepath, filename, date1, date2):
         # populate the report tree
@@ -814,6 +861,9 @@ class docxClass:
 
             docx2pdf.convert(docx_file, pdf_file)
             os.remove(docx_file)
+            messbx.showinfo(
+                "Generated", "The reports have been successfully generated."
+            )
 
     def print_pdf_visitor(self, filepath, filename, date1, date2):
         # populate the report tree
@@ -867,6 +917,9 @@ class docxClass:
             docx2pdf.convert(docx_file, pdf_file)
             os.remove(docx_file)
             os.startfile(filepath + "/" + filename + ".pdf")
+            messbx.showinfo(
+                "Generated", "The reports have been successfully generated."
+            )
 
     def save_pdf_visitor(self, filepath, filename, date1, date2):
         # populate the report tree
@@ -919,3 +972,6 @@ class docxClass:
 
             docx2pdf.convert(docx_file, pdf_file)
             os.remove(docx_file)
+            messbx.showinfo(
+                "Generated", "The reports have been successfully generated."
+            )

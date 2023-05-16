@@ -428,7 +428,7 @@ class EditPersonnelApp:
                         and len(personnel_contact_num_var) == 10
                         ):
                         if ((personnel_firstname_var.replace(" ", "").isalpha() or "-" in personnel_firstname_var)
-                            and (personnel_middlename_var.replace(" ", "").isalpha() or "-" in personnel_middlename_var)
+                            and (personnel_middlename_var.replace(" ", "").isalpha() or personnel_middlename_var == "" or "-" in personnel_middlename_var)
                             and (personnel_lastname_var.replace(" ", "").isalpha() or "-" in personnel_lastname_var)
                             ):
 
