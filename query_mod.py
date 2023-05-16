@@ -145,7 +145,7 @@ class dbQueries:
         """)
 
         # Create table tbl_visitor_attendance
-        cursor.execute("""
+        self.cursor.execute("""
             CREATE TABLE IF NOT EXISTS tbl_visitor_attendance (
                 visitor_attendance_no INTEGER PRIMARY KEY AUTOINCREMENT
                 visitor_no INTEGER,
