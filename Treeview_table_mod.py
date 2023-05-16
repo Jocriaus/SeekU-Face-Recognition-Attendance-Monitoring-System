@@ -1,4 +1,4 @@
-import pyodbc as odbc
+import sqlite3 as sql
 import tkinter as tk
 import tkinter.ttk as ttk
 import query_mod as qry
@@ -16,9 +16,9 @@ class TreeviewGUI:
         self.username = ""
         self.password = ""
         # self.connection_string = f"Driver={{ODBC Driver 18 for SQL Server}};Server={self.server};Database={self.database};UID={self.username};PWD={self.password};TrustServerCertificate=yes"
-        self.connection_string = f"Driver={{SQL Server}};Server={self.server};Database={self.database};UID={self.username};PWD={self.password}"
-
-        self.connection = odbc.connect(self.connection_string)
+        self.connection_string2 = f"Driver={{SQL Server}};Server={self.server};Database={self.database};UID={self.username};PWD={self.password}"
+        self.connection_string = 'SeekU_Database'
+        self.connection = sql.connect(self.connection_string)
         self.cursor = self.connection.cursor()
 
     def disconnect(self):
