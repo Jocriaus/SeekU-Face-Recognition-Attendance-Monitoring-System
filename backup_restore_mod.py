@@ -1,5 +1,5 @@
 import os
-import pyodbc as odbc
+import sqlite3 as sql
 import pandas as pd
 import tkinter.messagebox as messbx
 import datetime
@@ -15,9 +15,9 @@ class BackupRestore:
         self.username = ""
         self.password = ""
 
-        self.connection_string = f"Driver={{SQL Server}};Server={self.server};Database={self.database};UID={self.username};PWD={self.password}"
-
-        self.connection = odbc.connect(self.connection_string)
+        self.connection_string2 = f"Driver={{SQL Server}};Server={self.server};Database={self.database};UID={self.username};PWD={self.password}"
+        self.connection_string = 'SeekU_Database'
+        self.connection = sql.connect(self.connection_string)
         self.cursor = self.connection.cursor()
 
     def restore_student(self, path):
