@@ -13,8 +13,8 @@ class dbQueries:
         self.username = ""
         self.password = ""
 
-        self.connection_string2 = f"Driver={{SQL Server}};Server={self.server};Database={self.database};UID={self.username};PWD={self.password}"
-        self.connection_string = 'SeekU_Database'
+        self.connection_string = f"Driver={{SQL Server}};Server={self.server};Database={self.database};UID={self.username};PWD={self.password}"
+        #self.connection_string = 'SeekU_Database'
         self.connection = sql.connect(self.connection_string)
         self.cursor = self.connection.cursor()
 
