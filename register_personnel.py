@@ -332,7 +332,6 @@ class RegisterPersonnelApp:
                                                         personnel_type_var,
                                                         
                                                     )
-                                                    self.register_button.configure(state="disabled")
                                                     messbx.showinfo(
                                                         "Success",
                                                         "The personnel's record has been registered successfully.",

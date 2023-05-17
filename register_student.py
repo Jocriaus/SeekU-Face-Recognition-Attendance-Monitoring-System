@@ -364,7 +364,6 @@ class RegisterStudentApp:
                                                 contact_num_var,
                                                 address_var,
                                             )
-                                            self.register_button.configure(state="disabled")
                                             messbx.showinfo(
                                                 "Success",
                                                 "The student's record has been registered successfully.",
@@ -430,8 +429,7 @@ class RegisterStudentApp:
 
     # this command will open the camera app
     def change_pic(self, event=None):
-        if self.register_button.state() != "disabled":
-            self.back_cam_app_window()
+        self.back_cam_app_window()
 
     def return_func(self, event=None):
         self.back_cam_app_window()
