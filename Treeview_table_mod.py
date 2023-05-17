@@ -1,4 +1,4 @@
-import sqlite3 as sql
+import pyodbc as sql
 import tkinter as tk
 import tkinter.ttk as ttk
 import query_mod as qry

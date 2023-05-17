@@ -1,5 +1,5 @@
 import os
-import sqlite3 as sql
+import pyodbc as sql
 import pandas as pd
 import tkinter.messagebox as messbx
 import datetime

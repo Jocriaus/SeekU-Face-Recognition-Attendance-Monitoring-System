@@ -1,4 +1,4 @@
-import sqlite3 as sql
+import pyodbc as sql
 import datetime as datetime
 
 
