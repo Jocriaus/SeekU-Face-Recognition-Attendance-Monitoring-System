@@ -39,4 +39,4 @@ exe = EXE(pyz,
           icon='.\\SeekU\\SeekU.ico',
           upx=True,
           runtime_tmpdir=None,
-          console=True )
+          console=False )
