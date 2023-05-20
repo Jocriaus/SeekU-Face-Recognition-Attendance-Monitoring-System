@@ -3,6 +3,8 @@ import tkinter.messagebox as messbx
 import tkinter as tk
 import query_mod as qry
 import PIL.Image, PIL.ImageTk
+import datetime
+import time
 import os
 import sys
 import re
@@ -111,24 +113,11 @@ class AddVisitorApp:
             background=self.complimentary_color_2, image=self.img_STICollegeBalagtasLogo, text="label1"
         )
         self.school_logo_label.place(anchor="center", relx=0.5, rely=0.12)
-        self.last_name_label = tk.Label(self.add_visitor_frame)
-        self.last_name_label.configure(
-            background=self.complimentary_color_2, font="{arial} 36 {}", text="Last Name"
-        )
-        self.last_name_label.place(anchor="center", relx=0.34, rely=0.25, x=0, y=0)
-        self.last_name_entry = tk.Entry(self.add_visitor_frame)
-        self.last_name_entry.configure(
-            borderwidth=2,
-            font="{arial} 30 {}",
-            highlightbackground="#000000",
-            highlightthickness=2,
-        )
-        self.last_name_entry.place(anchor="center", relx=0.55, rely=0.31, x=0, y=0)
         self.first_name_label = tk.Label(self.add_visitor_frame)
         self.first_name_label.configure(
             background=self.complimentary_color_2, font="{arial} 36 {}", text="First Name"
         )
-        self.first_name_label.place(anchor="center", relx=0.34, rely=0.40, x=0, y=0)
+        self.first_name_label.place(anchor="center", relx=0.34, rely=0.25, x=0, y=0)
         self.first_name_entry = tk.Entry(self.add_visitor_frame)
         self.first_name_entry.configure(
             borderwidth=2,
@@ -136,7 +125,20 @@ class AddVisitorApp:
             highlightbackground="#000000",
             highlightthickness=2,
         )
-        self.first_name_entry.place(anchor="center", relx=0.55, rely=0.46, x=0, y=0)
+        self.first_name_entry.place(anchor="center", relx=0.55, rely=0.31, x=0, y=0)
+        self.last_name_label = tk.Label(self.add_visitor_frame)
+        self.last_name_label.configure(
+            background=self.complimentary_color_2, font="{arial} 36 {}", text="Last Name"
+        )
+        self.last_name_label.place(anchor="center", relx=0.34, rely=0.40, x=0, y=0)
+        self.last_name_entry = tk.Entry(self.add_visitor_frame)
+        self.last_name_entry.configure(
+            borderwidth=2,
+            font="{arial} 30 {}",
+            highlightbackground="#000000",
+            highlightthickness=2,
+        )
+        self.last_name_entry.place(anchor="center", relx=0.55, rely=0.46, x=0, y=0)
         self.contact_no_label = tk.Label(self.add_visitor_frame)
         self.contact_no_label.configure(
             background=self.complimentary_color_2, font="{arial} 36 {}", text="Contact No."
@@ -235,6 +237,7 @@ class AddVisitorApp:
                             ):
                             result = messbx.askokcancel("Confirm Action", "Please review all the details you have inputted. Are you sure everything is final and correct?")
                             if result:
+
                                 self.sql_query.register_visitor(
                                     first_name_var,
                                     last_name_var,
@@ -247,6 +250,9 @@ class AddVisitorApp:
                                     contact_num_var,
                                     address_var,
                                 )
+                                current_time = time.strftime("%H:%M:%S", time.localtime())
+                                current_date = datetime.datetime.now().strftime("%Y-%m-%d")
+                                self.sql_query.first_visitor_attendance_record(str(img_name[0]),current_date,current_time)
                                 os.rename(
                                     self.img_path + "/000000000.jpg",
                                     self.img_path + "/" + str(img_name[0]) + ".jpg",

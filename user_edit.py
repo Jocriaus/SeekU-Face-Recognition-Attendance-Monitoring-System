@@ -299,19 +299,25 @@ class EditUserApp:
                     if update:
                         result = messbx.askokcancel("Confirm Action", "Do you wish to proceed without saving?")
                         if result:
-                            self.sql_query.update_user(
-                                username_var,
-                                password_var,
-                                firstname_var,
-                                lastname_var,
-                                user_role_variable,
-                                user_status_var,
-                            )
-                            self.saved = True
-                            messbx.showinfo(
-                                "Success",
-                                "The user record has been updated successfully.",
-                            )
+                            if not (username_var == "user" and user_status_var == "IsArchived"):
+                                self.sql_query.update_user(
+                                    username_var,
+                                    password_var,
+                                    firstname_var,
+                                    lastname_var,
+                                    user_role_variable,
+                                    user_status_var,
+                                )
+                                self.saved = True
+                                messbx.showinfo(
+                                    "Success",
+                                    "The user record has been updated successfully.",
+                                )
+                            else:
+                                messbx.showwarning(
+                                "Warning",
+                                "This user cannot be deactivated.",
+                                )
                 else:
                     messbx.showwarning(
                         "Warning",

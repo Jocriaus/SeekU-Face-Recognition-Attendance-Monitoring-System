@@ -299,13 +299,17 @@ class EditVisitorApp:
         self.last_name_entry.configure(state="disabled")
         self.first_name_entry.configure(state="disabled")
         self.contact_num_entry.configure(state="disabled")
-
+        self.active_radiobutton.configure(state="disabled")
+        self.inactive_radiobutton.configure(state="disabled")
+        
     # enables entry widgets
     def enable_entry(self):
         self.address_entry.configure(state="normal")
         self.last_name_entry.configure(state="normal")
         self.first_name_entry.configure(state="normal")
         self.contact_num_entry.configure(state="normal")
+        self.active_radiobutton.configure(state="normal")
+        self.inactive_radiobutton.configure(state="normal")
 
     def select_visitor(self):
         self.first_name_entry.insert(0, self.visitor_firstname)

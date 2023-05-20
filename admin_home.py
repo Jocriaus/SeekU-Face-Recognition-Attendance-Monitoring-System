@@ -451,12 +451,19 @@ class AdminHomeApp:
             anchor="center", relheight=0.6, relwidth=0.9, relx=0.5, rely=0.6, x=0, y=0
         )
         self.archived_man_var = tk.StringVar(value="Archived Students")
-        __values = [
-            "Archived Students",
-            "Archived Personnels",
-            "Archived Visitors",
-            "Archived User",
-        ]
+        if self.user == "Staff":
+            __values = [
+                "Archived Students",
+                "Archived Personnels",
+                "Archived Visitors",
+            ]
+        else:
+            __values = [
+                "Archived Students",
+                "Archived Personnels",
+                "Archived Visitors",
+                "Archived User",
+            ]
         self.manage_archived_optionmenu = tk.OptionMenu(
             self.administrator_archived_frame,
             self.archived_man_var,
@@ -885,60 +892,113 @@ class AdminHomeApp:
         self.attendance_section_label.bind("<1>", self.attendance_appear, add="")
         self.attendance_section_label.bind("<Enter>", self.attendance_hover, add="")
         self.attendance_section_label.bind("<Leave>", self.attendance_hover_out, add="")
+        if self.user == "Staff":
+            self.user_section_label = tk.Label(self.administrator_frame3)
+            self.user_section_label.configure(
+                background=self.main_color,
+                font="{arial } 19 {bold}",
+                foreground=self.complimentary_color_2,
+                justify="center",
+                relief="flat",
+                text="User",
+            )
+            self.user_section_label.bind("<1>", self.user_appear, add="")
+            self.user_section_label.bind("<Enter>", self.user_hover, add="")
+            self.user_section_label.bind("<Leave>", self.user_hover_out, add="")
+            self.report_section_label = tk.Label(self.administrator_frame3)
+            self.report_section_label.configure(
+                background=self.main_color,
+                font="{arial } 19 {bold}",
+                foreground=self.complimentary_color_2,
+                justify="center",
+                relief="flat",
+                text="Report",
+            )
+            self.report_section_label.place(anchor="w", relx=0.1, rely=0.28)
+            self.report_section_label.bind("<1>", self.report_appear, add="")
+            self.report_section_label.bind("<Enter>", self.report_hover, add="")
+            self.report_section_label.bind("<Leave>", self.report_hover_out, add="")
+            self.archived_section_label = tk.Label(self.administrator_frame3)
+            self.archived_section_label.configure(
+                background=self.main_color,
+                font="{arial } 19 {bold}",
+                foreground=self.complimentary_color_2,
+                justify="center",
+                relief="flat",
+                text="Archived",
+            )
+            self.archived_section_label.place(anchor="w", relx=0.1, rely=0.34)
+            self.archived_section_label.bind("<1>", self.archived_appear, add="")
+            self.archived_section_label.bind("<Enter>", self.archived_hover, add="")
+            self.archived_section_label.bind("<Leave>", self.archived_hover_out, add="")
 
-        self.user_section_label = tk.Label(self.administrator_frame3)
-        self.user_section_label.configure(
-            background=self.main_color,
-            font="{arial } 19 {bold}",
-            foreground=self.complimentary_color_2,
-            justify="center",
-            relief="flat",
-            text="User",
-        )
-        self.user_section_label.place(anchor="w", relx=0.1, rely=0.28)
-        self.user_section_label.bind("<1>", self.user_appear, add="")
-        self.user_section_label.bind("<Enter>", self.user_hover, add="")
-        self.user_section_label.bind("<Leave>", self.user_hover_out, add="")
-        self.report_section_label = tk.Label(self.administrator_frame3)
-        self.report_section_label.configure(
-            background=self.main_color,
-            font="{arial } 19 {bold}",
-            foreground=self.complimentary_color_2,
-            justify="center",
-            relief="flat",
-            text="Report",
-        )
-        self.report_section_label.place(anchor="w", relx=0.1, rely=0.34)
-        self.report_section_label.bind("<1>", self.report_appear, add="")
-        self.report_section_label.bind("<Enter>", self.report_hover, add="")
-        self.report_section_label.bind("<Leave>", self.report_hover_out, add="")
-        self.archived_section_label = tk.Label(self.administrator_frame3)
-        self.archived_section_label.configure(
-            background=self.main_color,
-            font="{arial } 19 {bold}",
-            foreground=self.complimentary_color_2,
-            justify="center",
-            relief="flat",
-            text="Archived",
-        )
-        self.archived_section_label.place(anchor="w", relx=0.1, rely=0.40)
-        self.archived_section_label.bind("<1>", self.archived_appear, add="")
-        self.archived_section_label.bind("<Enter>", self.archived_hover, add="")
-        self.archived_section_label.bind("<Leave>", self.archived_hover_out, add="")
+            self.settings_section_label = tk.Label(self.administrator_frame3)
+            self.settings_section_label.configure(
+                background=self.main_color,
+                font="{arial } 19 {bold}",
+                foreground=self.complimentary_color_2,
+                justify="center",
+                relief="flat",
+                text="Settings",
+            )
+            self.settings_section_label.place(anchor="w", relx=0.1, rely=0.40)
+            self.settings_section_label.bind("<1>", self.settings_appear, add="")
+            self.settings_section_label.bind("<Enter>", self.settings_hover, add="")
+            self.settings_section_label.bind("<Leave>", self.settings_hover_out, add="")
+        else:
+            self.user_section_label = tk.Label(self.administrator_frame3)
+            self.user_section_label.configure(
+                background=self.main_color,
+                font="{arial } 19 {bold}",
+                foreground=self.complimentary_color_2,
+                justify="center",
+                relief="flat",
+                text="User",
+            )
+            self.user_section_label.place(anchor="w", relx=0.1, rely=0.28)
+            self.user_section_label.bind("<1>", self.user_appear, add="")
+            self.user_section_label.bind("<Enter>", self.user_hover, add="")
+            self.user_section_label.bind("<Leave>", self.user_hover_out, add="")
+            self.report_section_label = tk.Label(self.administrator_frame3)
+            self.report_section_label.configure(
+                background=self.main_color,
+                font="{arial } 19 {bold}",
+                foreground=self.complimentary_color_2,
+                justify="center",
+                relief="flat",
+                text="Report",
+            )
+            self.report_section_label.place(anchor="w", relx=0.1, rely=0.34)
+            self.report_section_label.bind("<1>", self.report_appear, add="")
+            self.report_section_label.bind("<Enter>", self.report_hover, add="")
+            self.report_section_label.bind("<Leave>", self.report_hover_out, add="")
+            self.archived_section_label = tk.Label(self.administrator_frame3)
+            self.archived_section_label.configure(
+                background=self.main_color,
+                font="{arial } 19 {bold}",
+                foreground=self.complimentary_color_2,
+                justify="center",
+                relief="flat",
+                text="Archived",
+            )
+            self.archived_section_label.place(anchor="w", relx=0.1, rely=0.40)
+            self.archived_section_label.bind("<1>", self.archived_appear, add="")
+            self.archived_section_label.bind("<Enter>", self.archived_hover, add="")
+            self.archived_section_label.bind("<Leave>", self.archived_hover_out, add="")
 
-        self.settings_section_label = tk.Label(self.administrator_frame3)
-        self.settings_section_label.configure(
-            background=self.main_color,
-            font="{arial } 19 {bold}",
-            foreground=self.complimentary_color_2,
-            justify="center",
-            relief="flat",
-            text="Settings",
-        )
-        self.settings_section_label.place(anchor="w", relx=0.1, rely=0.46)
-        self.settings_section_label.bind("<1>", self.settings_appear, add="")
-        self.settings_section_label.bind("<Enter>", self.settings_hover, add="")
-        self.settings_section_label.bind("<Leave>", self.settings_hover_out, add="")
+            self.settings_section_label = tk.Label(self.administrator_frame3)
+            self.settings_section_label.configure(
+                background=self.main_color,
+                font="{arial } 19 {bold}",
+                foreground=self.complimentary_color_2,
+                justify="center",
+                relief="flat",
+                text="Settings",
+            )
+            self.settings_section_label.place(anchor="w", relx=0.1, rely=0.46)
+            self.settings_section_label.bind("<1>", self.settings_appear, add="")
+            self.settings_section_label.bind("<Enter>", self.settings_hover, add="")
+            self.settings_section_label.bind("<Leave>", self.settings_hover_out, add="")
         self.logout_label = tk.Label(self.administrator_frame3)
         self.logout_label.configure(
             background=self.main_color,
@@ -948,7 +1008,7 @@ class AdminHomeApp:
             relief="flat",
             text="Log Out",
         )
-        self.logout_label.place(anchor="w", relx=0.1, rely=0.85)
+        self.logout_label.place(anchor="w", relx=0.1, rely=0.97)
         self.logout_label.bind("<1>", self.logout, add="")
         self.logout_label.bind("<Enter>", self.logout_hover, add="")
         self.logout_label.bind("<Leave>", self.logout_hover_out, add="")

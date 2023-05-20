@@ -408,6 +408,21 @@ class dbQueries:
         else:
             print("visitor not found.")
 
+
+    def first_visitor_attendance_record(
+        self, visitor_number, visitor_attendance_date, visitor_time
+    ):
+        print("time_in")
+        insert_query_attendance = f"INSERT INTO tbl_visitor_attendance (visitor_no, visitor_attendance_date, visitor_time_in) VALUES (?, ?, ?)"
+        self.cursor.execute(
+            insert_query_attendance,
+            (visitor_number, visitor_attendance_date, visitor_time),
+        )
+        self.connection.commit()
+
+
+
+
     def search_student(self, search_term, status):
         query = (
             f"SELECT * FROM tbl_student WHERE (student_no LIKE ? OR student_firstname LIKE ? OR student_lastname LIKE ? "

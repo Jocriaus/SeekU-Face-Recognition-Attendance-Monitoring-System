@@ -361,6 +361,8 @@ class EditStudentApp:
         self.student_num_entry.configure(state="disabled")
         self.program_entry.configure(state="disabled")
         self.section_entry.configure(state="disabled")
+        self.active_radiobutton.configure(state="disabled")
+        self.inactive_radiobutton.configure(state="disabled")
 
     # enables entry widgets
     def enable_entry(self):
@@ -371,6 +373,8 @@ class EditStudentApp:
         self.contact_num_entry.configure(state="normal")
         self.program_entry.configure(state="normal")
         self.section_entry.configure(state="normal")
+        self.active_radiobutton.configure(state="normal")
+        self.inactive_radiobutton.configure(state="normal")
 
     def select_student(self):
         self.student_num_entry.insert(0, self.student_number)
