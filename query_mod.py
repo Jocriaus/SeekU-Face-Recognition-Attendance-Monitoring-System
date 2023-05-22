@@ -7,18 +7,17 @@ class dbQueries:
         # "DESKTOP-DG7AK17\SQLEXPRESS"
         # "STAR-PLATINUM\SQLEXPRESS01"
         # "DESKTOP-3MNAAKG\SQLEXPRESS"
-        self.server = "STAR-PLATINUM\SQLEXPRESS01"
+        self.server = "DESKTOP-DG7AK17\SQLEXPRESS"
         self.database = "seeku_database"
         self.username = ""
         self.password = ""
 
         self.connection_string = f"Driver={{SQL Server}};Server={self.server};Database={self.database};UID={self.username};PWD={self.password}"
-        #self.connection_string = 'SeekU_Database'
+        # self.connection_string = 'SeekU_Database'
         self.connection = sql.connect(self.connection_string)
         self.cursor = self.connection.cursor()
 
-
-# Commit the changes and close the cursor and connection
+    # Commit the changes and close the cursor and connection
 
     def disconnect(self):
         self.cursor.close()
@@ -408,7 +407,6 @@ class dbQueries:
         else:
             print("visitor not found.")
 
-
     def first_visitor_attendance_record(
         self, visitor_number, visitor_attendance_date, visitor_time
     ):
@@ -419,9 +417,6 @@ class dbQueries:
             (visitor_number, visitor_attendance_date, visitor_time),
         )
         self.connection.commit()
-
-
-
 
     def search_student(self, search_term, status):
         query = (

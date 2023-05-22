@@ -259,7 +259,7 @@ class excelClass:
                 col_idx = df.columns.get_loc(column)
                 col_idx = col_idx + start_column
                 worksheet.set_column(col_idx, col_idx, column_length)
-            writer.close()  
+            writer.close()
             os.startfile(filepath + "/" + filename + ".xlsx")
             messbx.showinfo(
                 "Generated", "The reports have been successfully generated."
@@ -309,7 +309,7 @@ class excelClass:
                 col_idx = df.columns.get_loc(column)
                 col_idx = col_idx + start_column
                 worksheet.set_column(col_idx, col_idx, column_length)
-            writer.close()   
+            writer.close()
             os.startfile(filepath + "/" + filename + ".xlsx")
             messbx.showinfo(
                 "Generated", "The reports have been successfully generated."
@@ -336,7 +336,12 @@ class docxClass:
         cont_inue = self.treeview.populate_student_report_bydate(date1, date2)
         # open an existing Word document
         if cont_inue:
-            doc = docx.Document(".\Documents\Student Report Template.docx")
+            doc = docx.Document(".\Documents\Report-Template.docx")
+            header_text = "Student Report"
+            header_add = doc.add_paragraph(header_text)
+            header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+            header_font = header_add.runs[0].font
+            header_font.size = docx.shared.Pt(24)
             start_date = str(date1)[0:10]
             end_date = str(date2)[0:10]
             text = str(start_date) + " to " + str(end_date)
@@ -344,7 +349,11 @@ class docxClass:
             date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
 
             font = date_time.runs[0].font
-            font.size = docx.shared.Pt(15)
+            font.size = docx.shared.Pt(18)
+
+            space = "\n"
+            doc.add_paragraph(space)
+
             column_names = [
                 "Student_No",
                 "Firstname",
@@ -371,9 +380,36 @@ class docxClass:
                     treeview_data.append(values)
 
             # Inserts the table data of student
-            for row in treeview_data:
+            column_count = len(column_names)
+            for idx, row in enumerate(treeview_data, start=1):
+                if idx % 18 == 0:
+                    doc.add_page_break()
+                    space = "\n"
+                    doc.add_paragraph(space)
+                    header_text = "Student Report"
+                    header_add = doc.add_paragraph(header_text)
+                    header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+                    header_font = header_add.runs[0].font
+                    header_font.size = docx.shared.Pt(24)
+                    start_date = str(date1)[0:10]
+                    end_date = str(date2)[0:10]
+                    text = "Date: " + str(start_date) + " to " + str(end_date)
+                    date_time = doc.add_paragraph(text)
+                    date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+
+                    font = date_time.runs[0].font
+                    font.size = docx.shared.Pt(18)
+                    space = "\n"
+                    doc.add_paragraph(space)
+                    table = doc.add_table(rows=1, cols=column_count)
+                    table.style = "Table Grid"
+                    hdr_cells = table.rows[0].cells
+
+                    for i in range(len(column_names)):
+                        hdr_cells[i].text = column_names[i]
+
                 row_cells = table.add_row().cells
-                for i in range(len(column_names)):
+                for i in range(column_count):
                     row_cells[i].text = str(row[i])
 
             # saves the doc to a new file path
@@ -386,9 +422,14 @@ class docxClass:
     def save_doc_student(self, filepath, filename, date1, date2):
         # populate the report tree
         cont_inue = self.treeview.populate_student_report_bydate(date1, date2)
+        # open an existing Word document
         if cont_inue:
-            # open an existing Word document
-            doc = docx.Document(".\Documents\Student Report Template.docx")
+            doc = docx.Document(".\Documents\Report-Template.docx")
+            header_text = "Student Report"
+            header_add = doc.add_paragraph(header_text)
+            header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+            header_font = header_add.runs[0].font
+            header_font.size = docx.shared.Pt(24)
             start_date = str(date1)[0:10]
             end_date = str(date2)[0:10]
             text = str(start_date) + " to " + str(end_date)
@@ -396,7 +437,10 @@ class docxClass:
             date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
 
             font = date_time.runs[0].font
-            font.size = docx.shared.Pt(15)
+            font.size = docx.shared.Pt(18)
+
+            space = "\n"
+            doc.add_paragraph(space)
 
             column_names = [
                 "Student_No",
@@ -424,13 +468,41 @@ class docxClass:
                     treeview_data.append(values)
 
             # Inserts the table data of student
-            for row in treeview_data:
+            column_count = len(column_names)
+            for idx, row in enumerate(treeview_data, start=1):
+                if idx % 18 == 0:
+                    doc.add_page_break()
+                    space = "\n"
+                    doc.add_paragraph(space)
+                    header_text = "Student Report"
+                    header_add = doc.add_paragraph(header_text)
+                    header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+                    header_font = header_add.runs[0].font
+                    header_font.size = docx.shared.Pt(24)
+                    start_date = str(date1)[0:10]
+                    end_date = str(date2)[0:10]
+                    text = "Date: " + str(start_date) + " to " + str(end_date)
+                    date_time = doc.add_paragraph(text)
+                    date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+
+                    font = date_time.runs[0].font
+                    font.size = docx.shared.Pt(18)
+                    space = "\n"
+                    doc.add_paragraph(space)
+                    table = doc.add_table(rows=1, cols=column_count)
+                    table.style = "Table Grid"
+                    hdr_cells = table.rows[0].cells
+
+                    for i in range(len(column_names)):
+                        hdr_cells[i].text = column_names[i]
+
                 row_cells = table.add_row().cells
-                for i in range(len(column_names)):
+                for i in range(column_count):
                     row_cells[i].text = str(row[i])
 
             # saves the doc to a new file path
             doc.save(filepath + "/" + filename + ".docx")
+            os.startfile(filepath + "/" + filename + ".docx")
             messbx.showinfo(
                 "Generated", "The reports have been successfully generated."
             )
@@ -442,7 +514,12 @@ class docxClass:
         cont_inue = self.treeview.populate_personnel_report_bydate(date1, date2)
         if cont_inue:
             # open an existing Word document
-            doc = docx.Document(".\Documents\Personnel Report Template.docx")
+            doc = docx.Document(".\Documents\Report-Template.docx")
+            header_text = "Personnel Report"
+            header_add = doc.add_paragraph(header_text)
+            header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+            header_font = header_add.runs[0].font
+            header_font.size = docx.shared.Pt(24)
             start_date = str(date1)[0:10]
             end_date = str(date2)[0:10]
             text = str(start_date) + " to " + str(end_date)
@@ -451,6 +528,9 @@ class docxClass:
 
             font = date_time.runs[0].font
             font.size = docx.shared.Pt(15)
+
+            space = "\n"
+            doc.add_paragraph(space)
             column_names = [
                 "Personnel Number",
                 "First Name",
@@ -475,9 +555,36 @@ class docxClass:
                     treeview_data.append(values)
 
             # Inserts the table data of student
-            for row in treeview_data:
+            column_count = len(column_names)
+            for idx, row in enumerate(treeview_data, start=1):
+                if idx % 18 == 0:
+                    doc.add_page_break()
+                    space = "\n"
+                    doc.add_paragraph(space)
+                    header_text = "Personnel Report"
+                    header_add = doc.add_paragraph(header_text)
+                    header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+                    header_font = header_add.runs[0].font
+                    header_font.size = docx.shared.Pt(24)
+                    start_date = str(date1)[0:10]
+                    end_date = str(date2)[0:10]
+                    text = "Date: " + str(start_date) + " to " + str(end_date)
+                    date_time = doc.add_paragraph(text)
+                    date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+
+                    font = date_time.runs[0].font
+                    font.size = docx.shared.Pt(18)
+                    space = "\n"
+                    doc.add_paragraph(space)
+                    table = doc.add_table(rows=1, cols=column_count)
+                    table.style = "Table Grid"
+                    hdr_cells = table.rows[0].cells
+
+                    for i in range(len(column_names)):
+                        hdr_cells[i].text = column_names[i]
+
                 row_cells = table.add_row().cells
-                for i in range(len(column_names)):
+                for i in range(column_count):
                     row_cells[i].text = str(row[i])
 
             # saves the doc to a new file path
@@ -492,7 +599,12 @@ class docxClass:
         cont_inue = self.treeview.populate_personnel_report_bydate(date1, date2)
         if cont_inue:
             # open an existing Word document
-            doc = docx.Document(".\Documents\Personnel Report Template.docx")
+            doc = docx.Document(".\Documents\Report-Template.docx")
+            header_text = "Personnel Report"
+            header_add = doc.add_paragraph(header_text)
+            header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+            header_font = header_add.runs[0].font
+            header_font.size = docx.shared.Pt(24)
             start_date = str(date1)[0:10]
             end_date = str(date2)[0:10]
             text = str(start_date) + " to " + str(end_date)
@@ -501,6 +613,9 @@ class docxClass:
 
             font = date_time.runs[0].font
             font.size = docx.shared.Pt(15)
+
+            space = "\n"
+            doc.add_paragraph(space)
             column_names = [
                 "Personnel Number",
                 "First Name",
@@ -525,13 +640,41 @@ class docxClass:
                     treeview_data.append(values)
 
             # Inserts the table data of student
-            for row in treeview_data:
+            column_count = len(column_names)
+            for idx, row in enumerate(treeview_data, start=1):
+                if idx % 18 == 0:
+                    doc.add_page_break()
+                    space = "\n"
+                    doc.add_paragraph(space)
+                    header_text = "Personnel Report"
+                    header_add = doc.add_paragraph(header_text)
+                    header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+                    header_font = header_add.runs[0].font
+                    header_font.size = docx.shared.Pt(24)
+                    start_date = str(date1)[0:10]
+                    end_date = str(date2)[0:10]
+                    text = "Date: " + str(start_date) + " to " + str(end_date)
+                    date_time = doc.add_paragraph(text)
+                    date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+
+                    font = date_time.runs[0].font
+                    font.size = docx.shared.Pt(18)
+                    space = "\n"
+                    doc.add_paragraph(space)
+                    table = doc.add_table(rows=1, cols=column_count)
+                    table.style = "Table Grid"
+                    hdr_cells = table.rows[0].cells
+
+                    for i in range(len(column_names)):
+                        hdr_cells[i].text = column_names[i]
+
                 row_cells = table.add_row().cells
-                for i in range(len(column_names)):
+                for i in range(column_count):
                     row_cells[i].text = str(row[i])
 
             # saves the doc to a new file path
             doc.save(filepath + "/" + filename + ".docx")
+            os.startfile(filepath + "/" + filename + ".docx")
             messbx.showinfo(
                 "Generated", "The reports have been successfully generated."
             )
@@ -541,7 +684,12 @@ class docxClass:
         cont_inue = self.treeview.populate_visitor_report_bydate(date1, date2)
         if cont_inue:
             # open an existing Word document
-            doc = docx.Document(".\Documents\Visitor Report Template.docx")
+            doc = docx.Document(".\Documents\Report-Template.docx")
+            header_text = "Visitor Report"
+            header_add = doc.add_paragraph(header_text)
+            header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+            header_font = header_add.runs[0].font
+            header_font.size = docx.shared.Pt(24)
             start_date = str(date1)[0:10]
             end_date = str(date2)[0:10]
             text = str(start_date) + " to " + str(end_date)
@@ -550,6 +698,9 @@ class docxClass:
 
             font = date_time.runs[0].font
             font.size = docx.shared.Pt(15)
+
+            space = "\n"
+            doc.add_paragraph(space)
             column_names = [
                 "Visitor Number",
                 "First Name",
@@ -574,9 +725,36 @@ class docxClass:
                     treeview_data.append(values)
 
             # Inserts the table data of student
-            for row in treeview_data:
+            column_count = len(column_names)
+            for idx, row in enumerate(treeview_data, start=1):
+                if idx % 18 == 0:
+                    doc.add_page_break()
+                    space = "\n"
+                    doc.add_paragraph(space)
+                    header_text = "Visitor Report"
+                    header_add = doc.add_paragraph(header_text)
+                    header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+                    header_font = header_add.runs[0].font
+                    header_font.size = docx.shared.Pt(24)
+                    start_date = str(date1)[0:10]
+                    end_date = str(date2)[0:10]
+                    text = "Date: " + str(start_date) + " to " + str(end_date)
+                    date_time = doc.add_paragraph(text)
+                    date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+
+                    font = date_time.runs[0].font
+                    font.size = docx.shared.Pt(18)
+                    space = "\n"
+                    doc.add_paragraph(space)
+                    table = doc.add_table(rows=1, cols=column_count)
+                    table.style = "Table Grid"
+                    hdr_cells = table.rows[0].cells
+
+                    for i in range(len(column_names)):
+                        hdr_cells[i].text = column_names[i]
+
                 row_cells = table.add_row().cells
-                for i in range(len(column_names)):
+                for i in range(column_count):
                     row_cells[i].text = str(row[i])
 
             # saves the doc to a new file path
@@ -591,7 +769,12 @@ class docxClass:
         cont_inue = self.treeview.populate_visitor_report_bydate(date1, date2)
         if cont_inue:
             # open an existing Word document
-            doc = docx.Document(".\Documents\Visitor Report Template.docx")
+            doc = docx.Document(".\Documents\Report-Template.docx")
+            header_text = "Visitor Report"
+            header_add = doc.add_paragraph(header_text)
+            header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+            header_font = header_add.runs[0].font
+            header_font.size = docx.shared.Pt(24)
             start_date = str(date1)[0:10]
             end_date = str(date2)[0:10]
             text = str(start_date) + " to " + str(end_date)
@@ -600,6 +783,9 @@ class docxClass:
 
             font = date_time.runs[0].font
             font.size = docx.shared.Pt(15)
+
+            space = "\n"
+            doc.add_paragraph(space)
             column_names = [
                 "Visitor Number",
                 "First Name",
@@ -624,13 +810,41 @@ class docxClass:
                     treeview_data.append(values)
 
             # Inserts the table data of student
-            for row in treeview_data:
+            column_count = len(column_names)
+            for idx, row in enumerate(treeview_data, start=1):
+                if idx % 18 == 0:
+                    doc.add_page_break()
+                    space = "\n"
+                    doc.add_paragraph(space)
+                    header_text = "Visitor Report"
+                    header_add = doc.add_paragraph(header_text)
+                    header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+                    header_font = header_add.runs[0].font
+                    header_font.size = docx.shared.Pt(24)
+                    start_date = str(date1)[0:10]
+                    end_date = str(date2)[0:10]
+                    text = "Date: " + str(start_date) + " to " + str(end_date)
+                    date_time = doc.add_paragraph(text)
+                    date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+
+                    font = date_time.runs[0].font
+                    font.size = docx.shared.Pt(18)
+                    space = "\n"
+                    doc.add_paragraph(space)
+                    table = doc.add_table(rows=1, cols=column_count)
+                    table.style = "Table Grid"
+                    hdr_cells = table.rows[0].cells
+
+                    for i in range(len(column_names)):
+                        hdr_cells[i].text = column_names[i]
+
                 row_cells = table.add_row().cells
-                for i in range(len(column_names)):
+                for i in range(column_count):
                     row_cells[i].text = str(row[i])
 
             # saves the doc to a new file path
             doc.save(filepath + "/" + filename + ".docx")
+            os.startfile(filepath + "/" + filename + ".docx")
             messbx.showinfo(
                 "Generated", "The reports have been successfully generated."
             )
@@ -638,9 +852,14 @@ class docxClass:
     def print_pdf_student(self, filepath, filename, date1, date2):
         # populate the report tree
         cont_inue = self.treeview.populate_student_report_bydate(date1, date2)
+        # open an existing Word document
         if cont_inue:
-            # open an existing Word document
-            doc = docx.Document(".\Documents\Student Report Template.docx")
+            doc = docx.Document(".\Documents\Report-Template.docx")
+            header_text = "Student Report"
+            header_add = doc.add_paragraph(header_text)
+            header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+            header_font = header_add.runs[0].font
+            header_font.size = docx.shared.Pt(24)
             start_date = str(date1)[0:10]
             end_date = str(date2)[0:10]
             text = str(start_date) + " to " + str(end_date)
@@ -648,7 +867,11 @@ class docxClass:
             date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
 
             font = date_time.runs[0].font
-            font.size = docx.shared.Pt(15)
+            font.size = docx.shared.Pt(18)
+
+            space = "\n"
+            doc.add_paragraph(space)
+
             column_names = [
                 "Student_No",
                 "Firstname",
@@ -675,9 +898,36 @@ class docxClass:
                     treeview_data.append(values)
 
             # Inserts the table data of student
-            for row in treeview_data:
+            column_count = len(column_names)
+            for idx, row in enumerate(treeview_data, start=1):
+                if idx % 18 == 0:
+                    doc.add_page_break()
+                    space = "\n"
+                    doc.add_paragraph(space)
+                    header_text = "Student Report"
+                    header_add = doc.add_paragraph(header_text)
+                    header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+                    header_font = header_add.runs[0].font
+                    header_font.size = docx.shared.Pt(24)
+                    start_date = str(date1)[0:10]
+                    end_date = str(date2)[0:10]
+                    text = "Date: " + str(start_date) + " to " + str(end_date)
+                    date_time = doc.add_paragraph(text)
+                    date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+
+                    font = date_time.runs[0].font
+                    font.size = docx.shared.Pt(18)
+                    space = "\n"
+                    doc.add_paragraph(space)
+                    table = doc.add_table(rows=1, cols=column_count)
+                    table.style = "Table Grid"
+                    hdr_cells = table.rows[0].cells
+
+                    for i in range(len(column_names)):
+                        hdr_cells[i].text = column_names[i]
+
                 row_cells = table.add_row().cells
-                for i in range(len(column_names)):
+                for i in range(column_count):
                     row_cells[i].text = str(row[i])
 
             # saves the doc to a new file path
@@ -698,9 +948,14 @@ class docxClass:
     def save_pdf_student(self, filepath, filename, date1, date2):
         # populate the report tree
         cont_inue = self.treeview.populate_student_report_bydate(date1, date2)
+        # open an existing Word document
         if cont_inue:
-            # open an existing Word document
-            doc = docx.Document(".\Documents\Student Report Template.docx")
+            doc = docx.Document(".\Documents\Report-Template.docx")
+            header_text = "Student Report"
+            header_add = doc.add_paragraph(header_text)
+            header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+            header_font = header_add.runs[0].font
+            header_font.size = docx.shared.Pt(24)
             start_date = str(date1)[0:10]
             end_date = str(date2)[0:10]
             text = str(start_date) + " to " + str(end_date)
@@ -708,7 +963,11 @@ class docxClass:
             date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
 
             font = date_time.runs[0].font
-            font.size = docx.shared.Pt(15)
+            font.size = docx.shared.Pt(18)
+
+            space = "\n"
+            doc.add_paragraph(space)
+
             column_names = [
                 "Student_No",
                 "Firstname",
@@ -735,9 +994,36 @@ class docxClass:
                     treeview_data.append(values)
 
             # Inserts the table data of student
-            for row in treeview_data:
+            column_count = len(column_names)
+            for idx, row in enumerate(treeview_data, start=1):
+                if idx % 18 == 0:
+                    doc.add_page_break()
+                    space = "\n"
+                    doc.add_paragraph(space)
+                    header_text = "Student Report"
+                    header_add = doc.add_paragraph(header_text)
+                    header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+                    header_font = header_add.runs[0].font
+                    header_font.size = docx.shared.Pt(24)
+                    start_date = str(date1)[0:10]
+                    end_date = str(date2)[0:10]
+                    text = "Date: " + str(start_date) + " to " + str(end_date)
+                    date_time = doc.add_paragraph(text)
+                    date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+
+                    font = date_time.runs[0].font
+                    font.size = docx.shared.Pt(18)
+                    space = "\n"
+                    doc.add_paragraph(space)
+                    table = doc.add_table(rows=1, cols=column_count)
+                    table.style = "Table Grid"
+                    hdr_cells = table.rows[0].cells
+
+                    for i in range(len(column_names)):
+                        hdr_cells[i].text = column_names[i]
+
                 row_cells = table.add_row().cells
-                for i in range(len(column_names)):
+                for i in range(column_count):
                     row_cells[i].text = str(row[i])
 
             # saves the doc to a new file path
@@ -748,6 +1034,7 @@ class docxClass:
 
             docx2pdf.convert(docx_file, pdf_file)
             os.remove(docx_file)
+            os.startfile(filepath + "/" + filename + ".pdf")
             messbx.showinfo(
                 "Generated", "The reports have been successfully generated."
             )
@@ -759,7 +1046,12 @@ class docxClass:
         cont_inue = self.treeview.populate_personnel_report_bydate(date1, date2)
         if cont_inue:
             # open an existing Word document
-            doc = docx.Document(".\Documents\Personnel Report Template.docx")
+            doc = docx.Document(".\Documents\Report-Template.docx")
+            header_text = "Personnel Report"
+            header_add = doc.add_paragraph(header_text)
+            header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+            header_font = header_add.runs[0].font
+            header_font.size = docx.shared.Pt(24)
             start_date = str(date1)[0:10]
             end_date = str(date2)[0:10]
             text = str(start_date) + " to " + str(end_date)
@@ -768,6 +1060,9 @@ class docxClass:
 
             font = date_time.runs[0].font
             font.size = docx.shared.Pt(15)
+
+            space = "\n"
+            doc.add_paragraph(space)
             column_names = [
                 "Personnel Number",
                 "First Name",
@@ -792,9 +1087,36 @@ class docxClass:
                     treeview_data.append(values)
 
             # Inserts the table data of student
-            for row in treeview_data:
+            column_count = len(column_names)
+            for idx, row in enumerate(treeview_data, start=1):
+                if idx % 18 == 0:
+                    doc.add_page_break()
+                    space = "\n"
+                    doc.add_paragraph(space)
+                    header_text = "Personnel Report"
+                    header_add = doc.add_paragraph(header_text)
+                    header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+                    header_font = header_add.runs[0].font
+                    header_font.size = docx.shared.Pt(24)
+                    start_date = str(date1)[0:10]
+                    end_date = str(date2)[0:10]
+                    text = "Date: " + str(start_date) + " to " + str(end_date)
+                    date_time = doc.add_paragraph(text)
+                    date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+
+                    font = date_time.runs[0].font
+                    font.size = docx.shared.Pt(18)
+                    space = "\n"
+                    doc.add_paragraph(space)
+                    table = doc.add_table(rows=1, cols=column_count)
+                    table.style = "Table Grid"
+                    hdr_cells = table.rows[0].cells
+
+                    for i in range(len(column_names)):
+                        hdr_cells[i].text = column_names[i]
+
                 row_cells = table.add_row().cells
-                for i in range(len(column_names)):
+                for i in range(column_count):
                     row_cells[i].text = str(row[i])
 
             # saves the doc to a new file path
@@ -815,7 +1137,12 @@ class docxClass:
         cont_inue = self.treeview.populate_personnel_report_bydate(date1, date2)
         if cont_inue:
             # open an existing Word document
-            doc = docx.Document(".\Documents\Personnel Report Template.docx")
+            doc = docx.Document(".\Documents\Report-Template.docx")
+            header_text = "Personnel Report"
+            header_add = doc.add_paragraph(header_text)
+            header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+            header_font = header_add.runs[0].font
+            header_font.size = docx.shared.Pt(24)
             start_date = str(date1)[0:10]
             end_date = str(date2)[0:10]
             text = str(start_date) + " to " + str(end_date)
@@ -824,6 +1151,9 @@ class docxClass:
 
             font = date_time.runs[0].font
             font.size = docx.shared.Pt(15)
+
+            space = "\n"
+            doc.add_paragraph(space)
             column_names = [
                 "Personnel Number",
                 "First Name",
@@ -848,9 +1178,36 @@ class docxClass:
                     treeview_data.append(values)
 
             # Inserts the table data of student
-            for row in treeview_data:
+            column_count = len(column_names)
+            for idx, row in enumerate(treeview_data, start=1):
+                if idx % 18 == 0:
+                    doc.add_page_break()
+                    space = "\n"
+                    doc.add_paragraph(space)
+                    header_text = "Personnel Report"
+                    header_add = doc.add_paragraph(header_text)
+                    header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+                    header_font = header_add.runs[0].font
+                    header_font.size = docx.shared.Pt(24)
+                    start_date = str(date1)[0:10]
+                    end_date = str(date2)[0:10]
+                    text = "Date: " + str(start_date) + " to " + str(end_date)
+                    date_time = doc.add_paragraph(text)
+                    date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+
+                    font = date_time.runs[0].font
+                    font.size = docx.shared.Pt(18)
+                    space = "\n"
+                    doc.add_paragraph(space)
+                    table = doc.add_table(rows=1, cols=column_count)
+                    table.style = "Table Grid"
+                    hdr_cells = table.rows[0].cells
+
+                    for i in range(len(column_names)):
+                        hdr_cells[i].text = column_names[i]
+
                 row_cells = table.add_row().cells
-                for i in range(len(column_names)):
+                for i in range(column_count):
                     row_cells[i].text = str(row[i])
 
             # saves the doc to a new file path
@@ -861,6 +1218,7 @@ class docxClass:
 
             docx2pdf.convert(docx_file, pdf_file)
             os.remove(docx_file)
+            os.startfile(filepath + "/" + filename + ".pdf")
             messbx.showinfo(
                 "Generated", "The reports have been successfully generated."
             )
@@ -870,7 +1228,12 @@ class docxClass:
         cont_inue = self.treeview.populate_visitor_report_bydate(date1, date2)
         if cont_inue:
             # open an existing Word document
-            doc = docx.Document(".\Documents\Visitor Report Template.docx")
+            doc = docx.Document(".\Documents\Report-Template.docx")
+            header_text = "Visitor Report"
+            header_add = doc.add_paragraph(header_text)
+            header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+            header_font = header_add.runs[0].font
+            header_font.size = docx.shared.Pt(24)
             start_date = str(date1)[0:10]
             end_date = str(date2)[0:10]
             text = str(start_date) + " to " + str(end_date)
@@ -879,6 +1242,9 @@ class docxClass:
 
             font = date_time.runs[0].font
             font.size = docx.shared.Pt(15)
+
+            space = "\n"
+            doc.add_paragraph(space)
             column_names = [
                 "Visitor Number",
                 "First Name",
@@ -903,9 +1269,36 @@ class docxClass:
                     treeview_data.append(values)
 
             # Inserts the table data of student
-            for row in treeview_data:
+            column_count = len(column_names)
+            for idx, row in enumerate(treeview_data, start=1):
+                if idx % 18 == 0:
+                    doc.add_page_break()
+                    space = "\n"
+                    doc.add_paragraph(space)
+                    header_text = "Visitor Report"
+                    header_add = doc.add_paragraph(header_text)
+                    header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+                    header_font = header_add.runs[0].font
+                    header_font.size = docx.shared.Pt(24)
+                    start_date = str(date1)[0:10]
+                    end_date = str(date2)[0:10]
+                    text = "Date: " + str(start_date) + " to " + str(end_date)
+                    date_time = doc.add_paragraph(text)
+                    date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+
+                    font = date_time.runs[0].font
+                    font.size = docx.shared.Pt(18)
+                    space = "\n"
+                    doc.add_paragraph(space)
+                    table = doc.add_table(rows=1, cols=column_count)
+                    table.style = "Table Grid"
+                    hdr_cells = table.rows[0].cells
+
+                    for i in range(len(column_names)):
+                        hdr_cells[i].text = column_names[i]
+
                 row_cells = table.add_row().cells
-                for i in range(len(column_names)):
+                for i in range(column_count):
                     row_cells[i].text = str(row[i])
 
             # saves the doc to a new file path
@@ -926,7 +1319,12 @@ class docxClass:
         cont_inue = self.treeview.populate_visitor_report_bydate(date1, date2)
         if cont_inue:
             # open an existing Word document
-            doc = docx.Document(".\Documents\Visitor Report Template.docx")
+            doc = docx.Document(".\Documents\Report-Template.docx")
+            header_text = "Visitor Report"
+            header_add = doc.add_paragraph(header_text)
+            header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+            header_font = header_add.runs[0].font
+            header_font.size = docx.shared.Pt(24)
             start_date = str(date1)[0:10]
             end_date = str(date2)[0:10]
             text = str(start_date) + " to " + str(end_date)
@@ -935,6 +1333,9 @@ class docxClass:
 
             font = date_time.runs[0].font
             font.size = docx.shared.Pt(15)
+
+            space = "\n"
+            doc.add_paragraph(space)
             column_names = [
                 "Visitor Number",
                 "First Name",
@@ -959,9 +1360,36 @@ class docxClass:
                     treeview_data.append(values)
 
             # Inserts the table data of student
-            for row in treeview_data:
+            column_count = len(column_names)
+            for idx, row in enumerate(treeview_data, start=1):
+                if idx % 18 == 0:
+                    doc.add_page_break()
+                    space = "\n"
+                    doc.add_paragraph(space)
+                    header_text = "Visitor Report"
+                    header_add = doc.add_paragraph(header_text)
+                    header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+                    header_font = header_add.runs[0].font
+                    header_font.size = docx.shared.Pt(24)
+                    start_date = str(date1)[0:10]
+                    end_date = str(date2)[0:10]
+                    text = "Date: " + str(start_date) + " to " + str(end_date)
+                    date_time = doc.add_paragraph(text)
+                    date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
+
+                    font = date_time.runs[0].font
+                    font.size = docx.shared.Pt(18)
+                    space = "\n"
+                    doc.add_paragraph(space)
+                    table = doc.add_table(rows=1, cols=column_count)
+                    table.style = "Table Grid"
+                    hdr_cells = table.rows[0].cells
+
+                    for i in range(len(column_names)):
+                        hdr_cells[i].text = column_names[i]
+
                 row_cells = table.add_row().cells
-                for i in range(len(column_names)):
+                for i in range(column_count):
                     row_cells[i].text = str(row[i])
 
             # saves the doc to a new file path
@@ -972,6 +1400,7 @@ class docxClass:
 
             docx2pdf.convert(docx_file, pdf_file)
             os.remove(docx_file)
+            os.startfile(filepath + "/" + filename + ".pdf")
             messbx.showinfo(
                 "Generated", "The reports have been successfully generated."
             )

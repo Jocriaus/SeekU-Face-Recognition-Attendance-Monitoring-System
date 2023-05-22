@@ -11,13 +11,13 @@ class TreeviewGUI:
         # "DESKTOP-DG7AK17\SQLEXPRESS"
         # "STAR-PLATINUM\SQLEXPRESS01"
         # "DESKTOP-3MNAAKG\SQLEXPRESS"
-        self.server = "STAR-PLATINUM\SQLEXPRESS01"
+        self.server = "DESKTOP-DG7AK17\SQLEXPRESS"
         self.database = "seeku_database"
         self.username = ""
         self.password = ""
         # self.connection_string = f"Driver={{ODBC Driver 18 for SQL Server}};Server={self.server};Database={self.database};UID={self.username};PWD={self.password};TrustServerCertificate=yes"
         self.connection_string = f"Driver={{SQL Server}};Server={self.server};Database={self.database};UID={self.username};PWD={self.password}"
-        #self.connection_string = 'SeekU_Database'
+        # self.connection_string = 'SeekU_Database'
         self.connection = sql.connect(self.connection_string)
         self.cursor = self.connection.cursor()
 

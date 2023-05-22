@@ -14,12 +14,12 @@ class LoginApp:
     def __init__(self, master=None):
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         # Color ------------
-        self.sub_complimentary_color = "#808080" #gray
-        self.main_color = "#0072bc" #Blue
-        self.sub_color = "#FFF875" #light Yellow
-        self.complimentary_color_1 = "#E7E7E7" #light  gray
-        self.complimentary_color_2 = "#F7FAE9" #Cream Color
-        self.hover_color = "#FFF200" #pure Yellow
+        self.sub_complimentary_color = "#808080"  # gray
+        self.main_color = "#0072bc"  # Blue
+        self.sub_color = "#FFF875"  # light Yellow
+        self.complimentary_color_1 = "#E7E7E7"  # light  gray
+        self.complimentary_color_2 = "#F7FAE9"  # Cream Color
+        self.hover_color = "#FFF200"  # pure Yellow
         # Color ------------
         self.sql_query = qry.dbQueries()
         self.sql_query.default_settings_if_not_exist()
@@ -42,7 +42,7 @@ class LoginApp:
         self.log_in_app.resizable(False, False)
         self.log_in_app.title("SeekU - Login")
         self.log_in_app.iconbitmap(".\SeekU\SeekU.ico")
-        self.log_in_app.bind('<Return>',lambda event:self.login_logic())
+        self.log_in_app.bind("<Return>", lambda event: self.login_logic())
         # Contains-the-entry-and-button---------------------------------------------------------------------------------------------------------
         self.log_in_frame2 = tk.Frame(self.log_in_app)
         self.log_in_frame2.configure(background=self.main_color, height=200, width=200)
@@ -53,10 +53,12 @@ class LoginApp:
             foreground=self.complimentary_color_2,
             text="Username",
         )
-        self.un_label.place(anchor="center",relx=0.3, rely=0.375)
+        self.un_label.place(anchor="center", relx=0.3, rely=0.375)
         self.un_entry = tk.Entry(self.log_in_frame2)
         self.un_entry.configure(
-            background=self.complimentary_color_2, font="{arial} 18 {}", foreground="#010303"
+            background=self.complimentary_color_2,
+            font="{arial} 18 {}",
+            foreground="#010303",
         )
         self.un_entry.place(
             anchor="center", relheight=0.08, relwidth=0.64, relx=0.5, rely=0.45
@@ -69,13 +71,20 @@ class LoginApp:
             justify="left",
             text="Password",
         )
-        self.pw_label.place(anchor="center", relx=0.3, rely=0.57,)
+        self.pw_label.place(
+            anchor="center",
+            relx=0.3,
+            rely=0.57,
+        )
         self.pw_entry = tk.Entry(self.log_in_frame2)
         self.pw_entry.configure(
-            background=self.complimentary_color_2, font="{arial} 18 {}", foreground="#010303", show="•"
+            background=self.complimentary_color_2,
+            font="{arial} 18 {}",
+            foreground="#010303",
+            show="•",
         )
         self.pw_entry.place(
-            anchor="center", relheight=.08, relwidth=0.64, relx=0.5, rely=0.64
+            anchor="center", relheight=0.08, relwidth=0.64, relx=0.5, rely=0.64
         )
         self.login_button = tk.Button(self.log_in_frame2)
         self.login_button.configure(
@@ -89,11 +98,7 @@ class LoginApp:
             width=10,
         )
         self.login_button.place(
-            anchor="center",
-            relheight=.12,
-            relwidth=0.3,
-            relx=.5,
-            rely=0.85
+            anchor="center", relheight=0.12, relwidth=0.3, relx=0.5, rely=0.85
         )
         self.login_button.bind("<1>", self.login_press, add="")
         self.log_in_frame2.place(anchor="center", height=500, width=500, x=250, y=250)
@@ -101,13 +106,17 @@ class LoginApp:
         # Contains-the-logo-and-logotype---------------------------------------------------------------------------------------------------------
 
         self.log_in_frame = tk.Frame(self.log_in_app)
-        self.log_in_frame.configure(background=self.complimentary_color_2, height=200, width=200)
+        self.log_in_frame.configure(
+            background=self.complimentary_color_2, height=200, width=200
+        )
         self.sti_logo = tk.Label(self.log_in_frame)
         self.img_SeekU = tk.PhotoImage(file=".\SeekU\SeekU small.png")
-        self.sti_logo.configure(background=self.complimentary_color_2, image=self.img_SeekU)
+        self.sti_logo.configure(
+            background=self.complimentary_color_2, image=self.img_SeekU
+        )
         self.sti_logo.place(anchor="center", relx=0.0, rely=0.0, x=150, y=80)
         self.app_name_logo = tk.Label(self.log_in_frame)
-        
+
         self.img_SeekULogotypemicro = tk.PhotoImage(
             file=".\SeekU\SeekU Logotype micro.png"
         )
@@ -165,27 +174,33 @@ class LoginApp:
                     # test for security guard = jc   123
 
                     print(
-                        self.sql_query.check_user_type(self.username_var, self.password_var)
+                        self.sql_query.check_user_type(
+                            self.username_var, self.password_var
+                        )
                     )
                     if (
-                        self.sql_query.check_user_type(self.username_var, self.password_var)
+                        self.sql_query.check_user_type(
+                            self.username_var, self.password_var
+                        )
                         == "Security Guard"
                     ):
                         self.hide_this_window()
                         print("login")
-                        # add message box                       
+                        # add message box
                         self.clear_entry()
                         self.user = "Security Guard"
                         self.tries = self.sql_query.get_login_attempts()
                         cC.ClientCameraSelectApp(self.user, self.log_in_app)
                     elif (
-                        self.sql_query.check_user_type(self.username_var, self.password_var)
+                        self.sql_query.check_user_type(
+                            self.username_var, self.password_var
+                        )
                         == "System Admin"
                         or self.sql_query.check_user_type(
                             self.username_var, self.password_var
                         )
                         == "Staff"
-                        ):
+                    ):
                         self.hide_this_window()
                         print("login")
                         # add message box
@@ -196,28 +211,43 @@ class LoginApp:
                         self.tries = self.sql_query.get_login_attempts()
                         cC.ClientCameraSelectApp(self.user, self.log_in_app)
 
-                elif (self.sql_query.login_entry(self.username_var, self.password_var) == False):
-                    self.tries = self.tries-1
+                elif (
+                    self.sql_query.login_entry(self.username_var, self.password_var)
+                    == False
+                ):
+                    self.tries = self.tries - 1
                     if self.tries == 1:
                         if self.init_time == 0:
                             self.init_time = time.time()
                         self.locked = True
                         messbx.showwarning(
-                            "Warning", "The username and password entered do not match. Remaning tries: {}.".format(self.tries))
+                            "Warning",
+                            "The username and password entered do not match. Remaning tries: {}.".format(
+                                self.tries
+                            ),
+                        )
                         self.time_passing()
                     else:
-                        
+
                         messbx.showwarning(
-                            "Warning", "The username and password entered do not match. Remaning tries: {}.".format(self.tries))
+                            "Warning",
+                            "The username and password entered do not match. Remaning tries: {}.".format(
+                                self.tries
+                            ),
+                        )
             else:
                 messbx.showwarning(
-                    "Warning ", "Kindly ensure all fields are filled by entering a value."
+                    "Warning ",
+                    "Kindly ensure all fields are filled by entering a value.",
                 )
 
         else:
             messbx.showwarning(
-                    "Warning", "Your account is curretly locked. Please try after {:.0f} seconds".format(self.timer)
-                ) 
+                "Warning",
+                "Your account is curretly locked. Please try after {:.0f} seconds".format(
+                    self.timer
+                ),
+            )
 
     def time_passing(self):
         self.time_locked = 15.0
