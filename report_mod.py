@@ -58,6 +58,7 @@ class excelClass:
                 worksheet.set_column(col_idx, col_idx, column_length)
 
             writer.close()
+            os.startfile(filepath + "/" + filename + ".xlsx")
             messbx.showinfo(
                 "Generated", "The reports have been successfully generated."
             )
@@ -108,6 +109,7 @@ class excelClass:
                 col_idx = col_idx + start_column
                 worksheet.set_column(col_idx, col_idx, column_length)
             writer.close()
+            os.startfile(filepath + "/" + filename + ".xlsx")
             messbx.showinfo(
                 "Generated", "The reports have been successfully generated."
             )
@@ -157,6 +159,7 @@ class excelClass:
                 col_idx = col_idx + start_column
                 worksheet.set_column(col_idx, col_idx, column_length)
             writer.close()
+            os.startfile(filepath + "/" + filename + ".xlsx")
             messbx.showinfo(
                 "Generated", "The reports have been successfully generated."
             )
