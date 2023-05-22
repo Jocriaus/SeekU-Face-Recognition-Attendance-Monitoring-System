@@ -91,7 +91,7 @@ class SavePrintReportApp:
             width=10,
         )
         self.save_button.place(
-            anchor="center", relheight=0.08, relwidth=0.3, relx=0.30, rely=0.92
+            anchor="center", relheight=0.09, relwidth=0.325, relx=0.5, rely=0.92
         )
         self.save_button.bind("<ButtonPress>", self.save_press, add="")
         self.print_button = tk.Button(self.gen_report_frame2)
@@ -105,9 +105,11 @@ class SavePrintReportApp:
             text="Print",
             width=10,
         )
+        """
         self.print_button.place(
             anchor="center", relheight=0.08, relwidth=0.3, relx=0.70, rely=0.92
         )
+        """
         self.print_button.bind("<ButtonPress>", self.print_press, add="")
         self.pdf_radiobutton = tk.Radiobutton(self.gen_report_frame2)
         self.file_type_var = tk.StringVar(value="Pdf")
