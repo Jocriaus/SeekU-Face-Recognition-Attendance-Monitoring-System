@@ -264,10 +264,11 @@ class LoginApp:
     def turnin_report(self):
         if self.current_date != self.sql_query.get_today_date():
             timeout = self.sql_query.get_time_out_time()
+
             self.sql_query.update_personnel_time_out(timeout)
             self.sql_query.update_student_time_out(timeout)
             self.sql_query.update_visitor_time_out(timeout)
-
+            #change create_client_report with get today_date as date of report
             self.sql_query.create_personnel_report()
             self.sql_query.create_student_report()
             self.sql_query.create_visitor_report()
