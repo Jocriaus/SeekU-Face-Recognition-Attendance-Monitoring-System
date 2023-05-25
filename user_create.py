@@ -177,7 +177,7 @@ class CreateUserApp:
                     last_name_var.replace(" ", "").isalpha()
                     ):
                     if registeru and registerp:
-                        result = messbx.askokcancel("Confirm Action", "Do you wish to proceed without saving?")
+                        result = messbx.askokcancel("Confirm Action", "Please review all the details you have inputted. Are you sure everything is final and correct?")
                         if result:
                             self.sql_query.register_user(
                                 username_var,

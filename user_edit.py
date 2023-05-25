@@ -297,7 +297,7 @@ class EditUserApp:
                     lastname_var.replace(" ", "").isalpha()
                     ):
                     if update:
-                        result = messbx.askokcancel("Confirm Action", "Do you wish to proceed without saving?")
+                        result = messbx.askokcancel("Confirm Action", "Please review all the details you have inputted. Are you sure everything is final and correct?")
                         if result:
                             if not (username_var == "user" and user_status_var == "IsArchived"):
                                 self.sql_query.update_user(

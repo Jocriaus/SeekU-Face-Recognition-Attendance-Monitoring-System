@@ -552,7 +552,7 @@ class HomeApp:
 
     def reencode(self, event=None):
         if os.path.exists("encodings.pickle"):
-            result = messbx.askokcancel("Confirm Action", "Do you wish to reset all encoded images")
+            result = messbx.askokcancel("Confirm Action", "Do you wish to reset all encoded images. It will take a lot of time to re encode.")
             if result:
                 os.remove("encodings.pickle")
         else:
