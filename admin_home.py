@@ -19,7 +19,7 @@ import sys
 
 
 class AdminHomeApp:
-    def __init__(self, user, vid_source, login_mod, sel_cam):
+    def __init__(self, user, vid_source, login_mod, sel_cam, ufname,ulname):
 
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         # Color ------------
@@ -40,6 +40,8 @@ class AdminHomeApp:
         self.backup = bR.BackupRestore()
         self.treeview = tbl.TreeviewGUI()
         self.sql_query = qry.dbQueries()
+        self.users_firstname = ufname
+        self.users_lastname = ulname
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         # build ui
         self.administrator_app = tk.Toplevel()
@@ -1841,7 +1843,7 @@ class AdminHomeApp:
         self.search_report_info_logic()
 
     def generate_clients_reports(self, event=None):
-        gR.SavePrintReportApp(self.clients_rep_var.get())
+        gR.SavePrintReportApp(self.clients_rep_var.get(),self.users_firstname  ,self.users_lastname)
 
     # REPORTS-COMMANDS---------------------------------------------------------------------------------------------------------------
     # ARCHIVED-COMMANDS---------------------------------------------------------------------------------------------------------------

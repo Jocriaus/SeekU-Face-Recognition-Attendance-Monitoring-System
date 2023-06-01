@@ -4,7 +4,7 @@ import admin_home as aH
 import sys
 import cv2
 class ClientCameraSelectApp:
-    def __init__(self, user ,login_module):
+    def __init__(self, user ,login_module, ufname,ulname):
 
     #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         # Color ------------
@@ -18,6 +18,8 @@ class ClientCameraSelectApp:
         self.user = user
         self.login_window = login_module # this is the login window
         self.on_radio = True
+        self.users_firstname = ufname
+        self.users_lastname = ulname
     #PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         
         # build ui
@@ -153,7 +155,7 @@ class ClientCameraSelectApp:
             foreground=self.main_color,
             relief="flat",
             text='IP Camera')
-        self.ip_label.place(anchor="center", relx=0.7, rely=0.5)
+        # self.ip_label.place(anchor="center", relx=0.7, rely=0.5)
         self.ip_label.bind("<1>", self.ip_press, add="")
         self.ip_label.bind("<Enter>", self.ip_hover, add="")
         self.ip_label.bind("<Leave>", self.ip_hover_out, add="")
@@ -243,7 +245,7 @@ class ClientCameraSelectApp:
         if self.user == "System Admin" or self.user == "Staff": 
             vid_source = self.cam_var.get()
             print(vid_source)
-            aH.AdminHomeApp(self.user, vid_source, self.login_window, self.camera_app )
+            aH.AdminHomeApp(self.user, vid_source, self.login_window, self.camera_app,self.users_firstname  ,self.users_lastname)
 
     def open_with_ip_logic(self):
         self.hide_this_window()
@@ -253,7 +255,7 @@ class ClientCameraSelectApp:
 
         if self.user == "System Admin" or self.user == "Staff": 
             vid_source = self.ip_cam_entry.get()
-            aH.AdminHomeApp(self.user, vid_source, self.login_window, self.camera_app )
+            aH.AdminHomeApp(self.user, vid_source, self.login_window, self.camera_app,self.users_firstname  ,self.users_lastname)
 
     def open_press(self, event=None):
         self.open_logic()

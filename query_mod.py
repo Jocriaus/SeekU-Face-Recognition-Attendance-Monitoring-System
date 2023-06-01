@@ -649,15 +649,15 @@ class dbQueries:
         results = self.cursor.fetchall()
         return results
 
-    def sort_student_report_bydate_excel(self, date1, date2):
+    def sort_student_report_bydate_excel(self, date1, date2, section):
         query = (
             f"SELECT tbl_student.student_no, tbl_student.student_firstname, tbl_student.student_lastname, "
             + "tbl_student.student_program, tbl_student.student_section, tbl_student_report.student_attendance_date, "
             + "tbl_student_report.student_time_in, tbl_student_report.student_time_out FROM tbl_student "
             + "RIGHT JOIN tbl_student_report ON tbl_student.student_no = tbl_student_report.student_no "
-            + "WHERE student_attendance_date BETWEEN ? AND ? ORDER BY student_attendance_date"
+            + "WHERE tbl_student.student_section = ? student_attendance_date BETWEEN ? AND ? ORDER BY student_attendance_date"
         )
-        self.cursor.execute(query, (date1, date2))
+        self.cursor.execute(query, ( section, date1, date2))
         column = [desc[0] for desc in self.cursor.description]
         rows = self.cursor.fetchall()
         print(len(column))
@@ -683,29 +683,30 @@ class dbQueries:
         else:
             return False, False
 
-    def sort_student_report_bydate_docx(self, date1, date2):
+    def sort_student_report_bydate_docx(self, date1, date2, section):
         query = (
             f"SELECT tbl_student.student_no, tbl_student.student_firstname, tbl_student.student_lastname, "
             + "tbl_student.student_program, tbl_student.student_section, tbl_student_report.student_attendance_date, "
             + "tbl_student_report.student_time_in, tbl_student_report.student_time_out FROM tbl_student "
             + "RIGHT JOIN tbl_student_report ON tbl_student.student_no = tbl_student_report.student_no "
-            + "WHERE student_attendance_date BETWEEN ? AND ? ORDER BY student_attendance_date"
+            + "WHERE tbl_student.student_section = ? AND student_attendance_date BETWEEN ? AND ? ORDER BY student_attendance_date"
         )
-        self.cursor.execute(query, (date1, date2))
+        self.cursor.execute(query, (section, date1, date2))
         rows = self.cursor.fetchall()
         if rows:
             return rows
         else:
             return False
 
-    def sort_personnel_report_bydate_excel(self, date1, date2):
+    def sort_personnel_report_bydate_excel(self, date1, date2, ptype):
         query = (
             f"SELECT tbl_personnel.personnel_no, tbl_personnel.personnel_firstname, tbl_personnel.personnel_lastname,"
             + "tbl_personnel.personnel_type, tbl_personnel_report.personnel_attendance_date, tbl_personnel_report.personnel_time_in, "
             + "tbl_personnel_report.personnel_time_out FROM tbl_personnel RIGHT JOIN tbl_personnel_report "
-            + "ON tbl_personnel.personnel_no = tbl_personnel_report.personnel_no WHERE personnel_attendance_date BETWEEN ? AND ?  ORDER BY personnel_attendance_date"
+            + "ON tbl_personnel.personnel_no = tbl_personnel_report.personnel_no " 
+            + "WHERE tbl_personnel.personnel_type = ? AND personnel_attendance_date BETWEEN ? AND ? ORDER BY personnel_attendance_date"
         )
-        self.cursor.execute(query, (date1, date2))
+        self.cursor.execute(query, (ptype, date1, date2))
         column = [desc[0] for desc in self.cursor.description]
         rows = self.cursor.fetchall()
         print(len(column))
@@ -731,14 +732,15 @@ class dbQueries:
         else:
             return False, False
 
-    def sort_personnel_report_bydate_docx(self, date1, date2):
+    def sort_personnel_report_bydate_docx(self, date1, date2, ptype):
         query = (
             f"SELECT tbl_personnel.personnel_no, tbl_personnel.personnel_firstname, tbl_personnel.personnel_lastname,"
             + "tbl_personnel.personnel_type, tbl_personnel_report.personnel_attendance_date, tbl_personnel_report.personnel_time_in, "
             + "tbl_personnel_report.personnel_time_out FROM tbl_personnel RIGHT JOIN tbl_personnel_report "
-            + "ON tbl_personnel.personnel_no = tbl_personnel_report.personnel_no WHERE personnel_attendance_date BETWEEN ? AND ? ORDER BY personnel_attendance_date"
+            + "ON tbl_personnel.personnel_no = tbl_personnel_report.personnel_no " 
+            + "WHERE tbl_personnel.personnel_type = ? AND personnel_attendance_date BETWEEN ? AND ? ORDER BY personnel_attendance_date"
         )
-        self.cursor.execute(query, (date1, date2))
+        self.cursor.execute(query, (ptype,date1, date2))
         rows = self.cursor.fetchall()
         if rows:
             return rows
@@ -935,6 +937,15 @@ class dbQueries:
 
         return count
 
+    def get_all_sections(self):
+        query = (f"SELECT DISTINCT student_section FROM tbl_student")
+        self.cursor.execute(query)
+        sections = self.cursor.fetchall()
+        cleaned_sections = [section[0] for section in sections]
+        return cleaned_sections
+
+
+
     # USER-TABLE-QUERY--------------------------------------------------------------------------------------------------------------
     def default_user_if_not_exist(self):
         condition = True
@@ -972,6 +983,16 @@ class dbQueries:
             self.cursor.execute(f"SET IDENTITY_INSERT {table_name} OFF")
             self.connection.commit()
 
+    def get_users_name(self,username,password):
+        query = f"SELECT user_firstname, user_lastname FROM tbl_user WHERE username = ? AND password = ?"
+        self.cursor.execute(query, (username, password))
+        row = self.cursor.fetchone()
+
+        if row:
+            user_firstname = row[0]
+            user_lastname = row[1]
+            return user_firstname, user_lastname
+        
     def create_personnel_report(self):
         self.today = datetime.date.today()
         self.yesterday = self.today - datetime.timedelta(days=1)

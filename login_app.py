@@ -172,7 +172,7 @@ class LoginApp:
 
                     # test for admin = jus    jus123
                     # test for security guard = jc   123
-
+                    user_firstname, user_lastname = self.sql_query.get_users_name(self.username_var, self.password_var)
                     print(
                         self.sql_query.check_user_type(
                             self.username_var, self.password_var
@@ -190,7 +190,7 @@ class LoginApp:
                         self.clear_entry()
                         self.user = "Security Guard"
                         self.tries = self.sql_query.get_login_attempts()
-                        cC.ClientCameraSelectApp(self.user, self.log_in_app)
+                        cC.ClientCameraSelectApp(self.user, self.log_in_app, user_firstname,user_lastname)
                     elif (
                         self.sql_query.check_user_type(
                             self.username_var, self.password_var
@@ -208,8 +208,7 @@ class LoginApp:
                         self.user = self.sql_query.check_user_type(
                             self.username_var, self.password_var
                         )
-                        self.tries = self.sql_query.get_login_attempts()
-                        cC.ClientCameraSelectApp(self.user, self.log_in_app)
+                        cC.ClientCameraSelectApp(self.user, self.log_in_app,user_firstname,user_lastname)
 
                 elif (
                     self.sql_query.login_entry(self.username_var, self.password_var)

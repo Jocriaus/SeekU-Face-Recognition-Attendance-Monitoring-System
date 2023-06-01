@@ -1347,11 +1347,11 @@ class TreeviewGUI:
                     ),
                 )
 
-    def populate_student_report_bydate(self, date1, date2):
+    def populate_student_report_bydate(self, date1, date2, section):
         for child in self.student_report_tree.get_children():
             self.student_report_tree.delete(child)
-        result = self.sql_query.sort_student_report_bydate_docx(date1, date2)
-
+        result = self.sql_query.sort_student_report_bydate_docx(date1, date2, section)
+        print(result)
         if result:
             for row in result:
                 if row[7] is None:
@@ -1398,11 +1398,11 @@ class TreeviewGUI:
             )
             return False
 
-    def populate_personnel_report_bydate(self, date1, date2):
+    def populate_personnel_report_bydate(self, date1, date2, ptype):
         for child in self.personnel_report_tree.get_children():
             self.personnel_report_tree.delete(child)
-        result = self.sql_query.sort_personnel_report_bydate_docx(date1, date2)
-
+        result = self.sql_query.sort_personnel_report_bydate_docx(date1, date2, ptype)
+        print(result)
         if result:
             for row in result:
                 if row[6] is None:
@@ -1450,7 +1450,7 @@ class TreeviewGUI:
         for child in self.visitor_report_tree.get_children():
             self.visitor_report_tree.delete(child)
         result = self.sql_query.sort_visitor_report_bydate_docx(date1, date2)
-
+        print(result)
         if result:
             for row in result:
                 if row[5] is None:
