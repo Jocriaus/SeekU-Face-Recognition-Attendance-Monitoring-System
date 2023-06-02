@@ -697,7 +697,15 @@ class dbQueries:
             return rows
         else:
             return False
+        
+    def student_report_counter(self, date1, date2, section):
+        query = (f"SELECT COUNT(*) FROM tbl_student RIGHT JOIN tbl_student_report ON tbl_student.student_no = tbl_student_report.student_no "+
+                 "WHERE tbl_student.student_section = ? AND student_attendance_date BETWEEN ? AND ?")
+        self.cursor.execute(query, (section ,date1, date2))
+        count = self.cursor.fetchone()[0]
 
+        return count
+    
     def sort_personnel_report_bydate_excel(self, date1, date2, ptype):
         query = (
             f"SELECT tbl_personnel.personnel_no, tbl_personnel.personnel_firstname, tbl_personnel.personnel_lastname,"
@@ -747,6 +755,14 @@ class dbQueries:
         else:
             return False
 
+    def personnel_report_counter(self, date1, date2, ptype):
+        query = (f"SELECT COUNT(*) FROM tbl_personnel_report "+
+                 "WHERE personnel_type = ? AND personnel_attendance_date BETWEEN ? AND ?")
+        self.cursor.execute(query, (ptype,date1, date2))
+        count = self.cursor.fetchone()[0]
+
+        return count
+    
     def sort_visitor_report_bydate_excel(self, date1, date2):
         query = (
             f"SELECT tbl_visitor.visitor_no, tbl_visitor.visitor_firstname, tbl_visitor.visitor_lastname, "
@@ -793,6 +809,13 @@ class dbQueries:
             return rows
         else:
             return False
+
+    def visitor_report_counter(self, date1, date2, section):
+        query = (f"SELECT COUNT(*) FROM tbl_visitor_report WHERE visitor_attendance_date BETWEEN ? AND ?")
+        self.cursor.execute(query, (section ,date1, date2))
+        count = self.cursor.fetchone()[0]
+
+        return count
 
     def check_username(self, username):
         query = f"SELECT * FROM tbl_user WHERE username = ?"
