@@ -9,16 +9,17 @@ import datetime
 from tkinter import filedialog
 import re
 
+
 class SavePrintReportApp:
-    def __init__(self, optionmenu,ufname,ulname):
+    def __init__(self, optionmenu, ufname, ulname):
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         # Color ------------
-        self.sub_complimentary_color = "#808080" #gray
-        self.main_color = "#0072bc" #Blue
-        self.sub_color = "#FFF875" #light Yellow
-        self.complimentary_color_1 = "#E7E7E7" #light  gray
-        self.complimentary_color_2 = "#F7FAE9" #Cream Color
-        self.hover_color = "#FFF200" #pure Yellow
+        self.sub_complimentary_color = "#808080"  # gray
+        self.main_color = "#0072bc"  # Blue
+        self.sub_color = "#FFF875"  # light Yellow
+        self.complimentary_color_1 = "#E7E7E7"  # light  gray
+        self.complimentary_color_2 = "#F7FAE9"  # Cream Color
+        self.hover_color = "#FFF200"  # pure Yellow
         # Color ------------
         self.client_type = optionmenu
         self.users_firstname = ufname
@@ -28,15 +29,17 @@ class SavePrintReportApp:
         self.today_month = self.today.month
         self.today_year = self.today.year
         # self.mindate =  min date is set as when the first attendance
-        
-        self.maxdate = self.today - datetime.timedelta(days = 1)  # max date is yesterday
+
+        self.maxdate = self.today - datetime.timedelta(days=1)  # max date is yesterday
         self.sql_query = qry.dbQueries()
         self.treeview = tbl.TreeviewGUI()
         self.excel_class = rM.excelClass()
         self.docx_class = rM.docxClass()
         # PRE-LOAD-ASSIGNMENT-------------------------------------------------------------------------------------------
         self.generate_report_app = tk.Toplevel()
-        self.generate_report_app.configure(background=self.main_color, height=200, width=200)
+        self.generate_report_app.configure(
+            background=self.main_color, height=200, width=200
+        )
         self.generate_report_app.geometry("640x700")
         self.generate_report_app.resizable(False, False)
         self.generate_report_app.title("SeekU-Save & Print-Report")
@@ -44,7 +47,9 @@ class SavePrintReportApp:
 
         if self.client_type == "Students Report":
             self.gen_report_frame2 = tk.Frame(self.generate_report_app)
-            self.gen_report_frame2.configure(background=self.main_color, height=200, width=200)
+            self.gen_report_frame2.configure(
+                background=self.main_color, height=200, width=200
+            )
             self.from_label = tk.Label(self.gen_report_frame2)
             self.from_label.configure(
                 background=self.main_color,
@@ -115,9 +120,7 @@ class SavePrintReportApp:
                 *__values,
             )
             self.sections_optionmenu.configure(font="{arial} 20 ")
-            self.sections_optionmenu.place(
-                anchor="center", relx=0.75, rely=0.59
-            )
+            self.sections_optionmenu.place(anchor="center", relx=0.75, rely=0.59)
             self.sections_options = self.generate_report_app.nametowidget(
                 self.sections_optionmenu.menuname
             )
@@ -182,7 +185,9 @@ class SavePrintReportApp:
             )
         elif self.client_type == "Personnels Report":
             self.gen_report_frame2 = tk.Frame(self.generate_report_app)
-            self.gen_report_frame2.configure(background=self.main_color, height=200, width=200)
+            self.gen_report_frame2.configure(
+                background=self.main_color, height=200, width=200
+            )
             self.from_label = tk.Label(self.gen_report_frame2)
             self.from_label.configure(
                 background=self.main_color,
@@ -253,9 +258,7 @@ class SavePrintReportApp:
                 *__values,
             )
             self.personnel_type_optionmenu.configure(font="{arial} 20 ")
-            self.personnel_type_optionmenu.place(
-                anchor="center", relx=0.75, rely=0.59
-            )
+            self.personnel_type_optionmenu.place(anchor="center", relx=0.75, rely=0.59)
             self.personnel_type_options = self.generate_report_app.nametowidget(
                 self.personnel_type_optionmenu.menuname
             )
@@ -320,7 +323,9 @@ class SavePrintReportApp:
             )
         elif self.client_type == "Visitors Report":
             self.gen_report_frame2 = tk.Frame(self.generate_report_app)
-            self.gen_report_frame2.configure(background=self.main_color, height=200, width=200)
+            self.gen_report_frame2.configure(
+                background=self.main_color, height=200, width=200
+            )
             self.from_label = tk.Label(self.gen_report_frame2)
             self.from_label.configure(
                 background=self.main_color,
@@ -447,13 +452,17 @@ class SavePrintReportApp:
             self.gen_report_frame2.place(
                 anchor="center", relheight=1.0, relwidth=1.0, relx=0.5, rely=0.5
             )
-        
+
         self.gen_report_frame = tk.Frame(self.generate_report_app)
-        self.gen_report_frame.configure(background=self.complimentary_color_2, height=200, width=200)
+        self.gen_report_frame.configure(
+            background=self.complimentary_color_2, height=200, width=200
+        )
         self.sti_logo = tk.Label(self.gen_report_frame)
         self.img_SeekUsmall = tk.PhotoImage(file=".\SeekU\SeekU small.png")
         self.sti_logo.configure(
-            background=self.complimentary_color_2, font="TkDefaultFont", image=self.img_SeekUsmall
+            background=self.complimentary_color_2,
+            font="TkDefaultFont",
+            image=self.img_SeekUsmall,
         )
         self.sti_logo.place(anchor="center", relx=0.30, rely=0.5)
         self.app_name_logo = tk.Label(self.gen_report_frame)
@@ -506,8 +515,8 @@ class SavePrintReportApp:
         filename = self.file_name.get()
         pattern = re.compile("[^a-zA-Z0-9 ]")
         if not pattern.search(filename):
-            if len(filename) !=0:
-                if folder:    
+            if len(filename) != 0:
+                if folder:
                     date1 = self.calendar1.selection_get()
                     date2 = self.calendar2.selection_get()
 
@@ -520,62 +529,119 @@ class SavePrintReportApp:
                     print(datefrom)
                     print(dateto)
                     filepath = folder
-                
+
                     if self.client_type == "Students Report":
                         if self.sections_var.get() != "Section":
                             if self.file_type_var.get() == "Excel":
-                                self.excel_class.save_student(filepath, filename, datefrom, dateto, str(self.sections_var.get()),self.users_firstname  ,self.users_lastname)
+                                self.excel_class.save_student(
+                                    filepath,
+                                    filename,
+                                    datefrom,
+                                    dateto,
+                                    str(self.sections_var.get()),
+                                    self.users_firstname,
+                                    self.users_lastname,
+                                )
 
                             if self.file_type_var.get() == "Docx":
-                                self.docx_class.save_doc_student(filepath, filename, datefrom, dateto, str(self.sections_var.get()),self.users_firstname  ,self.users_lastname)
+                                self.docx_class.save_doc_student(
+                                    filepath,
+                                    filename,
+                                    datefrom,
+                                    dateto,
+                                    str(self.sections_var.get()),
+                                    self.users_firstname,
+                                    self.users_lastname,
+                                )
 
                             if self.file_type_var.get() == "Pdf":
-                                self.docx_class.save_pdf_student(filepath, filename, datefrom, dateto, str(self.sections_var.get()),self.users_firstname  ,self.users_lastname)
+                                self.docx_class.save_pdf_student(
+                                    filepath,
+                                    filename,
+                                    datefrom,
+                                    dateto,
+                                    str(self.sections_var.get()),
+                                    self.users_firstname,
+                                    self.users_lastname,
+                                )
                         else:
                             messbx.showwarning("Warning", "Select a section.")
 
                     if self.client_type == "Personnels Report":
                         if self.personnel_type_var.get() != "Personnel Type":
                             if self.file_type_var.get() == "Excel":
-                                self.excel_class.save_personnel(filepath, filename, datefrom, dateto,str(self.personnel_type_var.get()),self.users_firstname  ,self.users_lastname)
+                                self.excel_class.save_personnel(
+                                    filepath,
+                                    filename,
+                                    datefrom,
+                                    dateto,
+                                    str(self.personnel_type_var.get()),
+                                    self.users_firstname,
+                                    self.users_lastname,
+                                )
 
                             if self.file_type_var.get() == "Docx":
-                                self.docx_class.save_doc_personnel(filepath, filename, datefrom, dateto,str(self.personnel_type_var.get()),self.users_firstname  ,self.users_lastname)
+                                self.docx_class.save_doc_personnel(
+                                    filepath,
+                                    filename,
+                                    datefrom,
+                                    dateto,
+                                    str(self.personnel_type_var.get()),
+                                    self.users_firstname,
+                                    self.users_lastname,
+                                )
 
                             if self.file_type_var.get() == "Pdf":
-                                self.docx_class.save_pdf_personnel(filepath, filename, datefrom, dateto,str(self.personnel_type_var.get()),self.users_firstname  ,self.users_lastname)
+                                self.docx_class.save_pdf_personnel(
+                                    filepath,
+                                    filename,
+                                    datefrom,
+                                    dateto,
+                                    str(self.personnel_type_var.get()),
+                                    self.users_firstname,
+                                    self.users_lastname,
+                                )
                         else:
                             messbx.showwarning("Warning", "Select a Personnel Type.")
                     if self.client_type == "Visitors Report":
 
                         if self.file_type_var.get() == "Excel":
-                            self.excel_class.save_visitor(filepath, filename, datefrom, dateto)
+                            self.excel_class.save_visitor(
+                                filepath,
+                                filename,
+                                datefrom,
+                                dateto,
+                                self.users_firstname,
+                                self.users_lastname,
+                            )
 
                         if self.file_type_var.get() == "Docx":
-                            self.docx_class.save_doc_visitor(filepath, filename, datefrom, dateto)
+                            self.docx_class.save_doc_visitor(
+                                filepath,
+                                filename,
+                                datefrom,
+                                dateto,
+                                self.users_firstname,
+                                self.users_lastname,
+                            )
 
                         if self.file_type_var.get() == "Pdf":
-                            self.docx_class.save_pdf_visitor(filepath, filename, datefrom, dateto)
+                            self.docx_class.save_pdf_visitor(
+                                filepath,
+                                filename,
+                                datefrom,
+                                dateto,
+                                self.users_firstname,
+                                self.users_lastname,
+                            )
 
             else:
-                messbx.showwarning("Warning", "Kindly ensure all fields are filled by entering a value.")
+                messbx.showwarning(
+                    "Warning",
+                    "Kindly ensure all fields are filled by entering a value.",
+                )
         else:
             messbx.showwarning("Warning", "The input contains special characters.")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     def print_press(self, event=None):
 
@@ -594,24 +660,31 @@ class SavePrintReportApp:
                     datefrom = datetime.datetime.strptime(edited_date1, "%Y-%m-%d")
                     dateto = datetime.datetime.strptime(edited_date2, "%Y-%m-%d")
 
-
                     filepath = folder
 
                     if self.client_type == "Students Report":
 
                         if self.file_type_var.get() == "Excel":
-                            self.excel_class.print_student(filepath, filename, datefrom, dateto)
+                            self.excel_class.print_student(
+                                filepath, filename, datefrom, dateto
+                            )
 
                         if self.file_type_var.get() == "Docx":
-                            self.docx_class.print_doc_student(filepath, filename, datefrom, dateto)
+                            self.docx_class.print_doc_student(
+                                filepath, filename, datefrom, dateto
+                            )
 
                         if self.file_type_var.get() == "Pdf":
-                            self.docx_class.print_pdf_student(filepath, filename, datefrom, dateto)
+                            self.docx_class.print_pdf_student(
+                                filepath, filename, datefrom, dateto
+                            )
 
                     if self.client_type == "Personnels Report":
 
                         if self.file_type_var.get() == "Excel":
-                            self.excel_class.print_personnel(filepath, filename, datefrom, dateto)
+                            self.excel_class.print_personnel(
+                                filepath, filename, datefrom, dateto
+                            )
 
                         if self.file_type_var.get() == "Docx":
                             self.docx_class.print_doc_personnel(
@@ -626,14 +699,23 @@ class SavePrintReportApp:
                     if self.client_type == "Visitors Report":
 
                         if self.file_type_var.get() == "Excel":
-                            self.excel_class.print_visitor(filepath, filename, datefrom, dateto)
+                            self.excel_class.print_visitor(
+                                filepath, filename, datefrom, dateto
+                            )
 
                         if self.file_type_var.get() == "Docx":
-                            self.docx_class.print_doc_visitor(filepath, filename, datefrom, dateto)
+                            self.docx_class.print_doc_visitor(
+                                filepath, filename, datefrom, dateto
+                            )
 
                         if self.file_type_var.get() == "Pdf":
-                            self.docx_class.print_pdf_visitor(filepath, filename, datefrom, dateto)
+                            self.docx_class.print_pdf_visitor(
+                                filepath, filename, datefrom, dateto
+                            )
             else:
-                messbx.showwarning("Warning", "Kindly ensure all fields are filled by entering a value.")
+                messbx.showwarning(
+                    "Warning",
+                    "Kindly ensure all fields are filled by entering a value.",
+                )
         else:
             messbx.showwarning("Warning", "The input contains special characters.")

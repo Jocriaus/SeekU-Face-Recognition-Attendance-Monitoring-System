@@ -7,6 +7,7 @@ import docx.shared
 import docx2pdf
 import Treeview_table_mod as tbl
 import tkinter.messagebox as messbx
+from datetime import datetime
 
 
 class excelClass:
@@ -14,8 +15,10 @@ class excelClass:
         self.sql_query = qry.dbQueries()
         self.treeview = tbl.TreeviewGUI()
 
-    def save_student(self, filepath, filename, date1, date2,section, ufname, ulname):
-        data, columns = self.sql_query.sort_student_report_bydate_excel(date1, date2, section)
+    def save_student(self, filepath, filename, date1, date2, section, ufname, ulname):
+        data, columns = self.sql_query.sort_student_report_bydate_excel(
+            date1, date2, section
+        )
         columns = [
             "Student No.",
             "First Name",
@@ -67,8 +70,10 @@ class excelClass:
                 "Warning", "There are no records of attendance for the selected date."
             )
 
-    def save_personnel(self, filepath, filename, date1, date2,ptype, ufname, ulname):
-        data, columns = self.sql_query.sort_personnel_report_bydate_excel(date1, date2, ptype)
+    def save_personnel(self, filepath, filename, date1, date2, ptype, ufname, ulname):
+        data, columns = self.sql_query.sort_personnel_report_bydate_excel(
+            date1, date2, ptype
+        )
         columns = [
             "Personnel No.",
             "First Name",
@@ -167,6 +172,7 @@ class excelClass:
             messbx.showwarning(
                 "Warning", "There are no records of attendance for the selected date."
             )
+
     """
     def print_student(self, filepath, filename, date1, date2):
         data, columns = self.sql_query.sort_student_report_bydate_excel(date1, date2)
@@ -323,6 +329,7 @@ class excelClass:
             )
     """
 
+
 class docxClass:
     def __init__(self, master=None):
         self.sql_query = qry.dbQueries()
@@ -422,22 +429,24 @@ class docxClass:
                 "Generated", "The reports have been successfully generated."
             )
     """
-    
-    def save_doc_student(self, filepath, filename, date1, date2,section, ufname, ulname):
+
+    def save_doc_student(
+        self, filepath, filename, date1, date2, section, ufname, ulname
+    ):
         # populate the report tree
         cont_inue = self.treeview.populate_student_report_bydate(date1, date2, section)
         print(cont_inue)
         # open an existing Word document
         if cont_inue:
             doc = docx.Document(".\Documents\Report-Template.docx")
-            header_text = "Student Report"
+            header_text = "Student Attendance Report"
             header_add = doc.add_paragraph(header_text)
             header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
             header_font = header_add.runs[0].font
             header_font.size = docx.shared.Pt(24)
-            start_date = str(date1)[0:10]
-            end_date = str(date2)[0:10]
-            text = str(start_date) + " to " + str(end_date)
+            start_date = date1.strftime("%B %d, %Y")
+            end_date = date2.strftime("%B %d, %Y")
+            text = start_date + " to " + end_date
             date_time = doc.add_paragraph(text)
             date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
 
@@ -479,14 +488,14 @@ class docxClass:
                     doc.add_page_break()
                     space = "\n"
                     doc.add_paragraph(space)
-                    header_text = "Student Report"
+                    header_text = "Student Attendance Report"
                     header_add = doc.add_paragraph(header_text)
                     header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
                     header_font = header_add.runs[0].font
                     header_font.size = docx.shared.Pt(24)
-                    start_date = str(date1)[0:10]
-                    end_date = str(date2)[0:10]
-                    text = "Date: " + str(start_date) + " to " + str(end_date)
+                    start_date = date1.strftime("%B %d, %Y")
+                    end_date = date2.strftime("%B %d, %Y")
+                    text = start_date + " to " + end_date
                     date_time = doc.add_paragraph(text)
                     date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
 
@@ -504,6 +513,29 @@ class docxClass:
                 row_cells = table.add_row().cells
                 for i in range(column_count):
                     row_cells[i].text = str(row[i])
+
+            space = "\n"
+            doc.add_paragraph(space)
+            current_date = datetime.now().date()
+
+            generateby_text = "Generate by: " + ufname + " " + ulname
+            generateby_add = doc.add_paragraph(generateby_text)
+            generateby_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.LEFT
+            generateby_font = generateby_add.runs[0].font
+            generateby_font.size = docx.shared.Pt(15)
+
+            generateon_text = "Generate on: " + current_date.strftime("%B %d, %Y")
+            generateon_add = doc.add_paragraph(generateon_text)
+            generateon_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.LEFT
+            generateon_font = generateon_add.runs[0].font
+            generateon_font.size = docx.shared.Pt(15)
+
+            report_count = self.sql_query.student_report_counter(date1, date2, section)
+            total_report_text = "Total Generated Records: " + str(report_count)
+            total_report_add = doc.add_paragraph(total_report_text)
+            total_report_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.LEFT
+            total_report_font = total_report_add.runs[0].font
+            total_report_font.size = docx.shared.Pt(15)
 
             # saves the doc to a new file path
             doc.save(filepath + "/" + filename + ".docx")
@@ -599,20 +631,23 @@ class docxClass:
                 "Generated", "The reports have been successfully generated."
             )
     """
-    def save_doc_personnel(self, filepath, filename, date1, date2,ptype, ufname, ulname):
+
+    def save_doc_personnel(
+        self, filepath, filename, date1, date2, ptype, ufname, ulname
+    ):
         # populate the report tree
         cont_inue = self.treeview.populate_personnel_report_bydate(date1, date2, ptype)
         if cont_inue:
             # open an existing Word document
             doc = docx.Document(".\Documents\Report-Template.docx")
-            header_text = "Personnel Report"
+            header_text = "Personnel Attendance Report"
             header_add = doc.add_paragraph(header_text)
             header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
             header_font = header_add.runs[0].font
             header_font.size = docx.shared.Pt(24)
-            start_date = str(date1)[0:10]
-            end_date = str(date2)[0:10]
-            text = str(start_date) + " to " + str(end_date)
+            start_date = date1.strftime("%B %d, %Y")
+            end_date = date2.strftime("%B %d, %Y")
+            text = start_date + " to " + end_date
             date_time = doc.add_paragraph(text)
             date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
 
@@ -651,14 +686,14 @@ class docxClass:
                     doc.add_page_break()
                     space = "\n"
                     doc.add_paragraph(space)
-                    header_text = "Personnel Report"
+                    header_text = "Personnel Attendance Report"
                     header_add = doc.add_paragraph(header_text)
                     header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
                     header_font = header_add.runs[0].font
                     header_font.size = docx.shared.Pt(24)
-                    start_date = str(date1)[0:10]
-                    end_date = str(date2)[0:10]
-                    text = "Date: " + str(start_date) + " to " + str(end_date)
+                    start_date = date1.strftime("%B %d, %Y")
+                    end_date = date2.strftime("%B %d, %Y")
+                    text = start_date + " to " + end_date
                     date_time = doc.add_paragraph(text)
                     date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
 
@@ -677,12 +712,36 @@ class docxClass:
                 for i in range(column_count):
                     row_cells[i].text = str(row[i])
 
+            space = "\n"
+            doc.add_paragraph(space)
+            current_date = datetime.now().date()
+
+            generateby_text = "Generate by: " + ufname + " " + ulname
+            generateby_add = doc.add_paragraph(generateby_text)
+            generateby_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.LEFT
+            generateby_font = generateby_add.runs[0].font
+            generateby_font.size = docx.shared.Pt(15)
+
+            generateon_text = "Generate on: " + current_date.strftime("%B %d, %Y")
+            generateon_add = doc.add_paragraph(generateon_text)
+            generateon_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.LEFT
+            generateon_font = generateon_add.runs[0].font
+            generateon_font.size = docx.shared.Pt(15)
+
+            report_count = self.sql_query.personnel_report_counter(date1, date2, ptype)
+            total_report_text = "Total Generated Records: " + str(report_count)
+            total_report_add = doc.add_paragraph(total_report_text)
+            total_report_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.LEFT
+            total_report_font = total_report_add.runs[0].font
+            total_report_font.size = docx.shared.Pt(15)
+
             # saves the doc to a new file path
             doc.save(filepath + "/" + filename + ".docx")
             os.startfile(filepath + "/" + filename + ".docx")
             messbx.showinfo(
                 "Generated", "The reports have been successfully generated."
             )
+
     """
     def print_doc_visitor(self, filepath, filename, date1, date2):
         # populate the report tree
@@ -769,20 +828,21 @@ class docxClass:
                 "Generated", "The reports have been successfully generated."
             )
     """
-    def save_doc_visitor(self, filepath, filename, date1, date2,ufname, ulname):
+
+    def save_doc_visitor(self, filepath, filename, date1, date2, ufname, ulname):
         # populate the report tree
         cont_inue = self.treeview.populate_visitor_report_bydate(date1, date2)
         if cont_inue:
             # open an existing Word document
             doc = docx.Document(".\Documents\Report-Template.docx")
-            header_text = "Visitor Report"
+            header_text = "Visitor Attendance Report"
             header_add = doc.add_paragraph(header_text)
             header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
             header_font = header_add.runs[0].font
             header_font.size = docx.shared.Pt(24)
-            start_date = str(date1)[0:10]
-            end_date = str(date2)[0:10]
-            text = str(start_date) + " to " + str(end_date)
+            start_date = date1.strftime("%B %d, %Y")
+            end_date = date2.strftime("%B %d, %Y")
+            text = start_date + " to " + end_date
             date_time = doc.add_paragraph(text)
             date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
 
@@ -821,14 +881,14 @@ class docxClass:
                     doc.add_page_break()
                     space = "\n"
                     doc.add_paragraph(space)
-                    header_text = "Visitor Report"
+                    header_text = "Visitor Attendance Report"
                     header_add = doc.add_paragraph(header_text)
                     header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
                     header_font = header_add.runs[0].font
                     header_font.size = docx.shared.Pt(24)
-                    start_date = str(date1)[0:10]
-                    end_date = str(date2)[0:10]
-                    text = "Date: " + str(start_date) + " to " + str(end_date)
+                    start_date = date1.strftime("%B %d, %Y")
+                    end_date = date2.strftime("%B %d, %Y")
+                    text = start_date + " to " + end_date
                     date_time = doc.add_paragraph(text)
                     date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
 
@@ -847,12 +907,36 @@ class docxClass:
                 for i in range(column_count):
                     row_cells[i].text = str(row[i])
 
+            space = "\n"
+            doc.add_paragraph(space)
+            current_date = datetime.now().date()
+
+            generateby_text = "Generate by: " + ufname + " " + ulname
+            generateby_add = doc.add_paragraph(generateby_text)
+            generateby_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.LEFT
+            generateby_font = generateby_add.runs[0].font
+            generateby_font.size = docx.shared.Pt(15)
+
+            generateon_text = "Generate on: " + current_date.strftime("%B %d, %Y")
+            generateon_add = doc.add_paragraph(generateon_text)
+            generateon_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.LEFT
+            generateon_font = generateon_add.runs[0].font
+            generateon_font.size = docx.shared.Pt(15)
+
+            report_count = self.sql_query.visitor_report_counter(date1, date2)
+            total_report_text = "Total Generated Records: " + str(report_count)
+            total_report_add = doc.add_paragraph(total_report_text)
+            total_report_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.LEFT
+            total_report_font = total_report_add.runs[0].font
+            total_report_font.size = docx.shared.Pt(15)
+
             # saves the doc to a new file path
             doc.save(filepath + "/" + filename + ".docx")
             os.startfile(filepath + "/" + filename + ".docx")
             messbx.showinfo(
                 "Generated", "The reports have been successfully generated."
             )
+
     """
     def print_pdf_student(self, filepath, filename, date1, date2, section):
         # populate the report tree
@@ -948,21 +1032,24 @@ class docxClass:
                 "Generated", "The reports have been successfully generated."
             )
     """
-    def save_pdf_student(self, filepath, filename, date1, date2,section, ufname, ulname):
+
+    def save_pdf_student(
+        self, filepath, filename, date1, date2, section, ufname, ulname
+    ):
         # populate the report tree
         cont_inue = self.treeview.populate_student_report_bydate(date1, date2, section)
         print(cont_inue)
         # open an existing Word document
         if cont_inue:
             doc = docx.Document(".\Documents\Report-Template.docx")
-            header_text = "Student Report"
+            header_text = "Student Attendance Report"
             header_add = doc.add_paragraph(header_text)
             header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
             header_font = header_add.runs[0].font
             header_font.size = docx.shared.Pt(24)
-            start_date = str(date1)[0:10]
-            end_date = str(date2)[0:10]
-            text = str(start_date) + " to " + str(end_date)
+            start_date = date1.strftime("%B %d, %Y")
+            end_date = date2.strftime("%B %d, %Y")
+            text = start_date + " to " + end_date
             date_time = doc.add_paragraph(text)
             date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
 
@@ -1004,14 +1091,14 @@ class docxClass:
                     doc.add_page_break()
                     space = "\n"
                     doc.add_paragraph(space)
-                    header_text = "Student Report"
+                    header_text = "Student Attendance Report"
                     header_add = doc.add_paragraph(header_text)
                     header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
                     header_font = header_add.runs[0].font
                     header_font.size = docx.shared.Pt(24)
-                    start_date = str(date1)[0:10]
-                    end_date = str(date2)[0:10]
-                    text = "Date: " + str(start_date) + " to " + str(end_date)
+                    start_date = date1.strftime("%B %d, %Y")
+                    end_date = date2.strftime("%B %d, %Y")
+                    text = start_date + " to " + end_date
                     date_time = doc.add_paragraph(text)
                     date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
 
@@ -1029,6 +1116,29 @@ class docxClass:
                 row_cells = table.add_row().cells
                 for i in range(column_count):
                     row_cells[i].text = str(row[i])
+
+            space = "\n"
+            doc.add_paragraph(space)
+            current_date = datetime.now().date()
+
+            generateby_text = "Generate by: " + ufname + " " + ulname
+            generateby_add = doc.add_paragraph(generateby_text)
+            generateby_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.LEFT
+            generateby_font = generateby_add.runs[0].font
+            generateby_font.size = docx.shared.Pt(15)
+
+            generateon_text = "Generate on: " + current_date.strftime("%B %d, %Y")
+            generateon_add = doc.add_paragraph(generateon_text)
+            generateon_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.LEFT
+            generateon_font = generateon_add.runs[0].font
+            generateon_font.size = docx.shared.Pt(15)
+
+            report_count = self.sql_query.student_report_counter(date1, date2, section)
+            total_report_text = "Total Generated Records: " + str(report_count)
+            total_report_add = doc.add_paragraph(total_report_text)
+            total_report_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.LEFT
+            total_report_font = total_report_add.runs[0].font
+            total_report_font.size = docx.shared.Pt(15)
 
             # saves the doc to a new file path
             doc.save(filepath + "/" + filename + ".docx")
@@ -1135,20 +1245,23 @@ class docxClass:
                 "Generated", "The reports have been successfully generated."
             )
         """
-    def save_pdf_personnel(self, filepath, filename, date1, date2):
+
+    def save_pdf_personnel(
+        self, filepath, filename, date1, date2, ptype, ufname, ulname
+    ):
         # populate the report tree
-        cont_inue = self.treeview.populate_personnel_report_bydate(date1, date2)
+        cont_inue = self.treeview.populate_personnel_report_bydate(date1, date2, ptype)
         if cont_inue:
             # open an existing Word document
             doc = docx.Document(".\Documents\Report-Template.docx")
-            header_text = "Personnel Report"
+            header_text = "Personnel Attendance Report"
             header_add = doc.add_paragraph(header_text)
             header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
             header_font = header_add.runs[0].font
             header_font.size = docx.shared.Pt(24)
-            start_date = str(date1)[0:10]
-            end_date = str(date2)[0:10]
-            text = str(start_date) + " to " + str(end_date)
+            start_date = date1.strftime("%B %d, %Y")
+            end_date = date2.strftime("%B %d, %Y")
+            text = start_date + " to " + end_date
             date_time = doc.add_paragraph(text)
             date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
 
@@ -1187,14 +1300,14 @@ class docxClass:
                     doc.add_page_break()
                     space = "\n"
                     doc.add_paragraph(space)
-                    header_text = "Personnel Report"
+                    header_text = "Personnel Attendance Report"
                     header_add = doc.add_paragraph(header_text)
                     header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
                     header_font = header_add.runs[0].font
                     header_font.size = docx.shared.Pt(24)
-                    start_date = str(date1)[0:10]
-                    end_date = str(date2)[0:10]
-                    text = "Date: " + str(start_date) + " to " + str(end_date)
+                    start_date = date1.strftime("%B %d, %Y")
+                    end_date = date2.strftime("%B %d, %Y")
+                    text = start_date + " to " + end_date
                     date_time = doc.add_paragraph(text)
                     date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
 
@@ -1213,6 +1326,29 @@ class docxClass:
                 for i in range(column_count):
                     row_cells[i].text = str(row[i])
 
+            space = "\n"
+            doc.add_paragraph(space)
+            current_date = datetime.now().date()
+
+            generateby_text = "Generate by: " + ufname + " " + ulname
+            generateby_add = doc.add_paragraph(generateby_text)
+            generateby_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.LEFT
+            generateby_font = generateby_add.runs[0].font
+            generateby_font.size = docx.shared.Pt(15)
+
+            generateon_text = "Generate on: " + current_date.strftime("%B %d, %Y")
+            generateon_add = doc.add_paragraph(generateon_text)
+            generateon_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.LEFT
+            generateon_font = generateon_add.runs[0].font
+            generateon_font.size = docx.shared.Pt(15)
+
+            report_count = self.sql_query.personnel_report_counter(date1, date2, ptype)
+            total_report_text = "Total Generated Records: " + str(report_count)
+            total_report_add = doc.add_paragraph(total_report_text)
+            total_report_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.LEFT
+            total_report_font = total_report_add.runs[0].font
+            total_report_font.size = docx.shared.Pt(15)
+
             # saves the doc to a new file path
             doc.save(filepath + "/" + filename + ".docx")
 
@@ -1225,6 +1361,7 @@ class docxClass:
             messbx.showinfo(
                 "Generated", "The reports have been successfully generated."
             )
+
     """
     def print_pdf_visitor(self, filepath, filename, date1, date2):
         # populate the report tree
@@ -1317,21 +1454,21 @@ class docxClass:
                 "Generated", "The reports have been successfully generated."
             )
         """
-        
-    def save_pdf_visitor(self, filepath, filename, date1, date2 ,ufname, ulname):
+
+    def save_pdf_visitor(self, filepath, filename, date1, date2, ufname, ulname):
         # populate the report tree
         cont_inue = self.treeview.populate_visitor_report_bydate(date1, date2)
         if cont_inue:
             # open an existing Word document
             doc = docx.Document(".\Documents\Report-Template.docx")
-            header_text = "Visitor Report"
+            header_text = "Visitor Attendance Report"
             header_add = doc.add_paragraph(header_text)
             header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
             header_font = header_add.runs[0].font
             header_font.size = docx.shared.Pt(24)
-            start_date = str(date1)[0:10]
-            end_date = str(date2)[0:10]
-            text = str(start_date) + " to " + str(end_date)
+            start_date = date1.strftime("%B %d, %Y")
+            end_date = date2.strftime("%B %d, %Y")
+            text = start_date + " to " + end_date
             date_time = doc.add_paragraph(text)
             date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
 
@@ -1370,14 +1507,14 @@ class docxClass:
                     doc.add_page_break()
                     space = "\n"
                     doc.add_paragraph(space)
-                    header_text = "Visitor Report"
+                    header_text = "Visitor Attendance Report"
                     header_add = doc.add_paragraph(header_text)
                     header_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
                     header_font = header_add.runs[0].font
                     header_font.size = docx.shared.Pt(24)
-                    start_date = str(date1)[0:10]
-                    end_date = str(date2)[0:10]
-                    text = "Date: " + str(start_date) + " to " + str(end_date)
+                    start_date = date1.strftime("%B %d, %Y")
+                    end_date = date2.strftime("%B %d, %Y")
+                    text = start_date + " to " + end_date
                     date_time = doc.add_paragraph(text)
                     date_time.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.CENTER
 
@@ -1395,6 +1532,29 @@ class docxClass:
                 row_cells = table.add_row().cells
                 for i in range(column_count):
                     row_cells[i].text = str(row[i])
+
+            space = "\n"
+            doc.add_paragraph(space)
+            current_date = datetime.now().date()
+
+            generateby_text = "Generate by: " + ufname + " " + ulname
+            generateby_add = doc.add_paragraph(generateby_text)
+            generateby_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.LEFT
+            generateby_font = generateby_add.runs[0].font
+            generateby_font.size = docx.shared.Pt(15)
+
+            generateon_text = "Generate on: " + current_date.strftime("%B %d, %Y")
+            generateon_add = doc.add_paragraph(generateon_text)
+            generateon_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.LEFT
+            generateon_font = generateon_add.runs[0].font
+            generateon_font.size = docx.shared.Pt(15)
+
+            report_count = self.sql_query.visitor_report_counter(date1, date2)
+            total_report_text = "Total Generated Records: " + str(report_count)
+            total_report_add = doc.add_paragraph(total_report_text)
+            total_report_add.alignment = docx.enum.text.WD_ALIGN_PARAGRAPH.LEFT
+            total_report_font = total_report_add.runs[0].font
+            total_report_font.size = docx.shared.Pt(15)
 
             # saves the doc to a new file path
             doc.save(filepath + "/" + filename + ".docx")
