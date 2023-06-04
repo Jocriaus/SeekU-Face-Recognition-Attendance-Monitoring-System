@@ -14,6 +14,7 @@ class excelClass:
     def __init__(self, master=None):
         self.sql_query = qry.dbQueries()
         self.treeview = tbl.TreeviewGUI()
+        self.current_date = datetime.now().date()
 
     def save_student(self, filepath, filename, date1, date2, section, ufname, ulname):
         data, columns = self.sql_query.sort_student_report_bydate_excel(
@@ -29,12 +30,18 @@ class excelClass:
             "Time in",
             "Time out",
         ]
+        
+        generateby_text = "Generate by: " + ufname + " " + ulname
+        generateon_text = "Generate on: " + self.current_date.strftime("%B %d, %Y")
+        report_count = self.sql_query.student_report_counter(date1, date2, section)
+        total_report_text = "Total Generated Records: " + str(report_count)
+
         if data and columns:
             df = pd.DataFrame(data=data, columns=columns)
             writer = pd.ExcelWriter(
                 filepath + "/" + filename + ".xlsx", engine="xlsxwriter"
             )
-            start_column = 2
+            start_column = 3
             df.to_excel(
                 writer,
                 sheet_name="Sheet1",
@@ -44,21 +51,27 @@ class excelClass:
                 index=False,
                 na_rep="NaN",
             )
-            starting_date = str(date1)[0:10]
-            end_date = str(date2)[0:10]
+            starting_date = date1.strftime("%B %d, %Y")
+            end_date = date2.strftime("%B %d, %Y")
 
             worksheet = writer.sheets["Sheet1"]
-            worksheet.write("E9", starting_date)
-            worksheet.write("G9", end_date)
-            worksheet.insert_image("C1", ".\SeekU\STI College Balagtas Logo medium.png")
+            worksheet.write("F9", str(starting_date)+" to " + str(end_date))
+            worksheet.insert_image("B1", ".\SeekU\STI College Balagtas Logo medium.png")
             worksheet.insert_image("E1", ".\SeekU\Student Report.png")
-            worksheet.insert_image("E6", ".\SeekU\Dates.png")
-            worksheet.insert_image("I1", ".\SeekU\SeekU small.png")
+            # worksheet.insert_image("E6", ".\SeekU\Dates.png")
+            worksheet.insert_image("L1", ".\SeekU\SeekU small.png")
             for column in df:
                 column_length = max(df[column].astype(str).map(len).max(), len(column))
                 col_idx = df.columns.get_loc(column)
                 col_idx = col_idx + start_column
                 worksheet.set_column(col_idx, col_idx, column_length)
+            # Add the information after printing the table
+            startrow = 14
+            last_row_index = len(df.index) + startrow  # Assuming start_row is defined
+
+            worksheet.write(last_row_index, start_column, generateby_text)
+            worksheet.write(last_row_index + 1, start_column, generateon_text)
+            worksheet.write(last_row_index + 2, start_column, total_report_text)
 
             writer.close()
             os.startfile(filepath + "/" + filename + ".xlsx")
@@ -83,6 +96,12 @@ class excelClass:
             "Time in",
             "Time out",
         ]
+
+        generateby_text = "Generate by: " + ufname + " " + ulname
+        generateon_text = "Generate on: " + self.current_date.strftime("%B %d, %Y")
+        report_count = self.sql_query.personnel_report_counter(date1, date2, ptype)
+        total_report_text = "Total Generated Records: " + str(report_count)
+
         if data and columns:
             df = pd.DataFrame(data=data, columns=columns)
             writer = pd.ExcelWriter(
@@ -98,21 +117,29 @@ class excelClass:
                 index=False,
                 na_rep="NaN",
             )
-            starting_date = str(date1)[0:10]
-            end_date = str(date2)[0:10]
+            starting_date = date1.strftime("%B %d, %Y")
+            end_date = date2.strftime("%B %d, %Y")
 
             worksheet = writer.sheets["Sheet1"]
-            worksheet.write("E9", starting_date)
-            worksheet.write("G9", end_date)
-            worksheet.insert_image("C1", ".\SeekU\STI College Balagtas Logo medium.png")
+            worksheet.write("F9", str(starting_date)+" to " + str(end_date))
+            worksheet.insert_image("B1", ".\SeekU\STI College Balagtas Logo medium.png")
             worksheet.insert_image("E1", ".\SeekU\Personnel Report.png")
-            worksheet.insert_image("E6", ".\SeekU\Dates.png")
-            worksheet.insert_image("J1", ".\SeekU\SeekU small.png")
+            # worksheet.insert_image("E6", ".\SeekU\Dates.png")
+            worksheet.insert_image("K1", ".\SeekU\SeekU small.png")
             for column in df:
                 column_length = max(df[column].astype(str).map(len).max(), len(column))
                 col_idx = df.columns.get_loc(column)
                 col_idx = col_idx + start_column
                 worksheet.set_column(col_idx, col_idx, column_length)
+
+            # Add the information after printing the table
+            startrow = 14
+            last_row_index = len(df.index) + startrow  # Assuming start_row is defined
+
+            worksheet.write(last_row_index, start_column, generateby_text)
+            worksheet.write(last_row_index + 1, start_column, generateon_text)
+            worksheet.write(last_row_index + 2, start_column, total_report_text)
+
             writer.close()
             os.startfile(filepath + "/" + filename + ".xlsx")
             messbx.showinfo(
@@ -123,7 +150,7 @@ class excelClass:
                 "Warning", "There are no records of attendance for the selected date."
             )
 
-    def save_visitor(self, filepath, filename, date1, date2):
+    def save_visitor(self, filepath, filename, date1, date2, ufname, ulname):
         data, columns = self.sql_query.sort_visitor_report_bydate_excel(date1, date2)
         columns = [
             "Visitor No.",
@@ -133,12 +160,18 @@ class excelClass:
             "Time in",
             "Time out",
         ]
+
+        generateby_text = "Generate by: " + ufname + " " + ulname
+        generateon_text = "Generate on: " + self.current_date.strftime("%B %d, %Y")
+        report_count = self.sql_query.visitor_report_counter(date1, date2)
+        total_report_text = "Total Generated Records: " + str(report_count)
+
         if data and columns:
             df = pd.DataFrame(data=data, columns=columns)
             writer = pd.ExcelWriter(
                 filepath + "/" + filename + ".xlsx", engine="xlsxwriter"
             )
-            start_column = 3
+            start_column = 4
             df.to_excel(
                 writer,
                 sheet_name="Sheet1",
@@ -148,21 +181,28 @@ class excelClass:
                 index=False,
                 na_rep="NaN",
             )
-            starting_date = str(date1)[0:10]
-            end_date = str(date2)[0:10]
+            starting_date = date1.strftime("%B %d, %Y")
+            end_date = date2.strftime("%B %d, %Y")
 
             worksheet = writer.sheets["Sheet1"]
-            worksheet.write("E9", starting_date)
-            worksheet.write("H9", end_date)
-            worksheet.insert_image("C1", ".\SeekU\STI College Balagtas Logo medium.png")
+            worksheet.write("G9", str(starting_date)+" to " + str(end_date))
+            worksheet.insert_image("B1", ".\SeekU\STI College Balagtas Logo medium.png")
             worksheet.insert_image("E1", ".\SeekU\Visitor Report.png")
-            worksheet.insert_image("E6", ".\SeekU\Dates.png")
-            worksheet.insert_image("I1", ".\SeekU\SeekU small.png")
+            # worksheet.insert_image("E6", ".\SeekU\Dates.png")
+            worksheet.insert_image("K1", ".\SeekU\SeekU small.png")
             for column in df:
                 column_length = max(df[column].astype(str).map(len).max(), len(column))
                 col_idx = df.columns.get_loc(column)
                 col_idx = col_idx + start_column
                 worksheet.set_column(col_idx, col_idx, column_length)
+
+            # Add the information after printing the table
+            startrow = 14
+            last_row_index = len(df.index) + startrow  # Assuming start_row is defined
+
+            worksheet.write(last_row_index, start_column, generateby_text)
+            worksheet.write(last_row_index + 1, start_column, generateon_text)
+            worksheet.write(last_row_index + 2, start_column, total_report_text)
             writer.close()
             os.startfile(filepath + "/" + filename + ".xlsx")
             messbx.showinfo(

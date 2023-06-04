@@ -7,7 +7,7 @@ class dbQueries:
         # "DESKTOP-DG7AK17\SQLEXPRESS"
         # "STAR-PLATINUM\SQLEXPRESS01"
         # "DESKTOP-3MNAAKG\SQLEXPRESS"
-        self.server = "DESKTOP-DG7AK17\SQLEXPRESS"
+        self.server = "STAR-PLATINUM\SQLEXPRESS01"
         self.database = "seeku_database"
         self.username = ""
         self.password = ""
@@ -655,7 +655,7 @@ class dbQueries:
             + "tbl_student.student_program, tbl_student.student_section, tbl_student_report.student_attendance_date, "
             + "tbl_student_report.student_time_in, tbl_student_report.student_time_out FROM tbl_student "
             + "RIGHT JOIN tbl_student_report ON tbl_student.student_no = tbl_student_report.student_no "
-            + "WHERE tbl_student.student_section = ? student_attendance_date BETWEEN ? AND ? ORDER BY student_attendance_date"
+            + "WHERE tbl_student.student_section = ? AND student_attendance_date BETWEEN ? AND ? ORDER BY student_attendance_date"
         )
         self.cursor.execute(query, (section, date1, date2))
         column = [desc[0] for desc in self.cursor.description]
