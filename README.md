@@ -1,6 +1,8 @@
 # Face-Recognition-Attendance-Monitoring-System
 A system for thesis
 
+The server name for the SQLServer Database should be "DESKTOP-3MNAAKG\SQLEXPRESS" (without the quotations)
+
 
 Prerequisites
 
